@@ -96,6 +96,11 @@ body.scroll-fix { overflow: hidden; }
       }
     }
   }
+
+  &.bg-change {
+    .menu li a { color: #111; }
+    .main-logo a { background-image: url(../images/logo_black.png); }
+  }
 }
 @media (max-width: 350px) {
   #header li a p { font-size: 11px; }

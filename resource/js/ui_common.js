@@ -341,8 +341,10 @@ var fn_setMainPage = function () {
         on: {
             init: function() {
                 if ( this.realIndex == 0 ) {
+                    document.querySelector("#header").classList.add("bg-change")
                     document.querySelector('.btn-more-wrap').classList.add("hide")
                 } else {
+                    document.querySelector("#header").classList.remove("bg-change")
                     document.querySelector('.btn-more-wrap').classList.remove("hide")
                 }
             },
