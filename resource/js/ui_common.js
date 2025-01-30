@@ -1,4 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(TextPlugin);
 
 /***** intro *****/
 var fn_setIntroAnimation = function () {
@@ -281,56 +282,21 @@ var fn_setMenuEvent = function () {
     })
 }
 
-const sleep = time => new Promise(resolve => setTimeout(resolve, time))
+var fn_textTyping = function() {
 
-class TypeAsync extends HTMLSpanElement {
-    get typeInterval () {
-        const randomMs = 100 * Math.random()
-        return randomMs < 50 ? 10 : randomMs
-    }
-    async type (text) {
-            for (let character of text) {
-            this.innerText += character
-            await sleep(this.typeInterval)
-        }
-    }
-    async delete (text) {
-            for (let character of text) {
-            this.innerText = this.innerText.slice(0, this.innerText.length -1)
-            await sleep(this.typeInterval)
-        }
-    }
-}
+    const text = document.querySelector("#type-text")
+    const tl = gsap.timeline({ repeat: -1, yoyo: false, repeatDelay: .5 })
 
-customElements.define('type-async', TypeAsync, { extends: 'span' })
-
-async function fn_textTyping () {
-    const node = document.querySelector("#type-text")
-
-    await sleep(2200)
-    node.innerText = ""
-
-    while (true) {
-        await node.type('UI/UX')
-        await sleep(2000)
-        await node.delete('UI/UX')
-
-        await node.type('Interaction')
-        await sleep(2000)
-        await node.delete('Interaction')
-
-        await node.type('Websites')
-        await sleep(2000)
-        await node.delete('Websites')
-
-        await node.type('Motion')
-        await sleep(2000)
-        await node.delete('Motion')
-
-        await node.type('Mobile Web')
-        await sleep(2000)
-        await node.delete('Mobile Web')
-    }
+    tl.to(text, 1, { text: "UI/UX", delay: 2.5 });
+    tl.to(text, .5, { text: "", delay: .5 });
+    tl.to(text, 1.5, { text: "Interaction", delay: 1 });
+    tl.to(text, 1, { text: "", delay: .5 });
+    tl.to(text, 1.5, { text: "Websites", delay: 1 });
+    tl.to(text, 1, { text: "", delay: .5 });
+    tl.to(text, 1, { text: "Motion", delay: 1 });
+    tl.to(text, .5, { text: "", delay: .5 });
+    tl.to(text, 1.5, { text: "Mobile Web", delay: 1 });
+    tl.to(text, 1, { text: "", delay: .5 });
 }
 
 /***** main *****/
