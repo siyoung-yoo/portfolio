@@ -260,10 +260,6 @@ var fn_setMenuEvent = function () {
             menuList.forEach((list, index) => {
                 if (eventPosition >= list.offsetTop) {
                     changeBg(index)
-
-                    if ( window.innerWidth < 769 ) {
-                        list.querySelector("a").classList.add("mb-active")
-                    }
                 }
             })
         })
