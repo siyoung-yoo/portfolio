@@ -308,16 +308,16 @@ var fn_setMainPage = function () {
     fn_setMenuEvent();
     fn_textTyping();
 
-    setTimeout(function () {
-        document.body.classList.add('loading-ani')
-        setTimeout(function () {
-            document.body.classList.add('bg-off')
-        }, 1000)
-    }, 300)
+    // setTimeout(function () {
+    //     document.body.classList.add('loading-ani')
+    //     setTimeout(function () {
+    //         document.body.classList.add('bg-off')
+    //     }, 1000)
+    // }, 300)
 
-    setTimeout(function () {
-        document.querySelector("#load01").remove();
-    }, 700)
+    // setTimeout(function () {
+    //     document.querySelector("#load01").remove();
+    // }, 700)
 
     document.querySelector(".btn-more").addEventListener("click", () => {
         const fileName = document.querySelector(".swiper-slide-active").dataset.file;

@@ -141,6 +141,17 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         fn_setMainPage();
+
+        setTimeout(function () {
+            document.body.classList.add('loading-ani')
+            setTimeout(function () {
+                document.body.classList.add('bg-off')
+            }, 1000)
+        }, 300)
+
+        setTimeout(function () {
+            document.querySelector("#load01").remove();
+        }, 700)
     });
 </script>
 </body>
