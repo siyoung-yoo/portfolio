@@ -197,7 +197,7 @@ body.scroll-fix { overflow: hidden; }
       z-index: -1;
     }
 
-    &:hover, &:active, &:focus, &.mb-active {
+    &:hover, &:active, &:focus {
       color: #fff;
 
       &::after {
@@ -208,6 +208,15 @@ body.scroll-fix { overflow: hidden; }
       }
     }
 
+    &.mb-active {
+      color: #fff;
+
+      &::after {
+        width: 110%;
+        left: -5%;
+        right: inherit;
+      }
+    }
     &.active { color: #fff; }
   }
 }
