@@ -194,17 +194,17 @@ body.scroll-fix { overflow: hidden; }
       right: -5%;
       top: 0.7em;
       background: rgba(0, 255, 181, 0.5);
-      transition: width ease-in 300ms;
       z-index: -1;
     }
 
-    &:hover, &:active, &:focus {
+    &:hover, &:active, &:focus, &.mb-active {
       color: #fff;
 
       &::after {
         width: 110%;
         left: -5%;
         right: inherit;
+        transition: width ease-in 150ms;
       }
     }
 

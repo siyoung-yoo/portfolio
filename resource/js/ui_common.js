@@ -170,7 +170,7 @@ var fn_setMainCursor = function() {
     })
 }
 
-var fn_setMenuHover = function() {
+var fn_setGnbHover = function() {
     new SplitType('.menu p', {
         types: 'chars',
         tagName: 'span',
@@ -237,10 +237,17 @@ var fn_setMenuEvent = function () {
         bgURLA = "url(../resource/images/"+ bgFileA +")";
         $menuWrap.style.backgroundImage = bgURLA;
 
-        document.querySelectorAll(".menu-wrap a").forEach(function(list) {
-            list.classList.remove("active")
-        })
-        $menuList[num].querySelector("a").classList.add("active");
+        if ( window.innerWidth < 769 ) {
+            document.querySelectorAll(".menu-wrap a").forEach(function(list) {
+                list.classList.remove("mb-active")
+            })
+            $menuList[num].querySelector("a").classList.add("mb-active");
+        } else {
+            document.querySelectorAll(".menu-wrap a").forEach(function(list) {
+                list.classList.remove("active")
+            })
+            $menuList[num].querySelector("a").classList.add("active");
+        }
     }
 
     var menuScrollEvent = function() {
@@ -253,6 +260,10 @@ var fn_setMenuEvent = function () {
             menuList.forEach((list, index) => {
                 if (eventPosition >= list.offsetTop) {
                     changeBg(index)
+
+                    if ( window.innerWidth < 769 ) {
+                        list.querySelector("a").classList.add("mb-active")
+                    }
                 }
             })
         })
@@ -303,7 +314,7 @@ var fn_setMainPage = function () {
     gsap.registerPlugin(TextPlugin);
     fn_setCommonCursor();
     fn_setMainCursor();
-    fn_setMenuHover();
+    fn_setGnbHover();
     fn_menuInclude();
     fn_setMenuEvent();
     fn_textTyping();
@@ -404,7 +415,7 @@ var fn_setMainPage = function () {
 /***** work *****/
 var fn_setWorkPage = function () {
     fn_setCommonCursor();
-    fn_setMenuHover();
+    fn_setGnbHover();
     fn_menuInclude();
     fn_setMenuEvent();
 
@@ -460,7 +471,7 @@ var fn_setWorkPage = function () {
 
 var setSubPage = function() {
     fn_setCommonCursor();
-    fn_setMenuHover();
+    fn_setGnbHover();
     fn_menuInclude();
     fn_setMenuEvent();
 
