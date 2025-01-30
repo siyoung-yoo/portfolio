@@ -1,0 +1,36 @@
+#loading-wrap {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #252525;
+  cursor: none;
+
+  .loading-num {
+    height: 30vw;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+  }
+
+  .txt {
+    font-size: 30vw;
+    line-height: 1;
+    font-weight: 800;
+    animation: loadTxt cubic-bezier(.40,.68,0,1) 3000ms;
+    animation-fill-mode: both;
+  }
+}
+@keyframes loadTxt {
+  0% {
+    opacity: 0;
+    color: #222;
+    margin-top: 35vw;
+  }
+  100% {
+    opacity: 1;
+    color: #000;
+    margin-top: 0;
+  }
+}

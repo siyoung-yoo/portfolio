@@ -1,0 +1,211 @@
+@mixin skill_icon ($size: 50px) {
+  width: $size;
+  height: $size;
+  background-size: auto $size*2;
+
+  @for $i from 1 through 6 {
+    &:nth-of-type(#{$i}) {
+      background-position: (0 + (($i - 1) * -$size)) 0;
+    }
+  }
+
+  @for $i from 1 through 6 {
+    &:nth-of-type(#{$i + 6}) {
+      background-position: (0 + (($i - 1) * -$size)) (-1 * $size);
+    }
+  }
+}
+
+.type-about {
+  display: flex;
+  align-items: center;
+
+  height: auto;
+  min-height: 100vh;
+  padding: 100px 10% 0;
+  background: #111;
+  overflow: auto;
+  transition: all linear 150ms;
+
+  > div { flex: 1; }
+  * { color: #fff; }
+
+  .fake-block { display: block; }
+
+  [class*=about-] {
+    h3 ~ h3 { margin-top: 30px;}
+    margin-bottom: 30px;
+    opacity: 0;
+    margin-top: 10px;
+
+    animation: ani_aboutLoad ease 1s;
+    animation-fill-mode: both;
+    animation-delay: 200ms;
+
+    @keyframes ani_aboutLoad {
+      0%    { opacity: 0; margin-top: 10px; }
+      100%  { opacity: 1; margin-top: 0; }
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -5px;
+
+      li {
+        margin: 5px;
+        background: url(../images/iconpack_skills.png) 0 0 / auto 150px no-repeat;
+
+        @include skill_icon(30px)
+      }
+    }
+
+    h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .btn-link {
+      position: relative;
+      display: inline-block;
+      padding: 0 4px;
+      line-height: 2em;
+      z-index: 1;
+
+      &::after {
+        content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: 0.25em;
+          width: 100%;
+          height: 0.5em;
+          background: rgba(0, 255, 181, .3);
+          z-index: -1;
+          transition: all ease-in 150ms;
+      }
+
+      &:hover, &:active, &:focus {
+        &::after {
+          bottom: 0em;
+          height: 2em
+        }
+      }
+
+      &+.btn-link { margin-left: 10px; }
+    }
+  }
+
+  .about-contact {
+    ul {
+      li {
+        position: relative;
+        padding-left: 24px;
+        &+li { margin-top: 10px; }
+
+        &::before {
+          content: '';
+          display: block;
+          width: 15px;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          background: url(../images/iconpack_contact.png) 0 50%/15px auto no-repeat;
+        }
+        &.phone { letter-spacing: 0.1em; }
+        &.phone::before { background-position: 0 0; }
+        &.email::before { background-position: 0 -32px; }
+      }
+    }
+  }
+
+  .about-list {
+    dl {
+      margin-bottom: 10px;
+      padding-left: 15px;
+
+      dt {
+        position: relative;
+        &::before {
+          content: '';
+          display: block;
+
+          position: absolute;
+          left: -15px;
+          top: 7px;
+          width: 6px;
+          height: 2px;
+          background: #00ffb5;
+        }
+      }
+
+      dd {
+        font-size: 0.9em;
+        color: #c4c4c4;
+      }
+    }
+
+    .btn-basic:nth-of-type(1) {
+      margin: 0 20px 15px 0;
+    }
+  }
+
+  .text-title { margin-top: 30px; }
+
+  .page-navi {
+    height: 50px;
+    padding: 20px 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .type-about {
+    padding-top: 150px;
+
+    .fake-block { display: none; }
+
+    [class*=about-] {
+      margin-bottom: 50px;
+      h3 { margin-bottom: 20px; }
+      h3 ~ h3 { margin-top: 50px; }
+    }
+
+    ul, dl { line-height: 2em; }
+
+    .about-contact ul li {
+      &.phone::before { background-position: 0 7px; }
+      &.email::before { background-position: 0 -27px; }
+    }
+
+    dt::before { top: 12px !important; }
+
+    .text-title { margin-top: 50px; }
+  }
+}
+
+@media (min-width: 900px) {
+  .type-about {
+    .fake-block { display: block; }
+  }
+
+  .divide-group {
+    display: flex;
+    align-items: flex-start;
+
+    section { flex: 1; }
+  }
+
+  .skills {
+    margin: -5px -10px !important;
+    li {
+      margin: 5px 10px !important;
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .type-about {
+    .fake-block { display: none; }
+  }
+}

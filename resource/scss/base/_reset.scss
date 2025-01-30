@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: auto;
+    -webkit-text-size-adjust: 100%;
+}
+
+html {
+    font-family: $font-family;
+    color: $text-color-dark;
+    font-weight: $text-weight-basic;
+    line-height: $line-height-basic;
+    letter-spacing: $text-spacing-basic;
+    vertical-align: baseline;
+}
+
+ol, ul { list-style: none; }
+table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+select::-ms-expand { display: none; }
+a, button, input,  textarea, select {
+    border: none;
+    text-decoration: none;
+    // background-color: transparent;
+    -webkit-appearance: none;
+         -moz-appearance: none;
+              appearance: none;
+}
+button[disabled], input[disabled], select[disabled] { cursor: default; }

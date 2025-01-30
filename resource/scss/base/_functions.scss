@@ -1,0 +1,74 @@
+// icon
+@mixin icon($set-container-size, $set-icon-size, $set-line-height: $set-container-size) {
+	display: flex;
+	justify-content: center;
+	flex-shrink: 0;
+	width: #{$set-container-size};
+	height: #{$set-container-size};
+	font-size: #{$set-icon-size};
+	line-height: #{$set-line-height};
+}
+
+// border inside
+@mixin border-inside($set-color, $set-border-width: 1px) {
+	box-shadow: inset 0 0 0 $set-border-width $set-color;
+}
+
+// text-overflow
+@mixin text-ellipsis {
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+// text-ellipsis multi line
+@mixin text-multi-line {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp: 2; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap: break-word;
+	line-height:  1.6em;
+	height: 3.2em;
+}
+
+// screen only
+@mixin screen-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+}
+
+// clearfix
+@mixin clearfix {
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+// transition
+@mixin transition($target, $set-time: .05s, $duration: ease-in) {
+	transition: $target $set-time $duration;
+}
+
+//color cover
+@function blend-transparent($foreground, $background) {
+  $fg-opacity: opacity($foreground);
+  $bg-opacity: opacity($background);
+
+  $opacity: $fg-opacity + $bg-opacity * (1.0 - $fg-opacity);
+  $factor: $bg-opacity * (1.0 - $fg-opacity);
+
+  $red: (red($foreground) * $fg-opacity + red($background) * $factor) / $opacity;
+  $green: (green($foreground) * $fg-opacity + green($background) * $factor) / $opacity;
+  $blue: (blue($foreground) * $fg-opacity + blue($background) * $factor) / $opacity;
+
+  @return rgba($red, $green, $blue, $opacity);
+}
