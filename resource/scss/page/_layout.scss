@@ -96,10 +96,18 @@ body.scroll-fix { overflow: hidden; }
       }
     }
   }
+}
 
-  &.bg-change {
-    .menu li a { color: #111; }
-    .main-logo a { background-image: url(../images/logo_black.png); }
+.bg-change {
+  #header .menu li a { color: #111; }
+  #header .main-logo a { background-image: url(../images/logo_black.png); }
+  .swiper-pagination { color: #333; }
+  .swiper-button-prev, .swiper-button-next { filter: none; }
+  .mouse-cursor {
+    border-color: #333;
+    &.active-grab {
+      &::before, &::after { filter: none; }
+    }
   }
 }
 @media (max-width: 350px) {
@@ -360,11 +368,13 @@ body.loading-ani {
 
     &::before {
       margin-left: -15px;
-      background: url(../images/icon_prev.svg) 0 0 / 100% auto no-repeat;
+      background: url(../images/icon_left.svg) 0 0 / 100% auto no-repeat;
+      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
     }
     &::after {
       margin-right: -15px;
-      background: url(../images/icon_next.svg) 0 0 / 100% auto no-repeat;
+      background: url(../images/icon_right.svg) 0 0 / 100% auto no-repeat;
+      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
     }
   }
 

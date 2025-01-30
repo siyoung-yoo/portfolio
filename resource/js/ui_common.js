@@ -6,9 +6,9 @@ var fn_setIntroAnimation = function () {
     var startCount = {var: 0};
 
     gsap.to( startCount, {
-        var: 100,
-        duration: 1.5,
-        ease: "power1",
+        var: 99,
+        duration: 3,
+        ease: "power3.out",
         delay: 0.5,
         onUpdate: function() {
             number.innerHTML = (startCount.var).toFixed();
@@ -17,7 +17,7 @@ var fn_setIntroAnimation = function () {
 
     setTimeout(function() {
 		window.location.href="html/main.html"
-	}, 2800)
+	}, 3700)
 };
 
 /***** Cursor Custom *****/
@@ -341,17 +341,19 @@ var fn_setMainPage = function () {
         on: {
             init: function() {
                 if ( this.realIndex == 0 ) {
-                    document.querySelector("#header").classList.add("bg-change")
+                    document.body.classList.add("bg-change")
                     document.querySelector('.btn-more-wrap').classList.add("hide")
                 } else {
-                    document.querySelector("#header").classList.remove("bg-change")
+                    document.body.classList.remove("bg-change")
                     document.querySelector('.btn-more-wrap').classList.remove("hide")
                 }
             },
             slideChange: function() {
                 if ( this.realIndex == 0 ) {
+                    document.body.classList.add("bg-change")
                     document.querySelector('.btn-more-wrap').classList.add("hide")
                 } else {
+                    document.body.classList.remove("bg-change")
                     document.querySelector('.btn-more-wrap').classList.remove("hide")
                 }
             },
