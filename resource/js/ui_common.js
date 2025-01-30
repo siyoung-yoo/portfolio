@@ -1,5 +1,4 @@
 gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(TextPlugin);
 
 /***** intro *****/
 var fn_setIntroAnimation = function () {
@@ -301,6 +300,7 @@ var fn_textTyping = function() {
 
 /***** main *****/
 var fn_setMainPage = function () {
+    gsap.registerPlugin(TextPlugin);
     fn_setCommonCursor();
     fn_setMainCursor();
     fn_setMenuHover();
