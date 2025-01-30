@@ -7,8 +7,8 @@ var fn_setIntroAnimation = function () {
 
     gsap.to( startCount, {
         var: 100,
-        duration: 2,
-        ease: "power3",
+        duration: 1.5,
+        ease: "power1",
         delay: 0.5,
         onUpdate: function() {
             number.innerHTML = (startCount.var).toFixed();
