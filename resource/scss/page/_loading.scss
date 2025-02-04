@@ -1,5 +1,5 @@
 /* 로딩 */
-#load01{
+#load01, #load02 {
 	width: 100%;
 	height: 100%;
 	z-index: 100;
@@ -7,31 +7,37 @@
 	position: fixed;
 	left: 0;
 	bottom: 0;
-}
-#load01 li {
-	width: 16.67%;
-	height: 100%;
 
-	background-color: #111;
-	border-right: 1px solid rgba(240, 240, 240, 0.1);
+	li {
+		width: 16.67%;
+		height: 100%;
 
-	position: absolute;
-	top: 0;
+		background-color: #111;
+		border-right: 1px solid rgba(240, 240, 240, 0.1);
 
-	animation: ani_load01 ease-in 200ms;
-	animation-fill-mode: both;
+		position: absolute;
+		top: 0;
 
-	$liNum: 1;
-	$delay: 50ms;
-	@while $liNum <= 6 {
-		&:nth-of-type(#{$liNum}) {
-			left: 0 + (16.6667% * ($liNum - 1));
-			animation-delay: 100 + ($delay * $liNum);
+		animation: ani_load ease-in 200ms;
+		animation-fill-mode: both;
+
+		$liNum: 1;
+		$delay: 50ms;
+		@while $liNum <= 6 {
+			&:nth-of-type(#{$liNum}) {
+				left: 0 + (16.6667% * ($liNum - 1));
+				animation-delay: 100 + ($delay * $liNum);
+			}
+			$liNum : $liNum + 1;
 		}
-		$liNum : $liNum + 1;
 	}
 }
-@keyframes ani_load01 {
+@keyframes ani_load {
 	0% { top: 0;}
 	100% { top: -120%; }
+}
+
+#load02 li {
+	background-color: #000;
+	border-right: 1px solid rgba(240, 240, 240, 0.1);
 }

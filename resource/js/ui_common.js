@@ -474,6 +474,7 @@ var fn_setWorkPage = function () {
     })
 }
 
+/***** career, about *****/
 var setSubPage = function() {
     fn_setCommonCursor();
     fn_setGnbHover();

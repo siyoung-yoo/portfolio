@@ -20,6 +20,8 @@
 <script type="text/javascript" src="../resource/js/ui_common.js"></script>
 </head>
 <body>
+    <ul id="load02"><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+
     <header id="header">
         <h1 class="main-logo">
             <a href="main.html">유시영 포트폴리오 사이트</a>
@@ -208,6 +210,9 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         setSubPage();
+        setTimeout(function () {
+            document.querySelector("#load02").remove();
+        }, 700)
     });
 </script>
 </body>
