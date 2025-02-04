@@ -132,7 +132,7 @@
 }
 
 @keyframes ani_workVisualImg {
-  0%    { width: 100vw; height: 100vh; -webkit-transform: translate3d(-50%, -50%, 0); transform: translate3d(-50%, -50%, 0); }
+  0%    { width: 100vw; height: 100vh; }
   100%  { width: 100vw; height: 80vh;  -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(5deg); transform: translate3d(-50%, -50%, 0) rotateZ(5deg); }
 }
 
