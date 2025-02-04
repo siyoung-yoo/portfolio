@@ -28,18 +28,6 @@
     animation-fill-mode: both;
     animation-delay: 300ms;
 
-    &::after {
-			content: "";
-			display: block;
-			width: 100%;
-			height: 100%;
-			background: rgba(0,0,0,0.5);
-
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-
     .inner-img {
       position: absolute;
       left: 50%;
@@ -50,6 +38,7 @@
       background-position: 50% 50%;
       background-size: cover;
       background-repeat: no-repeat;
+      filter: brightness(0.5);
 
       animation: ani_workVisualImg cubic-bezier(.40,.68,0,1) 800ms;
       animation-fill-mode: both;
@@ -135,12 +124,12 @@
 @keyframes ani_workVisual {
   0%    { width: 100%;  height: 100%; transform: translate(-50%, -50%); }
   20%    { width: 100%;  height: 100%; transform: translate(-50%, -50%) scale(1.1); }
-  100%  { width: 40%;  height: 70%; transform: translate(-50%, -50%) rotate(-5deg); }
+  100%  { width: 40%;  height: 70%; transform: translate(-50%, -50%) rotateZ(-5deg); }
 }
 
 @keyframes ani_workVisualImg {
   0%    { width: 100vw; height: 100vh; transform: translate(-50%, -50%); }
-  100%  { width: 100vw; height: 80vh; transform: translate(-50%, -50%) rotate(5deg); }
+  100%  { width: 100vw; height: 80vh; transform: translate(-50%, -50%) rotateZ(5deg); }
 }
 
 @keyframes ani_workDesc {
