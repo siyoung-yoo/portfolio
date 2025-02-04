@@ -407,6 +407,44 @@ var fn_setMainPage = function () {
             touchEnd: function() {
                 document.querySelector('.mouse-cursor').classList.remove("active-grab")
             },
+
+
+
+
+
+afterInit: function() { alert("afterInit")},
+beforeDestroy: function() { alert("beforeDestroy")},
+beforeLoopFix: function() { alert("beforeLoopFix")},
+breakpoint: function() { alert("breakpoint")},
+changeDirection: function() { alert("changeDirection")},
+click: function() { alert("click")},
+destroy: function() { alert("destroy")},
+doubleClick: function() { alert("doubleClick")},
+doubleTap: function() { alert("doubleTap")},
+lock: function() { alert("lock")},
+loopFix: function() { alert("loopFix")},
+momentumBounce: function() { alert("momentumBounce")},
+observerUpdate: function() { alert("observerUpdate")},
+orientationchange: function() { alert("orientationchange")},
+reachBeginning: function() { alert("reachBeginning")},
+reachEnd: function() { alert("reachEnd")},
+realIndexChange: function() { alert("realIndexChange")},
+slidePrevTransitionEnd: function() { alert("slidePrevTransitionEnd")},
+slidePrevTransitionStart: function() { alert("slidePrevTransitionStart")},
+slideResetTransitionEnd: function() { alert("slideResetTransitionEnd")},
+slideResetTransitionStart: function() { alert("slideResetTransitionStart")},
+sliderFirstMove: function() { alert("sliderFirstMove")},
+sliderMove: function() { alert("sliderMove")},
+slidesUpdated: function() { alert("slidesUpdated")},
+tap: function() { alert("tap")},
+toEdge: function() { alert("toEdge")},
+touchEnd: function() { alert("touchEnd")},
+touchMove: function() { alert("touchMove")},
+touchMoveOpposite: function() { alert("touchMoveOpposite")},
+touchStart: function() { alert("touchStart")},
+unlock: function() { alert("unlock")},
+
+
         }
     })
 }
