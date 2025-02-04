@@ -386,18 +386,18 @@ var fn_setMainPage = function () {
                 let activeSlide = document.querySelector(".work-title.active").querySelectorAll(".char");
                 let nextSlide = document.querySelector(".work-title.next").querySelectorAll(".char");
 
-                gsap.to(prevSlide, { duration: 0.5, scale: 1.1, x: -100, opacity: 0, stagger: { each: 0.02, ease:Power3.easeOut, from: "end" } })
-                gsap.to(activeSlide, { duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease:Power3.easeOut, from: "end" } })
-                gsap.to(nextSlide, { duration: 0.5, scale: 0.9, x: 100, opacity: 0, stagger: { each: 0.02, ease:Power3.easeOut, from: "end" } })
+                gsap.to(prevSlide, { duration: 0.5, scale: 1.1, x: -100, opacity: 0, stagger: { each: 0.02, ease: "none", from: "end" } })
+                gsap.to(activeSlide, { delay: 0.3, duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease: "none", from: "end" } })
+                gsap.to(nextSlide, { duration: 0.5, scale: 0.9, x: 100, opacity: 0, stagger: { each: 0.02, ease: "none", from: "end" } })
             },
             slideNextTransitionStart: function() {
                 let prevSlide = document.querySelector(".work-title.prev").querySelectorAll(".char");
                 let activeSlide = document.querySelector(".work-title.active").querySelectorAll(".char");
                 let nextSlide = document.querySelector(".work-title.next").querySelectorAll(".char");
 
-                gsap.to(prevSlide, { duration: 0.5, scale: 0.9, x: -100, opacity: 0, stagger: { each: 0.02, ease:Power3.easeOut } })
-                gsap.to(activeSlide, { duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease:Power3.easeOut } })
-                gsap.to(nextSlide, { duration: 0.5, scale: 1.1, x: 100, opacity: 0, stagger: { each: 0.02, ease:Power3.easeOut } })
+                gsap.to(prevSlide, { duration: 0.5, scale: 0.9, x: -100, opacity: 0, stagger: { each: 0.02, ease: "none" } })
+                gsap.to(activeSlide, { delay: 0.3, duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease: "none" } })
+                gsap.to(nextSlide, { duration: 0.5, scale: 1.1, x: 100, opacity: 0, stagger: { each: 0.02, ease: "none" } })
             },
             touchStart: function(e) {
                 if ( !e.target.classList.contains('swiper-button-prev') && !e.target.classList.contains('swiper-button-next')) {
