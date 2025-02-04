@@ -34,6 +34,7 @@ var fn_setCommonCursor = function() {
     const logo = document.querySelector(".main-logo");
     const btnMore = document.querySelector(".btn-more")
     const arrowLink = document.querySelectorAll(".work-subtext a");
+    const btnTop = document.querySelector(".btn-top");
     const btnBlock = document.querySelectorAll(".btn-basic");
     const btnLink = document.querySelectorAll(".about-list .btn-link");
 
@@ -69,6 +70,15 @@ var fn_setCommonCursor = function() {
                 cursor.classList.remove("active-lg");
             });
         })
+    }
+
+    if (btnTop != null) {
+        btnTop.addEventListener("mouseenter", () => {
+            cursor.classList.add("active-lg");
+        });
+        btnTop.addEventListener("mouseleave", () => {
+            cursor.classList.remove("active-lg");
+        });
     }
 
     if (btnBlock != null) {
@@ -470,7 +480,6 @@ var fn_setWorkPage = function () {
 
     document.querySelector(".next-pjt").addEventListener("mouseleave", () => {
         TweenMax.staggerTo(".name-block:nth-child(1) .letter", 0.3, { y: "0", ease:Power1.easeInOut }, 0.02)
-        TweenMax.staggerTo(".name-block:nth-child(2) .letter", 0.3, { y: "0", ease:Power1.easeInOut }, 0.02)
     })
 }
 
