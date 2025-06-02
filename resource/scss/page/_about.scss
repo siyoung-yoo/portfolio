@@ -142,7 +142,7 @@
 
       dd {
         font-size: 0.9em;
-        color: #c4c4c4;
+        color: #fff;
       }
     }
 
@@ -156,6 +156,15 @@
   .page-navi {
     height: 50px;
     padding: 20px 0;
+  }
+
+  .sub-list {
+    padding: 10px 0;
+
+    dt {
+      text-indent: -10px;
+      &::before { display: none !important;}
+    }
   }
 }
 

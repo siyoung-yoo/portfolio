@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>9단원 1차시</title>
+<style>
+  .activityPopup {
+    z-index: 20 !important;
+  }
+
+  .audioPopup {
+    z-index: 20 !important;
+  }
+
+  .toast-msg-container {
+    z-index: 20 !important;
+  }
+
+  .button_wrap {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  .button_wrap .btn-img {
+    width: auto;
+    height: auto;
+    text-indent: unset;
+    position: unset;
+    background: none;
+    background-color: #3b71fe;
+    color: #fff;
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    padding: 10px 24px;
+    border-radius: 12px;
+  }
+
+  .activity-button-wrap button {
+    width: 112px;
+    height: 56px;
+  }
+
+  .ip_cont .ip_text {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: -1px;
+    vertical-align: middle;
+  }
+
+  .ip_cont .idx1 li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #e2e7ef;
+    border-radius: 20px;
+    padding: 16px 32px;
+    margin-bottom: 16px;
+  }
+
+  .ip_cont .idx1 li p {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: -1px;
+  }
+
+  .ip_cont .idx1 li p.active {
+    color: #3b71fe;
+  }
+
+  #contents > h2 {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 64px;
+    letter-spacing: -1px;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 30px;
+  }
+
+  .cont_inner {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+  }
+
+  .cont_inner > div {
+    border: 1px solid #d2d2d2;
+    border-radius: 12px;
+    padding: 32px 20px;
+    display: flex;
+    gap: 16px;
+    width: 700px;
+    height: 390px;
+  }
+
+  .cont_inner > div span {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 56px;
+    letter-spacing: -0.5px;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    background: #3b71fe;
+    border-radius: 14px;
+    color: #fff;
+  }
+
+  .cont_inner > div p {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: -0.5px;
+    flex: 1;
+  }
+
+  .q_tit > p {
+    white-space: unset;
+  }
+
+  /* 드래그 & 드랍 css */
+  .dnd-container {
+    position: relative;
+    width: 890px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+  }
+
+  .drag-item-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    width: 108px;
+  }
+
+  .card-slot {
+    width: 108px;
+    height: 108px;
+    background: url(../images/EEN69_01/69_card_slot.png) 50% / 100% no-repeat;
+  }
+  .card-slot::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.6);
+  }
+
+  .drag-item-wrap .dnd-item {
+    position: absolute;
+    width: 108px;
+    height: 108px;
+    z-index: 0;
+  }
+  .drag-item-wrap #di_01 { top: 1px; left: 2px; }
+  .drag-item-wrap #di_02 { top: 121px; left: 2px; }
+  .drag-item-wrap #di_03 { top: 241px; left: 2px; }
+  .drag-item-wrap #di_04 { top: 361px; left: 2px; }
+
+  .drop-area-wrap {
+    width: 728px;
+    height: 500px;
+  }
+
+  .drop-area-wrap .dnd-drop {
+    position: absolute;
+    width: 108px;
+    height: 108px;
+  }
+  .drop-area-wrap #dd_01 { left: 241px; top: 100px;}
+  .drop-area-wrap #dd_02 { left: 666px; top: 66px;}
+  .drop-area-wrap #dd_03 { left: 313px; top: 326px;}
+  .drop-area-wrap #dd_04 { left: 649px; top: 237px;}
+
+  .game-button-wrap {
+    width: 112px;
+    margin-left: -1px;
+  }
+
+  .game-button-wrap button {
+    padding: 12px 20px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #3b71fe;
+    pointer-events: none;
+  }
+  .game-button-wrap button.active {
+    pointer-events: all;
+  }
+
+  /* 스코어 CSS */
+  .score_wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    top: 159px;
+    right: 135px;
+  }
+
+  .score_wrap .counter {
+    width: 129px;
+  }
+
+  .score-box {
+    background: #eef9ff;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    font-size: 32px;
+    text-align: center;
+    width: 100%;
+    line-height: 72px;
+    margin-bottom: 8px;
+  }
+  .score_wrap .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .score_wrap .btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #d2d2d2;
+    padding: 17px;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .score_wrap .btn.active {
+    pointer-events: all;
+  }
+
+  .score_wrap .scoreReset {
+    padding: 12px 20px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    border-radius: 12px;
+    background: #3b71fe;
+    pointer-events: none;
+  }
+  .score_wrap .scoreReset.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* 버튼들 disabled, active 타입 정리 */
+  .game-button-wrap button,
+  .score_wrap .scoreReset,
+  .score_wrap .btn {
+    opacity: 0.5;
+  }
+  .game-button-wrap button.active,
+  .score_wrap .scoreReset.active,
+  .score_wrap .btn.active {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+  <div id="wrapper">
+    <header id="header">
+      <p>Play Time 1</p>
+      <p lang="y">놀이 활동하기</p>
+    </header>
+    <!-- /header -->
+
+    <div id="container">
+      <div id="content" data-quiz-type="drag-and-drop">
+        <div class="q_tit flex-between">
+          <p lang="y">
+            각자 장소 그림을 지도의 원하는 위치에 놓은 후 게임을 시작해요.
+          </p>
+          <div class="activity-button-wrap">
+            <button lang="y" type="button" class="btn-abw">활동 방법</button>
+            <button lang="y" type="button" class="btn-pop stc_play">
+              주요 표현
+            </button>
+          </div>
+        </div>
+
+        <div id="contents">
+          <div id="dnd-container" class="dnd-container">
+            <div class="drag-item-wrap">
+              <div class="card-slot">
+                <div class="dnd-item swapSticky" id="di_01">
+                  <img src="../images/EEN69_01/69_card1.png" alt="" />
+                </div>
+              </div>
+              <div class="card-slot">
+                <div class="dnd-item swapSticky" id="di_02">
+                  <img src="../images/EEN69_01/69_card2.png" alt="" />
+                </div>
+              </div>
+              <div class="card-slot">
+                <div class="dnd-item swapSticky" id="di_03">
+                  <img src="../images/EEN69_01/69_card3.png" alt="" />
+                </div>
+              </div>
+              <div class="card-slot">
+                <div class="dnd-item swapSticky" id="di_04">
+                  <img src="../images/EEN69_01/69_card4.png" alt="" />
+                </div>
+              </div>
+              <div class="game-button-wrap">
+                <button type="button" class="gbw_complete">선택 완료</button>
+              </div>
+            </div>
+            <!-- /drag-item-wrap -->
+
+            <div class="drop-area-wrap">
+              <img src="../images/EEN69_01/69_board.png" alt="" />
+              <div class="dnd-drop" id="dd_01"></div>
+              <div class="dnd-drop" id="dd_02"></div>
+              <div class="dnd-drop" id="dd_03"></div>
+              <div class="dnd-drop" id="dd_04"></div>
+            </div>
+            <!-- /drop-area-wrap -->
+          </div>
+          <!-- /dnd-container -->
+          <div class="score_wrap">
+            <div class="counter">
+              <div class="score-box" id="score">0점</div>
+              <button class="scoreReset">점수 초기화</button>
+            </div>
+            <div class="buttons">
+              <button class="btn plus">
+                <img src="../common/images/icon_plus.png" alt="증가" />
+              </button>
+              <button class="btn minus">
+                <img src="../common/images/icon_minus.png" alt="감소" />
+              </button>
+            </div>
+          </div>
+          <!-- /score_wrap -->
+
+          <div class="activityPopup" tabindex="-1">
+            <div class="ap_inner">
+              <button
+                class="ap_close"
+                tabindex="0"
+                aria-label="닫기"
+              ></button>
+              <div class="ap_cont">
+                <p class="ap_text sky_badge" lang="y">활동 방법</p>
+
+                <ul class="idx1 number">
+                  <li lang="y">
+                    학생들은 각자 그림 카드를 교과서에 있는 지도의 빈칸 중
+                    원하는 위치에 올려 둔다.
+                  </li>
+                  <li lang="y">
+                    교사가 그림 카드의 장소를 하나 선택하여 학생들에게 보여
+                    주면 학생들은 해당 장소에 가는 교통수단을 묻고, 교사는
+                    임의의 교통수단 하나를 선택하여 대답한다. <br />
+                    Ss: How can I get to the library? <br />
+                    T: Take Bus Number 7 and get off at the library.
+                  </li>
+                  <li lang="y">
+                    학생들은 자신의 지도를 보고 해당 장소에 가는 교통수단이
+                    교사가 말한 교통수단과 동일하면 1점을 얻는다.
+                  </li>
+                  <li lang="y">
+                    모든 장소에 대해 교통수단을 묻고 답하는 대화를 반복한다.
+                  </li>
+                  <li lang="y">
+                    지도에 그림 카드를 재배치하여 게임을 여러 번 반복한다.
+                    게임을 계속하여, 가장 높은 점수를 얻은 학생이 이긴다.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- /activityPopup -->
+
+          <!-- 오디오 팝업 -->
+          <div class="audioPopup audio">
+            <div class="ap_inner stc">
+              <button
+                class="ap_close"
+                tabindex="0"
+                aria-label="닫기"
+              ></button>
+              <div class="stc_wrap">
+                <p class="ap_title" lang="y">주요 표현</p>
+                <div class="stc_area">
+                  <!-- 문장 리스트 들어옴 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /contents -->
+      </div>
+      <!-- /content -->
+
+      <!-- <button class='contentsBottomHidden' tabindex="20" arial-label="음원 자막"></button> -->
+    </div>
+    <!-- /container -->
+
+    <div class="btnArea">
+      <button type="reset" class="all_reset_btn" aria-label="다시하기"></button>
+    </div>
+
+    <!-- 카드 선택 완료 팝업 -->
+    <div class="toast-msg-container pop-card-complete">
+      <div class="toast-msgbox">
+        <div class="toast-msg">
+          <p lang="y">카드 위치를 더이상 바꿀 수 없습니다.</p>
+          <p lang="y">완료하시겠습니까?</p>
+        </div>
+        <div class="toast-select YN">
+          <button type="button" class="alert-n">아니요</button>
+          <button type="button" class="alert-y">예</button>
+        </div>
+      </div>
+    </div>
+    <!-- //카드 선택 완료 팝업 -->
+
+    <!-- 점수 초기화 팝업 -->
+    <div class="toast-msg-container pop-count-reset">
+      <div class="toast-msgbox">
+        <div class="toast-msg">
+          <p lang="y">점수를 초기화하겠습니까?</p>
+        </div>
+        <div class="toast-select YN">
+          <button type="button" class="alert-n">아니요</button>
+          <button type="button" class="alert-y">예</button>
+        </div>
+      </div>
+    </div>
+    <!-- // 점수 초기화 팝업 -->
+
+    <!-- 초기화 팝업 -->
+    <div class="toast-msg-container pop-all-reset">
+      <div class="toast-msgbox">
+        <div class="toast-msg" >
+          <p lang="y">다시 하시겠습니까?</p>
+          <p lang="y">게임이 초기화됩니다.</p>
+          </div>
+        <div class="toast-select YN">
+        <button type="button" class="alert-n" lang="y">취소</button>
+        <button type="button" class="alert-y" lang="y">확인</button>
+        </div>
+      </div>
+    </div>
+    <!-- // 초기화 팝업 -->
+
+  </div>
+  <!-- /wrapper -->
+
+  <script>
+    // 한 문장씩 듣기 데이터
+    const stcData = {
+      items: [
+        {
+          text: "How can I get to the library?",
+          audio: "../audio/EEN69/6_PT1_09_01.mp3",
+        },
+        {
+          text: "Take Bus Number 7 and get off at the library.",
+          audio: "../audio/EEN69/6_PT1_09_02.mp3",
+        },
+      ],
+    };
+
+    let grade = 3;
+    let scriptArray = [
+      "How can I get to the library? <br /> Take Bus Number 7 and get off at the library.",
+    ];
+
+    $(function() {
+      // 팝업 호출
+      function popupToggle(popupName, fnName) {
+        playAudio(adoClick);
+        $(popupName).show();
+
+        $(popupName).find(".alert-y").off("click").on("click", function () {
+          playAudio(adoClick);
+          $(popupName).hide();
+          if (fnName) fnName();
+        });
+        $(popupName).find(".alert-n").off("click").on("click", function () {
+          playAudio(adoClick);
+          $(popupName).hide();
+        });
+      }
+
+      // 선택 완료 버튼 활성화
+      $(".swapSticky").on("touchend click", function() {
+        const allChk = $(".swapSticky.item-dropped").length;
+
+        if (allChk > 0) {
+          $('.all_reset_btn').addClass("active");
+        } else {
+          $('.all_reset_btn').removeClass("active");
+        }
+
+        if (allChk === 4) {
+          $(".gbw_complete").addClass("active");
+        } else {
+          $(".gbw_complete").removeClass("active");
+        }
+      });
+
+      $(".gbw_complete").click(function() {
+        popupToggle(".pop-card-complete", startGame)
+      })
+
+      function startGame() {
+        $(".score_wrap button").addClass("active");
+        $(".gbw_complete").removeClass("active");
+        $(".dnd-item").css("pointer-events", "none");
+      }
+
+      // 점수판 기능
+      let score = 0;
+
+      function updateScore() {
+        $("#score").html(score + "점")
+      }
+      function countReset() {
+        score = 0;
+        updateScore();
+      }
+
+      $('.score_wrap .plus').click(function() {
+        score++;
+        updateScore();
+      })
+      $('.score_wrap .minus').click(function() {
+        if (score > 0) {
+          score--;
+          updateScore();
+        }
+      })
+      $('.scoreReset').click(function() {
+        popupToggle(".pop-count-reset", countReset);
+      })
+
+      // 카드 영역 처음 위치 저장
+      const resetInitPosition = {};
+      $(".dnd-item").each(function() {
+        resetInitPosition[this.id] = {
+          top: parseFloat($(this).css("top")),
+          left: parseFloat($(this).css("left")),
+        }
+      })
+
+      // 초기화 버튼 선택시
+      $('.all_reset_btn').click(function() {
+        popupToggle(".pop-all-reset", gameReset)
+      })
+
+      function gameReset() {
+        countReset();
+        $('.gbw_complete').removeClass("active");
+        $('.score_wrap button').removeClass("active");
+
+        // 처음 위치 복귀
+        initialPositions = resetInitPosition;
+        $(".dnd-item").each(function () {
+          const pos = initialPositions[this.id];
+          $(this).css(
+            { top: pos.top,
+              left: pos.left,
+              "pointer-events": "all"
+            }
+          );
+          $(this).data("dropped", null);
+          $(this).removeClass("item-dropped");
+        });
+      }
+    })
+  </script>
+</body>
+</html>

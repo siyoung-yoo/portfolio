@@ -13,7 +13,7 @@ body { scrollbar-face-color: transparent; }
 	.view-pc { display: inline-block !important; }
 }
 
-.korean { font-family: "NanumSquare"; }
+.korean { font-family: "SeoulAlrim"; }
 
 body.scroll-fix { overflow: hidden; }
 
@@ -191,33 +191,39 @@ body.scroll-fix { overflow: hidden; }
   }
 
   a {
-    position: relative;
     display: inline-block;
-    font-size: 8.5vw;
+    font-size: 8vw;
     font-weight: 700;
     color: #aaa;
     z-index: 10;
+    word-wrap: break-word;
+    text-align: center;
 
-    &::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 0.8em;
-      position: absolute;
-      right: -5%;
-      top: 0.7em;
-      background: rgba(0, 255, 181, 0.5);
-      z-index: -1;
+    span {
+      position: relative;
+      white-space: nowrap;
+      &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0.8em;
+        position: absolute;
+        right: -5%;
+        top: 0.7em;
+        background: rgba(0, 255, 181, 0.5);
+        transition: width ease-in 150ms;
+        z-index: -1;
+      }
     }
+
 
     &:hover, &:active, &:focus {
       color: #fff;
 
-      &::after {
+      span::after {
         width: 110%;
         left: -5%;
         right: inherit;
-        transition: width ease-in 150ms;
       }
     }
 

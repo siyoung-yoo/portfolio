@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<script src="../common/js/fnDndSticyAllowMulti.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>6단원 6차시</title>
+<style>
+  .text_container[data-type='left-right'] {
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .left_wrap {
+    width: 1020px;
+    position: relative;
+  }
+
+  .activity-button-wrap {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .ex-list {
+    width: 770px;
+    height: 78px;
+    padding: 8px 32px;
+    border-radius: 100px;
+    border: 1px solid #d2d2d2;
+    font-size: 24px;
+  }
+
+  .ex-list>div {
+    width: 74px;
+    height: 48px;
+    color: #fff;
+    font-weight: 700;
+    background: url('../images/EEN66_06/66_icon.png') no-repeat 100% / contain;
+  }
+
+  .ex-list ul li {
+    float: left;
+    font-weight: 700;
+    margin-left: 28px;
+  }
+
+  .audioPopup .has-ex input {
+    pointer-events: none;
+  }
+
+  /* 10단원 */
+  .drop_box {
+    width: 180px;
+    height: 60px;
+    border: 2px solid #6a6a6a;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 12px;
+    font-weight: inherit;
+  }
+
+  .drop_point {
+    position: absolute;
+    width: 180px;
+    height: 60px;
+    border: 2px solid #6a6a6a;
+    border-radius: 12px;
+    background-color: #fff;
+  }
+
+  .drop_wrap {
+    position: relative;
+  }
+
+  .dp_1 {
+    top: -130px;
+    left: -800px;
+  }
+
+  .dp_2 {
+    top: -131px;
+    left: -515px;
+  }
+
+  .dp_3 {
+    top: -17px;
+    left: -800px;
+  }
+
+  .dp_4 {
+    top: -42px;
+    left: -517px;
+  }
+
+  .dp_5 {
+    top: 65px;
+    left: -500px;
+  }
+
+  .drop-area-wrap {
+    width: 100%;
+    background: url('../images/EEN66_06/66_bg.png') no-repeat center 40px;
+    height: 412px;
+  }
+
+  .stc_area {
+    margin-left: 128px;
+    margin-right: 225px;
+  }
+
+  .stc_area .item>div.align-center {
+    gap: 0;
+  }
+
+  #dd_01 {
+    position: absolute;
+    left: 135px;
+  }
+
+  #dd_02 {
+    position: absolute;
+    left: 1268px;
+  }
+  .drag-item-wrap .dnd-item {
+    /* position: absolute !important; */
+    position: absolute;
+    width: 180px;
+    height: 60px;
+    border: 2px solid #6a6a6a;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 12px;
+    font-weight: bold;
+    background-color: #fff;
+  }
+  .drag-item-wrap #di_01 { top: 103px; left: 537px; }
+  .drag-item-wrap #di_02 { top: 103px; left: 745px; }
+  .drag-item-wrap #di_03 { top: 103px; left: 953px; }
+
+  .answer_mode .dnd-item.correct_item {
+    border-color: #3B71FE;
+    color: #3B71FE;
+  }
+
+  .answer_mode .dnd-item.incorrect_item {
+    border-color: #FF0000;
+    color: #FF0000;
+  }
+
+  .dnd-drop .name {
+    position: absolute;
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .name1 {
+    top: 5px;
+    left: 83px;
+  }
+
+  .name2 {
+    top: 5px;
+    left: 1224px;
+  }
+
+  .dnd-item span.ex {
+    display: none;
+    color: #FF0000;
+    font-weight: 700;
+    margin-top: -18px;
+  }
+
+  .answer_mode #di_03.incorrect_item span.ex {
+    display: block;
+  }
+
+  .answer_mode #di_01.incorrect_item span.ex {
+    display: block;
+  }
+
+  .answer_mode #di_01.incorrect_item+#di_02.incorrect_item .ex2 {
+    display: block;
+  }
+
+  .answer_mode #di_01.correct_item+#di_02.incorrect_item .ex1 {
+    display: block;
+  }
+
+  .answer_mode:has(#di_03.incorrect_item) #di_02.incorrect_item .ex1 {
+    display: block;
+  }
+
+  .answer_mode:has(#di_03.correct_item) #di_02.incorrect_item .ex2 {
+    display: block;
+  }
+
+  .answer_mode .dnd-item.correct_item {
+    background-color: #EEF9FF;
+  }
+
+  .answer_mode .dnd-item.incorrect_item {
+    background-color: #FF00001A;
+    color: #000;
+  }
+</style>
+</head>
+<body>
+  <div id="wrapper">
+    <header id="header">
+      <p>Review</p>
+      <p lang="y">듣기</p>
+    </header>
+    <!-- /header -->
+
+    <div id="container">
+      <div id="content" data-quiz-type="drag-and-drop">
+        <div class="q_tit">
+          <p lang="y" class="qt_label_A">
+            대화를 듣고, 알맞은 주말 계획을 <보기>에서 골라 빈칸에 넣어 봅시다.
+          </p>
+        </div>
+
+        <div id="contents">
+          <div id="dnd-container">
+            <div class="btn_wrap activity-button-wrap align-center">
+              <div class="stc_area"></div>
+              <div class="drag-item-wrap ex-list align-center">
+                <div class="justify-center align-center" lang="y">보기</div>
+                <ul class="grid-area">
+                  <li class="dnd-item" id="di_01">
+                    go on a trip
+                    <span class="ex">go swimming</span>
+                  </li>
+                  <li class="dnd-item" id="di_02">
+                    go fishing
+                    <span class="ex ex1">go swimming</span>
+                    <span class="ex ex2">go on a trip</span>
+                  </li>
+                  <li class="dnd-item" id="di_03">
+                    go swimming
+                    <span class="ex">go on a trip</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="drop-area-wrap">
+                <div class="dnd-drop" id="dd_01">
+                  <p class="name name1">Mina</p>
+                  <p class="name name2">Tom</p>
+                  <img src="../images/EEN66_06/66_drop01.png" alt="">
+                </div>
+                <div class="dnd-drop" id="dd_02">
+                  <img src="../images/EEN66_06/66_drop02.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /contents -->
+      </div>
+      <!-- /content -->
+    </div>
+
+    <div class="btnArea">
+
+      <button type="reset" class="btn_return" aria-label="다시하기">
+        <span class="ir" lang="y">다시하기</span>
+      </button>
+
+      <button type="submit" class="btn_answer" aria-label="예시 답안 확인">
+        <span class="ir" lang="y">예시 답안 확인</span>
+      </button>
+    </div>
+
+    <button class='contentsBottomHidden' tabindex="20" arial-label="음원 자막"></button>
+  </div>
+  <script>
+    // 한 문장씩 듣기 데이터
+    let stcData = {
+      items: [
+        {
+          text: '',
+          audio: '../audio/EEN66/6_6_Review_A.mp3',
+        },
+      ],
+    };
+
+    const correctMap = {
+      di_03: "dd_01",
+      di_01: "dd_02",
+    };
+
+    $(".btn_return").on("touchstart click", function () {
+      if ($("#contents").hasClass("answer_mode")) {
+        $("#contents").removeClass("answer_mode")
+      }
+    })
+
+    const dndItems = [
+      {
+        id: "di_01",
+        top: 80,
+        left: 0,
+      },
+      {
+        id: "di_02",
+        top: 80,
+        left: 0,
+      },
+      {
+        id: "di_03",
+        top: 80,
+        left: 0,
+      },
+    ]
+    fnDndSticyAllowMulti(dndItems);
+
+    // $('.btn_return').click(function () {
+    //   // $('.dnd-item').css('position', 'relative');
+    // })
+  </script>
+</body>
+</html>

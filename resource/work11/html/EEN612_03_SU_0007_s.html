@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>12단원 3차시</title>
+<style>
+  #contents {
+    background: url('../images/EEN612_03/612_board.png') no-repeat center top;
+    background-size: contain;
+    margin: 30px auto 0;
+    position: relative;
+  }
+  .q_tit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btnArea {
+    bottom: -40px;
+    right: 0;
+  }
+
+  .d_flex {
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+
+  .textareaGroup textarea {
+    width: 510px;
+    height: 116px;
+    box-sizing: border-box;
+  }
+
+  .number {
+    margin-right: 18px;
+  }
+
+  .arrow {
+    margin: 0 30px;
+  }
+
+  #contents {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btns_left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+  }
+
+  .btns_wrap button {
+    width: auto !important;
+    padding: 12px 20px;
+    font-family: 'Pretendard';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    border-radius: 12px;
+    color: #fff;
+    background-color: #3B71FE;
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .btns_wrap button.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity ease-in .3s;
+  }
+
+  .btns_wrap button.disabled {
+    color:  #9E9E9E;
+    background-color: #F2F4F7;
+    pointer-events: none !important;
+  }
+
+  .cont_inner  {width: 100%; height: 100%;}
+
+  .cont_inner .cont_wrap ul {
+    gap: 12px;
+    padding-left: 85px;
+  }
+
+  .cont_inner .cont_wrap ul li {
+    gap: 26px;
+    width: 302px;
+  }
+
+  .cont_inner .cont_wrap ul li:first-child {position: relative;}
+  .cont_inner .cont_wrap ul li:first-child::before {
+    content: "가격:";
+    position: absolute;
+    left: -85px; bottom: 8px;
+    font-size: 32px; font-weight: 600;
+    line-height: 48px;
+  }
+
+  .text_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .cont_inner .start {
+    position: absolute;
+    font-size: 64px;
+    line-height: 64px;
+    letter-spacing: -1px;
+    color: #fff;
+  }
+  .cont_inner .start.start1 {
+    top: 60px;
+    left: 1095px;
+    text-shadow: -1px 0 #1A478F, 0 1px #1A478F, 1px 0 #1A478F, 0 -1px #1A478F;
+  }
+  .cont_inner .start.start2 {
+    top: 380px;
+    left: 432px;
+    text-shadow: -1px 0 #259029, 0 1px #259029, 1px 0 #259029, 0 -1px #259029;
+  }
+  .text_container .textInputGroup {position: unset;}
+  .text_container .textInputGroup .has-ex,
+  .text_container .textInputGroup .has-ex .input {
+    min-width: 120px;
+  }
+  .text_container .textBox_EL {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px; line-height: 24px;
+    letter-spacing: -0.5px;
+    text-align: center;
+  }
+
+  .text_container .textBox_EL1 {
+    top: 40px;
+    left: 603px;
+  }
+  .text_container .textBox_EL2 {
+    top: 75px;
+    left: 770px;
+  }
+  .text_container .textBox_EL3 {
+    top: 200px;
+    left: 440px;
+  }
+  .text_container .textBox_EL4 {
+    top: 210px;
+    left: 1090px;
+  }
+  .text_container .textBox_EL5 {
+    top: 360px;
+    left: 604px;
+  }
+  .text_container .textBox_EL6 {
+    top: 390px;
+    left: 945px;
+  }
+
+  .text_container .textBox_EL4 >div:first-child {
+    margin-bottom: -10px;
+  }
+
+  .text_container .textBox_EL4 input {
+    background-color: transparent;
+  }
+  .btnArea.btnAreaLeft {
+    left: 0px;
+  }
+
+  .game_board {
+    width: 840px;
+    height: 498px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  .game_board.active {
+    opacity: 2;
+    z-index: 2;
+    transition: opacity ease-in .3s;
+  }
+
+  .piece1, .piece2 {
+    position: absolute;
+    left: 46px;
+    bottom: 97px;
+    transition: all ease-in-out .5s;
+  }
+
+  .piece1 { left: 60px;  bottom: 55px; }
+  .piece2 { left: 720px; bottom: 375px; }
+
+  [class^=piece].move0   { left: 60px;   bottom: 55px; }
+  [class^=piece].move1   { left: 239px;  bottom: 55px; }
+  [class^=piece].move2   { left: 395px;  bottom: 55px; }
+  [class^=piece].move3   { left: 555px;  bottom: 55px; }
+  [class^=piece].move4   { left: 725px;  bottom: 210px; }
+  [class^=piece].move5   { left: 555px;  bottom: 210px; }
+  [class^=piece].move6   { left: 395px;  bottom: 210px; }
+  [class^=piece].move7   { left: 239px;  bottom: 210px; }
+  [class^=piece].move8   { left: 75px;   bottom: 210px; }
+  [class^=piece].move9   { left: 75px;   bottom: 375px; }
+  [class^=piece].move10  { left: 239px;  bottom: 375px; }
+  [class^=piece].move11  { left: 395px;  bottom: 375px; }
+  [class^=piece].move12  { left: 555px;  bottom: 375px; }
+  [class^=piece].move13  { left: 720px;  bottom: 375px; }
+
+  b[class^=player] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 800px;
+    border: 2px solid #fff;
+  }
+  b.player1 { background: #ED7D31; }
+  b.player2 { background: #3B71FE; }
+
+  .action-board {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .action-board.player1 {
+    left: -370px;
+    bottom: 62px;
+  }
+  .action-board.player1 .btns_wrap {
+    text-align: right;
+  }
+  .action-board.player2 {
+    right: -370px;
+    bottom: 216px;
+  }
+
+  .answer_area.active {
+    opacity: 1;
+  }
+  .answer_area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 357px;
+    height: 150px;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 7px #A8D5C0;
+    background-color: #E8F9F3;
+    opacity: 0;
+  }
+  .answer_area p {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 700;
+  }
+  .answer_check {
+    display: flex;
+    gap: 20px;
+  }
+  .answer_check li {
+    width: 60px;
+    height: 60px;
+  }
+  .answer_check button {
+    display: none;
+    font-size: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+  }
+  .answer_area.active button {
+    display: block;
+  }
+
+  /* 팝업 디자인 */
+  .cardPopup.active { display: flex; }
+  .cardPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  .cardPopup .content {
+    background-color: #fff;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px 60px;
+  }
+  .cardPopup .content .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 32px;
+    line-height: 48px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .cardPopup .btn_area {
+    margin-top: 40px;
+    font-size: 20px;
+    justify-content: center;
+    gap: 12px;
+  }
+  .cardPopup button {
+    width: 120px;
+    height: 56px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 12px;
+  }
+  .cardPopup .game_return {
+    color:#6A6A6A;
+    border:1px solid #161515;
+  }
+  .cardPopup .game_stop {
+    background-color: #6A6A6A;
+  }
+  .winnerPopup .content {
+    width: 820px;
+    height: 216px;
+  }
+  .rpsPopup .content {
+    gap: 32px;
+    width: 495px;
+    height: 424px;
+    padding: 40px 0 32px;
+  }
+  .rpsPopup .img_area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .rpsPopup .img_area img {
+    width: 340px;
+    height: 100px;
+  }
+  .rpsPopup .btn_area {
+    margin-top: 32px;
+    padding-top: 32px;;
+    gap: 16px;
+    border-top: 1px solid #E8E8E8;
+  }
+  .rpsPopup .btn_area button {
+    width: 140px; height: 60px;
+    border-radius: 16px;
+    font-size: 20px; line-height: 32px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .rpsPopup .btn_player1 { background: #E97131; }
+  .rpsPopup .btn_player2 { background: #3B71FE; }
+
+  .textBox_EL5 .textInputGroup {
+    display: flex;
+    width: 120px;
+    gap:4px;
+  }
+  .textBox_EL5 .textInputGroup .has-ex,
+  .textBox_EL5 .textInputGroup .has-ex .input {
+    min-width: unset;
+  }
+  .textBox_EL5 .textInputGroup .has-ex .input {
+    padding: 16px 0px;
+  }
+</style>
+</head>
+<body>
+<div id="wrapper">
+  <header id="header">
+    <p lang="y">Fun Time</p>
+    <p lang="y">놀이 활동하기</p>
+  </header>
+  <!-- /header -->
+
+  <div id="container">
+    <div id="content">
+      <div class="q_tit">
+        <p lang="y">각자 문장을 완성하고, 가위바위보로 게임할 기기를 선택한 후 게임을 시작해요.</p>
+        <div class="activity-button-wrap">
+          <button type="button" class="btn-abw">활동 방법</button>
+          <button type="button" class="btn-pop stc_play">주요 표현</button>
+        </div>
+      </div>
+
+      <div id="contents">
+        <div class="btns_left">
+          <div class="btns_wrap">
+            <button type="button" class="btn_ready active" lang="y">준비 완료</button>
+          </div>
+        </div>
+
+        <div class="cont_inner">
+          <span class="start start1">출발</span>
+          <span class="start start2">출발</span>
+          <!-- S: 게임판 위 글자 인풋-->
+          <div class="text_container">
+            <!-- S: textBox_EL1 -->
+            <div class="textBox_EL textBox_EL1 flex-c">
+              <div>Don’t forget to</div>
+              <!-- S: 빈칸 -->
+              <div class="textInputGroup input2">
+                <div class="has-ex" data-input-type="dit2">
+                  <input class="input" autocomplete="off" type="text" maxlength="30" data-fn="입력" placeholder="" />
+                </div>
+              </div>
+              <!-- S: 빈칸 -->
+              <div>cans and bottles.</div>
+            </div>
+            <!-- /textBox_EL1 -->
+
+            <!-- S: textBox_EL2 -->
+            <p class="textBox_EL textBox_EL2">We should save <br/>the world.</p>
+            <!-- E: textBox_EL2 -->
+
+            <!-- S: textBox_EL3 -->
+            <div class="textBox_EL textBox_EL3 flex-c">
+              <div>We</div>
+              <!-- S: 빈칸 -->
+              <div class="textInputGroup input2">
+                <div class="has-ex" data-input-type="dit2">
+                  <input class="input" autocomplete="off" type="text" maxlength="30" data-fn="입력" placeholder="" />
+                </div>
+              </div>
+              <!-- S: 빈칸 -->
+              <div>save energy.</div>
+            </div>
+            <!-- E: textBox_EL3 -->
+
+            <!-- S: textBox_EL4 -->
+            <div class="textBox_EL textBox_EL4 flex-c">
+              <div>Don’t</div>
+              <!-- S: 빈칸 -->
+              <div class="textInputGroup input2">
+                <div class="has-ex" data-input-type="dit2">
+                  <input class="input" autocomplete="off" type="text" maxlength="30" data-fn="입력" placeholder="" />
+                </div>
+              </div>
+              <!-- S: 빈칸 -->
+              <div>to turn off the</div>
+              <div>water.</div>
+            </div>
+            <!-- E: textBox_EL4 -->
+
+            <!-- S: textBox_EL5 -->
+            <div class="textBox_EL textBox_EL5 flex-c">
+              <div>Don’t forget to</div>
+              <!-- S: 빈칸 -->
+              <div class="textInputGroup input2">
+                <div class="has-ex" data-input-type="dit2">
+                  <input class="input" autocomplete="off" type="text" maxlength="30" data-fn="입력"
+                    placeholder="" />
+                </div>
+                <div class="has-ex" data-input-type="dit2">
+                  <input class="input" autocomplete="off" type="text" maxlength="30" data-fn="입력"
+                    placeholder="" />
+                </div>
+              </div>
+              <!-- S: 빈칸 -->
+              <div>the light.</div>
+            </div>
+            <!-- E: textBox_EL5 -->
+
+            <!-- S: textBox_EL6 -->
+            <p class="textBox_EL textBox_EL6">We should <br/>save water.</p>
+            <!-- E: textBox_EL6 -->
+          </div>
+          <!-- E: 게임판 위 글자 인풋 -->
+
+          <!-- S: Game Board -->
+          <div class="game_board">
+            <div class="piece1"><b class="player1">1</b></div>
+            <div class="piece2"><b class="player2">2</b></div>
+
+            <div class="action-board player1">
+              <div class="answer_area">
+                <p>알맞은 말을 했나요?</p>
+                <ul class="answer_check">
+                  <li ><button type="button" data-answer="o"><img src="../common/images/answer_o.svg" alt="정답"></button></li>
+                  <li ><button type="button" data-answer="x"><img src="../common/images/answer_x.svg" alt="오답"></button></li>
+                </ul>
+              </div>
+              <div class="btns_wrap">
+                <button type="button" class="btn_move" lang="y">한 칸 앞으로</button>
+              </div>
+            </div>
+
+            <div class="action-board player2">
+              <div class="btns_wrap">
+                <button type="button" class="btn_move" lang="y">한 칸 앞으로</button>
+              </div>
+              <div class="answer_area">
+                <p>알맞은 말을 했나요?</p>
+                <ul class="answer_check">
+                  <li ><button type="button" data-answer="o"><img src="../common/images/answer_o.svg" alt="정답"></button></li>
+                  <li ><button type="button" data-answer="x"><img src="../common/images/answer_x.svg" alt="오답"></button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- E: Game Board -->
+        </div>
+        <!-- // .cont_inner -->
+
+        <div class="btnArea btnAreaLeft">
+          <!-- <button type="button" class="btn_draw active" aria-label="그리기">
+            <span class="ir" lang="y">그리기</span>
+          </button> -->
+        </div>
+        <div class="btnArea">
+          <button type="button" class="btn_write" aria-label="필기인식 켜짐" data-fn="필기인식">
+            <span class="ir">작성하기</span>
+            <i class="icon_write"></i>
+          </button>
+          <button type="reset" class="btn_return all_reset_btn" aria-label="다시하기">
+            <span class="ir">다시하기</span>
+          </button>
+        </div>
+
+        <!-- S: activityPopup(활동영상+방법) -->
+        <div class="activityPopup" tabindex="-1">
+          <div class="ap_inner">
+            <button class="ap_close" tabindex="0" aria-label="닫기"></button>
+            <div class="ap_cont">
+            </div>
+          </div>
+        </div>
+        <!-- E: activityPopup(활동영상+방법) -->
+      </div>
+      <!-- /contents -->
+
+      <!-- S: 오디오 팝업(주요표현) -->
+      <div class="audioPopup audio">
+        <div class="ap_inner stc">
+          <button class="ap_close" tabindex="0" aria-label="닫기"></button>
+          <div class="stc_wrap">
+            <p class="ap_title">주요 표현</p>
+            <div class="stc_area">
+              <!-- 문장 리스트 들어옴 -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 오디오 팝업(주요표현) -->
+
+      <!-- S: 가위바위보 팝업 -->
+      <div class="cardPopup rpsPopup">
+        <div class="content">
+          <div class="img_area">
+            <img src="../images/EEN612_03/612_popImg.png" alt="가위바위보 이미지">
+            <p class="title" lang="y">짝과 가위바위보를 한 후<br/>이긴 사람을 선택하세요.</p>
+          </div>
+          <div class="btn_area">
+            <button class="btn_player1">1</button>
+            <button class="btn_player2">2</button>
+          </div>
+        </div>
+      </div>
+      <!-- E: 가위바위보 팝업 -->
+
+      <!-- S: 승리 플레이어 표시 팝업 -->
+      <div class="cardPopup winnerPopup">
+        <div class="content">
+          <p class="title" lang="y">이번 게임은 <b>1</b> 의 승리입니다.</p>
+          <div class="btn_area">
+            <button type="button" class="game_return" lang="y">다시하기</button>
+            <button type="button" class="game_stop" lang="y">그만하기</button>
+          </div>
+        </div>
+      </div>
+      <!-- E: 승리 플레이어 표시 팝업 -->
+    </div>
+    <!-- /content -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /wrapper -->
+
+<!-- 초기화 팝업 -->
+<div class="toast-msg-container">
+  <div class="toast-msgbox">
+    <div class="toast-msg" >
+      <p lang="y">다시 하시겠습니까?</p>
+      <p lang="y">게임이 초기화됩니다.</p>
+      </div>
+    <div class="toast-select YN">
+    <button type="button" class="alert-n" lang="y">취소</button>
+    <button type="button" class="alert-y" lang="y">확인</button>
+    </div>
+  </div>
+</div>
+<!-- // 초기화 팝업 -->
+
+<script>
+  // 한 문장씩 듣기 데이터
+  const stcData = {
+    items: [
+    { text: "Don’t forget to recycle cans and bottles.",
+      audio: '../audio/EEN612/6_FT_12_01.mp3' },
+    { text: 'We should save the world.',
+      audio: '../audio/EEN612/6_FT_12_03.mp3' },
+    ],
+  };
+
+
+  $(document).ready(function () {
+    const tg = $(".ap_cont");
+    let videoHtml = $(".ap_cont").html();
+
+    $(".btn-abw").on("click", function () {
+      let idx = $(this).index();
+      $(".activityPopup").attr("data-type", "");
+      $(".activityPopup .ap_close").removeClass("ap_close_w");
+      tg.html("");
+
+      if (idx === 0) {
+        let el = `
+            <p class="ap_text sky_badge" lang="y">활동 방법</p>
+            <ul class="idx1 number">
+              <li lang="y">학생들은 각자 놀이판의 빈칸을 채워 문장을 완성한다.</li>
+              <li lang="y">
+                2명씩 짝을 이루고, 가위바위보로 순서를 정한다. 가위바위보에서 이긴 학생(S1)의 놀이판에서 게임을 진행하도록 안내한다.
+              </li>
+              <li lang="y">S1이 먼저 놀이판에서 출발점을 고른다.</li>
+              <li lang="y">
+                S1은 자신의 출발점에서부터 1칸씩 앞으로 손가락을 짚어 나아가며 각 칸의 내용에 맞게 의무를 나타내는 말이나 잊지 말아야 할 것을 조언하는 말을 한다.
+              </li>
+              <li lang="y">S1이 알맞은 말을 하면 해당 칸에 남을 수 있고, 그렇지 않을 경우 이전 칸으로 돌아간다.</li>
+              <li lang="y">
+                번갈아 가며 한 칸씩 나아가다 S1과 S2가 같은 칸에서 만날 경우 가위바위보를 한다. <br/>
+                가위바위보에서 이긴 학생은 그 칸에 남고 진 학생은 자신의 출발점으로 되돌아간다.
+              </li>
+              <li lang="y">게임을 계속하여, 상대방의 출발점에 먼저 도착한 학생이 이긴다.</li>
+              <li lang="y">S2의 놀이판에서 게임을 다시 시작한다.</li>
+            </ul>
+          `;
+
+        tg.append(el);
+      }
+    });
+
+    // 오른쪽 캘린더 안 숫자 생성
+    for (let i = 1; i <= 31; i++) {
+      $('.Calendar_text_num').append(`<span class="Calendar_text_num_${i}">${i}</span>`);
+    }
+    // 주요표현 버튼 클릭시 주요표현 X버튼 검정색
+    $(".btn-pop").on("click", function () {
+      $(".ap_close").removeClass("ap_close_w");
+    })
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    if (teacher) {
+      $('#wrapper').addClass('teacher');
+    }
+    // 팝업 닫기
+    $('.close_but').click(function () {
+      $('.pop_box').css('display', 'none');
+      $('.draw-tool-wrap').removeClass('show');
+    });
+  });
+</script>
+
+
+<script>
+  $(function() {
+
+    // 준비완료 버튼 보이기
+    $(".text_container input").on("input", function() {
+      let inputChk = 0;
+      $(".text_container input").each(function() {
+        if ($(this).val() == "") inputChk++
+      })
+
+      if (inputChk == 0) {
+        $(".btn_ready").addClass("active");
+      } else {
+        $(".btn_ready").removeClass("active");
+      }
+    })
+
+    // 준비완료 버튼 선택
+    $(".btn_ready").click(function() {
+      $(this).removeClass("active");
+      $(".text_container input").prop("readonly", true);
+      $(".game_board").addClass("active");
+      $(".btn_move").addClass("active");
+    })
+
+
+    let player1Num = 0;
+    let player2Num = 13;
+    let stateMoving = false;
+
+    function movePiece(plyaerNumber, moveCount) {
+      $(".piece"+plyaerNumber).attr("class", "piece"+plyaerNumber+" move"+moveCount);
+    }
+
+    function showWinner(num) {
+      setTimeout(() => {
+        $(".winnerPopup").find("b").attr("class", "player"+ num);
+        $(".winnerPopup").find("b").text(num);
+        $(".winnerPopup").addClass("active");
+      }, 700);
+    }
+
+    function gameReset() {
+      $(".btn_ready").removeClass("active")
+      $(".text_container input").removeAttr("readonly");
+      $(".game_board").removeClass("active");
+      $(".btn_move").attr("class", "btn_move");
+
+      $(".textInputGroup input").val("");
+      $(".all_reset_btn").removeClass("active");
+
+      player1Num = 0;
+      player2Num = 13;
+      movePiece("1", "0")
+      movePiece("2", "13")
+    }
+
+    // 한 칸 앞으로 버튼 선택
+    $(".btn_move").click(function () {
+      if (stateMoving) return;
+      stateMoving = true;
+
+      const $board = $(this).closest(".action-board");
+      const isPlayer1 = $board.hasClass("player1");
+      const $piece = isPlayer1 ? $(".piece1") : $(".piece2");
+
+      if (isPlayer1) {
+        player1Num++;
+        movePiece("1", player1Num)
+      } else {
+        player2Num--;
+        movePiece("2", player2Num)
+      }
+
+      $board.find(".answer_area").addClass("active");
+    });
+
+    // ox 버튼 선택
+    $(".answer_area button").click(function () {
+      const $board = $(this).closest(".action-board");
+      const isPlayer1 = $board.hasClass("player1");
+      const isWrong = $(this).data("answer") === "x";
+      const $piece = isPlayer1 ? $(".piece1") : $(".piece2");
+
+      stateMoving = false;
+      $board.find(".answer_area").removeClass("active");
+      // x 선택
+      if (isWrong) {
+        if (isPlayer1) {
+          player1Num--;
+          movePiece("1", player1Num)
+        } else {
+          player2Num++;
+          movePiece("2", player2Num)
+        }
+      }
+      // o 선택
+      else {
+        $(".all_reset_btn").addClass("active");
+        // 마지막 칸일 때 출발지점까지 한칸 더 이동하기
+        if (player1Num === 12) {
+          player1Num++;
+          movePiece("1", player1Num)
+          showWinner("1");
+        }
+        if (player2Num == 1) {
+          player2Num--;
+          movePiece("2", player2Num)
+          showWinner("2");
+        }
+      }
+
+      // 같은 칸에서 만나는 경우 가위바위보 팝업 띄우기
+      if (player1Num === player2Num && !(player1Num >= 12) && !(player2Num <= 1)) {
+        $(".rpsPopup").addClass("active");
+      }
+    });
+
+    // 가위바위보 팝업
+    $(".rpsPopup button").click(function() {
+      $(".rpsPopup").removeClass("active");
+      if ($(this).hasClass("btn_player1")) {
+        player2Num = 13;
+        movePiece("2", "13")
+      } else {
+        player1Num = 0;
+        movePiece("1", "0")
+      }
+    })
+
+    // 우승자 팝업 > 그만하기
+    $(".winnerPopup .game_stop").click(function() {
+      $(".btn_move").addClass("disabled");
+      $(".winnerPopup").removeClass("active");
+    })
+
+    // 우승자 팝업 > 다시하기
+    $(".winnerPopup .game_return").click(function() {
+      gameReset();
+      $(".text_container input").val("");
+      $(".winnerPopup").removeClass("active");
+      $(".btn_return").removeClass("active");
+    })
+
+    // 초기화 버튼 클릭시
+    $(".all_reset_btn").off().on("click", function() {
+      allResetBtnEvent(gameReset);
+    });
+
+  })
+</script>
+
+<!-- <script src="../../common_contents/assets/EEN51_01/0014/data.js"></script>
+
+
+<script src="../../common_contents/common/media/js/script.manager.js"></script>
+<script src="../../common_contents/common/media/js/script.ui.js"></script>
+<script src="../../common_contents/common/media/js/recorder.js"></script>
+<script src="../../common_contents/common/media/js/recorder.manager.js"></script>
+<script src="../../common_contents/common/media/js/timer.js"></script>
+<script src="../../common_contents/common/media/js/viewer.js"></script> -->
+</body>
+
+</html>

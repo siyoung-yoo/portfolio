@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>3단원 3차시</title>
+<style>
+  .btn-basic {
+    padding: 12px 20px;
+    background-color: #3B71FE;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    line-height: 1.6;
+    pointer-events: all;
+  }
+  .btn-basic.disabled {
+    color: #9E9E9E;
+    background-color: #F2F4F7;
+    pointer-events: none;
+  }
+
+  .btn-setting {
+    position: absolute;
+    left: -67px;
+    top: 0;
+  }
+
+  .dice_section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap:33px;
+    margin-left: 67px;
+  }
+  .dice_section .game_board {
+    position: relative;
+    width: 998px;
+  }
+  .piece1, .piece2 {
+    position: absolute;
+    left: 46px;
+    bottom: 97px;
+    z-index: 2;
+    transition: all ease-in-out .5s;
+  }
+  .piece3, .piece4 {
+    position: absolute;
+    left: 46px;
+    bottom: 34px;
+    transition: all ease-in-out .5s;
+  }
+  .piece1 { left: 46px; }
+  .piece2 { left: 114px; }
+  .piece3 { left: 46px; }
+  .piece4 { left: 114px; }
+
+  .piece1.move1  { left: 50px;  bottom: 200px }
+  .piece1.move2  { left: 150px; bottom: 345px }
+  .piece1.move3  { left: 230px; bottom: 260px }
+  .piece1.move4  { left: 230px; bottom: 100px }
+  .piece1.move5  { left: 350px; bottom: 80px }
+  .piece1.move6  { left: 400px; bottom: 170px }
+  .piece1.move7  { left: 410px; bottom: 315px }
+  .piece1.move8  { left: 550px; bottom: 330px }
+  .piece1.move9  { left: 550px; bottom: 140px }
+  .piece1.move10 { left: 670px; bottom: 200px }
+  .piece1.move11 { left: 780px; bottom: 160px }
+  .piece1.move12 { left: 750px; bottom: 310px }
+  .piece1.move13 { left: 750px; bottom: 400px }
+  .piece1.move14 { left: 650px; bottom: 480px }
+  .piece1.move15 { left: 540px; bottom: 460px }
+  .piece1.move16 { left: 420px; bottom: 475px }
+  .piece1.move17 { left: 290px; bottom: 460px }
+  .piece1.move18 { left: 100px; bottom: 460px }
+
+  .piece2.move1  { left: 110px;  bottom: 200px }
+  .piece2.move2  { left: 210px; bottom: 345px }
+  .piece2.move3  { left: 280px; bottom: 260px }
+  .piece2.move4  { left: 280px; bottom: 100px }
+  .piece2.move5  { left: 410px; bottom: 80px }
+  .piece2.move6  { left: 450px; bottom: 170px }
+  .piece2.move7  { left: 460px; bottom: 305px }
+  .piece2.move8  { left: 600px; bottom: 330px }
+  .piece2.move9  { left: 600px; bottom: 140px }
+  .piece2.move10 { left: 720px; bottom: 200px }
+  .piece2.move11 { left: 830px; bottom: 160px }
+  .piece2.move12 { left: 790px; bottom: 310px }
+  .piece2.move13 { left: 800px; bottom: 400px }
+  .piece2.move14 { left: 710px; bottom: 480px }
+  .piece2.move15 { left: 590px; bottom: 460px }
+  .piece2.move16 { left: 470px; bottom: 475px }
+  .piece2.move17 { left: 340px; bottom: 460px }
+  .piece2.move18 { left: 160px; bottom: 460px }
+
+  .piece3.move1  { left: 50px;  bottom: 260px }
+  .piece3.move2  { left: 180px; bottom: 385px }
+  .piece3.move3  { left: 320px; bottom: 290px }
+  .piece3.move4  { left: 230px; bottom: 50px }
+  .piece3.move5  { left: 470px; bottom: 80px }
+  .piece3.move6  { left: 400px; bottom: 220px }
+  .piece3.move7  { left: 450px; bottom: 355px }
+  .piece3.move8  { left: 570px; bottom: 300px }
+  .piece3.move9  { left: 560px; bottom: 190px }
+  .piece3.move10 { left: 670px; bottom: 150px }
+  .piece3.move11 { left: 780px; bottom: 200px }
+  .piece3.move12 { left: 830px; bottom: 310px }
+  .piece3.move13 { left: 800px; bottom: 440px }
+  .piece3.move14 { left: 650px; bottom: 530px }
+  .piece3.move15 { left: 540px; bottom: 420px }
+  .piece3.move16 { left: 430px; bottom: 430px }
+  .piece3.move17 { left: 310px; bottom: 415px }
+  .piece3.move18 { left: 220px; bottom: 460px }
+
+  .piece4.move1  { left: 110px;  bottom: 260px }
+  .piece4.move2  { left: 180px; bottom: 305px }
+  .piece4.move3  { left: 320px; bottom: 240px }
+  .piece4.move4  { left: 280px; bottom: 50px }
+  .piece4.move5  { left: 380px; bottom: 30px }
+  .piece4.move6  { left: 450px; bottom: 220px }
+  .piece4.move7  { left: 510px; bottom: 305px }
+  .piece4.move8  { left: 620px; bottom: 300px }
+  .piece4.move9  { left: 580px; bottom: 100px }
+  .piece4.move10 { left: 720px; bottom: 150px }
+  .piece4.move11 { left: 830px; bottom: 200px }
+  .piece4.move12 { left: 870px; bottom: 310px }
+  .piece4.move13 { left: 850px; bottom: 430px }
+  .piece4.move14 { left: 710px; bottom: 530px }
+  .piece4.move15 { left: 590px; bottom: 420px }
+  .piece4.move16 { left: 480px; bottom: 430px }
+  .piece4.move17 { left: 360px; bottom: 415px }
+  .piece4.move18 { left: 190px; bottom: 520px }
+
+  .dice_section .dice_roll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap:12px;
+  }
+
+  .dice_section .container {
+    border-radius: 10px;
+    padding:33px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 2px solid #D2D2D2;
+    width:411px;
+
+  }
+
+  .dice_section .container.cont1{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dice_section .tt{
+    font-size:20px;
+    font-weight: 700;
+    color:#1D1D1B;
+    margin-bottom:12px;
+    line-height: 32px;
+    display: block;
+    text-align: center;
+  }
+
+  .dice_section .ox_choice{
+    display: flex;
+    justify-content: center;
+    gap:20px;
+  }
+
+  .dice_section .ox_choice button {
+    position: relative;
+    background-color: #3B71FE;
+    border: 2px solid #3B71FE;
+    color: #fff;
+    border-radius:12px;
+    width: 64px;
+    height: 64px;
+    line-height: 79px;
+    text-align: center;
+  }
+  .dice_section .ox_choice button::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background-color:#fff;
+
+    -webkit-mask-size: 100% auto;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: 100% auto;
+    mask-position: center;
+    mask-repeat: no-repeat;
+  }
+  .ox_choice .btn-o::before {
+    -webkit-mask-image: url(../common/images/answer_o.svg);
+    mask-image: url(../common/images/answer_o.svg);
+  }
+  .ox_choice .btn-x::before {
+    -webkit-mask-image: url(../common/images/answer_x.svg);
+    mask-image: url(../common/images/answer_x.svg);
+  }
+  .dice_section .ox_choice button:disabled {
+    border-color: #F2F4F7;
+    background-color: #F2F4F7;
+    pointer-events: none;
+  }
+  .ox_choice button:disabled::before {
+    background-color: #9E9E9E;
+  }
+
+  .btnArea{
+    bottom:10px;
+  }
+
+  .cardPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  .cardPopup .content {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 820px;
+    height: 216px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px 60px;
+  }
+  .cardPopup .content .title {
+    font-size: 32px;
+    line-height: 48px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .cardPopup .btn_area {
+    margin-top: 40px;
+    font-size: 20px;
+    justify-content: center;
+    gap: 12px;
+  }
+  .cardPopup button {
+    width: 120px;
+    height: 56px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 12px;
+  }
+  .cardPopup button.btn_return{
+    color:#6A6A6A;
+    border:1px solid #161515;
+  }
+  .cardPopup .btn_card_reset {
+    background-color: #6A6A6A;
+  }
+  .cardPopup.active{display: block;}
+
+
+
+  b.dice1{
+    width:56px;
+    height: 56px;
+    border-radius: 800px;
+    background:#ED7D31;
+    text-align: center;
+    font-size:28px;
+    line-height:56px;
+    font-weight: 700;
+    text-align: center;
+    color:#fff;
+    display: inline-block;
+  }
+
+  b.dice2{
+    width:56px;
+    height: 56px;
+    border-radius: 800px;
+    background: #529987;
+    text-align: center;
+    font-size:28px;
+    line-height:56px;
+    font-weight: 700;
+    text-align: center;
+    color:#fff;
+    display: inline-block;
+  }
+  b.dice3{
+    width:56px;
+    height: 56px;
+    border-radius: 800px;
+    background: #00B0F0;
+    text-align: center;
+    font-size:28px;
+    line-height:56px;
+    font-weight: 700;
+    text-align: center;
+    color:#fff;
+    display: inline-block;
+  }
+  b.dice4{
+    width:56px;
+    height: 56px;
+    border-radius: 800px;
+    background: #D86ECC;
+    text-align: center;
+    font-size:28px;
+    line-height:56px;
+    font-weight: 700;
+    text-align: center;
+    color:#fff;
+    display: inline-block;
+  }
+
+  #dice { margin-bottom: 6px; }
+
+  .dice_img {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .dice_img img {
+    width: 150px;
+    height: auto;
+    margin-top: -27px;
+  }
+
+  .dice_pop {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #fff;
+    z-index: -1;
+  }
+
+  .dice_pop img { margin-top: 8px; }
+  .dice_pop .pop_close {
+    width: 40px;
+    height: 40px;
+    background: url(../common/images/icon_close_b.svg) 50% 50% / 24px 24px no-repeat;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+  .dice_pop .pop_close:hover {
+    box-shadow: none !important;
+  }
+  .dice_pop.active {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity ease-in 150ms;
+  }
+
+  .dice_txt{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap:14px;
+  }
+
+  .dice_txt > p{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap:12px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+  }
+
+  .activity-button-wrap .btn-abw, .activity-button-wrap .btn-pop{
+    width: 112px;
+    height: 56px;
+  }
+
+  .ap_cont ul.number li p{
+    font-weight: 700;
+  }
+
+  .input_wrap{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .input_text{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    background-color: #fff;
+    border: 2px dashed #5D67A6;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .input_text.input1 {
+    top: 360px;
+    left: 268px;
+    border-color: #F7890C;
+  }
+  .input_text.input2 {
+    top: 251px;
+    left: 551px;
+    border-color: #F7890C;
+  }
+  .input_text.input3 {
+    top: 267px;
+    left: 779px;
+  }
+  .input_text.input4 {
+    top: 8px;
+    left: 552px;
+  }
+  .input_text input[type='number']{
+    font-size: 16px;
+    width: 37px;
+    min-width: 37px;
+    height: 33px;
+    line-height: 33px;
+    padding: 0;
+    border: none;
+  }
+  input[type="number"]::placeholder {
+    content: "";
+    width: 20px;
+    height: 20px;
+    padding: -6px -3px;
+    background: url("../../common_contents/common/images/icon/icon_keyboard.png") no-repeat;
+    background-size: contain;
+    transform: translateX(5px) translateY(10px);
+    position: absolute;
+  }
+
+  p[class^='con-txt']{
+    position: absolute;
+    font-size: 16px;
+  }
+  p[class^='con-txt'].con-txt1{ top: 390px; left: 150px; color: #fff; font-size: 20px; font-weight: 700;}
+  p[class^='con-txt'].con-txt2{ top: 35px; left: 200px; color: #fff; font-size: 20px; font-weight: 700;}
+  .con-txt3{ top: 279px; left: 155px; }
+  .con-txt4{ top: 189px; left: 259px; }
+  .con-txt5{ top: 315px; left: 291px; }
+  .con-txt6{ top: 403px; left: 395px; }
+  .con-txt7{ top: 274px; left: 442px; }
+  .con-txt8{ top: 170px; left: 508px; }
+  .con-txt9{ top: 337px; left: 623px; }
+  .con-txt10{ top: 404px; left: 708px; }
+  .con-txt11{ top: 170px; left: 829px; }
+  .con-txt12{ top: 40px; left: 809px; }
+  .con-txt13{ top: 75px; left: 685px; }
+  .con-txt14{ top: 14px; left: 463px; }
+  .con-txt15{ top: 29px; left: 338px; }
+</style>
+</head>
+<body>
+  <div id="wrapper">
+    <header id="header">
+      <p>Play Time 2</p>
+      <p lang="y">놀이 활동하기</p>
+    </header>
+    <!-- /header -->
+
+    <div id="container">
+      <div id="content" class="tab_yes" data-quiz-type="select-text-submit">
+        <div class="q_tit flex-between">
+          <p lang="y">가위바위보로 모둠원 간 순서를 정하고 생일을 적은 후, 게임을 시작해요.</p>
+          <div class="activity-button-wrap">
+            <button type="button" class="btn-abw" lang="y" tabindex="0">활동 방법</button>
+            <button type="button" class="btn-pop stc_play" lang="y" tabindex="0">주요 표현</button>
+          </div>
+        </div>
+        
+        <form data-load="폼">
+          <div id="contents">
+            <div class="dice_section">
+              <button type="button" class="btn-basic btn-setting" lang="y" tabindex="0">준비 완료</button>
+              <div class="game_board">
+                <img src="../images/EEN63_02/63_bg.png" alt="">
+                <div class="piece1"><b class="dice1">1</b></div>
+                <div class="piece2"><b class="dice2">2</b></div>
+                <div class="piece3"><b class="dice3">3</b></div>
+                <div class="piece4"><b class="dice4">4</b></div>
+
+                <div class="input_wrap">
+                  <ul>
+                    <li><div aria-label="출발!"><p class="con-txt1">출발!</p></div></li>
+                    <li><div aria-label="1월26일"><p class="con-txt3">1/26</p></div></li>
+                    <li><div aria-label="4월21일"><p class="con-txt4">4/21</p></div></li>
+                    <li><div aria-label="9월30일"><p class="con-txt5">9/30</p></div></li>
+                    <li>
+                      <div class="input_text input1">
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="월 입력" data-fn="입력"/>
+                        <p>/</p>
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="일 입력" data-fn="입력"/>
+                      </div>
+                    </li>
+                    <li><div aria-label="3월25일"><p class="con-txt6">3/25</p></div></li>
+                    <li><div aria-label="7월13일"><p class="con-txt7">7/13</p></div></li>
+                    <li><div aria-label="8월2일"><p class="con-txt8">8/2</p></div></li>
+                    <li>
+                      <div class="input_text input2">
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="월 입력" data-fn="입력"/>
+                        <p>/</p>
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="일 입력" data-fn="입력"/>
+                      </div>
+                    </li>
+                    <li><div aria-label="5월8일"><p class="con-txt9">5/8</p></div></li>
+                    <li><div aria-label="10월1일"><p class="con-txt10">10/1</p></div></li>
+                    <li>
+                      <div class="input_text input3">
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="월 입력" data-fn="입력"/>
+                        <p>/</p>
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="일 입력" data-fn="입력"/>
+                      </div>
+                    </li>
+                    <li><div aria-label="5월5일"><p class="con-txt11">5/5</p></div></li>
+                    <li><div aria-label="6월27일"><p class="con-txt12">6/27</p></div></li>
+                    <li><div aria-label="12월31일"><p class="con-txt13">12/31</p></div></li>
+                    <li>
+                      <div class="input_text input4">
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="월 입력" data-fn="입력"/>
+                        <p>/</p>
+                        <input class="input" tabindex="0" placeholder="" autocomplete="off" type="number" maxlength="2" title="일 입력" data-fn="입력"/>
+                      </div>
+                    </li>
+                    <li><div aria-label="4월3일"><p class="con-txt14">4/3</p></div></li>
+                    <li><div aria-label="11월4일"><p class="con-txt15">11/4</p></div></li>
+                    <li><div aria-label="도착!"><p class="con-txt2">도착!</p></div></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="dice_roll">
+                <div class="container cont1">
+                  <div class="dice_img">
+                    <div class="dice" id="dice">
+                      <img src="../common/images/dice/dice_.png" alt="주사위">
+                    </div>
+                    <button type="button" class="btn-basic dice_btn disabled" lang="y" tabindex="0">주사위 굴리기</button>
+                  </div>
+                  <div class="dice_txt">
+                    <p>
+                      <img src="../images/EEN63_02/63_dice_sample1.png" alt="1,3,5 주사위">
+                      <strong lang="y">한 칸 앞으로!</strong>
+                    </p>
+                    <p>
+                      <img src="../images/EEN63_02/63_dice_sample2.png" alt="2,4,6 주사위">
+                      <strong lang="y">두 칸 앞으로!</strong>
+                    </p>
+                  </div>
+
+                  <div class="dice_pop">
+                    <button type="button" class="pop_close" tabindex="0"></button>
+                    <img src="../common/images/dice/dice_pop1.svg" alt="주사위 결과값">
+                  </div>
+                </div>
+
+                <div class="container">
+                  <strong class="tt" lang="y">질문과 대답을 바르게 했나요?</strong>
+                  <div class="ox_choice">
+                    <button type="button" tabindex="0" class="btn-o" disabled>
+                      <span class="ir">O</span>
+                    </button>
+                    <button type="button" tabindex="0" class="btn-x" disabled>
+                      <span class="ir">X</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 우승자 팝업 -->
+            <div class="cardPopup">
+              <div class="content">
+                <p class="title" lang="y">
+                  이번 게임은 <b lang="y"></b> 의 승리입니다.
+                </p>
+                <div class="btn_area">
+                  <button type="button" class="btn_return" lang="y" tabindex="0">다시 하기</button>
+                  <button type="button" class="btn_card_reset" lang="y" tabindex="0">그만하기</button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="activityPopup" tabindex="-1">
+              <div class="ap_inner">
+                <button type="button" class="ap_close" tabindex="0" aria-label="닫기"></button>
+                <div class="ap_cont">
+                  <p class="ap_text sky_badge" lang="y">활동 방법</p>
+                  <ul class="idx1 number">
+                    <li lang="y">4명이 한 모둠을 이루고, 가위바위보로 순서를 정한다.</li>
+                    <li lang="y">첫 번째 학생(S1)부터 차례대로 생일 케이크가 그려진 칸을 하나씩 골라 자신의 생일을 적는다. 생일을 모두 적은 뒤, 모든 말을 출발 칸에 두고 게임을 시작한다.</li>
+                    <li lang="y">S1이 주사위를 굴리고, 주사위에서 나온 숫자가 홀수면 1칸, 짝수이면 2칸 말을 이동한다.</li>
+                    <li>
+                      <div>
+                        <p lang="y">모둠 친구들은 S1이 도착한 칸에 그려진 그림을 보고 행사의 날짜를 묻고, S1은 도착한 칸에 쓰여진 날짜를 이용해 답한다.</p>
+                        <p>
+                          Ss: When is the talent show?</p>
+                        <p>
+                          S1: It’s on January 26th.
+                        </p>
+                      </div>
+                      </li>
+                    <li lang="y">알맞은 대화를 나누었다면 말을 그 자리에 두고, 그렇지 않을 경우 이전 칸으로 되돌린다.</li>
+                    <li lang="y">이동한 칸에 먼저 도착한 말이 있는 경우, 나중에 도착한 학생은 날짜를 답한 뒤 “I can’t wait.”를 이어 말해야 한다. 이를 말하지 못할 경우, 말을 이전 칸으로 되돌린다.</li>
+                    <li lang="y">게임을 계속하여 도착 칸에 먼저 도달한 학생이 이긴다.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- /activityPopup -->
+            <!-- 오디오 팝업 -->
+            <div class="audioPopup audio">
+              <div class="ap_inner stc">
+                <button type="button" class="ap_close" tabindex="0" aria-label="닫기"></button>
+                <div class="stc_wrap">
+                  <p class="ap_title" lang="y">주요 표현</p>
+                  <div class="stc_area">
+                    <!-- 문장 리스트 들어옴 -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /contents -->
+          </div>
+        </form>
+        <!-- /character-wrap -->
+      </div>
+      <!-- /content -->
+    </div>
+
+    <div class="btnArea">
+      <button type="button" class="btn_write" aria-label="필기인식 켜짐" data-fn="필기인식" tabindex="0">
+        <span class="ir" lang="y">작성하기</span>
+        <i class="icon_write"></i>
+      </button>
+
+      <button id="reset" type="reset" class="btn_return all_reset_btn" aria-label="다시하기" tabindex="0">
+        <span class="ir" lang="y">다시하기</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 초기화 팝업 -->
+  <div class="toast-msg-container">
+    <div class="toast-msgbox">
+      <div class="toast-msg" >
+        <p lang="y">다시 하시겠습니까?</p>
+        <p lang="y">게임이 초기화됩니다.</p>
+        </div>
+      <div class="toast-select YN">
+      <button type="button" class="alert-n" lang="y" tabindex="0">취소</button>
+      <button type="button" class="alert-y" lang="y" tabindex="0">확인</button>
+      </div>
+    </div>
+  </div>
+  <!-- // 초기화 팝업 -->
+
+  <script>
+    // 한 문장씩 듣기 데이터
+    const stcData = {
+      items: [
+        { text: 'When is the talent show?', audio: '../audio/EEN63/6_PT2_03_01.mp3' },
+        { text: "It’s on January 26th.", audio: '../audio/EEN63/6_PT2_03_02.mp3' },
+        { text: "I can’t wait.", audio: '../audio/EEN63/6_PT2_03_03.mp3' }
+      ],
+    };
+    let cidx = 0;
+    let scriptClick = 0;
+
+    $(document).ready(function () {
+      $('.textInputGroup input').attr('disabled', '');
+      $(".btn-abw").on("click", function () {
+        $('.activityPopup').attr('data-type', '');
+        $('.activityPopup .ap_close').removeClass('ap_close_w');
+        $(".ap_close").removeClass("ap_close_w");
+      });
+    });
+  </script>
+
+
+  <script>
+  $(function() {
+
+    // 준비완료 버튼 활성화
+    $(".input_wrap input").on("input", function() {
+      let inputChk = 0;
+      $(".input_wrap input").each(function() {
+        if ($(this).val() == "") inputChk++
+      })
+
+      if (inputChk == 0) {
+        $(".btn-setting").removeClass("disabled");
+      } else {
+        $(".btn-setting").addClass("disabled");
+      }
+    })
+
+    $(".btn-setting").click(function() {
+      if ( !$(this).hasClass("disabled") ) {
+        $(".dice_btn").removeClass("disabled");
+        $(this).addClass("disabled");
+        $(".input_wrap input").prop("readonly", true)
+      }
+    })
+
+    // 움직였던 위치에서 한칸만 뒤로 이동
+    // function moveDecrease(num) {
+    //   let idx = num - 1;
+    //   let count = moveCounts[idx];
+
+    //   if (count === 5) count = 9;
+    //   else if (count === 7) count = 2;
+    //   else if (count === 10) count = 13;
+    //   else if (count === 14 && roll%2 === 1) count = 8;
+    //   else count--;
+
+    //   moveCounts[idx] = count;
+    //   movePiece(num, count);
+    // }
+
+    let orderChk = 0;
+    let moveCounts = [0, 0, 0, 0];
+    let prevPosition = [0, 0, 0, 0];
+    let roll = 0;
+
+    const dicSrc = "../common/images/dice/dice_0";
+    const imgSrc = "../common/images/dice/dice_pop";
+
+    function movePiece(plyaerNumber, moveCount) {
+      if (moveCount) {
+        $(".piece"+plyaerNumber).attr("class", "piece"+plyaerNumber+" move"+moveCount);
+      } else {
+        $(".piece"+plyaerNumber).attr("class", "piece"+plyaerNumber);
+      }
+    }
+
+    function moveIncrece(num) {
+      let idx = num - 1;
+      let count = moveCounts[idx];
+      
+      count = Math.min(count + 1, 17); // 최대 17까지만
+      moveCounts[idx] = count;
+      movePiece(num, count);
+    }
+
+    function moveShortcut(playerNum) {
+      let idx = playerNum - 1;
+      if (moveCounts[idx] === 2) {
+        moveCounts[idx] = moveCounts[idx] + 5;
+        movePiece(playerNum, moveCounts[idx]);
+      } else if (moveCounts[idx] === 8) {
+        moveCounts[idx] = moveCounts[idx] + 6;
+        movePiece(playerNum, moveCounts[idx]);
+      } else if (moveCounts[idx] === 9) {
+        moveCounts[idx] = moveCounts[idx] - 4;
+        movePiece(playerNum, moveCounts[idx]);
+      } else if (moveCounts[idx] === 13) {
+        moveCounts[idx] = moveCounts[idx] - 3;
+      }
+    }
+
+    $(".dice_btn").click(function() {
+      roll = Math.floor(Math.random() * 6) + 1;
+      orderChk++;
+
+      const currentPlayer = orderChk % 4 === 0 ? 4 : orderChk % 4;
+      const idx = currentPlayer - 1;
+      prevPosition[idx] = moveCounts[idx]; // 현재 위치 기억
+
+      $("#dice img").attr("src", dicSrc + roll + ".gif");
+      $(".ox_choice button").prop("disabled", true);
+      $(".dice_btn").addClass("disabled");
+      $(".dice_pop img").attr("src", imgSrc + roll + ".svg");
+      $(".all_reset_btn").addClass("active");
+
+      setTimeout(() => {
+        $(".dice_pop").addClass('active');
+        $(".ox_choice button").removeAttr("disabled");
+
+        moveIncrece(currentPlayer);
+
+        // 주사위 짝수면 한 칸 더 이동
+        setTimeout(() => {
+          if (roll % 2 === 0) {
+            let idx = currentPlayer - 1;
+            moveCounts[idx] = Math.min(moveCounts[idx] + 1, 17); // 최대 17까지만
+            movePiece(currentPlayer, moveCounts[idx]);
+          }
+        }, 500);
+      }, 500);
+    })
+
+    $(".ox_choice button").click(function () {
+      const currentPlayer = orderChk % 4 === 0 ? 4 : orderChk % 4;
+      const isEnd = moveCounts[currentPlayer - 1] === 17 && $(this).hasClass("btn-o");
+
+      if ($(this).hasClass("btn-x")) {
+        // x선택시 원래 있던 위치로 위동
+        moveCounts[currentPlayer - 1] = prevPosition[currentPlayer - 1];
+        movePiece(currentPlayer, prevPosition[currentPlayer - 1]);
+      } else {
+        // o선택시 지름길로 위치 이동
+        moveShortcut(currentPlayer)
+      }
+
+      $(".dice_pop").removeClass("active");
+      $(".ox_choice button").prop("disabled", true);
+      $(".dice_btn").removeClass("disabled");
+
+      // 마지막칸 성공시 도착칸으로 이동 후 승리팝업 노출
+      if (isEnd) {
+        $(".dice_btn").addClass("disabled");
+        movePiece(currentPlayer,18);
+        setTimeout(function() {
+          $(".cardPopup").find("b").removeAttr("class");
+          $(".cardPopup").find("b").addClass("dice" + currentPlayer);
+          $(".cardPopup").find("b").text(currentPlayer);
+          $(".cardPopup").show();
+        }, 800)
+      }
+    });
+
+    // 주사위 팝업 닫기
+    $(".dice_pop .pop_close").click(function() {
+      $(".dice_pop").removeClass("active");
+    })
+
+    // 우승자 팝업 내 버튼 클릭
+    $(".cardPopup .btn_return").click(function() {
+      gameReset();
+      $(".cardPopup").hide();
+    });
+    $(".cardPopup .btn_card_reset").click(function() {
+      $(".cardPopup").hide();
+    });
+
+    // 초기화 버튼 클릭시
+    $(".all_reset_btn").off().on("click", function() {
+      allResetBtnEvent(gameReset);
+    });
+
+    function gameReset() {
+      orderChk = 0;
+      moveCounts = [0, 0, 0, 0];
+
+      movePiece("1");
+      movePiece("2");
+      movePiece("3");
+      movePiece("4");
+
+      $(".btn-setting").addClass("disabled");
+      $(".dice_btn").addClass("disabled");
+      $(".dice_pop").removeClass("active");
+      $(".input_wrap input").val("");
+      $(".input_wrap input").removeAttr("readonly");
+      $(".all_reset_btn").removeClass("active");
+    }
+  })
+  </script>
+</body>
+</html>

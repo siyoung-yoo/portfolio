@@ -86,7 +86,7 @@
 // WIDTH
 $width: 100;
 @while $width>0 {
-	.w#{$width} { width: #{$width} !important; }
+	.w#{$width} { width: #{ $width + "%" } !important; }
 	$width: $width - 5;
 }
 

@@ -1,0 +1,1307 @@
+/* 공통 */
+:root {
+  --color-primary: #ec6d1e;
+  /* primary */
+  --color-point: #2d73e3;
+  --color-point-hover: #2662c1;
+  --color-bg-point: #e9f1ff;
+
+  --color-purple: #8a14ff;
+  --color-bg-purple: #ecd8ff;
+}
+
+[class*='s24'] {
+  font-size: 1.5rem;
+}
+
+[class*='s26'] {
+  font-size: 1.625rem;
+}
+
+[class*='cPrimary'] {
+  color: var(--color-primary);
+}
+
+[class*='cPoint'] {
+  color: var(--color-point);
+}
+
+[class*='cWhite'] {
+  color: #fff;
+}
+
+[class*='cBlack'] {
+  color: #171717;
+}
+
+[class^='tit_'] {
+  font-family: 'Lexend';
+  font-weight: 600;
+}
+
+button,
+a,
+svg,
+#thickness input,
+#color input,
+.line_wrap,
+p.eng,
+.drawArea .drawTool input[type='radio'] {
+  /* cursor: url(../images/icon/icon_cursor.svg), auto !important; */
+}
+
+p.kor.on {
+  /* cursor: url(../images/icon/icon_cursor.svg), auto; */
+}
+
+*:focus-visible {
+  outline-offset: 1px;
+  /* outline: 3px solid #ff5618; */
+}
+
+button:focus:not(:focus-visible) {
+  /* border: 0; */
+}
+
+html,
+body,
+#cloned-body {
+  /* font-family: "Lexend", "NotoSansKR";
+  font-weight: 500; */
+}
+
+body {
+  overflow-x: hidden;
+  /* overflow-y: hidden; */
+  /* max-height: none; */
+}
+
+label.blind {
+  display: none;
+}
+
+/* 대체 택스트(숨김 택스트) */
+.ir {
+  position: absolute;
+  visibility: hidden;
+  text-indent: -9999em;
+}
+
+[class*='FB'] {
+  font-weight: 700;
+}
+
+[class*='FS'] {
+  font-weight: 500;
+}
+
+/* 헤더 */
+/* header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-width: calc(1715px - 60px);
+  height: 70px;
+  margin: 0 30px;
+  border-bottom: 1px solid #171717;
+}
+
+header p + p[class^="tit_"] {
+  position: relative;
+  margin-left: 50px;
+  font-weight: 500;
+  font-family: "NotoSansKR";
+}
+
+.inp_txtArea_focus {
+  position: relative;
+  width: 100%;
+  height: 74px;
+  padding: 5px 5px 5px 10px;
+  background-color: #FFF;
+  border: 3px solid var(--color-point);
+  border-radius: 10px;
+}
+
+.inp_txtArea_focus textarea {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  font-size: 36px;
+  font-weight: 500;
+  word-break: keep-all;
+  resize: none;
+  color: #141414;
+}
+
+.inp_txtArea_focus textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.inp_txtArea_focus textarea:focus::placeholder {
+  background: var(--color-bg-point);
+}
+
+header p + p:before {
+  position: absolute;
+  top: 50%;
+  left: -25px;
+  margin-top: -8px;
+  background: #171717;
+  width: 1px;
+  height: 20px;
+  content: "";
+} */
+
+/* 드래그 앤 드롭 */
+.drag_wrap {
+  display: inline-flex;
+  position: relative;
+  margin-left: -120px;
+}
+
+/* 학습완료 */
+.ty_complete {
+  position: absolute;
+  top: -55px;
+  z-index: 3;
+  left: 1515px;
+}
+
+.ty_complete .icon_complete {
+  display: block;
+  width: 158px;
+  height: 158px;
+  background: url(../images/icon/icon_complete2.svg) no-repeat;
+  background-size: 100% auto;
+  background-position: 15px;
+  text-indent: -9999px;
+  opacity: 0.5;
+  position: relative;
+}
+
+/* 스토리타임 */
+#contents.rolePlay {
+  padding: 0px 30px 34px; /* 7/18 수정 */
+}
+
+#contents.rolePlay .tabBtn {
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  top: 91px;
+  left: 50px;
+}
+
+#contents.rolePlay .tabBtn li {
+  display: flex;
+  min-width: 145px;
+  height: 59px;
+  padding: 9px 25px;
+  margin-left: 10px;
+  border-radius: 20px 20px 0px 0px;
+  background: #808080;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  color: #fff;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  /* cursor: url(../images/icon/icon_cursor.svg), auto; */
+}
+
+#contents.rolePlay .tabBtn li a {
+  color: #fff;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+#contents.rolePlay .tabBtn li.on {
+  background: #8a14ff;
+}
+
+#contents.rolePlay .tabBtn li.page-5.on {
+  background: #ee5101;
+}
+
+#contents.rolePlay .tabBtn li.myrole.on {
+  background: #ee5101;
+}
+
+#contents.rolePlay .tab_wrap {
+  width: 1655px;
+  height: 506px;
+  border-radius: 25px;
+  border: 5px solid #8d89be;
+  background: #fff;
+  margin-top: 85px;
+}
+
+#contents.rolePlay .tab_wrap .tab_content {
+  padding: 20px 25px;
+  height: 100%;
+}
+
+#contents.rolePlay .roleSceneArea {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-align: left;
+}
+
+#contents.rolePlay .roleSceneArea .scriptHeader {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#contents.rolePlay .roleSceneArea .scriptContent {
+  /* margin-top: 50px */
+  margin-top: 70px;
+}
+
+#contents.rolePlay .roleSceneArea .scriptContent.on .scriptChar {
+  padding-left: 85px;
+}
+
+#contents.rolePlay .roleSceneArea .scriptChar {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+#contents.rolePlay .roleSceneArea .role_wrap + .role_wrap {
+  margin-top: 17px;
+}
+
+#contents.rolePlay .roleSceneArea .scriptChar img {
+  border-radius: 100%;
+  border: 5px solid #2d73e3;
+  width: 84px;
+  height: 84px;
+}
+
+#contents.rolePlay .roleSceneArea .baloon {
+  display: inline-block;
+  width: auto;
+}
+
+#contents.rolePlay .roleSceneArea .baloon p {
+  display: inline-block;
+}
+
+#contents.rolePlay .roleSceneArea .baloon p.eng {
+  display: inline-block;
+  width: auto;
+  border-radius: 20px;
+  background: #e9f1ff;
+  color: #171717;
+  text-align: center;
+  font-family: 'Lexend';
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.7px;
+  padding: 5px 20px 7px;
+  margin: 0px 20px 0px 30px;
+  position: relative;
+}
+
+#contents.rolePlay .roleSceneArea .baloon p.eng::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 25px solid #e9f1ff;
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+}
+
+#contents.rolePlay .roleSceneArea .scriptChar.on p.eng,
+#contents.rolePlay .roleSceneArea .scriptChar p.eng.on,
+#contents.rolePlay .roleSceneArea .scriptChar p.eng:hover,
+#contents.rolePlay .roleSceneArea .scriptChar:focus p.eng {
+  color: #8a14ff;
+}
+
+#contents.rolePlay .roleSceneArea .scriptChar.recorded p.eng {
+  color: #8a14ff;
+}
+
+#contents.rolePlay .roleSceneArea .baloon p.kor {
+  color: #2d73e3;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 70px;
+  vertical-align: text-top;
+}
+
+#contents.rolePlay .charTab {
+  display: none;
+  position: absolute;
+  top: 31px;
+  right: 50px;
+  z-index: 99;
+}
+
+#contents.rolePlay .charTab.on {
+  display: flex;
+}
+
+#contents.rolePlay .charTab li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px 0px;
+  margin-left: 10px;
+  border-radius: 100px 100px 0px 0px;
+  background: #d9d9d9;
+  width: 140px;
+  height: 115px;
+}
+
+#contents.rolePlay .charTab li a {
+  display: block;
+  width: 100%;
+  color: #141414;
+  text-align: center;
+  padding-top: 73px;
+  position: relative;
+  cursor: default;
+}
+
+#contents.rolePlay .charTab li a span {
+  color: #141414;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+#contents.rolePlay .charTab li.on {
+  background: #a346ff;
+  filter: grayscale(0%);
+}
+
+#contents.rolePlay .charTab li.on span {
+  color: #fff;
+}
+
+#contents.rolePlay .charTab li a:before {
+  content: '';
+  display: block;
+  background-size: 100%;
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+}
+
+.myRoleBox {
+  position: relative;
+}
+
+.myRoleBox .guide_text {
+  align-self: flex-start;
+  width: auto;
+  padding-top: 0;
+  margin: 6px 0 0 7px;
+}
+
+.tab_content:not(.myRoleBox) .guide_text {
+  position: absolute;
+  margin: 6px 0 0 7px;
+}
+
+.tab_content:not(.myRoleBox) .guide_text > p {
+  font-weight: 500;
+  line-height: 30px;
+}
+
+/* 7/2 검수반영 */
+.myRoleBox .guide_text > p {
+  height: 38px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 34px;
+  color: #ffffff;
+}
+
+.myRoleBox .record {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 50px;
+  height: 100%;
+}
+
+.myRoleBox .record .box {
+  width: 200px;
+}
+.myRoleBox .record .box + .box {
+  margin-left: 150px;
+}
+
+.myRoleBox .record {
+  display: flex;
+}
+
+.myRoleBox .record .box p {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 8px solid #2d73e3;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.myRoleBox .record .box span {
+  display: block;
+  margin-top: 25px;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #141414;
+}
+
+.myRoleBox .record .box img {
+  vertical-align: middle;
+}
+
+.myRoleBox .record .box p::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+}
+
+.myRoleBox .record .box p:hover {
+  border: 8px solid #8a14ff;
+}
+
+.myRoleBox .record .box p:hover::before {
+  background: rgba(233, 213, 255, 0.5) url('../images/icon/icon_role_sel_off.svg') 50% 50% no-repeat;
+}
+
+.myRoleBox .record .box.sel p {
+  border: none;
+}
+
+.myRoleBox .record .box.sel p::before {
+  background: #8a14ff url('../images/icon/icon_role_sel_on.svg') 50% 50% no-repeat;
+}
+
+/* #tab_content5 {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center !important;
+	align-items: center;
+} */
+
+#tab_content5 .active-title {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+#tab_content5 .active-title img {
+  position: relative;
+  z-index: 1;
+}
+
+#tab_content5 .active-title .p-box {
+  position: relative;
+  top: 5px;
+  left: -20px;
+  height: 42px;
+  padding: 0 30px;
+  border-radius: 19px;
+  background: var(--color-blue, #2d73e3);
+}
+
+#tab_content5 .active-title .p-box p {
+  color: var(--white, #fff);
+  font-family: 'NotoSansKR';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+#tab_content5 .default-box {
+  color: #808080;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+#tab_content5 .card-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+}
+
+#tab_content5 .card-area .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 460px;
+  height: 330px;
+  flex-shrink: 0;
+  background: #e9f1ff;
+  border: 4px solid #2d73e3;
+  border-radius: 15px;
+  filter: drop-shadow(0px 7px 0px #d5e3f9);
+}
+
+.box {
+  /* cursor: url(../images/icon/icon_cursor.svg), auto; */
+}
+
+#tab_content5 .card-area .box p {
+  color: #171717;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+#tab_content5 .card-area .box small {
+  color: var(--color-blue, #2d73e3);
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.recordScript {
+  position: absolute;
+  top: 10px;
+  left: 2px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.recordScript.off {
+  background-color: #909090;
+  box-shadow: 0px 4px #dce0e7;
+}
+
+.recordScript.playing,
+.recordScript.off:hover {
+  background-color: #ff4444;
+  box-shadow: 0px 4px #f0ccc4;
+}
+
+.recordScript.listen {
+  background-color: #0093ff;
+  box-shadow: 0px 4px #d5e3f9;
+}
+
+.recordScript.listen:hover {
+  background-color: #8a14ff;
+  box-shadow: 0px 4px #e8d0ff;
+}
+
+.recordScript > i[class*='icon_'] {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+}
+
+.recordScript.off > i,
+.recordScript .icon_record {
+  background-image: url(../images/icon/icon_record_default.svg);
+}
+
+.recordScript.playing > i,
+.recordScript .icon_playing {
+  background-image: url(../images/icon/icon_record_recording.svg);
+  background-position: center 4px;
+  background-size: 35px auto;
+  -webkit-animation: pulsate-bck 0.5s ease-in-out infinite both;
+  animation: pulsate-bck 0.5s ease-in-out infinite both;
+}
+
+.recordScript.listen > i,
+.recordScript .icon_listen {
+  background-image: url(../images/icon/icon_record_play.svg);
+  background-position: 1px 1px;
+}
+
+#contents.rolePlay .roleSceneArea .scriptChar:has(.playing) .baloon p.eng,
+#contents.rolePlay .roleSceneArea .baloon.color_red p.eng {
+  color: #ff0000;
+}
+
+.scriptReturn {
+  position: absolute;
+  right: 30px;
+  bottom: 0px;
+}
+
+.scriptReturn .btnArea .btn_return {
+  right: 0;
+}
+
+.scriptReturn .btnArea .btn_return.show {
+  display: block;
+}
+
+@keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+/*storytime 주요 표현*/
+/* 7/3 영어 공통변경사항 반영*/
+#contents.expression {
+  padding: 25px 80px 45px; /* 7/18 수정 */
+}
+
+.expList > div {
+  /* width: 50%; */
+  width: calc(50% - 80px);
+  text-align: left;
+}
+
+.m_exp {
+  /* padding: 5px 0px 5px 55px; */
+  padding-left: 55px;
+  position: relative;
+}
+
+/* 7/3 영어 공통변경사항 반영 */
+/* .expList .m_exp+.m_exp {
+	margin-top: 20px
+} */
+
+/*storytime 주요 표현*/
+/* 7/3 영어 공통변경사항 반영*/
+/* #contents.expression {
+	padding: 40px 80px 45px
+}
+
+.expList>div {
+	width: 50%;
+	text-align: left
+}
+
+.m_exp {
+	padding: 10px 0px 20px 55px;
+	position: relative
+} */
+/* 7/3 영어 공통변경사항 반영*/
+/* .expList .m_exp+.m_exp {
+	margin-top: 20px
+} */
+
+.m_exp .btn_sound {
+  position: absolute;
+  top: 6px;
+  left: 16px;
+}
+
+.expList .m_exp p.playing {
+  color: #171717;
+}
+
+/* 7/4 영어 공통변경사항 반영 */
+.expList .m_exp p:not(.kor) {
+  width: 678px;
+  height: 77px;
+  margin-left: -55px;
+  padding-left: 92px;
+  padding-top: 13px;
+  border-radius: 500px;
+}
+
+.m_exp .num {
+  background-color: #cccccc;
+  font-size: 40px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  display: inline-block;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.expList .m_exp p {
+  font-family: 'Lexend';
+  font-size: 40px;
+  color: #758298;
+  text-align: left;
+  line-height: 50px;
+  font-weight: 500;
+  letter-spacing: -0.7px;
+  /* padding-left: 20px; */
+}
+
+.expList .m_exp p.kor {
+  font-family: 'NotoSansKR';
+  font-size: 24px;
+  color: #2d73e3;
+  line-height: 38px;
+  font-weight: 500;
+  /* padding-top: 8px;
+	padding-left: 44px;  */
+  padding-left: 36px;
+  opacity: 0;
+  cursor: default;
+}
+
+.expList .m_exp p.kor.on {
+  opacity: 1;
+  cursor: default;
+}
+
+/*expressBox 안에 들어가는 underline*/
+.expressBox .underline {
+  border: 0;
+  border-bottom: 1px solid #233632;
+  height: 55px;
+  margin-left: 10px;
+}
+
+#contents.stEvaluation {
+  height: 570px; /* 7/18 수정 */
+  padding: 15px 70px 0px;
+}
+
+/*story time 주요 표현*/
+.underline {
+  display: inline-block;
+  border: 1px solid #233632;
+  width: 160px;
+  vertical-align: bottom;
+}
+
+/*story time 평가하기*/
+
+#contents.stEvaluation {
+  padding: 15px 70px 0px;
+}
+
+.ev_box {
+  /* width: 1575px; */
+  width: 1485px; /* 7/3 컨텐츠 영역 넘어가는 문제로 수정 */
+  height: 218px;
+  border-radius: 25px;
+  border: 5px solid #acca82;
+  background: #e6f1d4;
+  padding: 20px;
+  position: relative;
+}
+
+.ev_box .ipt_wrap {
+  width: 90%;
+}
+
+.ev_box .ipt_wrap li {
+  position: relative;
+  display: flex;
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+
+.ev_box .ipt_wrap li:nth-child(3),
+.ev_box .ipt_wrap li:nth-child(4) {
+  margin-top: 14px;
+}
+
+.ev_box p {
+  display: inline-block;
+  color: #171717;
+  font-family: 'NotoSansKR';
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 40px;
+  width: 370px;
+  text-align: left;
+}
+
+.ev_box p span {
+  font-weight: 500;
+}
+
+.ev_box .btnArea {
+  position: absolute;
+  width: auto;
+  height: 64px;
+  right: 25px;
+  left: auto;
+  top: 13px;
+}
+
+.ev_box2 {
+  width: 1024px;
+  height: 243px;
+  border-radius: 25px;
+  border: 5px solid #63c0b2;
+  background: #d8f6f2;
+  float: right;
+  margin: 18px 89px 18px 0px;
+  padding: 30px 30px;
+}
+
+.ev_box2 p {
+  text-align: justify;
+  color: #171717;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+.st_input-box {
+  position: relative;
+}
+.ev_box2 .st_textarea {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  margin-top: 25px;
+  padding: 15px 15px 15px 20px;
+  border: 3px solid #2d73e3;
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+.ev_box2 .st_textarea textarea {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  resize: none;
+  font-family: 'Lexend', 'NotoSansKR';
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.ev_box2 .st_textarea textarea:focus {
+  border: none;
+  outline: none;
+}
+
+.ev_box .ipt_wrap li .placeholder-max,
+.ev_box2 .st_textarea .placeholder-max,
+.st_input-box .placeholder-max,
+.inp_txtArea_focus .placeholder-max {
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  font-size: 28px;
+  color: rgba(0, 0, 0, 0.3);
+  padding-left: 48px;
+}
+
+.ev_box .ipt_wrap li .placeholder-max {
+  /* right: 500px; */
+  top: 4px;
+  left: 380px;
+  font-size: 22px;
+}
+
+.st_input-box .placeholder-max {
+  left: 0px;
+  font-size: 22px;
+  padding-left: 48px;
+}
+
+.inp_txtArea_focus .placeholder-max {
+  top: 14px;
+  left: 8px;
+}
+
+.ev_box .ipt_wrap li .placeholder-max:before,
+.ev_box2 .st_textarea .placeholder-max:before,
+.st_input-box .placeholder-max:before,
+.inp_txtArea_focus .placeholder-max:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 56px;
+}
+
+.ev_box .ipt_wrap li .placeholder-max.placeholder-key:before,
+.ev_box2 .st_textarea .placeholder-max.placeholder-key:before,
+.st_input-box .placeholder-max.placeholder-key:before,
+.inp_txtArea_focus .placeholder-max.placeholder-key:before {
+  content: attr(placeholder);
+  background: url(../images/icon/placeholder_key.svg) 10px 11px / auto 41px no-repeat;
+}
+
+.st_input-box .placeholder-max.placeholder-key:before {
+  background: url(../images/icon/placeholder_key.svg) 10px 11px / auto 41px no-repeat;
+}
+
+.ev_box .ipt_wrap li .placeholder-max.placeholder-pen,
+.ev_box2 .st_textarea .placeholder-max.placeholder-pen,
+.st_input-box .placeholder-max.placeholder-pen,
+.inp_txtArea_focus .placeholder-max.placeholder-pen {
+  padding-left: 54px;
+}
+
+.ev_box .ipt_wrap li .placeholder-max.placeholder-pen:before,
+.ev_box2 .st_textarea .placeholder-max.placeholder-pen:before,
+.st_input-box .placeholder-max.placeholder-pen:before,
+.inp_txtArea_focus .placeholder-max.placeholder-pen:before {
+  content: attr(placeholder);
+  background: url(../images/icon/placeholder_pen.svg) 10px 11px / auto 41px no-repeat;
+}
+
+.st_input-box .placeholder-max.placeholder-pen:before {
+  background: url(../images/icon/placeholder_pen.svg) 10px 11px / auto 41px no-repeat;
+}
+
+.st_input-box .placeholder-max.placeholder-key.no-text:before {
+  background: url(../images/icon/placeholder_key.svg) 14px 10px / auto 41px no-repeat;
+}
+.st_input-box .placeholder-max.placeholder-pen.no-text:before {
+  background: url(../images/icon/placeholder_pen.svg) 21px 13px / auto 41px no-repeat;
+}
+
+.ev_box .st_icon {
+  display: inline-block;
+  height: 80px;
+  vertical-align: middle;
+}
+
+.ev_box .st_input {
+  width: 260px;
+  height: 74px;
+  border: 3px solid #2d73e3;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 0px 10px 5px;
+}
+
+.ev_box .st_input.lnt_input_text,
+.ev_box .st_input.lnt_input_text:focus {
+  /* background: #e9f1ff; */
+  color: #141414;
+}
+
+.ev_box2 .btnArea {
+  position: absolute;
+  width: auto;
+  height: 64px;
+  right: 25px;
+  left: auto;
+  top: 13px;
+}
+
+.stEvaluation button.t_answer,
+.btnArea button.t_answer {
+  display: inline-block;
+  min-width: 180px;
+  max-width: 400px;
+  min-height: 60px;
+  line-height: 1.2;
+  border-radius: 15px;
+  font-size: 24px;
+  text-align: center;
+  background: #2d73e3;
+  box-shadow: 1px 5px #d5e3f9;
+  position: absolute;
+}
+
+.stEvaluation button.t_answer:hover,
+.btnArea button.t_answer:hover {
+  background: #8a14ff;
+  box-shadow: 1px 5px #e8d0ff;
+}
+
+.stEvaluation button.t_answer span,
+.btnArea button.t_answer span {
+  color: #fff;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+/*모 캐릭터*/
+#mo_cha {
+  position: absolute;
+  /* width: 25%;
+   height: 205px; */
+  z-index: 10;
+}
+
+#mo_cha .mo_cha_img {
+  width: 211px;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  /* animation: bounce 300ms cubic-bezier(.36,-0.01,.86,.63) 4; */
+  animation-fill-mode: both;
+  animation-direction: alternate;
+  animation: bounce 800ms 3;
+}
+
+.mo_cha {
+  position: absolute;
+  top: 453px;
+  left: 0;
+}
+
+#mo_cha #mo {
+  /* left: 40px; */
+  /* cursor: url(../images/icon/icon_cursor.svg), auto; */
+}
+
+.mo_cha_img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../images/cha/mascot_mo_bg_default.svg) center no-repeat;
+  z-index: 1;
+}
+
+.mo_cha_img .icon_mo {
+  position: relative;
+  display: block;
+  width: 211px;
+  height: 214px;
+  background: url(../images/cha/aidt_mascot_mo.svg) center no-repeat;
+  z-index: 2;
+}
+
+/* .mo_cha_img:hover::before {
+  background: url(../images/cha/mascot_mo_bg_hover.svg) center no-repeat;
+} */
+
+/* 7/29 태블릿 호버 삭제 */
+@media (hover: hover) and (pointer: fine) {
+  .mo_cha_img:hover::before {
+    background: url(../images/cha/mascot_mo_bg_hover.svg) center no-repeat;
+  }
+}
+
+.draw-placeholder {
+  top: 40%;
+  right: 50%;
+  transform: translate(50%, 50%);
+  position: absolute;
+  color: #808080;
+  text-align: center;
+  font-family: 'NotoSansKR';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+/* 7/7 팝업버튼 */
+
+#microphone-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1715px;
+  height: 764px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  z-index: 1000;
+}
+
+.popup-box {
+  display: flex;
+  width: 755px;
+  height: 364px;
+  padding: 20px;
+  background-color: white;
+  position: absolute;
+  top: 50%; /* 7/18 수정 */
+  left: 50%; /* 7/18 수정 */
+  transform: translate(-50%, -50%);
+  /* border: 1px solid black; */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: NotoSansKR;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 40px;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 40px;
+  border-radius: 20px;
+}
+
+.close-popup-btn {
+  width: 140px;
+  height: 58px;
+  background: #2d73e3;
+  color: #fff;
+  font-weight: 600;
+  font-size: 24px;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 5px 0 0 #d5e3f9;
+  /* cursor: url(../images/icon/icon_cursor.svg), auto; */
+}
+.close-popup-btn:hover {
+  background: #8a14ff;
+  box-shadow: 0 5px 0 0 #e8d0ff;
+}
+
+.toast-msg-container,
+.drawing-toast-msg-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
+
+.toast-msg-container,
+.drawing-toast-msg-container {
+  display: none;
+}
+
+.toast-msgbox,
+.drawing-toast-msgbox {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  background-color: #fff;
+  border: 1px solid #373737;
+  box-sizing: border-box;
+  /* height: 70px; */
+  text-align: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.toast-select.YN,
+.drawing-toast-select.YN {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #E8E8E8;
+  padding:32px 0;
+  justify-content: center;
+  gap: 16px;
+}
+.toast-select button,
+.drawing-toast-select button {
+  display: block;
+    width: 112px;
+    height: 56px;
+    text-indent: unset;
+    position: unset;
+    background: none;
+    background-color: #3b71fe;
+    color: #fff;
+    font-family: 'Pretendard';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: -0.5px;
+    text-align: center;
+    border-radius: 12px;
+}
+.toast-select .alert-n,
+.drawing-toast-select .alert-n {
+  background-color:#fff;
+  border:1px solid #D2D2D2;
+  color:#000;
+}
+.toast-select,
+.drawing-toast-select {
+  display: none;
+}
+.toast-msg,
+.drawing-toast-msg {
+  position: relative;
+  font-weight: 700;
+  font-size: 32px;
+  margin: 40px 50px;
+  line-height: 40px;
+}
+
+.toast-msg p,
+.drawing-toast-msg p {
+  font-weight: 700;
+}
+
+.foreign_lang .ev_box .ipt_wrap li p {
+  line-height: 0;
+}
+
+.foreign_lang .ev_box .ipt_wrap li p span[lang='y'] {
+  font-size: x-large;
+}

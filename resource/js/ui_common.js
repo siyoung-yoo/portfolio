@@ -207,32 +207,38 @@ var fn_menuInclude = function() {
     menuWrap.innerHTML = `
         <button type="button" class="btn-close">닫기버튼</button>
         <ul>
+            <li data-bg="work11/work11_main.jpg">
+                <a href="work11.html"><span>아이스크림</span><br><span>AI Digital Textbook</span></a>
+            </li>
+            <li data-bg="work10/work10_main.jpg">
+                <a href="work10.html"><span>행정안전부</span><br><span>Data Sharing Platform</span></a>
+            </li>
             <li data-bg="work06/work06_main.jpg">
-                <a href="work06.html">AutoDigital Project</a>
+                <a href="work06.html"><span>현대캐피탈</span><br><span>AutoDigital Project</span></a>
             </li>
             <li data-bg="work07/work07_main.jpg">
-                <a href="work07.html">Project Zaihan</a>
+                <a href="work07.html"><span>재한</span><br><span>Project Zaihan</span></a>
             </li>
             <li data-bg="work09/work09_main.jpg">
-                <a href="work09.html">e-HR System</a>
+                <a href="work09.html"><span>딜로이트</span><br><span>e-HR System</span></a>
             </li>
             <li data-bg="work02/work02_main.jpg">
-                <a href="work02.html">MLC Platform</a>
+                <a href="work02.html"><span>SK스토아</span><br><span>MLC Platform</span></a>
             </li>
             <li data-bg="work01/work01_main.jpg">
-                <a href="work01.html">Recruiting Site</a>
+                <a href="work01.html"><span>딜로이트</span><br><span>Recruiting Site</span></a>
             </li>
             <li data-bg="work08/work08_main.jpg">
-                <a href="work08.html">Hunet Labs</a>
+                <a href="work08.html"><span>휴넷</span><br><span>Hunet Labs</span></a>
             </li>
             <li data-bg="work03/work03_main.jpg">
-                <a href="work03.html">Yoons ChoTong</a>
+                <a href="work03.html"><span>윤선생</span><br><span>Yoons ChoTong</span></a>
             </li>
             <li data-bg="work04/work04_main.jpg">
-                <a href="work04.html">FIS System</a>
+                <a href="work04.html"><span>풀무원</span><br><span>FIS System</span></a>
             </li>
             <li data-bg="work05/work05_main.jpg">
-                <a href="work05.html">Research Portal</a>
+                <a href="work05.html"><span>CGV</span><br><span>Research Portal</span></a>
             </li>
         </ul>`;
 }

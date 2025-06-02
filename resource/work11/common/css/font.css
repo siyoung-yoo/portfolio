@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+/* Pretendard Font Face Definitions */
+@font-face {
+    font-family: Pretendard;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Pretendard Bold'), url(https://cdn.smart-aidt.com/stage/contents/resources/common_font/PretendardStd/web/static/woff2/Pretendard-Bold.woff2) format('woff2')
+}
+
+@font-face {
+    font-family: Pretendard;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Pretendard Regular'), url(https://cdn.smart-aidt.com/stage/contents/resources/common_font/PretendardStd/web/static/woff2/Pretendard-Regular.woff2) format('woff2')
+}

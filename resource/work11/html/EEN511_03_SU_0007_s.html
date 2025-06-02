@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>11단원 3차시</title>
+<style>
+  button {
+    font-style: normal;
+    border: none;
+    background: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .activity-button-wrap button {
+    height: 56px !important;
+  }
+
+  .card_area {
+    width: fit-content;
+    gap: 8px;
+    margin: 30px auto 0;
+    justify-items: center;
+  }
+
+  .card_box {
+    display: flex;
+    width: 130px;
+    height: 130px;
+    position: relative;
+    transition: 0.2s;
+    transform-style: preserve-3d;
+  }
+
+  .card_box .front,
+  .card_box .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-size: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+  }
+
+  .card_box .back {
+    z-index: 1;
+    background-image: url(../images/EEN511_03/511_back.png);
+  }
+
+  .card_box .front {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.5px;
+    background-image: url(../images/EEN511_03/511_front.png);
+    transform: rotateY(180deg);
+  }
+
+  .card_box .front .txt-sm {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .card_box.flip {
+    transition: 0.2s;
+    transform: rotateY(180deg);
+    pointer-events: none;
+  }
+
+  .card_box.done {
+    pointer-events: none;
+  }
+
+  .ap_cont ul.number li div p {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    color: #444;
+  }
+
+  .popup-success {
+    display: none;
+    width: 372px;
+  }
+
+  .popup-success .toast-select {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 32px;
+    gap: 12px;
+  }
+
+  .popup-success .toast-select button {
+    width: 120px;
+  }
+
+  .popup-success .btn-restart {
+    color: #6a6a6a;
+    border: 1px solid #6a6a6a;
+    background-color: #fff;
+  }
+
+  .popup-success .btn-done {
+    color: #fff;
+    background-color: #6a6a6a;
+  }
+</style>
+</head>
+<body>
+  <div id="wrapper">
+    <header id="header">
+      <p lang="y">Fun Time</p>
+      <p lang="y">놀이 활동하기</p>
+    </header>
+    <!-- /header -->
+
+    <div id="container">
+      <div id="content" class="tab_yes" data-quiz-type="checkbox-text-multi">
+        <div class="q_tit flex-between">
+          <p lang="y">가위바위보로 모둠원 간 순서를 정한 후, 게임을 시작해요.</p>
+          <div class="activity-button-wrap">
+            <button type="button" class="btn-abw">활동 방법</button>
+            <button type="button" class="btn-pop stc_play">주요 표현</button>
+          </div>
+        </div>
+
+        <div id="contents">
+          <div class="card_area grid-col-6">
+            <!-- 스크립트로 카드 생성 -->
+            <!-- <div class="card_box" data-order="0">
+            <div class="front"></div>
+            <div class="back"></div>
+          </div> -->
+          </div>
+          <div class="activityPopup" tabindex="-1">
+            <div class="ap_inner">
+              <button class="ap_close" tabindex="0" aria-label="닫기"></button>
+              <div class="ap_cont">
+                <p class="ap_text sky_badge" lang="y">활동 방법</p>
+                <ul class="idx1 number">
+                  <li lang="y">4명이 한 모둠이 되어, 가위바위보로 순서를 정한다.</li>
+                  <li lang="y">문장 카드를 뒷면이 보이도록 전부 뒤집어서 섞은 후 책상 위에 흩어 놓는다.</li>
+                  <li lang="y">순서대로 문장 카드를 1장씩 뒤집어 카드에 적힌 문장을 읽는다.</li>
+                  <li lang="y">문장 카드를 뒤집었을 때 증상을 묻고 답하는 문장, 유감을 표현하는 문장, 증상에 조언하는 문장 순서대로 대화가 만들어지면 카드 앞면이 보이게 뒤집어 놓고, 대화가 만들어지지 않으면 모든 카드를 원래대로 뒷면이 보이게 놓는다. (첫 문장 카드는 What’s wrong?으로 시작한다.)<br />예&#41; What’s wrong? - I have a fever. - That’s too bad. - Get some rest. (또는 Take this medicine.)</li>
+                  <li lang="y">꽝 카드가 나오면 모든 문장 카드를 다시 원래대로 뒷면이 보이게 놓은 후, 처음부터 다시 시작한다.</li>
+                  <li lang="y">모둠원이 협동하여 모든 쌍의 대화를 완성해 모든 카드가 앞면이 되면 게임이 끝난다.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- /activityPopup -->
+          <!-- 오디오 팝업 -->
+          <div class="audioPopup audio">
+            <div class="ap_inner stc">
+              <button class="ap_close" tabindex="0" aria-label="닫기"></button>
+              <div class="stc_wrap">
+                <p lang="y" class="ap_title">주요 표현</p>
+                <div class="stc_area">
+                  <!-- 문장 리스트 들어옴 -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /contents -->
+        </div>
+        <!-- /character-wrap -->
+      </div>
+    </div>
+
+    <!-- 성공 팝업 -->
+    <div class="toast-msg-container popup-success">
+      <div class="toast-msgbox">
+        <div class="toast-msg">성공 !</div>
+        <div class="toast-select">
+          <button type="button" class="btn-restart">다시 하기</button>
+          <button type="button" class="btn-done">그만하기</button>
+        </div>
+      </div>
+    </div>
+    <!-- /content -->
+  </div>
+  <script>
+    // 한 문장씩 듣기 데이터
+    const stcData = {
+      items: [
+        { text: 'What’s wrong?', audio: '../audio/EEN511/5_FT_11_01.mp3' },
+        { text: 'I have a fever.', audio: '../audio/EEN511/5_FT_11_02.mp3' },
+        { text: 'That’s too bad.', audio: '../audio/EEN511/5_FT_11_03.mp3' },
+        { text: 'Take this medicine. / Get some rest.', audio: '../audio/EEN511/5_FT_11_04.mp3' },
+      ],
+    };
+  
+    const sentences = [
+      { 1: "What’s wrong?" }, { 1: "What’s wrong?" }, { 1: "What’s wrong?" }, { 1: "What’s wrong?" }, { 1: "What’s wrong?" },
+      { 2: 'I have a <span class="txt-sm">stomachache.</span>' }, { 2: 'I have a runny nose.' }, { 2: 'I have a cold.' }, { 2: 'I have a fever.' }, { 2: 'I have a headache.' },
+      { 3: "That’s too bad." }, { 3: "That’s too bad." }, { 3: "That’s too bad." }, { 3: "That’s too bad." }, { 3: "That’s too bad." },
+      { 4: 'Get some rest.' }, { 4: 'Take this medicine.' }, { 4: 'Get some rest.' }, { 4: 'Take this medicine.' }, { 4: 'Get some rest.' },
+      { 0: '꽝' }, { 0: '꽝' }, { 0: '꽝' }, { 0: '꽝' }
+    ];
+  
+    $(document).ready(function () {
+      let orderChk = 1;
+      let flipCardCount = 0;
+      let clickDisabled = false;
+  
+      // 카드 랜덤 배치
+      const shuffleArray = (array) => {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
+  
+      // 카드 생성
+      function renderCards() {
+        $('.card_area').empty();
+        orderChk = 1;
+        flipCardCount = 0;
+  
+        const shuffled = shuffleArray(sentences);
+        shuffled.forEach((obj, index) => {
+          const key = Object.keys(obj)[0];
+          const value = obj[key];
+  
+          const $card = $(`
+            <button type="button" class="card_box" data-order="${key}">
+              <div class="back"></div>
+              <div class="front">${value}</div>
+            </button>
+          `);
+  
+          $('.card_area').append($card);
+        });
+      }
+  
+      // 게임 끝 팝업
+      function gameEnd() {
+        $('.popup-success').show();
+  
+        $('.popup-success .btn-done').click(function () {
+          $('.popup-success').hide();
+        });
+  
+        $('.popup-success .btn-restart').click(function () {
+          renderCards();
+          $('.popup-success').hide();
+        });
+      }
+  
+      // 카드 초기화 함수
+      function resetCards(ele) {
+        clickDisabled = true;
+        $(ele).addClass('flip');
+  
+        setTimeout(function () {
+          clickDisabled = false;
+          $('.card_box').removeClass("flip done");
+        }, 1000);
+      }
+  
+      renderCards(); // 최초 실행
+  
+      // 카드 클릭 이벤트
+      $('.card_area').on('click', '.card_box', function () {
+        if (clickDisabled) return;
+  
+        if (!$(this).hasClass('flip')) {
+          const order = $(this).data('order');
+  
+          // 꽝 선택 시 전체 초기화
+          if (order == 0) {
+            playAudio(adoTick);
+            resetCards(this);
+            orderChk = 1;
+            flipCardCount = 0;
+            return;
+          }
+  
+          // 정답 순서대로 선택
+          if (order == orderChk) {
+            $(this).addClass('flip');
+            flipCardCount++;
+            playAudio(adoClick);
+  
+            if (orderChk == 4) {
+              // 세트 완성
+              playAudio(adoStar);
+  
+              $('.card_box.flip').each(function () {
+                const flipCard = $(this).data('order');
+                if (flipCard >= 1 && flipCard <= 4) {
+                  $(this).addClass('done');
+                }
+              });
+  
+              if (flipCardCount == 20) {
+                gameEnd();
+              } else {
+                orderChk = 1;
+              }
+            } else {
+              orderChk++;
+            }
+          } else {
+            orderChk = 1;
+            flipCardCount = $('.card_box.done').length;
+            playAudio(adoTick);
+            resetCards(this);
+          }
+        }
+      });
+  
+      $('.btn-abw').on('click', function () {
+        $('.activityPopup').attr('data-type', '');
+        $('.ap_close').removeClass('ap_close_w');
+      });
+    });
+  </script>
+  
+</body>
+</html>

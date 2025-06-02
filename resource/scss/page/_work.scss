@@ -63,6 +63,7 @@
     text-align: center;
     color: #fff;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .work-subtext {
@@ -167,6 +168,35 @@
   }
 }
 
+.btn-link {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 4px;
+  line-height: 2em;
+  z-index: 1;
+
+  &::after {
+    content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0.25em;
+      width: 100%;
+      height: 0.5em;
+      background: rgba(0, 255, 181, .3);
+      z-index: -1;
+      transition: all ease-in 150ms;
+  }
+
+  &:hover, &:active, &:focus {
+    &::after {
+      bottom: 0em;
+      height: 2em
+    }
+  }
+}
+
 .work-info {
   padding: 100px 15% 60px;
 
@@ -210,7 +240,7 @@
       .text-sm {
         margin: 4px 0 0 10px;
         font-size: 0.9rem;
-        color: #c4c4c4;
+        color: #eee;
       }
     }
 

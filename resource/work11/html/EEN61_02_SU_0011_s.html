@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<!---------------------------------------------------------->
+<link href="../common/css/font.css" rel="stylesheet" type="text/css" />
+<link href="../common/css/common.css" rel="stylesheet" type="text/css" />
+<script src="../common/js/ext_library.js" type="text/javascript"></script>
+<script src="../common/js/common.js" type="text/javascript"></script>
+<!-- 오디오 -->
+<script src="../common/js/audio/define.js" type="text/javascript"></script>
+<script src="../common/js/audio/main_sentencePlay.js" type="text/javascript"></script>
+<script src="../common/js/audio/system.js" type="text/javascript"></script>
+<script src="../common/js/audio/media.object.js" type="text/javascript"></script>
+<title>1단원 2차시</title>
+<style>
+  .dice_section{
+    display: flex;
+    justify-content: center;
+    gap:33px;
+  }
+  .dice_section .game_board {
+    position: relative;
+    width: 530px;
+    height: 525px;
+    padding: 54px 23px 22px 56px;
+    background: url("../images/EEN61_02/61_gameboard.png") no-repeat;
+    background-size: contain;
+  }
+  .game_board .item-conts {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .game_board .item {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #7A62A9;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    padding: 8px 10px;
+  }
+  .game_board .item span{
+    display: none;
+  }
+  /*한번더*/
+  .game_board .item:nth-child(10),
+  .game_board .item:nth-child(14),
+  .game_board .item:nth-child(24){
+    font-size: 12px;
+    color: #000;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  /* 과목 */
+  .game_board .item:nth-child(2),
+  .game_board .item:nth-child(17),
+  .game_board .item:nth-child(21),
+  .game_board .item:nth-child(25),
+  .game_board .item:nth-child(34){
+    font-size: 16px;
+    color: #ED6C00;
+    padding: 11px 0 0 0px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .game_board .item:nth-child(2) span,
+  .game_board .item:nth-child(17) span,
+  .game_board .item:nth-child(21) span,
+  .game_board .item:nth-child(25) span,
+  .game_board .item:nth-child(34) span{
+    display: inline-block;
+    font-size: 16px;
+    color: #892B00;
+  }
+
+  .game_board .item.active {
+    outline: 2px solid red;
+  }
+  .game_board .item.red {
+    background-color: rgba(255,0,0,0.6);
+  }
+  .game_board .item.blue {
+    background-color: rgba(59,113,254,0.6);
+  }
+  .game_board .team-choice {
+    position: absolute;
+    width: 132px;
+    height: 82px;
+    background: url("../images/EEN61_02/61_team.png") no-repeat;
+  }
+  .team-choice .blue, .team-choice .red {
+    width: 52px;
+    height: 52px;
+    position: absolute;
+    bottom: 8px;
+    border-radius: 50%;
+  }
+  .team-choice .blue { left: 8px; }
+  .team-choice .red { right: 8px; }
+
+  .btnArea{
+    bottom:10px;
+  }
+
+  .activity-button-wrap .item-dice {
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    width: 200px !important;
+    height: 200px !important;
+    z-index: 1;
+    padding: 0;
+  }
+  .activity-button-wrap .item-dice:hover {
+    box-shadow: none !important;
+  }
+  .activity-button-wrap .item-dice img{
+    width: 100%;
+  }
+  .dice_pop {
+    opacity: 0;
+    position: absolute;
+    right: 200px;
+    top: 100px;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #fff;
+    z-index: -1;
+    box-shadow: 0px 8px 24px 0px #0000001F;
+  }
+
+  .dice_pop img { margin-top: 8px; }
+  .dice_pop .pop_close {
+    width: 40px;
+    height: 40px;
+    /* background: url(../images/icon_close_b.svg) 50% 50% / 24px 24px no-repeat; */
+    background: url(../common/images/icon_close_b.svg) 50% 50% / 24px 24px no-repeat;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+  .dice_pop .pop_close:hover {
+    box-shadow: none !important;
+  }
+  .dice_pop.active {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity ease-in 150ms;
+  }
+
+  .cardPopup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+  }
+  .cardPopup .content {
+    background-color: #fff;
+    border-radius: 20px;
+    width: 820px;
+    height: 216px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px 60px;
+  }
+  .cardPopup .content .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 32px;
+    line-height: 48px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+  .cardPopup .btn_area {
+    margin-top: 40px;
+    font-size: 20px;
+    justify-content: center;
+    gap: 12px;
+  }
+  .cardPopup button {
+    width: 120px;
+    height: 56px;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 12px;
+  }
+  .cardPopup button.btn_return{
+    color:#6A6A6A;
+    border:1px solid #161515;
+  }
+  .cardPopup .btn_card_reset {
+    background-color: #6A6A6A;
+  }
+  .cardPopup.active{display: block;}
+  .cardPopup b {
+    display: inline-block;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+  .cardPopup b.blue { background-color: #06B0F0; }
+  .cardPopup b.red { background-color: #FF0000; }
+
+  .activity-button-wrap .btn-abw, .activity-button-wrap .btn-pop{
+    width: 112px;
+    height: 56px;
+  }
+  .ap_cont ul.number li p{
+    font-weight: 700;
+  }
+  div[class^='con_txt']{
+    font-size: 14px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+</style>
+</head>
+<body>
+  <div id="wrapper">
+    <header id="header">
+      <p>Play Time 2</p>
+      <p lang="y">놀이 활동하기</p>
+    </header>
+    <!-- /header -->
+
+    <div id="container">
+      <div id="content" class="tab_yes" data-quiz-type="select-text-submit">
+        <div class="q_tit flex-between">
+          <p lang="y">가위바위보로 순서를 정한 후 게임을 시작해요.</p>
+          <div class="activity-button-wrap">
+            <button type="button" class="btn-abw" lang="y" tabindex="0">활동 방법</button>
+            <button type="button" class="btn-pop stc_play" lang="y" tabindex="0">주요 표현</button>
+            <button type="button" class="item-dice" tabindex="0">
+              <img src="../common/images/dice/dice_.png" alt="">
+            </button>
+          </div>
+        </div>
+
+        <form data-load="폼">
+          <div id="contents">
+            <div class="dice_section">
+              <div class="game_board" id="gameBoard">
+                <div class="item-conts">
+                  <!-- 스크립트로 태그 생성
+                  <div class="team-choice">
+                    <button type="button" class="blue"></button>
+                    <button type="button" class="red"></button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+
+            <!-- 주사위 결과 팝업 -->
+            <div class="dice_pop">
+              <button type="button" class="pop_close" tabindex="0"></button>
+              <img src="../common/images/dice/dice_1.gif" alt="주사위 결과값">
+            </div>
+
+            <!-- 우승자 팝업 -->
+            <div class="cardPopup">
+              <div class="content">
+                <p class="title" lang="y">
+                  이번 게임은 <b></b> 의 승리입니다.
+                </p>
+                <div class="btn_area">
+                  <button type="button" class="btn_return" lang="y" tabindex="0">다시 하기</button>
+                  <button type="button" class="btn_card_reset" lang="y" tabindex="0">그만하기</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="activityPopup" tabindex="-1">
+              <div class="ap_inner">
+                <button type="button" class="ap_close" tabindex="0" aria-label="닫기"></button>
+                <div class="ap_cont">
+                  <p class="ap_text sky_badge" lang="y">활동 방법</p>
+                  <ul class="idx1 number">
+                    <li lang="y">4명이 한 모둠이 되어 모둠 내에서 2명씩 팀을 나누고, 팀 색깔을 고른다.</li>
+                    <li>
+                      <div>
+                        <p lang="y">가위바위보를 하여 이긴 팀이 주사위를 연달아 2번 굴린다. 첫 번째 던진 주사위 눈이 1, 두 번째 던진 주사위 눈이 3을 가리키면, 교과서의 놀이판에서 첫 번째 열의 세 번째 행이나 세 번째 열의 첫 번째 행에 있는 그림의 상황에 맞게 짝끼리 묻고 답을 한다. 그림에 학년이 적혀 있는 경우, 학년을 묻고 답하고, 교실의 층수가 있는 경우, 해당 교실의 층수를 묻고 답한다.</p>
+                        <p lang="y">
+                          [학년이 적혀 있는 경우]
+                        </p>
+                        <p>
+                          S1: What grade are you in?</p>
+                        <p>
+                          S2: I’m in the first grade.
+                        </p>
+                        <p lang="y">
+                          [교실의 층수가 적혀 있는 경우]
+                        </p>
+                        <p>
+                          S1: Where is the English classroom?
+                        </p>
+                        <p> S2: It’s on the fifth floor.</p>
+                      </div>
+                      </li>
+                    <li lang="y">그림에 맞게 대화를 나눈 팀은 해당 칸을 팀 색으로 색칠하고, 해당 칸에 이미 색이 칠해졌으면 상대 팀에게 기회가 넘어간다.</li>
+                    <li lang="y">주사위를 던져 ‘한 번 더!’가 나온 경우, 해당 칸을 팀 색깔의 색연필로 칠하고, 다시 주사위를 던져 게임을 계속한다.</li>
+                    <li lang="y">팀이 번갈아 가며 게임을 진행하여, 먼저 4칸을 연속으로 팀 색으로 칠하는 팀이 이긴다.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- /activityPopup -->
+            <!-- 오디오 팝업 -->
+            <div class="audioPopup audio">
+              <div class="ap_inner stc">
+                <button type="button" class="ap_close" tabindex="0" aria-label="닫기"></button>
+                <div class="stc_wrap">
+                  <p class="ap_title" lang="y">주요 표현</p>
+                  <div class="stc_area">
+                    <!-- 문장 리스트 들어옴 -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /contents -->
+          </div>
+        </form>
+        <!-- /character-wrap -->
+      </div>
+      <!-- /content -->
+    </div>
+
+    <div class="btnArea">
+      <button id="reset" type="reset" class="all_reset_btn" aria-label="다시하기" tabindex="0">
+        <span class="ir" lang="y">다시하기</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 초기화 팝업 -->
+  <div class="toast-msg-container">
+    <div class="toast-msgbox">
+      <div class="toast-msg" >
+        <p lang="y">다시 하시겠습니까?</p>
+        <p lang="y">게임이 초기화됩니다.</p>
+        </div>
+      <div class="toast-select YN">
+      <button type="button" class="alert-n" lang="y" tabindex="0">취소</button>
+      <button type="button" class="alert-y" lang="y" tabindex="0">확인</button>
+      </div>
+    </div>
+  </div>
+  <!-- // 초기화 팝업 -->
+
+  <script>
+    // 한 문장씩 듣기 데이터
+    const stcData = {
+      items: [
+        { text: 'What grade are you in?', audio: '../audio/EEN61/6_PT2_01_01.mp3' },
+        { text: "I’m in the first grade.", audio: '../audio/EEN61/6_PT2_01_02.mp3' },
+        { text: "Where is the English classroom?", audio: '../audio/EEN61/6_PT2_01_03.mp3' },
+        { text: "It’s on the sixth floor.", audio: '../audio/EEN61/6_PT2_01_04.mp3' }
+      ],
+    };
+
+    let grade = 3;
+    let scriptArray = [
+      `What grade are you in?<br />
+      I’m in the first grade.<br />
+      Where is the English classroom?<br />
+      It’s on the sixth floor..
+      `,
+    ];
+    let cidx = 0;
+    let scriptClick = 0;
+
+    $(document).ready(function () {
+      $(".btn-abw").on("click", function () {
+        $('.activityPopup').attr('data-type', '');
+        $('.activityPopup .ap_close').removeClass('ap_close_w');
+        $(".ap_close").removeClass("ap_close_w");
+      });
+    });
+  </script>
+
+<script>
+  $(document).ready(function () {
+
+    let stateRolling = false;
+    // 주사위 기능
+    $(".item-dice").click(function() {
+      if (stateRolling) return;
+
+      stateRolling = true;
+      const roll = Math.floor(Math.random() * 6) + 1;
+      const dicSrc = "../common/images/dice/dice_0"
+      $(".item-dice img").attr("src", dicSrc + roll + ".gif");
+
+      const imgSrc = "../common/images/dice/dice_pop"
+      setTimeout(function() {
+        stateRolling = false;
+        $(".dice_pop").addClass("active");
+        $(".dice_pop img").attr("src", imgSrc + roll + ".svg");
+      }, 1000)
+    })
+
+    $(".dice_pop .pop_close").click(function() {
+      $(".dice_pop").removeClass("active");
+    })
+
+    // 셀 위치 계산, aria-label 문구 추가
+    const itemPositions = [
+      { left: 0,   top: 0,   label: "4학년",  con: '4-', sub: ''},
+      { left: 75,  top: 0,   label: "English 5층",  con: 'English', sub: '5층'},
+      { left: 150, top: 0,   label: "3학년",  con: '3-', sub: ''},
+      { left: 224, top: 0,   label: "5학년",  con: '5-', sub: ''},
+      { left: 301, top: 0,   label: "6학년",  con: '6-', sub: ''},
+      { left: 379, top: 0,   label: "1학년",  con: '1-', sub: ''},
+
+      { left: 0,  top: 75,  label: "3학년",  con: '3-', sub: ''},
+      { left: 75,  top: 75,  label: "6학년",  con: '6-', sub: ''},
+      { left: 150, top: 75,  label: "5학년",  con: '5-', sub: ''},
+      { left: 224, top: 75,  label: "한 번 더!",  con: '한 번 더!', sub: ''},
+      { left: 301, top: 75,  label: "1학년",  con: '1-', sub: ''},
+      { left: 378, top: 75,  label: "3학년",  con: '3-', sub: ''},
+
+      { left: 1,   top: 149, label: "1학년",  con: '1-', sub: ''},
+      { left: 75,  top: 149, label: "한 번 더!",  con: '한 번 더!', sub: ''},
+      { left: 150, top: 149, label: "2학년",  con: '2-', sub: ''},
+      { left: 224, top: 149, label: "3학년",  con: '3-', sub: ''},
+      { left: 301, top: 149, label: "Sience 4층",  con: 'Sience', sub: '4층'},
+      { left: 379, top: 149, label: "4학년",  con: '4-', sub: ''},
+
+      { left: 0,   top: 225, label: "2학년",  con: '2-', sub: ''},
+      { left: 75,  top: 225, label: "4학년",  con: '4-', sub: ''},
+      { left: 150, top: 225, label: "Music 3층",  con: 'Music', sub: '3층'},
+      { left: 224, top: 225, label: "4학년",  con: '4-', sub: ''},
+      { left: 301, top: 225, label: "3학년",  con: '3-', sub: ''},
+      { left: 379, top: 225, label: "한 번 더!",  con: '한 번 더!', sub: ''},
+
+      { left: 1,   top: 301, label: "Art 2층",  con: 'Art', sub: '2층'},
+      { left: 75,  top: 301, label: "2학년",  con: '2-', sub: ''},
+      { left: 150, top: 301, label: "6학년",  con: '6-', sub: ''},
+      { left: 224, top: 301, label: "2학년",  con: '2-', sub: ''},
+      { left: 301, top: 301, label: "1학년",  con: '1-', sub: ''},
+      { left: 379, top: 301, label: "2학년",  con: '2-', sub: ''},
+
+      { left: 0,   top: 379, label: "5학년",  con: '5-', sub: ''},
+      { left: 75,  top: 379, label: "6학년",  con: '6-', sub: ''},
+      { left: 150, top: 379, label: "1학년",  con: '1-', sub: ''},
+      { left: 224, top: 379, label: "English 1층",  con: 'English', sub: '1층'},
+      { left: 301, top: 379, label: "5학년",  con: '5-', sub: ''},
+      { left: 379, top: 379, label: "6학년",  con: '6-', sub: ''},
+    ];
+
+    const $gameArea = $('#gameBoard .item-conts');
+    const size = 6; // 6x6 설정
+    let board = [];
+    let gameOver = false;
+    let selectedIndex = null;
+
+    function initBingo() {
+      board = [];
+      gameOver = false;
+      selectedIndex = null;
+      $gameArea.empty();
+
+      // 셀 생성
+      itemPositions.forEach((pos, idx) => {
+        const $cell = $(`<div class="item" lang="y" data-index="${idx}" aria-label="${pos.label}">${pos.con}<span>${pos.sub}</span></div>`);
+        $cell.css({ left: pos.left + 'px', top: pos.top + 'px' });
+        $gameArea.append($cell);
+      });
+    }
+
+    initBingo(); // 최초 빙고판 생성
+
+    // 셀 클릭 > 팀 선택 생성
+    $gameArea.on('click', '.item', function () {
+      if (gameOver) return;
+
+      // 선택 시 빨간 테투리 활성화
+      $("#gameBoard .item").removeClass("active");
+      $(this).addClass("active");
+      playAudio(adoClick);
+
+      // 팀 선택 보이기
+      selectedIndex = $(this).data('index');
+      const pos = itemPositions[selectedIndex];
+
+      $('.team-choice').remove();
+
+      const $btns = $(`
+        <div class="team-choice" style="left:${pos.left - 30}px; top:${pos.top + 55}px;">
+          <button type="button" class="blue"></button>
+          <button type="button" class="red"></button>
+        </div>
+      `);
+
+      $gameArea.append($btns);
+    });
+
+    // 팀 선택 클릭
+    $gameArea.on('click', '.team-choice button', function () {
+      const isBlue = $(this).hasClass("blue");
+      const teamClass = isBlue ? "blue" : "red";
+
+      const $cell = $(".item").eq(selectedIndex);
+      const idx = $cell.data("index");
+
+      // 스타일 리셋 후 해당 팀 스타일 추가
+      $cell.attr("class","item").addClass(teamClass);
+      $('.team-choice').remove();
+      playAudio(adoClick);
+
+      board[idx] = teamClass;
+      checkBingo(teamClass);
+
+      // 페이지 하단 초기화 버튼 활성화
+      const hasSelectedItem = $('.item.blue, .item.red').length > 0;
+      if (hasSelectedItem) {
+        $(".all_reset_btn").addClass("active");
+      }
+    });
+
+    // 빙고 체크
+    function checkBingo(teamClass) {
+      let activeChk = 0;
+      let hasBingo = false;
+      const isOwned = (idx) => board[idx] === teamClass;
+
+      // 가로 4칸 연속
+      for (let row = 0; row < size; row++) {
+        for (let col = 0; col <= size - 4; col++) {
+          const i = row * size + col;
+          if (isOwned(i) && isOwned(i+1) && isOwned(i+2) && isOwned(i+3)) {hasBingo = true};
+        }
+      }
+
+      // 세로 4칸 연속
+      for (let col = 0; col < size; col++) {
+        for (let row = 0; row <= size - 4; row++) {
+          const i = row * size + col;
+          if (isOwned(i) && isOwned(i+size) && isOwned(i+size*2) && isOwned(i+size*3)) hasBingo = true;
+        }
+      }
+
+      // ↘ 대각선
+      for (let row = 0; row <= size - 4; row++) {
+        for (let col = 0; col <= size - 4; col++) {
+          const i = row * size + col;
+          if (isOwned(i) && isOwned(i+size+1) && isOwned(i+(size+1)*2) && isOwned(i+(size+1)*3)) hasBingo = true;
+        }
+      }
+
+      // ↙ 대각선
+      for (let row = 0; row <= size - 4; row++) {
+        for (let col = 3; col < size; col++) {
+          const i = row * size + col;
+          if (isOwned(i) && isOwned(i+size-1) && isOwned(i+(size-1)*2) && isOwned(i+(size-1)*3)) hasBingo = true;
+        }
+      }
+
+      // 빙고 1줄 성공
+      if (hasBingo) {
+        resultPopup(teamClass);
+        gameOver = true;
+        playAudio(adoStar);
+      }
+    }
+
+    // 게임 종료 팝업
+    function resultPopup(teamClass) {
+      $(".cardPopup").find("b").removeAttr("class");
+      $(".cardPopup").find("b").addClass(`${teamClass}`);
+      $(".cardPopup").show();
+
+      // 다시하기
+      $(".cardPopup .btn_return").click(function() {
+        initBingo();
+        $(".cardPopup").hide();
+        $(".all_reset_btn").removeClass("active");
+      });
+
+      // 그만하기
+      $(".cardPopup .btn_card_reset").click(function() {
+        $(".cardPopup").hide();
+      });
+    }
+
+    // 초기화 버튼 클릭
+    // 초기화 버튼 클릭시
+    $(".all_reset_btn").on("click", function() {
+      allResetBtnEvent(gameReset);
+    });
+
+    function gameReset() {
+      initBingo();
+      $(".dice_pop").removeClass("active");
+      $(".all_reset_btn").removeClass("active");
+    }
+  });
+</script>
+</body>
+
+</html>
