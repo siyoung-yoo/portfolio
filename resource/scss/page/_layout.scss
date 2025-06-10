@@ -192,8 +192,9 @@ body.scroll-fix { overflow: hidden; }
 
   a {
     display: inline-block;
-    font-size: 8vw;
+    font-size: 7vw;
     font-weight: 700;
+    line-height: 1.2;
     color: #aaa;
     z-index: 10;
     word-wrap: break-word;
@@ -244,7 +245,11 @@ body.scroll-fix { overflow: hidden; }
   #header { height: 80px; }
   #header .menu { padding: 10px 20px 10px 30px; }
   #header .menu li { margin-right: 30px; }
-  .menu-wrap a { font-size: 60px; }
+  .menu-wrap {
+    a { font-size: 55px; }
+
+    ul li { height: 300px; }
+  }
 }
 
 .all-wrap {
