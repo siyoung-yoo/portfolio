@@ -2,32 +2,23 @@
 
 @font-face {
 	font-family: 'SeoulAlrim';
-	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Bold.woff2') format('woff2');
+	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Medium.woff2') format('woff2');
+	/* src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Bold.woff2') format('woff2'); */
 	font-style: normal;
-	font-weight: normal;
+	font-weight: 400;
 }
 
 @font-face {
 	font-family: 'SeoulAlrim';
 	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Heavy.woff2') format('woff2');
 	font-style: normal;
-	font-weight: 600;
+	font-weight: 800;
 }
 
 @font-face {
 	font-family: "Montserrat";
 	font-style: normal;
-	font-weight: normal;
-	src: local('MontserratRegular');
-	src: url('MontserratRegular.eot');
-	src: url('MontserratRegular.eot?#iefix') format('embedded-opentype'),
-		url('MontserratRegular.woff2') format('woff2'),
-		url('MontserratRegular.woff') format('woff');
-}
-@font-face {
-	font-family: "Montserrat";
-	font-style: normal;
-	font-weight: 500;
+	font-weight: 400;
 	src: local('MontserratMedium');
 	src: url('MontserratMedium.eot');
 	src: url('MontserratMedium.eot?#iefix') format('embedded-opentype'),
