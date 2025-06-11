@@ -1,18 +1,27 @@
 @charset "utf-8";
 
 @font-face {
-	font-family: 'SeoulAlrim';
-	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Medium.woff2') format('woff2');
-	/* src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Bold.woff2') format('woff2'); */
+	font-family: "Korean";
 	font-style: normal;
 	font-weight: 400;
+	src: local('PretendardRegular');
+	src: url('PretendardRegular.woff2') format('woff2'), url('PretendardRegular.woff') format('woff');
 }
 
 @font-face {
-	font-family: 'SeoulAlrim';
-	src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Heavy.woff2') format('woff2');
+	font-family: "Korean";
+	font-style: normal;
+	font-weight: 600;
+	src: local('PretendardBold');
+	src: url('PretendardBold.woff2') format('woff2'), url('PretendardBold.woff') format('woff');
+}
+
+@font-face {
+	font-family: "Korean";
 	font-style: normal;
 	font-weight: 800;
+	src: local('SeoulAlrimHeavy');
+	src: url('SeoulAlrimHeavy.woff2') format('woff2'), url('SeoulAlrimHeavy.woff') format('woff');
 }
 
 @font-face {
@@ -20,18 +29,13 @@
 	font-style: normal;
 	font-weight: 400;
 	src: local('MontserratMedium');
-	src: url('MontserratMedium.eot');
-	src: url('MontserratMedium.eot?#iefix') format('embedded-opentype'),
-		url('MontserratMedium.woff2') format('woff2'),
-		url('MontserratMedium.woff') format('woff');
+	src: url('MontserratMedium.woff2') format('woff2'), url('MontserratMedium.woff') format('woff');
 }
+
 @font-face {
 	font-family: "Montserrat";
 	font-style: normal;
 	font-weight: 800;
 	src: local('MontserratExtraBold');
-	src: url('MontserratExtraBold.eot');
-	src: url('MontserratExtraBold.eot?#iefix') format('embedded-opentype'),
-		url('MontserratExtraBold.woff2') format('woff2'),
-		url('MontserratExtraBold.woff') format('woff');
+	src: url('MontserratExtraBold.woff2') format('woff2'), url('MontserratExtraBold.woff') format('woff');
 }
