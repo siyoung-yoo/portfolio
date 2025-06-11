@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>layout_filter</title>
+<link rel="stylesheet" href="../resources/css/output.css">
+<script src="../resources/js/component/ui-script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="wrap">
+        <!-- 본문 바로가기 영역  -->
+        <div id="krds-skip-link" class="type1">
+            <a href="#breadcrumb" class="item-link">본문 바로가기</a>
+        </div>
+        <!-- //본문 바로가기 영역  -->
+
+        <!-- 헤더 영역 -->
+        <header id="krds-header">
+            <div class="header-in">
+                <div class="header-container">
+                    <div class="inner">
+                        <div class="header-utility">
+                            <ul class="utility-list">
+                                <li>
+                                    <button type="button" class="krds-btn small text">
+                                        로그아웃 <i class="svg-icon ico-logout"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="krds-btn small text">
+                                        마이페이지 <i class="svg-icon ico-my"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <div class="krds-drop-wrap type-alarm">
+                                        <button type="button" class="krds-btn small text drop-btn">
+                                            <i class="svg-icon ico-alarm"></i>
+                                        </button>
+                                        <div class="drop-menu">
+                                            <div class="drop-in">
+                                                <div class="drop-top">
+                                                    <strong>알림</strong>
+                                                    <button type="button" class="krds-btn small icon">
+                                                        <span class="sr-only">닫기</span>
+                                                        <i class="svg-icon ico-popup-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="bt-chk-all">
+                                                    <button type="button" class="krds-btn xsmall tertiary">
+                                                        <i class="svg-icon ico-checkall"></i>모두읽음
+                                                    </button>
+                                                </div>
+                                                <ul class="drop-list">
+                                                    <li>
+                                                        <a href="#" class="item-link new">
+                                                            <span class="title">신규 알림</span>
+                                                            <span class="date">25-01-01</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="item-link chk">
+                                                            <span class="title">확인 완료 알림</span>
+                                                            <span class="date">25-01-01</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="item-link">
+                                                            <span class="title">미확인 알림</span>
+                                                            <span class="date">25-01-01</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- header-utility -->
+
+                        <div class="header-branding">
+                            <h2 class="logo">
+                                <a href="#">
+                                    <span class="sr-only">국가공유데이터 플랫폼</span>
+                                </a>
+                                <div class="krds-drop-wrap type-site">
+                                    <button type="button" class="krds-btn small icon drop-btn">
+                                        <i class="svg-icon ico-toggle"></i>
+                                    </button>
+                                    <div class="drop-menu">
+                                        <div class="drop-in">
+                                            <div class="drop-top">연계사이트 바로가기</div>
+                                            <ul class="drop-list">
+                                                <li><a href="#" class="item-link" title="새 창 열림">품질표준사이트<i class="svg-icon ico-go"></i></a></li>
+                                                <li><a href="#" class="item-link" title="새 창 열림">국가공유데이터 포털<i class="svg-icon ico-go"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h2>
+                            <nav class="krds-main-menu">
+                                <ul class="gnb-menu">
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">데이터 검색</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">공유데이터맵</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">활용사례</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">이용안내</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">기관담당자</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">전체메뉴
+                                            <i class="svg-icon ico-all"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- krds-main-menu -->
+                        </div>
+                        <!-- header-branding -->
+                    </div>
+                </div>
+                <!-- //header-container -->
+            </div>
+            <!-- //header-in -->
+        </header>
+        <!-- //헤더 영역 -->
+
+        <!-- 퀵 메뉴 영역 -->
+        <nav class="quick-menu-wrap">
+            <div class="quick-menu">
+                <h2 class="menu-tit"><span class="sr-only">quick menu</span></h2>
+                <ul class="menu-list" role="menu">
+                    <li role="none">
+                        <a href="#" class="menu-link plus" role="menuitem">
+                            <span class="sr-only">데이터 요청</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link heart" role="menuitem">
+                            <span class="sr-only">관심 데이터</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link download" role="menuitem">
+                            <span class="sr-only">다운로드</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link question" role="menuitem">
+                            <span class="sr-only">FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- // 퀵 메뉴 영역 -->
+
+        <!-- 컨테이너 영역 -->
+        <div id="container">
+            <!-- breadcrumb -->
+            <nav class="krds-breadcrumb-wrap" aria-label="현재 경로">
+                <ol class="breadcrumb">
+                    <li class="home"><a href="#;" class="txt">홈</a></li>
+                    <li><a href="#;" class="txt">서비스 신청</a></li>
+                </ol>
+            </nav>
+            <!-- //breadcrumb -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="inner">
+                <div class="conts-area">
+                    <!-- 페이지 타이틀 영역 -->
+                    <div class="page-title-wrap">
+                        <h1 class="page-title">데이터 직접등록</h1>
+                    </div>
+                    <!-- //페이지 타이틀 영역 -->
+                    
+                    <div class="krds-tab-area layer">
+                        <div class="tab fill full">
+                            <ul role="tablist">
+                                <li id="tab01" role="tab" aria-selected="true" aria-controls="panel01" class="active">
+                                    <button type="button" class="btn-tab">검색필터 접기 기능 없음<i class="sr-only created"> 선택됨</i></button>
+                                </li>
+                                <li id="tab02" role="tab" aria-selected="false" aria-controls="panel02">
+                                    <button type="button" class="btn-tab">검색필터 접기 기능 있음</button>
+                                </li>
+                            </ul>
+                        </div><!-- //tab list -->
+        
+                        <div class="tab-conts-wrap">
+                            <section id="panel01" aria-labelledby="tab01" class="tab-conts active" data-quick-nav="false">
+                                <h3 class="sr-only">탭 영역 타이틀</h3>
+                                
+                                <div class="in-page-filter-wrap">
+                                    <!-- filter-area -->
+                                    <div class="aside-filter-area">
+                                        <div class="filter-top">
+                                            <i class="svg-icon ico-sch-plus"></i>검색필터
+                                        </div>
+                                        <div class="filter-wrap">
+                                            <div class="filter-group">
+                                                <div class="filter-title">
+                                                    <div class="krds-form-check">
+                                                        <input type="checkbox" id="chkA00">
+                                                        <label for="chkA00">listA title</label>
+                                                        <span class="krds-badge bg-primary number">5</span>
+                                                    </div>
+                                                    <button type="button" class="btn-toggle" aria-controls="toggleTargetA00">
+                                                        <span class="sr-only">열기</span>
+                                                    </button>
+                                                </div>
+                                                <ul id="toggleTargetA00" class="filter-list toggle-target">
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA01">
+                                                            <label for="chkA01">listA 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA02">
+                                                            <label for="chkA02">listA 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA03">
+                                                            <label for="chkA03">listA 3</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <div class="filter-title">
+                                                    <div class="krds-form-check">
+                                                        <input type="checkbox" id="chkB00">
+                                                        <label for="chkB00">listB title</label>
+                                                    </div>
+                                                    <button type="button" class="btn-toggle" aria-controls="toggleTargetB00">
+                                                        <span class="sr-only">열기</span>
+                                                    </button>
+                                                </div>
+                                                <ul id="toggleTargetB00" class="filter-list toggle-target">
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB01">
+                                                            <label for="chkB01">listB 1</label>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle" aria-controls="toggleTargetB01">
+                                                            <span class="sr-only">열기</span>
+                                                        </button>
+                                                        <ul id="toggleTargetB01" class="toggle-target">
+                                                            <li>
+                                                                <div class="krds-form-check">
+                                                                    <input type="checkbox" id="chkB01_1">
+                                                                    <label for="chkB01_1">listB 1-1</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="krds-form-check">
+                                                                    <input type="checkbox" id="chkB01_2">
+                                                                    <label for="chkB01_2">listB 1-2</label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB02">
+                                                            <label for="chkB02">listB 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB03">
+                                                            <label for="chkB03">listB 3</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <div class="filter-title">
+                                                    <span>검색기간</span>
+                                                    <button type="button" class="btn-toggle" aria-controls="toggleTargetC10">
+                                                        <span class="sr-only">열기</span>
+                                                    </button>
+                                                </div>
+            
+                                                <div id="toggleTargetC10" class="filter-list toggle-target">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="krds-btn tertiary small">1개월</button>
+                                                        <button type="button" class="krds-btn tertiary small">3개월</button>
+                                                        <button type="button" class="krds-btn tertiary small">6개월</button>
+                                                        <button type="button" class="krds-btn tertiary small">1년</button>
+                                                    </div>
+                                                    <div class="calendar-conts">
+                                                        <div class="calendar-input type-range">
+                                                            <ul class="input-group range set">
+                                                                <li>
+                                                                    <input type="number" class="krds-input small datepicker" placeholder="YYYY.MM.DD" title="시작날짜 입력">
+                                                                </li>
+                                                                <li class="mark">-</li>
+                                                                <li>
+                                                                    <input type="number" class="krds-input small datepicker" placeholder="YYYY.MM.DD" title="종료날짜 입력">
+                                                                </li>
+                                                            </ul>
+                                                            <button type="button" class="krds-btn xsmall icon form-btn-datepicker" aria-expanded="false"><span class="sr-only">달력 열기</span><i class="svg-icon ico-calendar"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="in-page-navigation-action">
+                                                <button type="button" class="krds-btn medium tertiary">초기화</button>
+                                                <button type="button" class="krds-btn medium primary">적용하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- //filter-area -->
+
+                                    <div class="conts-area" style="height: 100vh; background: #f0f0f0;">
+                                        <strong>탭1 컨텐츠 영역</strong>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="panel02" aria-labelledby="tab02" class="tab-conts" data-quick-nav="false">
+                                <h3 class="sr-only">탭 영역 타이틀</h3>
+                                
+                                <div class="in-page-filter-wrap">
+                                    <!-- filter-area -->
+                                    <div class="aside-filter-area">
+                                        <button type="button" class="btn-toggle-filter">검색필터
+                                            <span class="sr-only">닫기</span>
+                                        </button>
+                                        <div class="filter-wrap">
+                                            <div class="filter-group">
+                                                <div class="filter-title">
+                                                    <div class="krds-form-check">
+                                                        <input type="checkbox" id="chkA10">
+                                                        <label for="chkA10">listA title</label>
+                                                        <span class="krds-badge bg-primary number">5</span>
+                                                    </div>
+                                                    <button type="button" class="btn-toggle" aria-controls="toggleTargetA10">
+                                                        <span class="sr-only">열기</span>
+                                                    </button>
+                                                </div>
+                                                <ul id="toggleTargetA10" class="filter-list toggle-target">
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA11">
+                                                            <label for="chkA11">listA 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA12">
+                                                            <label for="chkA12">listA 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkA13">
+                                                            <label for="chkA13">listA 3</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <div class="filter-title">
+                                                    <div class="krds-form-check">
+                                                        <input type="checkbox" id="chkB10">
+                                                        <label for="chkB10">listB title</label>
+                                                    </div>
+                                                    <button type="button" class="btn-toggle" aria-controls="toggleTargetB10">
+                                                        <span class="sr-only">열기</span>
+                                                    </button>
+                                                </div>
+                                                <ul id="toggleTargetB10" class="filter-list toggle-target">
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB11">
+                                                            <label for="chkB11">listB 1</label>
+                                                        </div>
+                                                        <button type="button" class="btn-toggle" aria-controls="toggleTargetB11">
+                                                            <span class="sr-only">열기</span>
+                                                        </button>
+                                                        <ul id="toggleTargetB11" class="toggle-target">
+                                                            <li>
+                                                                <div class="krds-form-check">
+                                                                    <input type="checkbox" id="chkB11_1">
+                                                                    <label for="chkB11_1">listB 1-1</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="krds-form-check">
+                                                                    <input type="checkbox" id="chkB11_2">
+                                                                    <label for="chkB11_2">listB 1-2</label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB12">
+                                                            <label for="chkB12">listB 2</label>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="krds-form-check">
+                                                            <input type="checkbox" id="chkB13">
+                                                            <label for="chkB13">listB 3</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="in-page-navigation-action">
+                                                <button type="button" class="krds-btn medium tertiary">초기화</button>
+                                                <button type="button" class="krds-btn medium primary">적용하기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- //filter-area -->
+
+                                    <div class="conts-area" style="height: 100vh; background: #f0f0f0;">
+                                        <strong>탭2 컨텐츠 영역</strong>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <!-- //tab-conts-wrap -->
+                    </div>
+                    <!-- //krds-tab-area layer -->
+                </div>
+            </div>
+            <!-- //컨텐츠 영역 -->
+        </div>
+        <!-- //컨테이너 영역 -->
+
+        <!-- 푸터 영역 -->
+        <footer id="krds-footer">
+            <div class="foot-quick">
+                <div class="inner">
+                    <button type="button" class="link open-modal" title="관련단체 레이어" data-target="popFootLink">관련단체</button>
+                    <button type="button" class="link open-modal" title="정부기관 레이어" data-target="popFootLink">정부기관</button>
+                    <button type="button" class="link open-modal" title="관련기관링크 레이어" data-target="popFootLink">관련기관링크</button>
+                    <button type="button" class="link open-modal" title="관련기관링크 레이어" data-target="popFootLink">관련기관링크</button>
+                </div>
+            </div>
+            <!-- //foot-quick -->
+
+            <div class="inner">
+                <div class="f-top">
+                    <div class="f-menu">
+                        <a href="#" class="krds-btn medium text"><strong>개인정보처리방침</strong></a>
+                        <a href="#" class="krds-btn medium text">저작권정책</a>
+                        <a href="#" class="krds-btn medium text">웹 접근성 품질인증 마크 획득</a>
+                        <a href="#" class="krds-btn medium text">국가공유데이터 플랫폼 소개</a>
+                    </div>
+
+                    <div class="link-sns">
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">인스타그램</span>
+                            <i class="svg-icon ico-instagram"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">유튜브</span>
+                            <i class="svg-icon ico-youtube"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">X</span>
+                            <i class="svg-icon ico-sns-x"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">페이스북</span>
+                            <i class="svg-icon ico-facebook"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">블로그</span>
+                            <i class="svg-icon ico-blog"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="f-cnt">
+                    <div class="f-logo">
+                        <span class="sr-only">행정안전부</span>
+                    </div>
+
+                    <div class="f-info">
+                        <ul class="info-cs">
+                            <li>(04383) 서울특별시 용산구 이태원로 22</li>
+                            <li>
+                                <strong class="key-info">대표전화 1234</strong>
+                                <span>(평일 09시-18시)</span>
+                            </li>
+                            <li>
+                                <strong class="key-info">팩스 02-123-5678</strong>
+                            </li>
+                        </ul>
+                        <p class="f-copy">© 2023 National Health Insurance Service. All rights reserved.The Government of the Republic of Korea. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- //inner -->
+        </footer>
+        <!-- //푸터 영역 -->
+    </div>
+</body>
+</html>

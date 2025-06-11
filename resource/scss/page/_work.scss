@@ -260,6 +260,10 @@
         word-break: keep-all;
       }
     }
+
+    &+.view-list {
+      margin-top: 20px;
+    }
   }
 
   .img-list {
@@ -406,6 +410,10 @@
       width: 50%;
       padding-right: 5%;
       margin-bottom: 40px;
+    }
+
+    .view-list+.view-list {
+      margin-top: 40px;
     }
   }
   .btn-link+.text-sm {

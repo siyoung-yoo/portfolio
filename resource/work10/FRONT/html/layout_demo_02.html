@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>layout_step</title>
+<link rel="stylesheet" href="../resources/css/output.css">
+<script src="../resources/js/component/ui-script.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <!-- 본문 바로가기 영역  -->
+        <div id="krds-skip-link" class="type1">
+            <a href="#breadcrumb">본문 바로가기</a>
+        </div>
+        <!-- //본문 바로가기 영역  -->
+
+        <!-- 헤더 영역 -->
+        <header id="krds-header">
+            <div class="header-in">
+                <div class="header-container">
+                    <div class="inner">
+                        <div class="header-utility">
+                            <ul class="utility-list">
+                                <li>
+                                    <button type="button" class="krds-btn small text">
+                                        로그아웃 <i class="svg-icon ico-logout"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="krds-btn small text">
+                                        마이페이지 <i class="svg-icon ico-my"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <div class="krds-drop-wrap type-alarm">
+                                        <button type="button" class="krds-btn small text drop-btn">
+                                            <i class="svg-icon ico-alarm"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- header-utility -->
+
+                        <div class="header-branding">
+                            <h2 class="logo">
+                                <a href="#">
+                                    <span class="sr-only">국가공유데이터 플랫폼</span>
+                                </a>
+                                <div class="krds-drop-wrap type-site">
+                                    <button type="button" class="krds-btn small icon drop-btn">
+                                        <i class="svg-icon ico-toggle"></i>
+                                    </button>
+                                </div>
+                            </h2>
+                            <nav class="krds-main-menu">
+                                <ul class="gnb-menu">
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">데이터 검색</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">공유데이터맵</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">활용사례</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">이용안내</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">기관담당자</button>
+                                    </li>
+                                    <li>
+                                        <button type="button" class="gnb-main-trigger" data-trigger="gnb">전체메뉴
+                                            <i class="svg-icon ico-all"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- krds-main-menu -->
+                        </div>
+                        <!-- header-branding -->
+                    </div>
+                </div>
+                <!-- //header-container -->
+            </div>
+            <!-- //header-in -->
+        </header>
+        <!-- //헤더 영역 -->
+
+        <!-- 퀵 메뉴 영역 -->
+        <nav class="quick-menu-wrap">
+            <div class="quick-menu">
+                <h2 class="menu-tit"><span class="sr-only">quick menu</span></h2>
+                <ul class="menu-list" role="menu">
+                    <li role="none">
+                        <a href="#" class="menu-link plus" role="menuitem">
+                            <span class="sr-only">데이터 요청</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link heart" role="menuitem">
+                            <span class="sr-only">관심 데이터</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link download" role="menuitem">
+                            <span class="sr-only">다운로드</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#" class="menu-link question" role="menuitem">
+                            <span class="sr-only">FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- // 퀵 메뉴 영역 -->
+
+        <!-- 컨테이너 영역 -->
+        <div id="container" class="krds-in-page-navigation-type">
+            <!-- breadcrumb -->
+            <nav class="krds-breadcrumb-wrap" aria-label="현재 경로">
+                <ol class="breadcrumb">
+                    <li class="home"><a href="#;" class="txt">홈</a></li>
+                    <li><a href="#;" class="txt">서비스 신청</a></li>
+                </ol>
+            </nav>
+            <!-- //breadcrumb -->
+
+            <!-- In-page navigation -->
+            <div class="krds-in-page-navigation-area">
+                <nav class="in-page-navigation-list">
+                    <ol>
+                        <li class="done">
+                            <div class="quick-title"><span class="num">01</span> 기본정보</div>
+                            <p class="quick-caption">필수항목</p>
+                            <ul>
+                                <li><a href="#step01-01" class="active">데이터명</a></li>
+                                <li><a href="#step01-02">데이터설명</a></li>
+                                <li><a href="#step01-03">키워드</a></li>
+                                <li><a href="#step01-04">갱신주기</a></li>
+                                <li><a href="#step01-05">분류체계</a></li>
+                                <li><a href="#step01-06">step01-06</a></li>
+                                <li><a href="#step01-07">step01-07</a></li>
+                            </ul>
+                        </li>
+                        <li class="active">
+                            <div class="quick-title"><span class="num">02</span> API등록/SOAP</div>
+                            <p class="quick-caption">필수항목</p>
+                            <ul>
+                                <li><a href="#step02-01">step02-01</a></li>
+                                <li><a href="#step02-02">step02-02</a></li>
+                                <li><a href="#step02-03">step02-03</a></li>
+                                <li><a href="#step02-04">step02-04</a></li>
+                                <li><a href="#step02-05">step02-05</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="quick-title"><span class="num"></span> 완료</div>
+                        </li>
+                    </ol>
+                </nav>
+                <div class="in-page-navigation-action">
+                    <button type="button" class="krds-btn xsmall tertiary">임시저장</button>
+                    <button type="button" class="krds-btn xsmall primary">등록</button>
+                </div>
+            </div>
+            <!-- //In-page navigation -->
+
+            <!-- 컨텐츠 영역 -->
+            <div class="inner">
+                <div class="conts-area">
+                    <!-- 페이지 타이틀 영역 -->
+                    <div class="page-title-wrap">
+                        <h1 class="page-title">데이터 직접등록</h1>
+                        <div class="page-info">
+                            <p class="info-title">데이터 등록 시 안내사항</p>
+                            <ul class="info-list">
+                                <li>1. 내용</li>
+                                <li>2. 내용 내용이 길 경우 내용이 길 경우 내용이 길 경우 내용이 길 경우 내용이 길 경우 내용이 길 경우</li>
+                                <li>3. 개방 데이터 등록 시 이용허락범위를 선택하여 개방범위를 선택할 수 있습니다. 개방 데이터 등록 시 이용허락범위를 선택하여 개방범위를 선택할 수 있습니다. 개방 데이터 등록 시 이용허락범위를 선택하여 개방범위를 선택할 수 있습니다.</li>
+                                <li>4. 내용</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //페이지 타이틀 영역 -->
+                    
+                    <div class="section-area type-line">
+                        <h2 class="section-title h-md">
+                            <span class="text-step">STEP 01</span>기본정보
+                        </h2>
+
+                        <p class="table-info all-chk-txt">모든 항목값은 필수입니다</p>
+                        <div class="krds-table-wrap">
+                            <table class="tbl">
+                                <caption>데이터명, 데이터설명, 키워드, 갱신주기, 분류체계, 보유근거, 정보시스템, 등록유형, 공유타입 입력테이블</caption>
+                                <colgroup>
+                                    <col style="width: 124px;">
+                                    <col>
+                                    <col style="width: 124px;">
+                                    <col style="width: 176px;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name01">데이터명</label></th>
+                                        <td colspan="3">
+                                            <div class="form-group">
+                                                <div class="form-conts is-information">
+                                                    <input type="text" id="consult_name01" class="krds-input small" placeholder="내용을 입력하세요">
+                                                </div>
+                                                <p class="form-hint-information">정보 메시지</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name02">데이터설명</label></th>
+                                        <td colspan="3">
+                                            <div class="textarea-wrap">
+                                                <textarea class="krds-input" placeholder="플레이스홀더" id="consult_name02" style="height: 8.6rem;"></textarea>
+                                                <p class="textarea-count">
+                                                  <span class="count-now">0</span><span class="count-total">/100</span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name03">키워드</label></th>
+                                        <td colspan="3">
+                                            <div class="form-group">
+                                                <div class="form-conts is-information">
+                                                    <input type="text" id="consult_name03" class="krds-input small" placeholder="내용을 입력하세요">
+                                                </div>
+                                                <p class="form-hint-information">콤마(,)로 구분하여키워드 3개 이상 등록해주세요. (예시) 공공,행정,안전</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">갱신주기</th>
+                                        <td colspan="3">
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA" id="radioA01">
+                                                    <label for="radioA01">일</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA" id="radioA02">
+                                                    <label for="radioA02">월</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA" id="radioA03">
+                                                    <label for="radioA03">분기</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA" id="radioA04">
+                                                    <label for="radioA04">연</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA" id="radioA05">
+                                                    <label for="radioA05">수시</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name04">분류체계</label></th>
+                                        <td colspan="3">
+                                            <div class="input-group">
+                                                <select class="krds-form-select small" title="대분류 선택" id="consult_name04">
+                                                    <option value="">대분류</option>
+                                                    <option value="">항목2</option>
+                                                    <option value="">항목3</option>
+                                                    <option value="">항목4</option>
+                                                </select>
+                                                <select class="krds-form-select small" title="중분류 선택">
+                                                    <option value="">중분류</option>
+                                                    <option value="">항목2</option>
+                                                    <option value="">항목3</option>
+                                                    <option value="">항목4</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name05">보유근거</label></th>
+                                        <td colspan="3">
+                                            <div class="form-group">
+                                                <div class="form-conts is-information">
+                                                    <input type="text" id="consult_name05" class="krds-input small" placeholder="내용을 입력하세요">
+                                                </div>
+                                                <p class="form-hint-information">법령에 근거한 보유 근거를 작성해주세요</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><label for="consult_name06">정보시스템</label></th>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" id="consult_name06" class="krds-input small" style="width: 27rem;" placeholder="내용을 입력하세요">
+                                                <button type="button" class="krds-btn small secondary">조회</button>   
+                                                <div class="krds-form-check small">
+                                                    <input type="checkbox" id="chk_1-1a">
+                                                    <label for="chk_1-1a">직접입력</label>
+                                                  </div>               
+                                            </div>
+                                        </td>
+                                        <th scope="row">정보시스템 코드</th>
+                                        <td class="td-disabled">자동입력값</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">등록유형</th>
+                                        <td colspan="3">
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA2" id="radioA201">
+                                                    <label for="radioA201">API등록</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA2" id="radioA202">
+                                                    <label for="radioA202">직접등록</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">공유타입</th>
+                                        <td colspan="3">
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA3" id="radioA301">
+                                                    <label for="radioA301">공유</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="radioA3" id="radioA302">
+                                                    <label for="radioA302">개방</label>
+                                                </div>
+                                            </div> 
+
+                                            <div class="krds-table-wrap inner-table">
+                                                <table class="tbl">
+                                                    <caption>홈페이지명, 홈페이지URL, 이용허락범위(저작권정보), 상세URL, 비용부과유무 안내표</caption>
+                                                    <colgroup>
+                                                        <col style="width: 160px;">
+                                                        <col>
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row"><label for="inner_name01">홈페이지명</label></th>
+                                                            <td>
+                                                                <input type="text" id="inner_name01" class="krds-input small" placeholder="내용을 입력하세요">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row"><label for="inner_name02">홈페이지URL</label></th>
+                                                            <td>
+                                                                <input type="text" id="inner_name02" class="krds-input small" placeholder="내용을 입력하세요">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">이용허락범위 <br>(저작권 정보)</th>
+                                                            <td>
+                                                                <div class="krds-check-area">
+                                                                    <div class="krds-form-check small">
+                                                                        <input type="checkbox" id="inner_chk_1">
+                                                                        <label for="inner_chk_1">제3자권리 포함</label>
+                                                                    </div>
+                                                                    <div class="krds-form-check small">
+                                                                        <input type="checkbox" id="inner_chk_2">
+                                                                        <label for="inner_chk_2">공공저작물</label>
+                                                                    </div>                                                                    
+                                                                </div>
+	
+                                                                <div class="box-rnd mgt-lg">
+                                                                    <h4 class="h-xsm">제3관리 포함</h4>
+                                                                    <!-- 파일 업로드 영역 -->
+                                                                    <div class="file-wrap">
+                                                                        <div class="file-upload-label">증빙자료등록</div>
+                                                                        <div class="file-upload">
+                                                                            <div class="file-upload-btn-wrap">
+                                                                                <input type="file" name="myFile" id="fileu-upload" hidden>
+                                                                                <label for="fileu-upload">
+                                                                                    <button type="button" class="krds-btn xsmall secondary">파일업로드</button>
+                                                                                </label>                                                                        
+                                                                            </div>
+                                                                            <div class="file-upload-list">
+                                                                                <div class="chip-wrap krds-tag-wrap medium">
+                                                                                    <span class="krds-btn-tag">
+                                                                                        파일.csv
+                                                                                        <button type="button" class="btn-delete">
+                                                                                        <span class="sr-only">삭제</span>
+                                                                                        </button>
+                                                                                    </span>
+                                                                                    <span class="krds-btn-tag">
+                                                                                        파일.csv
+                                                                                        <button type="button" class="btn-delete">
+                                                                                        <span class="sr-only">삭제</span>
+                                                                                        </button>
+                                                                                    </span>                            
+                                                                                </div>
+                                                                            </div>                                                                         
+                                                                        </div>
+                                                                        <p class="file-upload-info">증빙자료는 임시저장되지 않습니다.</p>
+                                                                    </div>
+                                                                    <!-- //파일 업로드 영역 -->
+
+                                                                    <!-- 이용허락범위 사유 -->
+                                                                     <div class="">
+                                                                        <div class="form-group">
+                                                                            <div class="form-tit">
+                                                                              <label for="c-name">이용 허락 범위 사유</label>
+                                                                            </div>
+                                                                            <div class="form-conts">
+                                                                              <input type="text" id="c-name" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="krds-check-area chk-column">
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA01">
+                                                                                <label for="c-radioA01">저작권 유형 (제 1유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA02">
+                                                                                <label for="c-radioA02">저작권 유형 – 비영리 (제 2유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA03">
+                                                                                <label for="c-radioA03">저작권 유형 – 변경금지 (제 3유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA04">
+                                                                                <label for="c-radioA04">저작권 유형 – 비영리 - 변경금지 (제 4유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA05">
+                                                                                <label for="c-radioA05">저작권 표시 – 동일조건 변경 하락</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA06">
+                                                                                <label for="c-radioA06">저작권 표시 – 비영리 – 동일조건 변경 하락</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="c-radioA" id="c-radioA07">
+                                                                                <label for="c-radioA07">이용 허락 범위 변경 없음</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                     </div>
+                                                                    <!-- 이용허락범위 사유 -->
+                                                                </div>
+
+                                                                <div class="box-rnd mgt-lg">
+                                                                    <h4 class="h-xsm">공공저작물</h4>
+                                                                    <!-- 이용허락범위 사유 -->
+                                                                    <div class="">                                                                        
+                                                                        <div class="krds-check-area chk-column">
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="d-radioA" id="d-radioA01">
+                                                                                <label for="d-radioA01">저작권 유형 (제 1유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="d-radioA" id="d-radioA02">
+                                                                                <label for="d-radioA02">저작권 유형 – 비영리 (제 2유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="d-radioA" id="d-radioA03">
+                                                                                <label for="c-radioA03">저작권 유형 – 변경금지 (제 3유형)</label>
+                                                                            </div>
+                                                                            <div class="krds-form-check medium">
+                                                                                <input type="radio" name="d-radioA" id="d-radioA04">
+                                                                                <label for="d-radioA04">저작권 유형 – 비영리 - 변경금지 (제 4유형)</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                     </div>
+                                                                    <!-- 이용허락범위 사유 -->
+                                                                </div>
+                                                            </td>
+                                                        </tr>   
+                                                        <tr>
+                                                            <th scope="row"><label for="inner_name03">상세 URL</label></th>
+                                                            <td>
+                                                                <input type="text" id="inner_name03" class="krds-input small" placeholder="내용을 입력하세요">
+                                                            </td>
+                                                        </tr>  
+                                                        <tr>
+                                                            <th scope="row">비용부과유무</th>
+                                                            <td>
+                                                                <div class="krds-check-area">
+                                                                    <div class="krds-form-check medium">
+                                                                        <input type="radio" name="inner_radioA2" id="inner_radioA02">
+                                                                        <label for="inner_radioA02">무료</label>
+                                                                    </div>
+                                                                    <div class="krds-form-check medium">
+                                                                        <input type="radio" name="inner_radioA" id="inner_radioA02_2">
+                                                                        <label for="inner_radioA02_2">유료</label>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>                                                   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //table -->
+                    </div>
+
+                    <div class="section-area type-line">
+                        <h2 class="section-title h-md">
+                            <span class="text-step">STEP 02</span>API 등록
+                        </h2>
+                        <p class="table-info all-chk-txt">모든 항목값은 필수입니다</p>
+                        <div class="krds-table-wrap">
+                            <table class="tbl">
+                                <caption>API포맷, 자동이용승인, API유형 입력테이블</caption>
+                                <colgroup>
+                                    <col style="width: 124px;">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">API 포맷</th>
+                                        <td>
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA" id="s-radioA01">
+                                                    <label for="s-radioA01">XML</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA" id="s-radioA02">
+                                                    <label for="s-radioA02">TEXT</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA" id="s-radioA03">
+                                                    <label for="s-radioA03">JSON+XML </label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA" id="s-radioA04">
+                                                    <label for="s-radioA04">WMS</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA" id="s-radioA05">
+                                                    <label for="s-radioA05">기타</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">자동이용승인</th>
+                                        <td>
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check small">
+                                                    <input type="checkbox" id="s-chk-1">
+                                                    <label for="s-chk-1">개발단계 : 허용</label>
+                                                </div>
+                                                <div class="krds-form-check small">
+                                                    <input type="checkbox" id="s-chk-1">
+                                                    <label for="s-chk-1">운영단계 : 허용</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">API유형</th>
+                                        <td>
+                                            <div class="krds-check-area">
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA-2" id="s-radioA01-2">
+                                                    <label for="s-radioA01-2">SOAP</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA-2" id="s-radioA02-2">
+                                                    <label for="s-radioA02-2">REST</label>
+                                                </div>
+                                                <div class="krds-form-check medium">
+                                                    <input type="radio" name="s-radioA-2" id="s-radioA03-2">
+                                                    <label for="s-radioA03-2">LINK</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">API상세정보</th>
+                                        <td>
+                                            <div class="title-wrap">
+                                                <h5 class="h-xsm">API 오퍼레이션</h5>
+                                                <button type="button" class="krds-btn small primary"><i class="svg-icon ico-plus"></i> 오퍼레이션</button>
+                                            </div>
+                                            
+                                            
+                                            <!-- accordion -->
+                                            <div class="krds-accordion type-box">
+                                                <div class="accordion-item active">
+                                                    <h5 class="accordion-header"><button type="button" id="accordionHeaderSample01" class="btn-accordion active" aria-controls="accordionCollapseSample01" aria-expanded="true">오퍼레이션</button></h5>
+                                                    <div id="accordionCollapseSample01" class="accordion-collapse collapse" aria-labelledby="accordionHeaderSample01">
+                                                        <div class="accordion-body">
+                                                        <!-- accordion contents -->
+                                                        <div class="flex-layout gap-8">
+                                                            <div class="group">
+                                                                <h5 class="h-xsm">API 오퍼레이션 정보</h5>
+                                                                <div class="krds-table-wrap inner-table">
+                                                                    <table class="tbl">
+                                                                        <caption>서비스 URL, 오퍼레이션 명, 오퍼레이션 설명, END POINT URL, 개발 계정 트래픽, 운영계정 트래픽 정보 테이블</caption>
+                                                                        <colgroup>
+                                                                            <col style="width: 124px;">
+                                                                            <col>
+                                                                        </colgroup>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th scope="row"><label for="ap-01">서비스 URL</label></th>
+                                                                                <td>
+                                                                                    <div class="form-conts">
+                                                                                        <input type="text" id="ap-01" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th scope="row"><label for="ap-02">데이터설명</label></th>
+                                                                                <td>
+                                                                                    <div class="form-conts">
+                                                                                        <input type="text" id="ap-02" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="group">
+                                                                <h5 class="h-xsm">요청 메시지 정보</h5>
+                                                                <div class="krds-table-wrap inner-table">
+                                                                    <table class="tbl">
+                                                                        <caption>항목명(영문), 설명, 항목유형, 구분, 샘플 정보 테이블</caption>
+                                                                        <colgroup>
+                                                                            <col style="width: 36px;">
+                                                                            <col>
+                                                                            <col style="width: 138px;">
+                                                                            <col style="width: 138px;">
+                                                                            <col style="width: 138px;">
+                                                                            <col style="width: 138px;">
+                                                                        </colgroup>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">
+                                                                                    <div class="krds-form-check small only">
+                                                                                        <input type="checkbox" id="ap-chk-01">
+                                                                                        <label for="ap-chk-01"><span class="sr-only">항목</span></label>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th scope="col">항목명(영문)</th>
+                                                                                <th scope="col">설명</th>
+                                                                                <th scope="col">항목유형</th>
+                                                                                <th scope="col">구분</th>
+                                                                                <th scope="col">샘플</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <td>
+                                                                                <div class="krds-form-check small only">
+                                                                                    <input type="checkbox" id="ap-chk-02">
+                                                                                    <label for="ap-chk-02"><span class="sr-only">항목</span></label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="ap-info-01" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="ap-info-02" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="krds-form-select small" title="선택">
+                                                                                    <option value="">선택해주세요</option>
+                                                                                    <option value="">항목2</option>
+                                                                                    <option value="">항목3</option>
+                                                                                    <option value="">항목4</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select class="krds-form-select small" title="선택">
+                                                                                    <option value="">선택해주세요</option>
+                                                                                    <option value="">항목2</option>
+                                                                                    <option value="">항목3</option>
+                                                                                    <option value="">항목4</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" id="ap-info-05" class="krds-input small" placeholder="내용을 입력하세요">
+                                                                            </td>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="btn-wrap type-center-right">
+                                                                    <button type="button" class="krds-btn xsmall tertiary">
+                                                                        <i class="svg-icon ico-plus"></i> 추가               
+                                                                    </button>
+                                                                    <button type="button" class="krds-btn xsmall tertiary">
+                                                                        <i class="svg-icon ico-minus"></i> 삭제               
+                                                                    </button>
+                                                                    <div class="btn-group">
+                                                                        <button type="button" class="krds-btn xsmall secondary">오브젝트 추가</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="btn-wrap type-right">                                                                
+                                                                <button type="button" class="krds-btn medium tertiary">취소</button>
+                                                                <button type="button" class="krds-btn medium secondary">저장</button>                                                               
+                                                            </div> 
+                                                        </div>
+                                                        <!-- //accordion contents -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- //accordion -->
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="btn-wrap">
+                        <button type="button" class="krds-btn tertiary">취소</button>
+                        <div class="btn-group">
+                            <button type="button" class="krds-btn tertiary">임시저장</button>
+                            <button type="button" class="krds-btn primary">등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- //컨텐츠 영역 -->
+        </div>
+        <!-- //컨테이너 영역 -->
+
+        <!-- 푸터 영역 -->
+        <footer id="krds-footer">
+            <div class="foot-quick">
+                <div class="inner">
+                    <button type="button" class="link open-modal" title="관련단체 레이어" data-target="popFootLink">관련단체</button>
+                    <button type="button" class="link open-modal" title="정부기관 레이어" data-target="popFootLink">정부기관</button>
+                    <button type="button" class="link open-modal" title="관련기관링크 레이어" data-target="popFootLink">관련기관링크</button>
+                    <button type="button" class="link open-modal" title="관련기관링크 레이어" data-target="popFootLink">관련기관링크</button>
+                </div>
+            </div>
+            <!-- //foot-quick -->
+
+            <div class="inner">
+                <div class="f-top">
+                    <div class="f-menu">
+                        <a href="#" class="krds-btn medium text"><strong>개인정보처리방침</strong></a>
+                        <a href="#" class="krds-btn medium text">저작권정책</a>
+                        <a href="#" class="krds-btn medium text">웹 접근성 품질인증 마크 획득</a>
+                        <a href="#" class="krds-btn medium text">국가공유데이터 플랫폼 소개</a>
+                    </div>
+
+                    <div class="link-sns">
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">인스타그램</span>
+                            <i class="svg-icon ico-instagram"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">유튜브</span>
+                            <i class="svg-icon ico-youtube"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">X</span>
+                            <i class="svg-icon ico-sns-x"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">페이스북</span>
+                            <i class="svg-icon ico-facebook"></i>
+                        </a>
+                        <a href="#" class="krds-btn xlarge icon border" target="_blank" title="새 창 열기">
+                            <span class="sr-only">블로그</span>
+                            <i class="svg-icon ico-blog"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="f-cnt">
+                    <div class="f-logo">
+                        <span class="sr-only">행정안전부</span>
+                    </div>
+
+                    <div class="f-info">
+                        <ul class="info-cs">
+                            <li>(04383) 서울특별시 용산구 이태원로 22</li>
+                            <li>
+                                <strong class="key-info">대표전화 1234</strong>
+                                <span>(평일 09시-18시)</span>
+                            </li>
+                            <li>
+                                <strong class="key-info">팩스 02-123-5678</strong>
+                            </li>
+                        </ul>
+                        <p class="f-copy">© 2023 National Health Insurance Service. All rights reserved.The Government of the Republic of Korea. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- //inner -->
+        </footer>
+        <!-- //푸터 영역 -->
+    </div>
+</body>
+</html>
