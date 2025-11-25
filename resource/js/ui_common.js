@@ -168,13 +168,26 @@ var fn_setMainCursor = function() {
         })
     });
 
-    const pjtImg = document.querySelectorAll(".work-img img");
-    document.addEventListener("mousemove", e => {
-        pjtImg.forEach(img => {
-            gsap.to( img , {
-                duration: .2,
-                x: (window.outerWidth / 2 - e.pageX) / 200,
-                y: (window.innerHeight / 2 - e.pageY) / 200
+    const pjtTitle = document.querySelectorAll(".work-title");
+    pjtTitle.forEach(text => {
+        const textSize = text.getBoundingClientRect();
+
+        text.addEventListener("mousemove", e => {
+            const thisX = e.clientX - (textSize.left + textSize.width);
+            const thisY = e.clientY - (textSize.top + textSize.height);
+
+            gsap.to( text , {
+                duration: .3,
+                x: thisX * 0.1,
+                y: thisY * 0.1
+            } )
+        })
+
+        text.addEventListener("mouseleave", e => {
+            gsap.to( text , {
+                duration: .3,
+                x: 'initial',
+                y: 'initial'
             } )
         })
     })
@@ -207,38 +220,26 @@ var fn_menuInclude = function() {
     menuWrap.innerHTML = `
         <button type="button" class="btn-close">닫기버튼</button>
         <ul>
-            <li data-bg="work11/work11_main.jpg">
-                <a href="work11.html"><span>아이스크림</span><br><span>AI Digital Textbook</span></a>
+            <li data-bg="work06/work06_main.jpg">
+                <a href="work06.html"><span>현대캐피탈</span><br><span>AUTODIGITAL PROJECT</span></a>
             </li>
             <li data-bg="work10/work10_main.jpg">
-                <a href="work10.html"><span>행정안전부</span><br><span>Data Sharing Platform</span></a>
+                <a href="work10.html"><span>행정안전부</span><br><span>국가공유데이터 플랫폼 구축</span></a>
             </li>
-            <li data-bg="work06/work06_main.jpg">
-                <a href="work06.html"><span>현대캐피탈</span><br><span>AutoDigital Project</span></a>
+            <li data-bg="work11/work11_main.jpg">
+                <a href="work11.html"><span>셀바스</span><br><span>아이스크림 AIDT</span></a>
             </li>
-            <li data-bg="work07/work07_main.jpg">
-                <a href="work07.html"><span>재한</span><br><span>Project Zaihan</span></a>
+            <li data-bg="work12/work12_main.jpg">
+                <a href="work12.html"><span>eum FLAP</span><br><span>디지털 통합 장례 플랫폼 구축</span></a>
             </li>
-            <li data-bg="work09/work09_main.jpg">
-                <a href="work09.html"><span>딜로이트</span><br><span>e-HR System</span></a>
+            <li data-bg="work13/work13_main.jpg">
+                <a href="work13.html"><span>천재교육</span><br><span>AIDT 지원센터</span></a>
             </li>
-            <li data-bg="work02/work02_main.jpg">
-                <a href="work02.html"><span>SK스토아</span><br><span>MLC Platform</span></a>
+            <li data-bg="work14/work14_main.jpg">
+                <a href="work14.html"><span>한국대한교육협의회</span><br><span>대입 서류제출 시스템 구축</span></a>
             </li>
-            <li data-bg="work01/work01_main.jpg">
-                <a href="work01.html"><span>딜로이트</span><br><span>Recruiting Site</span></a>
-            </li>
-            <li data-bg="work08/work08_main.jpg">
-                <a href="work08.html"><span>휴넷</span><br><span>Hunet Labs</span></a>
-            </li>
-            <li data-bg="work03/work03_main.jpg">
-                <a href="work03.html"><span>윤선생</span><br><span>Yoons ChoTong</span></a>
-            </li>
-            <li data-bg="work04/work04_main.jpg">
-                <a href="work04.html"><span>풀무원</span><br><span>FIS System</span></a>
-            </li>
-            <li data-bg="work05/work05_main.jpg">
-                <a href="work05.html"><span>CGV</span><br><span>Research Portal</span></a>
+            <li data-bg="img_work.jpg">
+                <a href="career.html"><span class="">More Project . . .</span></a>
             </li>
         </ul>`;
 }
@@ -307,18 +308,18 @@ var fn_setMenuEvent = function () {
 var fn_textTyping = function() {
 
     const text = document.querySelector("#type-text")
-    const tl = gsap.timeline({ repeat: -1, yoyo: false, repeatDelay: .5 })
+    const tl = gsap.timeline({ repeat: -1, yoyo: false, repeatDelay: 0 })
 
-    tl.to(text, 1, { text: "UI/UX", delay: 2.5 });
-    tl.to(text, .5, { text: "", delay: .5 });
-    tl.to(text, 1.5, { text: "Interaction", delay: 1 });
-    tl.to(text, 1, { text: "", delay: .5 });
-    tl.to(text, 1.5, { text: "Websites", delay: 1 });
-    tl.to(text, 1, { text: "", delay: .5 });
-    tl.to(text, 1, { text: "Motion", delay: 1 });
-    tl.to(text, .5, { text: "", delay: .5 });
-    tl.to(text, 1.5, { text: "Mobile Web", delay: 1 });
-    tl.to(text, 1, { text: "", delay: .5 });
+    tl.to(text, 1, { text: "UI/UX", delay: 2.2 });
+    tl.to(text, .5, { text: "", delay: .2 });
+    tl.to(text, 1.5, { text: "Interaction", delay: .8 });
+    tl.to(text, 1, { text: "", delay: .2 });
+    tl.to(text, 1.5, { text: "Websites", delay: .6 });
+    tl.to(text, 1, { text: "", delay: .2 });
+    tl.to(text, 1, { text: "Motion", delay: .6 });
+    tl.to(text, .5, { text: "", delay: .2 });
+    tl.to(text, 1.5, { text: "Mobile Web", delay: .6 });
+    tl.to(text, 1, { text: "", delay: .2 });
 }
 
 /***** main *****/
@@ -374,46 +375,26 @@ var fn_setMainPage = function () {
                 }
             },
             slideChangeTransitionStart: function() {
-                let activeTitle, prevTitle, nextTitle;
+                let activeTitle;
                 const swiperSlides = document.querySelectorAll(".swiper-slide");
                 swiperSlides.forEach( slide => {
                     if ( slide.classList.contains('swiper-slide-active')) {
                         activeTitle = slide.dataset.title;
                     }
-                    if ( slide.classList.contains('swiper-slide-prev')) {
-                        prevTitle = slide.dataset.title;
-                    }
-                    if ( slide.classList.contains('swiper-slide-next')) {
-                        nextTitle = slide.dataset.title;
-                    }
                 })
                 workTitleSplit.revert();
-                document.querySelector(".work-title.active").innerText = activeTitle;
-                document.querySelector(".work-title.prev").innerText = prevTitle;
-                document.querySelector(".work-title.next").innerText = nextTitle;
+                document.querySelector(".work-title").innerText = activeTitle;
                 workTitleSplit.split();
 
-                if (activeTitle == "") document.querySelector(".work-title.active").innerHTML = '<span class="char"></span>';
-                if (prevTitle == "") document.querySelector(".work-title.prev").innerHTML = '<span class="char"></span>';
-                if (nextTitle == "") document.querySelector(".work-title.next").innerHTML = '<span class="char"></span>';
+                if (activeTitle == "") document.querySelector(".work-title").innerHTML = '<span class="char"></span>';
             },
             slidePrevTransitionStart: function() {
-                let prevSlide = document.querySelector(".work-title.prev").querySelectorAll(".char");
-                let activeSlide = document.querySelector(".work-title.active").querySelectorAll(".char");
-                let nextSlide = document.querySelector(".work-title.next").querySelectorAll(".char");
-
-                gsap.to(prevSlide, { duration: 0.5, scale: 1.1, x: -100, opacity: 0, stagger: { each: 0.02, ease: "none", from: "end" } })
+                let activeSlide = document.querySelector(".work-title").querySelectorAll(".char");
                 gsap.to(activeSlide, { delay: 0.3, duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease: "none", from: "end" } })
-                gsap.to(nextSlide, { duration: 0.5, scale: 0.9, x: 100, opacity: 0, stagger: { each: 0.02, ease: "none", from: "end" } })
             },
             slideNextTransitionStart: function() {
-                let prevSlide = document.querySelector(".work-title.prev").querySelectorAll(".char");
-                let activeSlide = document.querySelector(".work-title.active").querySelectorAll(".char");
-                let nextSlide = document.querySelector(".work-title.next").querySelectorAll(".char");
-
-                gsap.to(prevSlide, { duration: 0.5, scale: 0.9, x: -100, opacity: 0, stagger: { each: 0.02, ease: "none" } })
+                let activeSlide = document.querySelector(".work-title").querySelectorAll(".char");
                 gsap.to(activeSlide, { delay: 0.3, duration: 0.5, scale: 1, x: 0, opacity: 1, stagger: { each: 0.02, ease: "none" } })
-                gsap.to(nextSlide, { duration: 0.5, scale: 1.1, x: 100, opacity: 0, stagger: { each: 0.02, ease: "none" } })
             },
             touchStart: function(e) {
                 if ( !e.target.classList.contains('swiper-button-prev') && !e.target.classList.contains('swiper-button-next')) {

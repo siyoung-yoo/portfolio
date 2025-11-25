@@ -57,13 +57,14 @@
     justify-content: center;
     width: 100%;
     height: 100vh;
-    padding: 0 40%;
+    padding: 0 20%;
     font-size: 30px;
     font-weight: 800;
     text-align: center;
     color: #fff;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    word-break: keep-all;
   }
 
   .work-subtext {
@@ -233,6 +234,35 @@
     }
   }
 
+  dd.list {
+    display: flex;
+    gap: 10px;
+
+    span {
+      flex: none;
+    }
+  }
+
+  @media (max-width: 500px) {
+    dd.list {
+      margin-top: 10px;
+      gap: 0;
+      flex-direction: column;
+
+      span { margin-bottom: -8px; }
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1100px) {
+    dd.list {
+      margin-top: 10px;
+      gap: 0;
+      flex-direction: column;
+
+      span { margin-bottom: -8px; }
+    }
+  }
+
   .view-list {
     .title-area {
       display: flex;
@@ -343,6 +373,14 @@
       }
     }
   }
+
+  @media (max-width: 400px) {
+    p.btn-top {
+      width: 60px;
+      white-space: normal;
+    }
+  }
+
   a {
     position: absolute;
     left: 50%;
