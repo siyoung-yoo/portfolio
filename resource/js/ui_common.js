@@ -221,7 +221,7 @@ var fn_menuInclude = function() {
         <button type="button" class="btn-close">닫기버튼</button>
         <ul>
             <li data-bg="work06/work06_main.jpg">
-                <a href="work06.html"><span>현대캐피탈</span><br><span>AUTODIGITAL PROJECT</span></a>
+                <a href="work06.html"><span>현대캐피탈</span><br><span>AutoDigital Project</span></a>
             </li>
             <li data-bg="work10/work10_main.jpg">
                 <a href="work10.html"><span>행정안전부</span><br><span>국가공유데이터 플랫폼 구축</span></a>
@@ -230,13 +230,13 @@ var fn_menuInclude = function() {
                 <a href="work11.html"><span>셀바스</span><br><span>아이스크림 AIDT</span></a>
             </li>
             <li data-bg="work12/work12_main.jpg">
-                <a href="work12.html"><span>eum FLAP</span><br><span>디지털 통합 장례 플랫폼 구축</span></a>
+                <a href="work12.html"><span>이음 파트너스</span><br><span>디지털 통합 장례 플랫폼 구축</span></a>
             </li>
             <li data-bg="work13/work13_main.jpg">
                 <a href="work13.html"><span>천재교육</span><br><span>AIDT 지원센터</span></a>
             </li>
             <li data-bg="work14/work14_main.jpg">
-                <a href="work14.html"><span>한국대한교육협의회</span><br><span>대입 서류제출 시스템 구축</span></a>
+                <a href="work14.html"><span>한국대학교육협의회</span><br><span>서류제출 시스템 구축</span></a>
             </li>
             <li data-bg="img_work.jpg">
                 <a href="career.html"><span class="">More Project . . .</span></a>
