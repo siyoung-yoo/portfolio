@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+		<!-- 컨텐츠 영역 START -->
+		<div id="bodyContent" class="container">
+			<form id="reportFrm" name="reportFrm" method="POST" action="/"><input type="hidden" name="_csrf" value="">
+				<input type="hidden" name="pJrf" value="">
+				<input type="hidden" name="userId" value="">
+				<input type="hidden" name="syr" value="">
+			</form>
+			<div class="ltrtCont mpg mypageMainView">
+				<!-- lnb -->
+				<div class="ltCont">
+					<div class="myLNB">
+						<!-- 알림 및 일정 -->
+						<ul class="alarmArea">
+							<li>
+								<a href="#0" class="alarm _myalarm">
+									<span class="hidden">나의알림</span>
+									<span class="count">17</span>
+								</a>
+							</li>
+							<li>
+								<a href="#0" class="alarm _mySchedule">
+									<span class="hidden">나의일정</span>
+									<span class="count">0</span>
+								</a>
+							</li>
+						</ul>
+						<!-- // 알림 및 일정 -->
+
+						<!-- 이름 -->
+						<div class="infoArea">
+							<strong>테스트 페이지</strong><br><span>(ID : test)</span>
+						</div>
+
+						<!-- 회원정보 수정 및 입학도우미 신청 -->
+						<a href="#0" class="editBtn">
+							<span class="d-flex">
+								<span class="flag">고3</span>
+								어디가고등학교
+							</span>
+							<i class="ico _arrow"></i>
+						</a>
+						<!-- // 회원정보 수정 및 입학도우미 신청 -->
+
+						<!-- 입학도우미 -->
+						<dl class="helpArea">
+							<dt>입학도우미</dt>
+							<dd class="helpItem"><span class="flag">학부모</span>김어디가</dd>
+						</dl>
+						<!-- // 입학도우미 -->
+					</div>
+				</div>
+				<!-- // lnb -->
+
+				<!-- 콘텐츠 -->
+				<div class="rtCont">
+					<!-- 20231204 인쇄버튼 위치 이동 -->
+					<button type="button" class="mpgmainPrintBtn"><span class="hidden">프린트하기</span></button>
+					<!-- 20231204 인쇄버튼 위치 이동 -->
+					<!-- 학생관리 - 교사&학부모 케이스에서 등장 -->
+
+					<!-- 온라인 상담 -->
+					<div id="mpgFragment">
+						<div class="myCon summaryArea">
+							<h3 class="hidden">온라인 상담 현황</h3>
+							<div class="titArea">
+								<div><strong class="prm01">테스트 페이지</strong> 진행중인 상담 총 <strong class="prm01 fw70">0</strong>건</div>
+								<!-- 대입상담 안내 -->
+								<div class="tip">
+									어디가 학생 평균 <strong>대입상담 <span>1</span>건</strong> 상담이 이루어지고 있어요!!
+								</div>
+								<!-- // 대입상담 안내 -->
+							</div>
+							<div class="listWrap">
+								<!-- 상담현황 -->
+								<ul class="list">
+									<!-- 상담신청 -->
+									<li>
+										<a href="#0">
+											<img src="../../static/img/contents/mypage_summary1.png" alt="">
+											<dl><dt>상담신청</dt><dd><strong>0</strong>건</dd></dl>
+										</a>
+									</li>
+									<!-- 상담 중 -->
+									<li>
+										<a href="#0">
+											<img src="../../static/img/contents/mypage_summary2.png" alt="">
+											<dl><dt>상담 중</dt><dd><strong>0</strong>건</dd></dl>
+										</a>
+									</li>
+									<!-- 답변중 -->
+									<li>
+										<a href="#0">
+											<img src="../../static/img/contents/mypage_summary3.png" alt="">
+											<dl><dt>답변 중</dt><dd><strong>0</strong>건</dd></dl>
+										</a>
+									</li>
+									<!-- 답변완료 -->
+									<li>
+										<a href="#0">
+											<img src="../../static/img/contents/mypage_summary4.png" alt="">
+											<dl><dt>답변완료</dt><dd><strong>0</strong>건</dd></dl>
+										</a>
+									</li>
+								</ul>
+								<!-- // 상담현황 -->
+								<!-- 배너 -->
+								<div class="banner">
+									<p>대입상담교사단의 상담을 받아보세요!</p>
+									<a href="#0">온라인대입상담 바로가기<img src="../../static/img/common/ico_arrow_right_w.png" alt="화살표"></a>
+								</div>
+								<!-- // 배너 -->
+							</div>
+						</div>
+						<!-- // 온라인 상담 -->
+
+						<!-- -->
+						<div class="myCon myData" id="mpgDataList">
+							<h3 class="hidden">내 정보</h3>
+							<ul class="list">
+								<!-- 관심진로 -->
+								<li class="listItem">
+									<div class="summary">
+										<div class="d-flex">
+											<h4 class="h5">관심진로</h4>
+											<button type="button" class="openBtn">레이어열기</button>
+										</div>
+										<div class="con">
+											<div class="total">
+												<strong>4</strong>건
+											</div>
+											<div class="average">평균 <span>2</span>건 등록</div>
+											<progress value="100" max="100"></progress>
+										</div>
+									</div>
+
+									<div class="layerArea" id="itrstCrer">
+										<p class="tit">관심진로 리스트</p>
+										<!-- no data-->
+										<a href="#0" class="noData">
+											<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+											관심 진로 추가하기
+										</a>
+										<!-- // no data-->
+
+										<!-- 버튼영역 -->
+										<div class="btnArea">
+											<!-- 페이지이동 -->
+											<a href="#0" class="btnItem link">관심진로페이지이동</a>
+											<!-- 닫기 -->
+											<button type="button" class="btnItem closeBtn">레이어닫기</button>
+										</div>
+										<!-- // 버튼영역 -->
+									</div>
+									<!-- // 레이어 펼쳐지는 영역 -->
+								</li>
+								<!-- 진로적성검사 -->
+								<li class="listItem">
+									<div class="summary">
+										<div class="d-flex">
+											<h4 class="h5">진로적성검사</h4>
+											<button type="button" class="openBtn">레이어열기</button>
+										</div>
+										<div class="con">
+											<!-- 건수 -->
+											<div class="total"><strong>0</strong>건</div>
+											<!-- 평균건수 -->
+											<div class="average">평균 <span>5</span>건 등록</div>
+											<!-- 프로그래스바 -->
+											<progress value="0" max="100"></progress>
+										</div>
+									</div>
+									<!-- 레이어 펼쳐지는 영역 -->
+									<div class="layerArea" id="jobPsyTestHist">
+										<p class="tit">직업심리검사 이력</p>
+										<!-- 직업심리검사 이력 -->
+										<!-- no data-->
+										<a href="#0" class="noData">
+											<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+											직업 심리 검사하기
+										</a>
+										<!-- // no data-->
+
+										<!-- 버튼영역 -->
+										<div class="btnArea">
+											<!-- 페이지이동 -->
+											<a href="#0" class="btnItem link text">전체</a>
+											<!-- 닫기 -->
+											<button type="button" class="btnItem closeBtn">레이어닫기</button>
+										</div>
+										<!-- // 버튼영역 -->
+									</div>
+									<!-- // 레이어 펼쳐지는 영역 -->
+								</li>
+								<!-- 관심대학 -->
+								<li class="listItem">
+									<div class="summary">
+										<div class="d-flex">
+											<h4 class="h5">관심대학</h4>
+											<button type="button" class="openBtn">레이어열기</button>
+										</div>
+										<div class="con">
+											<!-- 건수 -->
+											<div class="total">
+												<strong>7</strong>건
+											</div>
+											<!-- 평균건수 -->
+											<div class="average">평균 <span>4</span>건 등록</div>
+											<!-- 프로그래스바 -->
+											<progress value="100" max="100"></progress>
+										</div>
+									</div>
+									<!-- 레이어 펼쳐지는 영역 -->
+									<div class="layerArea favUniv" id="itrstUnv">
+										<div class="top">
+											<p class="tit">관심리스트</p>
+											<!-- 탭 -->
+											<ul class="tab">
+												<li>
+													<button type="button" class="favUnivTabBtn active">일반</button>
+												</li>
+												<li>
+													<button type="button" class="favUnivTabBtn">전문</button>
+												</li>
+											</ul>
+											<!-- // 탭 -->
+										</div>
+										<!-- 관심대학 리스트 (일반) -->
+										<div class="favUnivList on">
+											<!-- no data-->
+											<a href="#0" class="noData">
+												<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+												대학 정보 검색하기
+											</a>
+											<!-- // no data-->
+										</div>
+										<!-- 관심대학 리스트 (전문) -->
+										<div class="favUnivList">
+											<!-- // 관심대학 리스트 (전문) -->
+											<!-- no data-->
+											<a href="#0" class="noData">
+												<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+												관심 대학 추가하기
+											</a>
+										</div>
+										<!-- 버튼영역 -->
+										<div class="btnArea">
+											<a href="#0" class="btnItem link">관심대학페이지이동</a>
+											<button type="button" class="btnItem closeBtn">레이어닫기</button>
+										</div>
+										<!-- // 버튼영역 -->
+									</div>
+									<!-- // 레이어 펼쳐지는 영역 -->
+								</li>
+								<!-- 관심전형 -->
+								<li class="listItem">
+									<div class="summary">
+										<div class="d-flex">
+											<h4 class="h5">관심전형</h4>
+											<button type="button" class="openBtn">레이어열기</button>
+										</div>
+										<div class="con">
+											<!-- 건수 -->
+											<div class="total">
+												<strong>8</strong>건
+											</div>
+											<!-- 평균건수 -->
+											<div class="average">평균 <span>7</span>건 등록</div>
+											<!-- 프로그래스바 -->
+											<progress value="100" max="100"></progress>
+										</div>
+									</div>
+									<!-- 레이어 펼쳐지는 영역 -->
+									<div class="layerArea favAdmss" id="itrstSlcn">
+										<div class="top">
+											<p class="tit">관심리스트</p>
+											<!-- 탭 -->
+											<ul class="tab">
+												<li>
+													<button type="button" class="favAdmssTabBtn active">일반</button>
+												</li>
+												<li>
+													<button type="button" class="favAdmssTabBtn">전문</button>
+												</li>
+											</ul>
+											<!-- // 탭 -->
+										</div>
+
+										<!-- 관심전형 리스트 (일반) -->
+										<div class="favAdmssList on">
+											<!-- no data-->
+											<a href="#0" class="noData">
+												<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+												전형 정보 검색하기
+											</a>
+											<!-- // no data-->
+										</div>
+										<!-- // 관심전형 리스트 (일반) -->
+
+										<!-- 관심전형 리스트 (전문) -->
+										<div class="favAdmssList">
+											<!-- no data-->
+											<a href="#0" class="noData">
+												<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+												관심 전형 추가하기
+											</a>
+										</div>
+
+										<!-- 버튼영역 -->
+										<div class="btnArea">
+											<!-- 페이지이동 -->
+											<a href="#0" class="btnItem link">관심전형페이지이동</a>
+											<!-- 닫기 -->
+											<button type="button" class="btnItem closeBtn">레이어닫기</button>
+										</div>
+										<!-- // 버튼영역 -->
+									</div>
+									<!-- // 레이어 펼쳐지는 영역 -->
+								</li>
+								<!-- 성적 -->
+								<li class="listItem">
+									<div class="summary">
+										<div class="d-flex">
+											<h4 class="h5">성적</h4>
+											<button type="button" class="openBtn">레이어열기</button>
+										</div>
+										<div class="con">
+											<!-- 건수 -->
+											<div class="total"><strong>15</strong>건</div>
+											<!-- 평균건수 -->
+											<div class="average">평균 <span>25</span>건 등록</div>
+											<!-- 프로그래스바 -->
+											<progress value="60" max="100"></progress>
+										</div>
+									</div>
+									<!-- 레이어 펼쳐지는 영역 -->
+									<div class="layerArea" id="scoreHis">
+										<p class="tit">성적분석 이력</p>
+										<!-- no data-->
+										<a href="#0" class="noData">
+											<img src="../../static/img/contents/uni_ico_plus.png" alt="추가하기">
+											성적 등록/수정하고 분석하기
+										</a>
+										<!-- // no data-->
+
+										<!-- 버튼영역 -->
+										<div class="btnArea">
+											<!-- 페이지이동 -->
+											<a href="#0" class="btnItem link text">전체</a>
+											<!-- 닫기 -->
+											<button type="button" class="btnItem closeBtn">레이어닫기</button>
+										</div>
+										<!-- // 버튼영역 -->
+									</div>
+									<!-- // 레이어 펼쳐지는 영역 -->
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- // -->
+
+					<!-- 신청/접수 -->
+					<div class="myCon myApp">
+						<div class="titArea">
+							<h3 class="h3">ADIGA 신청/접수</h3>
+							<p class="desc">대학별 행사, Q&amp;A, 제안 및 건의, 화상상담신청 이력입니다.</p>
+						</div>
+						<ul class="list">
+							<!-- 대학별행사 -->
+							<li><a href="#0" class="appLink">대학별 행사(<span><span> 0 </span></span>)건</a></li>
+							<!-- Q&A -->
+							<li><a href="#0" class="appLink">Q&amp;A(<span><span> 0 </span></span>)건</a></li>
+							<!-- 제안및건의 -->
+							<li><a href="#0" class="appLink">제안 및 건의(<span><span> 0 </span></span>)건</a></li>
+						</ul>
+					</div>
+					<!-- // 신청/접수 -->
+
+					<!-- 대학특별전형 서류제출 -->
+					<a href="PCSSDCERT1000.html" target="_blank" class="myCon myApp mySsd">
+						<div class="mySsdtit">
+							<div class="titArea">
+								<h3 class="h3">대학특별전형 서류제출</h3>
+								<p class="desc">특별전형 지원 대학에 필요한 서류 발급 안내 및 제출을 할 수 있습니다.</p>
+							</div>
+							<ul class="list">
+								<!-- 지원현황 및 서류제출 -->
+								<li><div class="appLink">지원 현황 및 서류 제출</div></li>
+							</ul>
+						</div>
+						<div class="mySsdimg">
+							<img src="../../static/img/contents/mypage_ssd.png" alt="대학특별전형 서류제출 이미지">
+						</div>
+					</a>
+					<!-- // 대학특별전형 서류제출 -->
+				</div>
+				<!-- // 콘텐츠 -->
+			</div>
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+</body>
+</html>

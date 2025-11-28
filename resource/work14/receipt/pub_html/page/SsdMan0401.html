@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+
+<script>
+	$(function() {
+		// 서비스 가이드 탭 기능
+		initGuideMenu();
+	})
+</script>
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+
+	<div id="wrapper">
+		<div data-include="../layout/header.html #header"></div>
+
+		<div id="container">
+
+			<div data-include="../layout/sideInfo.html #sideInfo"></div>
+
+			<div class="content" id="boodyContent">
+				<nav class="breadcrumbWrap" aria-label="현재 경로">
+					<ol class="breadcrumb">
+						<li><a href="#0"><i class="icoHome"></i><span class="srOnly">홈</span></a></li>
+						<li><a href="#0">서비스 가이드</a></li>
+					</ol>
+				</nav>
+				<!-- // breadcrumb -->
+
+				<!-- 컨텐츠 START -->
+				<div class="contWrap">
+					<div class="titleArea">
+						<h2 class="pageTitle">서비스 가이드</h2>
+					</div>
+
+
+					<!--
+						initGuideMenu() 스크립트 추가 필요
+						- 가이드 페이지 > 메뉴 탭 활성화 기능은 common.js에 구현되어 있습니다.
+						- 페이지 로드시 Tab1, Tab1-1, 해당 콘텐츠를 기본 활성화(초기화) 상태로 설정함
+					-->
+					<div class="guideArea">
+						<!-- 메뉴 리스트 -->
+						<div class="guideList">
+							<div class="listBox">
+								<div class="title"><a href="#">서류관리</a></div>
+								<ul class="guideSubList">
+									<li><a href="#">제출서류 수신 관리</a></li>
+									<li><a href="#">제출서류 다운로드 관리</a></li>
+									<li><a href="#">지원자별 서류 제출 및 수신 현황</a></li>
+									<li><a href="#">서류별 제출 및 수신 현황</a></li>
+									<li><a href="#">지원자별 서류제출 현황</a></li>
+									<li><a href="#">모집단위별 서류제출 현황</a></li>
+									<li><a href="#">전형별 서류제출 현황</a></li>
+								</ul>
+							</div>
+							<div class="listBox">
+								<div class="title"><a href="#">데이터관리</a></div>
+								<ul class="guideSubList">
+									<li><a href="#">사용자접속로그 조회</a></li>
+									<li><a href="#">제출서류 열람 이력 조회</a></li>
+									<li><a href="#">제출서류 수신 이력 조회</a></li>
+									<li><a href="#">제출서류 다운로드(파일생성) 이력 조회</a></li>
+									<li><a href="#">제출서류 재제출 이력 조회</a></li>
+									<li><a href="#">권한부여 이력 조회</a></li>
+								</ul>
+							</div>
+							<div class="listBox">
+								<div class="title"><a href="#">통계관리</a></div>
+								<ul class="guideSubList">
+									<li><a href="#">전자증명서 열람 통계</a></li>
+									<li><a href="#">전자증명서 다운로드 통계</a></li>
+									<li><a href="#">전자증명서 전형별 통계</a></li>
+									<li><a href="#">전자증명서 모집단위별 통계</a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- // 메뉴 리스트 -->
+
+						<div id="contentsArea">
+
+							<!-- Tab1. 서류관리 -->
+							<section class="guideConBox">
+								<!-- Tab1-1. 제출서류 수신 관리 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>지원자가 <strong class="colorPoint">제출한 전자 증명서와 일반 서류 현황을 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>지원자의 제출 서류 중 <strong class="colorPoint">대학 담당자가 수신 처리한 서류 현황을 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>그리드 영역에 조회된 지원자들의 <strong class="colorPoint">제출 서류를 일괄 수신</strong> 처리합니다.
+												<br>※ ‘XML 수신 포함’을 선택하면  제출 받은 전자 증명서 중 메타 데이터가 포함된 경우 XML 형태로 함께 수신 받습니다.</li>
+											<li><strong class="num">05. </strong>버튼을 클릭하면 제출 서류의 수신 상태를 최신 상태로 업데이트합니다.</li>
+											<li><strong class="num">06. </strong>지원자를 클릭하여 상세 현황을 조회할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_1.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>서류 제출 수신 대상(지원자)의 이름과 수험번호를 포함하여 <strong class="colorPoint">지원한 전형 정보를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">02. </strong>지원자가 제출해야 하는 서류 목록을 확인할 수 있습니다. 서류를 제출하지 않은 <strong class="colorPoint">초기에는 모든 서류의 제출 상태가 ‘미제출’</strong>인 것을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>버튼을 클릭하면 모화면인 <strong class="colorPoint">‘제출서류 수신관리’ 화면으로 이동</strong>합니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_2.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 3 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 3</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>지원자가 <strong class="colorPoint">서류를 제출한 이후</strong>에는 제출 상태가 <strong class="colorPoint">‘제출완료’로 변경</strong>되며 <strong class="colorPoint">‘제출일시’가 업데이트</strong> 됩니다.</li>
+											<li><strong class="num">02. </strong><strong class="colorPoint">서류 제출 이후부터 ‘열람’, ‘재제출’ 2개의 버튼을 사용</strong>할 수 있습니다.
+												<br>※ ‘열람’ 버튼을 클릭하면 제출한 서류의 원문을 볼 수 있는 팝업을 불러 옵니다.
+												<br>※ ‘재제출’ 버튼을 클릭하면 지원자의 ‘제출완료’ 를 취소하고 대상 서류의 재제출 요청을 위한 ‘제출서류 재제출 요청’ 팝업이 나타납니다.</li>
+											<li><strong class="num">03. </strong>제출 받은 서류 중 ‘제출서류 수신’ 처리를 위한 <strong class="colorPoint">대상을 선택</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>선택한 지원자의 <strong class="colorPoint">제출 서류를 수신 처리</strong>합니다.
+												<br>※ ‘XML 수신 포함’을 선택하면  제출 받은 전자 증명서 중 메타 데이터가 포함된 경우 XML 형태로 함께 수신 받습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_3.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 4 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 4</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>재제출을 요청할 지원자의 <strong class="colorPoint">대상 서류 정보를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">02. </strong>지원자에게 안내할 <strong class="colorPoint">요청사항을 입력</strong>합니다.
+												<br>※ 지원자는 포탈의 ‘특별전형 서류제출’ 서비스에서 요청사항을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>요청사항과 함께 <strong class="colorPoint">대상 서류를 ‘재제출’ 상태로 변경</strong>합니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_4.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 5 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 5</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>재제출 요청이 완료되면 지원자에게 요청된 <strong class="colorPoint">‘재제출 요청 일시’가 업데이트</strong> 됩니다.</li>
+											<li><strong class="num">02. </strong><strong class="colorPoint">지원자에 의해 재제출이 완료</strong>되면 대상 서류의 ‘제출 상태’는 <strong class="colorPoint">‘재제출’로 변경</strong>됩니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_5.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 6 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 6</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>제출받은 서류를 <strong class="colorPoint">‘수신 완료’ 처리하면 ‘수신 일시’가 업데이트</strong> 됩니다.</li>
+											<li><strong class="num">02. </strong>대상 서류의 <strong class="colorPoint">수신 완료 이후부터 ‘미리보기’ 기능을 사용</strong>할 수 있습니다. 버튼을 클릭하면 ‘제출서류 미리보기’ 팝업이 나타납니다. </li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide11_6.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-2. 제출서류 다운로드 관리 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>그리드 영역에 <strong class="colorPoint">다운로드 대상 항목들을 조회</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>버튼을 클릭하여 내 로컬 PC에 제출한 서류를 zip 파일로 다운로드 할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide12_1.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong>버튼을 클릭하면 ‘제출서류 다운로드 파일 생성’ 팝업이 열립니다.
+												<br>※ 지원자의 제출 서류를 <strong class="colorPoint">다운로드 파일로 생성한 이후에 조회 및 다운로드</strong>를 할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide12_2.png" role="presentation"></li>
+										</ul>
+									</div>
+
+									<!-- step 3 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 3</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>다운로드 파일로 생성할 수 있는 <strong class="colorPoint">제출 서류 목록</strong>이 나타납니다.</li>
+											<li><strong class="num">03. </strong>버튼을 클릭하면 ZIP 파일 형태로 <strong class="colorPoint">다운로드 받을 수 있는 상태로 변환</strong>되며 모화면에서 조회 및 대상 파일을 다운로드 할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide12_3.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-3. 지원자별 서류 제출 및 수신 현황 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>모집시기, 전형유형, 차수, 모집단위, 수험번호, 지원자명 별로 <strong class="colorPoint">서류의 제출, 미제출, 수신 처리 현황을 확인</strong>할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide13_1.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-4. 서류별 제출 및 수신 현황 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong><strong class="colorPoint">제출 완료된 서류 목록을 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>대상 서류의 <strong class="colorPoint">수신 상태를 확인</strong>할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide14_1.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-5. 지원자별 서류제출 현황 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>모집시기, 전형유형, 차수, 모집단위, 수험번호, 지원자명 별로 <strong class="colorPoint">서류의 제출, 미제출 현황 및 제출 상태를 확인</strong>할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide15_1.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-6. 모집단위별 서류제출 현황 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>모집시기, 전형유형, 차수, 모집단위 별로 <strong class="colorPoint">서류의 제출, 미제출 현황 및 제출 상태를 확인</strong>할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide16_1.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab1-7. 전형별 서류제출 현황 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>모집시기, 전형유형, 차수 별로 <strong class="colorPoint">서류의 제출, 미제출 현황 및 제출 상태를 확인</strong>할 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide17_1.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+
+							<!-- Tab2. 데이터 관리 -->
+							<section class="guideConBox">
+								<!-- Tab2-1. 사용자접속로그 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>제출서류 확인 서비스에 접속한 <strong class="colorPoint">사용자 업무에 대한 로그 기록</strong>을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide21_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide21_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab2-2. 제출서류 열람 이력 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>지원자의 <strong class="colorPoint">제출 서류 별로 열람 여부를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>서류 별 <strong class="colorPoint">열람 상태와 열람 일시를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide22_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide22_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab2-3. 제출서류 수신 이력 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>지원자의 <strong class="colorPoint">제출 서류 별로 수신 성공 여부를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>서류 별 <strong class="colorPoint">수신 상태와 수신 일시를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide23_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide23_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab2-4. 제출서류 다운로드(파일생성) 이력 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>‘서류관리 > 제출서류 다운로드 관리’에서 <strong class="colorPoint">생성 및 다운로드한 이력을 조회</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>생성한 각 <strong class="colorPoint">다운로드 파일 별 생성일시와 다운로드 일시를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>생성한 각 <strong class="colorPoint">다운로드 파일 별 생성 및 다운로드 여부 상태를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">05. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide24_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide24_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab2-5. 제출서류 재제출 이력 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>지원자의 <strong class="colorPoint">제출 서류 별로 재제출 대상 서류를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>서류 별 <strong class="colorPoint">재제출 상태와 재제출 요청 일시, 요청자를 확인</strong>할 수 있습니다.</li>
+											<li><strong class="num">04. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide25_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide25_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab2-6. 권한부여 이력 조회 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>해당 대학의 <strong class="colorPoint">수취 서비스에 등록된 사용자 목록을 조회</strong>할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide26_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide26_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+
+							<!-- Tab3. 통계관리 -->
+							<section class="guideConBox">
+								<!-- Tab3-1. 전자증명서 열람 통계 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>검색한 조회 결과의 <strong class="colorPoint">지원자 별 제출, 열람, 미열람 현황</strong>을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide31_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide31_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab3-2. 전자증명서 다운로드 통계 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>검색한 조회 결과의 <strong class="colorPoint">지원자 별 제출, 다운로드, 미다운로드 현황</strong>을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide32_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide32_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab3-3. 전자증명서 전형별 통계 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>검색한 조회 결과의 전형의 <strong class="colorPoint">차수 별 요청한 제출 건수, 완료한 제출 건수, 열람, 다운로드 현황</strong>을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide33_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide33_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+
+								<!-- Tab3-4. 전자증명서 모집단위별 통계 -->
+								<div class="stepArea">
+									<!-- step 1 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 1</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">조회</strong> 버튼을 클릭합니다.</li>
+											<li><strong class="num">02. </strong>검색한 조회 결과의 전형의 <strong class="colorPoint">모집단위 별 요청한 제출 건수, 완료한 제출 건수, 열람, 다운로드 현황</strong>을 확인할 수 있습니다.</li>
+											<li><strong class="num">03. </strong>검색한 조회 결과를 <strong class="colorPoint">엑셀 다운로드 받을 수 있는 팝업</strong>을 불러옵니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide34_1.png" role="presentation"></li>
+										</ul>
+									</div>
+									<!-- step 2 -->
+									<div class="list">
+										<h4><i class="icoArrowR"></i>Step 2</h4>
+										<ul class="stepInfo">
+											<li><strong class="num">01. </strong><strong class="colorPoint">다운로드 사유</strong>를 입력합니다.</li>
+											<li><strong class="num">02. </strong>버튼을 클릭하면 모화면의 조회 결과를 <strong class="colorPoint">엑셀로 다운로드</strong> 받을 수 있습니다.</li>
+										</ul>
+										<ul class="imgArea">
+											<li><img src="../../static/img/guide/guide34_2.png" role="presentation"></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+
+						</div>
+					</div>
+				</div>
+				<!-- // 컨텐츠 END -->
+
+			</div>
+
+			<div data-include="../layout/footer.html #footer"></div>
+		</div>
+	</div>
+</body>
+</html>

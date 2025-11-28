@@ -1,0 +1,115 @@
+/*
+ * Nanum Gothic (Korean) http://www.google.com/fonts/earlyaccess
+ */
+ @font-face {
+	font-family:'Nanum Gothic';
+	font-style:normal;
+	font-weight:400;
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot);
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.eot?#iefix) format('embedded-opentype'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff2) format('woff2'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.woff) format('woff'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Regular.ttf) format('truetype');
+}
+@font-face {
+	font-family:'Nanum Gothic Bold';
+	font-style:normal;
+	font-weight:700;
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.eot);
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.eot?#iefix) format('embedded-opentype'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.woff2) format('woff2'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.woff) format('woff'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-Bold.ttf) format('truetype');
+}
+@font-face {
+	font-family:'Nanum Gothic ExtraBold';
+	font-style:normal;
+	font-weight:800;
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.eot);
+	src:url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.eot?#iefix) format('embedded-opentype'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.woff2) format('woff2'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.woff) format('woff'),
+		url(//fonts.gstatic.com/ea/nanumgothic/v5/NanumGothic-ExtraBold.ttf) format('truetype');
+}
+
+/* Noto Sans KR Light */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 300;
+	src: url("../webfont/NotoSansKR-Light.otf") format('opentype');
+	src: url("../webfont/NotoSansKR-Light.eot"),
+	url("../webfont/NotoSansKR-Light.eot?#iefix") format("embedded-opentype"), 
+			url("../webfont/NotoSansKR-Light.woff") format("woff");
+}
+/* Noto Sans KR Regular */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 400;
+	src: url("../webfont/NotoSansKR-Regular.otf") format('opentype');
+	src: url("../webfont/NotoSansKR-Regular.eot"),
+	url("../webfont/NotoSansKR-Regular.eot?#iefix") format("embedded-opentype"), 
+			url("../webfont/NotoSansKR-Regular.woff") format("woff");
+}
+/* Noto Sans KR Medium */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 500;
+	src: url("../webfont/NotoSansKR-Medium.otf") format('opentype');	
+	src: url("../webfont/NotoSansKR-Medium.eot"),
+	url("../webfont/NotoSansKR-Medium.eot?#iefix") format("embedded-opentype"), 
+		url("../webfont/NotoSansKR-Medium.woff") format("woff");
+}
+/* Noto Sans KR Bold */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 700;
+	src: url("../webfont/NotoSansKR-Bold.otf") format('opentype');
+	src: url("../webfont/NotoSansKR-Bold.eot"),
+		url("../webfont/NotoSansKR-Bold.eot?#iefix") format("embedded-opentype"), 
+		url("../webfont/NotoSansKR-Bold.woff") format("woff");
+}
+/* Noto Sans KR Black */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 900;
+	src: url("../webfont/NotoSansKR-Black.otf") format('opentype');
+	src: url("../webfont/NotoSansKR-Black.eot"),
+	url("../webfont/NotoSansKR-Black.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Black.woff") format("woff");
+}
+
+/* Roboto Light */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 300;
+	src: url("../webfont/Roboto-Light.ttf") format("truetype");
+}
+/* Roboto Regular */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 400;
+	src: url("../webfont/Roboto-Regular.ttf") format("truetype");
+}
+
+/* Roboto Medium */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 500;
+	src: url("../webfont/Roboto-Medium.ttf") format("truetype");
+}
+
+/* Roboto Bold */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 600;
+	src: url("../webfont/Roboto-Bold.ttf") format("truetype");
+}

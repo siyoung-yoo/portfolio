@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+	.tempPage { width: 100%; padding: 50px; }
+	.box { border: 1px solid #ddd; padding: 10px; }
+	.divider { margin-bottom: 10px; align-items: flex-start !important; gap: 40px !important; }
+</style>
+
+<script>
+	$(function() {
+		// 툴팁 버튼 기능
+		fnTooltipToggle();
+	})
+</script>
+</head>
+<body>
+	<div class="tempPage">
+		<h2>토글</h2>
+		<h3><br>* button aria-expanded 속성<br>* button > span.orOnly<br>* 토글영역 display: none; 스크립트로 처리함<br>!! 삭제 가능 !!</h3>
+		<h4>
+			<br>열린 상태 : aria-expanded="true" / srOnly 닫기
+			<br>닫힌 상태 : aria-expanded="false" / srOnly 열기
+		</h4>
+		<br>
+		<div class="divider">
+			<div class="w10">
+
+				<button type="button" class="btnToggle open" aria-controls="toggle01" aria-expanded="true">
+					<span class="srOnly">닫기</span>
+				</button>
+				<div id="toggle01">버튼만 동작 / 열린 상태<br>button.btnToggle.open</div>
+
+			</div>
+			<div class="w10">
+
+				<button type="button" class="btnToggle" aria-controls="toggle11"></button>
+				<div id="toggle11">버튼만 동작 / 닫힌 상태<br>button.btnToggle</div>
+
+			</div>
+			<div class="w10">
+
+				<button type="button" class="btnToggle typeFull open" aria-controls="toggle02">
+					<p>텍스트 영역</p>
+				</button>
+				<div id="toggle02">영역 전체 동작 / 열린 상태<br>button.btnToggle.typeFull.open</div>
+
+			</div>
+			<div class="w10">
+
+				<button type="button" class="btnToggle typeFull" aria-controls="toggle12">
+					<p>텍스트 영역</p>
+				</button>
+				<div id="toggle12">영역 전체 동작 / 닫힌 상태<br>button.btnToggle.typeFull</div>
+
+			</div>
+			<div style="width: 15%">
+
+				<div class="toggleBoxStyle">
+					<button type="button" class="btnToggle typeFull open" aria-controls="toggle03">
+						<p>텍스트 영역</p>
+					</button>
+					<div class="toggleCont" id="toggle03">toggleBoxStyle / 열린 상태</div>
+				</div>
+
+			</div>
+			<div style="width: 15%">
+
+				<div class="toggleBoxStyle">
+					<button type="button" class="btnToggle typeFull" aria-controls="toggle13">
+						<p>텍스트 영역</p>
+					</button>
+					<div class="toggleCont" id="toggle13">toggleBoxStyle / 닫힌 상태</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="tempPage">
+		<h2>툴팁</h2><br>
+
+		<div class="bolder listInline gap20">
+
+			<div>Default (right)
+				<div class="tooltipWrap">
+					<button type="button" class="btnTooltip"><span class="srOnly">툴팁 보기</span></button>
+					<div class="tooltipCont">
+						<div class="ttipTitle">title title</div>
+						<div>text text</div>
+					</div>
+				</div>
+			</div>
+
+			<div>right
+				<div class="tooltipWrap right">
+					<button type="button" class="btnTooltip"><span class="srOnly">툴팁 보기</span></button>
+					<div class="tooltipCont">
+						<div class="ttipTitle">title title</div>
+						<div>text text</div>
+					</div>
+				</div>
+			</div>
+
+			<div>top
+				<div class="tooltipWrap top">
+					<button type="button" class="btnTooltip"><span class="srOnly">툴팁 보기</span></button>
+					<div class="tooltipCont">
+						<div class="ttipTitle">title title</div>
+						<div>text text</div>
+					</div>
+				</div>
+			</div>
+
+			<div>bottom
+				<div class="tooltipWrap bottom">
+					<button type="button" class="btnTooltip"><span class="srOnly">툴팁 보기</span></button>
+					<div class="tooltipCont">
+						<div class="ttipTitle">title title</div>
+						<div>text text</div>
+					</div>
+				</div>
+			</div>
+
+			<div>left
+				<div class="tooltipWrap left">
+					<button type="button" class="btnTooltip"><span class="srOnly">툴팁 보기</span></button>
+					<div class="tooltipCont">
+						<div class="ttipTitle">title title</div>
+						<div>text text</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="tempPage">
+		<h2>.divider</h2><br>
+		<div class="divider">
+			<div class="box">[default] size : 1/n / gap : 20px</div>
+			<div class="box">[default] size : 1/n / gap : 20px</div>
+			<div class="box">[default] size : 1/n / gap : 20px</div>
+		</div>
+
+		<div class="divider">
+			<div class="box w10">w10</div>
+			<div class="box w90">w90</div>
+		</div>
+
+		<div class="divider">
+			<div class="box w20">w20</div>
+			<div class="box w80">w80</div>
+		</div>
+
+		<div class="divider">
+			<div class="box w30">w30</div>
+			<div class="box w70">w70</div>
+		</div>
+
+		<div class="divider">
+			<div class="box w40">w40</div>
+			<div class="box w60">w60</div>
+		</div>
+	</div>
+
+	<div class="tempPage">
+		<h2>box style</h2><br>
+
+		<ul class="divider gap20">
+			<li>
+				<div class="boxLineStyle">.boxLineStyle</div>
+			</li>
+			<li>
+				<div class="boxBgStyle">.boxBgStyle</div>
+			</li>
+		</ul>
+
+		<br>
+	</div>
+
+	<div class="tempPage">
+		<ul class="divider gap20">
+			<li class="w50">
+
+
+				<h2>게시판 view 형태</h2><br><br>
+				<div class="boardViewWrap">
+					<div class="boardTitle">[카테고리] 제목 영역 입니다</div>
+
+					<div class="boardInfo">
+						<p class="date">2025-01-01</p>
+						<ul class="info">
+							<li><i class="icoUser"></i>작성자 이름</li>
+							<li><i class="icoView"></i>12345</li>
+						</ul>
+					</div>
+
+					<div class="boardCont">
+						<ul class="fileDownList">
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">[다운로드] 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명 파일명 파일명.pdf</span>
+								</a>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="boardCont">
+						<ul class="fileDownList withBtn">
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">[다운로드] 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명이 길경우 파일명 파일명 파일명.pdf</span>
+								</a>
+								<button type="button" class="btnLineGray sm withIcon"><i class="icoPreview"></i>미리보기</button>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+								<button type="button" class="btnLineGray sm withIcon"><i class="icoPreview"></i>미리보기</button>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+								<button type="button" class="btnLineGray sm withIcon"><i class="icoPreview"></i>미리보기</button>
+							</li>
+							<li>
+								<a href="#0" download class="btnLinkFile">
+									<span class="ellipsis">파일명 파일명</span>
+								</a>
+								<button type="button" class="btnLineGray sm withIcon"><i class="icoPreview"></i>미리보기</button>
+							</li>
+						</ul>
+					</div>
+
+					<div class="boardCont">
+						boardCont
+					</div>
+
+					<div class="boardCont withSpace">
+						boardCont withSpace
+					</div>
+
+					<div class="boardCont minH300">
+						boardCont minH300
+					</div>
+				</div>
+
+			</li>
+
+			<li class="w50">
+
+				<h2>게시판 list 형태</h2><br><br>
+
+				<div class="cardListWrap">
+					<ul class="cardList">
+						<li>
+							<p>p태그 일반 텍스트</p>
+							<strong class="title">타이틀 타이틀</strong>
+							<div class="status">default 상태</div>
+						</li>
+						<li class="plan">
+							<p>p태그 일반 텍스트</p>
+							<strong class="title">타이틀 타이틀</strong>
+							<div class="status">.plan 예정</div>
+						</li>
+						<li class="ing">
+							<p>p태그 일반 텍스트</p>
+							<strong class="title">타이틀 타이틀</strong>
+							<div class="status">.ing 진행중</div>
+						</li>
+						<li class="end">
+							<p>p태그 일반 텍스트</p>
+							<strong class="title">타이틀 타이틀</strong>
+							<div class="status">.end 완료</div>
+						</li>
+					</ul>
+				</div>
+
+				<br><br>
+
+				<div class="boardListWrap">
+					<div class="boardTitle">
+						<h2 class="sectionTitle">공지사항</h2>
+						<button type="button" class="btnIcoOnly dark">
+							<i class="icoPlus"></i><span class="srOnly">더보기</span>
+						</button>
+					</div>
+
+					<div class="boardCont">
+						<ul class="boardList">
+							<li>
+								<a href="#0" class="btnLink ellipsis">제목 영역 입니다. 제목 영역 제목 영역 제목 영역 제목 영역 입니다. 제목 영역 제목 영역 제목 영역 제목 영역 입니다. 제목 영역 제목 영역 제목 영역 제목 영역 입니다. 제목 영역 제목 영역 제목 영역 제목 영역 입니다. 제목 영역 제목 영역 제목 영역</a>
+								<ul class="info">
+									<li class="name">작성자</li>
+									<li class="date">2025-01-01</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#0" class="btnLink ellipsis">제목 영역 입니다. 제목 영역 제목 영역 제목 영역</a>
+								<ul class="info">
+									<li class="name">작성자</li>
+									<li class="date">2025-01-01</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

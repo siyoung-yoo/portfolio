@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+
+	<div id="wrapper">
+		<div data-include="../layout/header.html #header"></div>
+
+		<div id="container">
+
+			<div data-include="../layout/sideInfo.html #sideInfo"></div>
+
+			<div class="content" id="bodyContent">
+
+				<nav class="breadcrumbWrap" aria-label="현재 경로">
+					<ol class="breadcrumb">
+						<li><a href="#0"><i class="icoHome"></i><span class="srOnly">홈</span></a></li>
+						<li><a href="#0">메뉴명 1</a></li>
+						<li><a href="#0">메뉴명 1-1</a></li>
+					</ol>
+				</nav>
+				<!-- // breadcrumb -->
+
+
+				<!-- 컨텐츠 START -->
+				<div class="contWrap">
+					<div class="titleArea">
+						<h2 class="pageTitle">전자증명서 모집단위별 통계</h2>
+					</div>
+
+					<div class="searchArea">
+						<div class="row">
+							<div class="group">
+								<div class="title">
+									<label for="form11">모집시기</label>
+								</div>
+								<div class="selectBox">
+									<button type="button" class="btnSelect" id="form11" title="모집시기 선택">수시</button>
+									<div class="optionList">
+										<div class="scrollY">
+											<button type="button" class="active">수시</button>
+											<button type="button">option 01</button>
+											<button type="button">option 02</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="group">
+								<div class="title">
+									<label for="form12">전형유형</label>
+								</div>
+								<div class="selectBox">
+									<button type="button" class="btnSelect" id="form12" title="전형유형 선택">전체</button>
+									<div class="optionList">
+										<div class="scrollY">
+											<button type="button" class="active">전체</button>
+											<button type="button">option 01</button>
+											<button type="button">option 02</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="group">
+								<div class="title">
+									<label for="form13">차수</label>
+								</div>
+								<div class="selectBox">
+									<button type="button" class="btnSelect" id="form13" title="차수 선택">전체</button>
+									<div class="optionList">
+										<div class="scrollY">
+											<button type="button" class="active">전체</button>
+											<button type="button">option 01</button>
+											<button type="button">option 02</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="group">
+								<div class="title">
+									<label for="form14">모집단위</label>
+								</div>
+								<div class="selectBox">
+									<button type="button" class="btnSelect" id="form14" title="모집단위 선택">전체</button>
+									<div class="optionList">
+										<div class="scrollY">
+											<button type="button" class="active">전체</button>
+											<button type="button">option 01</button>
+											<button type="button">option 02</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<button type="button" class="btnBoxPoint withIcon"><i class="icoSearch sm"></i>조회</button>
+					</div>
+
+
+					<div class="titleArea">
+						<p class="tableInfo">총 <strong>N</strong>건</p>
+						<div class="tableUtils">
+							<button type="button" class="btnLineGray withIcon"><i class="icoDownload"></i>엑셀 다운로드</button>
+						</div>
+					</div>
+
+					<div class="tableWrap">
+						<table class="tableCol">
+							<caption>전자증명서 모집단위별 통계 목록</caption>
+							<colgroup>
+								<col style="width: 80px;">
+								<col style="width: 8%">
+								<col style="width: 15%">
+								<col style="width: 8%">
+								<col style="width: auto">
+								<col style="width: 10%">
+								<col style="width: 10%">
+								<col style="width: 10%">
+								<col style="width: 10%">
+							</colgroup>
+							<thead>
+								<tr>
+									<th scope="col">No</th>
+									<th scope="col">모집시기</th>
+									<th scope="col">전형유형</th>
+									<th scope="col">차수</th>
+									<th scope="col">모집단위</th>
+									<th scope="col">전체</th>
+									<th scope="col">제출</th>
+									<th scope="col">열람</th>
+									<th scope="col">다운로드</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- <tr>
+									<td colspan="10">
+										<div class="resultArea">
+											<p class="noData">조회 데이터가 없습니다</p>
+										</div>
+									</td>
+								</tr> -->
+								<tr>
+									<td>1</td>
+									<td>수시</td>
+									<td>지역인재</td>
+									<td>1차</td>
+									<td class="tal">간호학과</td>
+									<td>5</td>
+									<td>2</td>
+									<td>2</td>
+									<td>1</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div data-include="../layout/pagination.html .tableControls"></div>
+				</div>
+				<!-- // 컨텐츠 END -->
+
+			</div>
+
+			<div data-include="../layout/footer.html #footer"></div>
+		</div>
+	</div>
+</body>
+</html>

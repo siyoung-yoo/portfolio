@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+
+<script>
+	$(function() {
+		fnPopupOpen("#btn01", "#popup01");
+		fnPopupOpen("#btn02", "#popup02");
+	})
+</script>
+
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+
+	<div id="wrapper">
+		<div data-include="../layout/header.html #header"></div>
+
+		<div id="container">
+
+			<div data-include="../layout/sideInfo.html #sideInfo"></div>
+
+			<div class="content" id="bodyContent">
+
+				<nav class="breadcrumbWrap" aria-label="현재 경로">
+					<ol class="breadcrumb">
+						<li><a href="#0"><i class="icoHome"></i><span class="srOnly">홈</span></a></li>
+						<li><a href="#0">메뉴명 1</a></li>
+						<li><a href="#0">메뉴명 1-1</a></li>
+					</ol>
+				</nav>
+				<!-- // breadcrumb -->
+
+
+				<!-- 컨텐츠 START -->
+				<div class="contWrap">
+					<br><br>
+					<button type="button" class="btnBoxGray lg" id="btn01" data-popupTarget="#popup01">다운로드 파일 생성하기</button>
+
+					<br><br><br><br>
+					<button type="button" class="btnBoxPoint" id="btn02" data-popupTarget="#popup02">[11/17 추가] 다운로드 파일 생성</button>
+				</div>
+				<!-- // 컨텐츠 END -->
+
+			</div>
+
+			<div data-include="../layout/footer.html #footer"></div>
+		</div>
+	</div>
+
+
+
+	<!-- 제출서류 다운로드 파일 생성 팝업 START -->
+	<div role="dialog" class="popupWrap lg" id="popup01">
+		<div class="popupCont">
+			<div class="popupHeader">제출서류 다운로드 파일 생성</div>
+			<div class="popupBody">
+
+				<div class="searchArea">
+					<div class="row">
+						<div class="group">
+							<div class="title">
+								<label for="form11">모집시기</label>
+							</div>
+							<div class="selectBox">
+								<button type="button" class="btnSelect" id="form11" title="모집시기 선택">수시</button>
+								<div class="optionList">
+									<div class="scrollY">
+										<button type="button" class="active">수시</button>
+										<button type="button">option 01</button>
+										<button type="button">option 02</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="group">
+							<div class="title">
+								<label for="form12">전형유형</label>
+							</div>
+							<div class="selectBox">
+								<button type="button" class="btnSelect" id="form12" title="전형유형 선택">전체</button>
+								<div class="optionList">
+									<div class="scrollY">
+										<button type="button" class="active">전체</button>
+										<button type="button">option 01</button>
+										<button type="button">option 02</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="group">
+							<div class="title">
+								<label for="form13">차수</label>
+							</div>
+							<div class="selectBox">
+								<button type="button" class="btnSelect" id="form13" title="차수 선택">전체</button>
+								<div class="optionList">
+									<div class="scrollY">
+										<button type="button" class="active">전체</button>
+										<button type="button">option 01</button>
+										<button type="button">option 02</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="group">
+							<div class="title">
+								<label for="form21">모집단위</label>
+							</div>
+							<div class="selectBox">
+								<button type="button" class="btnSelect" id="form21" title="모집단위 선택">전체</button>
+								<div class="optionList">
+									<div class="scrollY">
+										<button type="button" class="active">전체</button>
+										<button type="button">option 01</button>
+										<button type="button">option 02</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="group">
+							<div class="title">
+								<label for="form22">수험번호</label>
+							</div>
+							<div class="formText">
+								<input type="text" id="form22" title="수험번호 입력">
+							</div>
+						</div>
+
+						<div class="group">
+							<div class="title">
+								<label for="form23">지원자명</label>
+							</div>
+							<div class="formText">
+								<input type="text" id="form23" title="지원자명 입력">
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="group">
+							<div class="title">
+								<label for="form31">제출여부</label>
+							</div>
+							<div class="selectBox">
+								<button type="button" class="btnSelect" id="form31" title="제출여부 선택">전체</button>
+								<div class="optionList">
+									<div class="scrollY">
+										<button type="button" class="active">전체</button>
+										<button type="button">제출완료</button><!-- [10/23] 문구 수정(제출 > 제출완료)-->
+										<button type="button">미제출</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<button type="button" class="btnBoxPoint withIcon"><i class="icoSearch sm"></i>조회</button>
+				</div>
+
+				<div class="titleArea">
+					<p class="tableInfo">총 <strong>N</strong>건</p>
+				</div>
+
+				<div class="tableWrap">
+					<table class="tableCol">
+						<caption>다운로드 파일 생성 목록</caption>
+						<colgroup>
+							<col style="width: 60px;">
+							<col style="width: 6%">
+							<col style="width: 10%">
+							<col style="width: 5%">
+							<col style="width: 15%">
+							<col style="width: 10%">
+							<col style="width: 8%">
+							<col style="width: auto">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">No</th>
+								<th scope="col">모집시기</th>
+								<th scope="col">전형유형</th>
+								<th scope="col">차수</th>
+								<th scope="col">모집단위</th>
+								<th scope="col">수험번호</th>
+								<th scope="col">지원자명</th>
+								<th scope="col">전송 대상</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- <tr>
+								<td colspan="8">
+									<div class="resultArea">
+										<p class="noData">조회 데이터가 없습니다</p>
+									</div>
+								</td>
+							</tr> -->
+							<tr>
+								<td>1</td>
+								<td>수시</td>
+								<td>지역인재</td>
+								<td>1차</td>
+								<td class="tal">간호학과</td>
+								<td>A121213</td>
+								<td>홍길동</td>
+								<td class="tal pY10">주민등록등본(전자문서) / 기타증명서(직접문서) [2종]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div data-include="../layout/pagination.html .tableControls"></div>
+			</div>
+
+			<div class="popupFooter">
+				<button type="button" class="btnLineGray closeBtn">취소</button>
+				<button type="button" class="btnBoxPoint" onclick="fnPopupOpen('', '#popup02')">다운로드 파일 생성</button>
+			</div>
+			<button type="button" class="btnIconClose closeBtn"><span class="srOnly">닫기</span></button>
+		</div>
+	</div>
+	<!-- // 제출서류 다운로드 파일 생성 팝업 END -->
+
+
+	<!-- [11/17] 신규 alert 추가 -->
+	<div role="dialog" class="popupWrap sm" id="popup02">
+		<div class="popupCont">
+			<div class="popupBody">
+				<div class="tac mb30 mt30">
+					<h3 class="sectionTitle colorPoint">다운로드 파일을 생성 하시겠습니까?</h3>
+					<h3 class="sectionTitle colorPoint mt5">파일 디렉토리 타입을 지정해주세요.</h3>
+				</div>
+
+				<div class="flexCenter gap40">
+					<div class="formChk">
+						<input type="radio" name="radioA" id="radioA01" checked>
+						<label for="radioA01">코드명(CODE)</label>
+					</div>
+
+					<div class="formChk">
+						<input type="radio" name="radioA" id="radioA02">
+						<label for="radioA02">한글(KOR)</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="popupFooter">
+				<button type="button" class="btnLineGray closeBtn">취소</button>
+				<button type="button" class="btnBoxPoint" onclick="fnPopupClose('#popup02', '#btn02')">확인</button>
+			</div>
+			<button type="button" class="btnIconClose closeBtn"><span class="srOnly">닫기</span></button>
+		</div>
+	</div>
+	<!-- // [11/17] 신규 alert 추가 -->
+</body>
+</html>

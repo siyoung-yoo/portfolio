@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+			<div class="ltrtCont mpg memberJoinStep01Form">
+				<div class="ltCont">
+					<ul class="admSteps">
+						<li class="on">
+							<span class="checkImg mR20"><i class="ico _check"></i></span>
+							<div class="textBox">
+								<span>STEP 1</span>
+								<p>약관 동의</p>
+							</div>
+						</li>
+						<li>
+							<div>
+								<span class="checkImg mR20"><i class="ico _check"></i></span>
+								<div class="textBox">
+									<span>STEP 2</span>
+									<p>본인 인증</p>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div>
+								<span class="checkImg mR20"><i class="ico _check"></i></span>
+								<div class="textBox">
+									<span>STEP 3</span>
+									<p>정부 전자문서 지갑 신청</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!-- // .ltCont -->
+
+				<div class="rtCont">
+					<h3 class="hidden">약관동의</h3>
+					<div class="contTitleBox">
+						<strong class="h3 tclr">약관 동의 안내</strong>
+						<p class="body1 reg">정부 전자문서 지갑 신청을 위해 약관 동의가 필요합니다.<br>아래 약관 내용을 확인 후 “동의＂해주시면 전자문서 지갑 생성을 진행합니다.</p>
+					</div>
+
+					<div class="agreeAllWrap">
+						<div class="frmCheck">
+							<input type="checkbox" id="frmCheckAll">
+							<label for="frmCheckAll">약관에 전체 동의합니다.</label>
+						</div>
+					</div>
+
+					<div class="cptBxGry">
+						<div class="frmChoBox">
+							<div class="frmCheck">
+								<input type="checkbox" class="frmCheckClass" id="frmCheck01" required>
+								<label for="frmCheck01">전자증명서 신청 필수 약관 동의</label>
+							</div>
+							<button type="button" class="btnToggle _close"><span class="hidden">닫기</span></button>
+						</div>
+						<div class="customScroll">
+							<p class="center"><strong class="center">제 1장 총칙</strong></p>
+
+							<p class="body1 mB20">타이틀</p>
+							<p class="body3">약관 내용 내용</p>
+
+							<p class="mB20 mT20 mB20"><strong>타이틀</strong></p>
+							<p class="body3">약관 내용 내용</p>
+						</div>
+					</div>
+
+					<div class="cptBxGry">
+						<div class="frmChoBox">
+							<div class="frmCheck">
+								<input type="checkbox" class="frmCheckClass" id="frmCheck02" required>
+								<label for="frmCheck02">개인정보 제3자 제공에 대한 안내</label>
+							</div>
+							<button type="button" class="btnToggle _close"><span class="hidden">닫기</span></button>
+						</div>
+						<div class="customScroll">약관 내용</div>
+					</div>
+
+					<div class="btnWrap">
+						<a href="#0" class="btnCTA _default"><span>이전</span></a>
+						<a href="#0" class="btnCTA _confirm disabled"><span>다음</span></a>
+					</div>
+				</div>
+				<!-- // .rtCont -->
+
+			</div>
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+
+	<script>
+		//아코디언 열기/닫기
+		$('.memberJoinStep01Form .btnToggle').on('click', function () {
+			_this = $(this);
+			$(this).toggleClass('_close');
+			let openToggle = function () {
+				_this.find('.hidden').text('닫기').parents('.cptBxGry').removeClass('_close');
+			};
+			let closeToggle = function () {
+				_this.find('.hidden').text('열기').parents('.cptBxGry').addClass('_close');
+			};
+			$(this).hasClass('_close') ? openToggle() : closeToggle();
+		});
+	</script>
+</body>
+</html>

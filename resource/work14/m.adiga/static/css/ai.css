@@ -1,0 +1,822 @@
+@charset "UTF-8";
+
+
+/*  ---  AI 추천 정보 시작  --- */
+
+/*  AI 추천 - (대학정보) */
+.aiContainer {
+    width: 100vw;
+    height: 100dvh;
+    background-color: var(--color-white);
+    min-height: -webkit-fill-available;
+}
+.aiContainer .header .aihdTitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.2rem;
+}
+.aiContainer .header .aihdTitle .btnHeaderBack {
+    width: 1.8rem;
+    height: 1.8rem;
+    background: url(../../static/img/ai/ico_prev.svg) center no-repeat;
+}
+.aiContainer .header .aihdTitle h1 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-title);
+    letter-spacing: -0.1rem;
+}
+.aiConBox { padding: 1.2rem 2rem 7rem; }
+.aiConBox .aiTitleSec .aiListTitle { position: relative;}
+.aiConBox .aiTitleSec .aiListTitle h2 {
+	font-size: 1.6rem;
+	letter-spacing: -0.04rem;
+	color: var(--text-title);
+	font-weight: 700;
+    margin-bottom: 0.6rem;
+    position: relative;
+    display: inline-block;
+}
+.aiConBox .aiTitleSec .aiListTitle h2 span {
+	color: var(--prime-main);
+	font-size: 1.6rem;
+	letter-spacing: -0.04rem;
+	font-weight: 700;
+}
+.aiConBox .aiTitleSec .aiListTitle p {
+	font-size: 1.3rem;
+	color: var(--text-sub);
+    letter-spacing: -0.003rem;
+}
+.aiTitleSec .aiReBtnArea {margin-top: 2rem;}
+.aiTitleSec .aiReBtnArea .refreshBtn {
+	background-color: var(--prime-main);
+	color: var(--color-white);
+	font-size: 1.4rem;
+    font-weight: 500;
+	display: flex;
+	align-items: center;
+	position: relative;
+    border-radius: 2.2rem;
+    padding: 1.2rem 1rem;
+    letter-spacing: -0.035rem;
+	height: 4.4rem;
+	min-width: 13.5rem;
+	white-space: nowrap;
+	float: right;
+}
+.aiTitleSec .aiReBtnArea .refreshBtn img {
+    padding-top: 0.1rem; margin-right: 0.25rem;
+}
+.aiConBox .aiConSec .adviseListArea .aiListBox {
+    width: calc((100vw / 2) - 2.5rem);
+	min-height: 14.4rem;
+	padding: 1.5rem 1.2rem;
+	border-radius: 1.2rem;
+	border: solid 0.1rem var(--line1);
+	text-align: center;
+    position: relative;
+    display: inline-block;
+    background-color: var(--color-white);
+}
+.aiConBox .aiConSec .adviseListArea .aiListBox .formFavorite {
+	display: flex;
+	justify-content: flex-end;
+	position: absolute; 
+	top: 1rem; right: 1rem; 
+}
+.aiConBox .aiConSec .adviseListArea .aiListBox .formFavorite input {
+	width: 2.4rem;
+	width: 2.4rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none; appearance: none; 
+	-moz-appearance: none; 
+	-webkit-appearance: none; 
+	cursor: pointer;
+	display: block;
+}
+.aiConBox .aiConSec .adviseListArea .aiListBox .formFavorite label { 	
+	width: 2.4rem;
+	width: 2.4rem;
+	display: block; 
+	background: url("../img/common/ico_fav_off.svg") no-repeat center;
+	background-size: cover; 
+	text-indent: -9999px; 
+	overflow: hidden; 
+}
+.aiConBox .aiConSec .adviseListArea .aiListBox .formFavorite label.on { 
+	background: url("../img/common/ico_fav_on.svg") no-repeat center;
+	background-size: cover; 
+}
+.aiConSec .adviseListArea > div {
+    width: 100dvw;
+    box-sizing: border-box;
+    padding-top: 2rem;
+}
+.aiConSec .adviseListArea .aiRoofBox.swiper-slide {
+	display: grid;
+    grid-template-rows: repeat(3, 1fr); 
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+}
+.aiConBox .aiConSec .adviseListArea .aiUniLogo {
+	text-align: center;
+	height: 3.6rem;
+	width: 3.6rem;
+	margin: 0 auto;
+	line-height: 3.6rem;	
+}
+.aiConBox .aiConSec .adviseListArea .aiUniLogo img {
+	width: 100%;  
+	height: auto;  
+	vertical-align: middle;
+}
+.aiConBox .aiConSec .adviseListArea .aiUniName {
+	padding: 1.2rem 0 1.4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 13.1rem;
+	margin: 0 auto;
+}
+.aiConBox .aiConSec .adviseListArea .aiUniName > span {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: var(--text-title);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-right: 0.4rem;
+    letter-spacing: -0.035rem;
+}
+.aiConBox .aiConSec .aiUniName img {
+	height: 1.6rem;
+}
+.aiConSec .adviseListArea .aiUniName span img {margin-top: 0.2rem; width: 2.4rem;}
+.aiConSec .adviseListArea .aiUniInfo {margin: 0;}
+.aiConSec .adviseListArea .aiUniInfo a {margin-right: 0.7rem;}
+.aiConSec .adviseListArea .aiUniInfo a img {width: 3.2rem;}
+.aiConSec .adviseListArea .aiUniInfo a:last-child {margin-right: 0;}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a:last-child  {margin-right: 0;}
+.aiConBlock .adviseListArea .adviseListMore {
+    width: 100%;
+    text-align: center;
+}
+.aiConBlock .adviseListArea .adviseListMore .swiper-pagination-bullet {
+    background-color: var(--line2);
+    width: 1rem; height: 1rem;
+    opacity: 1;
+}
+.aiConBlock .adviseListArea .adviseListMore .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--prime-main);
+    width: 2.4rem;
+    height: 1rem;
+    border-radius: 999rem;
+    transition: all 0.3s ease;
+}
+/*  AI 추천 - (대학정보) --- 끝 --- */
+
+/*  AI 추천 - (학과정보) */
+
+.aiAdviseDepartment .aiConSec .aiConBlock .aiRoofBox .aiListBox .aiUniName {	
+    padding: 1.2rem 0 0.3rem;
+}
+.aiAdviseDepartment .aiConSec .aiConBlock .aiRoofBox .aiListBox .aiUniName span {
+	display: inline-block;
+	font-size: 1.4rem;
+	font-weight: 400;
+    letter-spacing: -0.035rem;
+}
+.aiAdviseDepartment .aiConSec .aiConBlock .aiRoofBox .aiListBox .aiUniClass {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: var(--text-title);
+	letter-spacing: -0.035rem;
+	width: 100%;
+	margin-bottom: 1rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/*  AI 추천 - (학과정보) --- 끝 --- */
+
+/*  AI 추천 - (입시전형) */
+
+.aiEntrance .aiTabClassList::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Opera*/
+}
+.aiEntrance .aiTabClassList {
+	width: 100%;
+	padding-top: 2rem;
+	-ms-overflow-style: none; /* IE, Edge */
+  	scrollbar-width: none; /* Firefox */
+	  overflow: scroll hidden;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: flex-start;
+}
+.aiEntrance .aiTabClassList a {
+	padding: 0.7rem 1.6rem 0.9rem;  
+	border-radius: 999rem;
+	border: solid 0.1rem var(--text-sub3);  
+	letter-spacing: -0.04rem;
+	font-size: 1.4rem;
+	font-weight: 500;
+	color:var(--text-body);
+	margin-right: 0.6rem;
+	flex-shrink: 0;
+}
+.aiEntrance .aiTabClassList a:last-child {margin-right: 0;}
+.aiEntrance .aiTabClassList a.tabListActive {
+	border: solid 0.1rem var(--prime-main);  
+	color:var(--prime-main);
+	font-weight: 500;
+}
+.aiEntrance .aiConSec .main_entrance_swiper .aiRoofBox.swiper-slide {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox {
+	width: calc((100vw) - 4rem);
+	text-align: left;
+	padding: 1rem 1.2rem 1.2rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiListTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiListTop .aiListDescription h4 {
+	font-size: 1.2rem;
+	letter-spacing: -0.03rem;
+	color: var(--text-body);
+	border: 0.1rem solid var(--line1);
+	padding: 0.1rem 0.4rem 0.2rem;
+	border-radius: 0.4rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a {
+	margin-right: 0.6rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a img {
+	width: 2.4rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 0.9rem 0 1rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniLogo img {
+	width: 100%; 
+	height: auto; 
+	vertical-align: middle;
+	margin-top: 0.8rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-start;
+	justify-content: flex-start;
+	text-align: left;
+	max-width: calc((100vw - 4rem) - 5rem);
+	margin-left: 0.8rem;
+	padding: 0;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5 {
+	position: relative;
+	margin-bottom: 0.2rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5 p {
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: -0.035rem;
+	color: var(--text-title);
+	max-width: 65dvw;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	line-height: 1.4rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p {
+	display: flex;
+	align-items: center;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span span {
+	font-size: 1.4rem;
+	font-weight: 400;
+	color: var(--text-title);
+	letter-spacing: -0.035rem;
+	max-width: calc((50vw / 2) - 2rem);
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span:last-child {
+	max-width: calc(75vw / 2);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 0.7rem;
+	padding-bottom: 0.2rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName p > span:nth-child(1)::after {
+	content: '';
+	width: 0.1rem;
+	height: 1.6rem;
+	background-color: var(--line1);
+	display: inline-block;
+	margin-left: 0.3rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite {
+	right: -2.1rem;
+	top: 0.2rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite input ,
+.aiEntrance .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite label { 
+	width: 1.7rem;
+	height: 1.7rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--bg2);
+	border-radius: 0.4rem;
+	padding: 0.7rem 0.2rem 0.8rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p:nth-child(1) {
+	width: calc(100dvw / 4);
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p:nth-child(2),
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p:nth-child(3) {
+	width: calc(100dvw / 3);
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	white-space: nowrap;
+	padding: 0 0.6rem;
+	border-right: 0.1rem solid var(--line1);
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p > span {
+	font-size: 1.2rem;	
+	letter-spacing: -0.03rem;
+	color: var(--text-sub);
+	margin-right: 0.4rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(2) {
+	color: var(--prime-main);
+	text-align: right;
+	font-weight: 700;
+	letter-spacing: -0.03rem;
+}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p:last-child span:nth-child(2)::after {display: none;}
+.aiEntrance .aiConSec .adviseListArea .aiListBox .listInfoBox p:last-child {
+	border-right: 0;
+}
+.aiEntrance.aiConBox .aiConSec .adviseListArea .aiUniLogo,
+.aiAdviseRegular.aiConBox .aiConSec .adviseListArea .aiUniLogo,
+.aiAdviseEarly.aiConBox .aiConSec .adviseListArea .aiUniLogo {margin: 0;}
+
+/*  AI 추천 - (입시전형) --- 끝 --- */
+
+
+/*  AI 추천 - (대학별성적분석(수시/정시)) */
+
+.aiAdviseEarly .aiConSec .adviseListArea .aiRoofBox.swiper-slide{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+/* AI추천 전형정보 */
+.aiEntrance .aiConSec .adviseListArea .swiper-slide > div {
+	margin-bottom: 10px;
+}
+.aiConSec .adviseListArea .swiper-slide > div:last-child {
+	margin-bottom: 0;
+}
+/* AI추천 전형정보  끝*/
+	
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox {
+	width: calc((100vw) - 4rem);
+	text-align: left;
+	padding: 1rem 1.2rem 1.2rem;
+	cursor: pointer;
+	height: fit-content;
+	min-height: auto;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiListTop,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiListTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiListTop .aiListDescription h4,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiListTop .aiListDescription h4 {
+	font-size: 1.2rem;
+	letter-spacing: -0.03rem;
+	color: var(--text-body);
+	border: 0.1rem solid var(--line1);
+	padding: 0.1rem 0.4rem 0.2rem;
+	border-radius: 0.4rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a {
+	margin-right: 0.6rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a img,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiListTop .aiUniInfo a img {
+	width: 2.4rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 0.9rem 0 0.7rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniLogo img,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniLogo img {
+	height: 3.2rem;
+	width: auto;
+	margin-top: 0.8rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-start;
+	justify-content: flex-start;
+	text-align: left;
+	max-width: calc((100vw - 4rem) - 5rem);
+	margin-left: 0.7rem;
+	padding: 0;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5 {
+	position: relative;
+	margin-bottom: 0.2rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5 p ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName h5 p {
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: -0.035rem;
+	color: var(--text-title);
+	max-width: 65dvw;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	line-height: 1.4rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p {
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span span,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span span {
+	font-size: 1.4rem;
+	font-weight: 400;
+	color: var(--text-title);
+	letter-spacing: -0.035rem;
+	max-width: calc((50vw / 2) - 2rem);
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span:last-child ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span:last-child {
+	max-width: calc(75vw / 2);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 0.6rem;
+	padding-bottom: 0.4rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName p > span:nth-child(1)::after ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName p > span:nth-child(1)::after {
+	content: '';
+	width: 0.1rem;
+	height: 1.6rem;
+	background-color: var(--line1);
+	display: inline-block;
+	transform: translateY(-0.2rem);
+	margin-left: 0.4rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite {
+	right: -2.1rem;
+	top: 0.2rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite input ,
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite label , 
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite input ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .aiUniInfoCon 
+.aiUniName .formFavorite label { 
+	width: 1.7rem;
+	height: 1.7rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--bg2);
+	border-radius: 0.4rem;
+	padding: 0.7rem 0rem 0.8rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox p ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	white-space: nowrap;
+	width: calc((100dvw / 3) - 2rem);
+	padding: 0 0.8rem;
+	border-right: 0.1rem solid var(--line1);
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox p span ,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span {
+	font-size: 1.2rem;	
+	letter-spacing: -0.03rem;
+	color: var(--text-sub);
+	text-align: center;
+	box-sizing: border-box;
+	width: 100%;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(1),
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(1) {
+	letter-spacing: -0.06rem;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(2),
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(2),
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(3) {
+	color: var(--prime-main);
+	font-weight: 700;
+	letter-spacing: -0.03rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 21vw;
+}
+.aiAdviseEarly .aiConSec .adviseListArea .aiListBox .listInfoBox p:last-child,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p:last-child {
+	border-right: 0;
+}
+/*  AI 추천 - (대학별성적분석(수시/정시)) --- 끝 --- */
+
+
+/*  AI 추천 - (대학별성적분석(정시 개별)) */
+.aiAdviseRegular .aiConSec .adviseListArea .aiRoofBox.swiper-slide  {
+    display: grid;
+    grid-template-rows: repeat(3, 0fr);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(2) img,
+.aiAdviseRegular .aiConSec .adviseListArea .aiListBox .listInfoBox p span:nth-child(3) img {
+	transform: translateY(0.2rem);
+	margin-right: 0.2rem;
+	height: 1.6rem;
+}
+/*  AI 추천 - (대학별성적분석(정시 개별)) --- 끝 --- */
+
+
+/*  AI 추천 - (직업정보(워드클라우드)) */
+.aiConBlock .wordCloudArea {
+	padding: 2rem 0 9rem;
+	text-align: center;
+}
+/*  AI 추천 - (직업정보(워드클라우드)) --- 끝 --- */
+
+/*  AI 추천 - (대학별성적분석(수시) - 팝업 */
+.aiContainer .header .aiSubTitle {
+	display: flex;
+	justify-content: space-between;
+	width: 100dvw;
+}
+.aiContainer .aiSubTabList {
+	padding: 0 2rem 2rem;
+	overflow: scroll hidden;
+	-ms-overflow-style: none; /* IE, Ed */
+	scrollbar-width: none; /* Fir */
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: flex-start;
+}
+.aiContainer .aiSubTabList::-webkit-scrollbar {display: none; /* Chr, Saf, Ope*/}
+.aiContainer .aiSubTabList a {
+	padding: 0.7rem 1.6rem 0.9rem;  
+	border-radius: 999rem;
+	border: solid 0.1rem var(--text-sub3);  
+	letter-spacing: -0.04rem;
+	font-size: 1.4rem;
+	font-weight: 500;
+	color:var(--text-sub3);
+	margin-right: 0.6rem;
+	flex-shrink: 0;
+}
+.aiContainer .aiSubTabList a:last-child {margin-right: 0;}
+.aiContainer .aiSubTabList a.subTabActive {
+	background-color: var(--text-title);  
+	border: 0.1rem solid var(--text-title);
+	color:var(--color-white);
+	font-weight: 500;
+}
+.aiContainer .header .aiSubTitle .btnHeaderClose {
+    width: 1.8rem;
+    height: 1.8rem;
+    background: url(../../static/img/ai/icon_cate_hd_close.svg) center no-repeat;
+}
+.aiAdviseRegularPopup.aiConBox,
+.aiAdviseEarlyPopup.aiConBox {padding: 1.2rem 2rem 0;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea > div,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea > div {padding-top: 0;}
+.aiAdviseRegularPopup.aiConBox .aiConSec .adviseListArea .aiListBox,
+.aiAdviseEarlyPopup.aiConBox .aiConSec .adviseListArea .aiListBox {min-height: auto; margin-bottom: 2rem;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon {padding: 0.9rem 0 0;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniLogo img ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniLogo img {margin-top: 0.5rem;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName {	margin-left: 0.4rem;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p {	white-space: nowrap;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span span ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span span {max-width: 20vw;}
+.aiAdviseRegularPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span:last-child ,
+.aiAdviseEarlyPopup .aiConSec .adviseListArea .aiListBox .aiUniInfoCon .aiUniName p span:last-child {max-width: 40vw;}
+.aiTable::-webkit-scrollbar {display: none;}
+.aiTable {
+	padding: 0 2rem 0.5rem;
+	max-height: calc(100dvh - 33.7rem);
+	overflow-y: scroll;
+	-ms-overflow-style: none; /* IE, Edge */
+  	scrollbar-width: none; /* Firefox */
+}
+.aiTable table {
+	border-top: 0.1rem solid var(--text-title) !important;
+	border-width: 0.1rem 0 0 0 !important;
+	border-collapse: separate;
+}
+.aiTable table th {	border-width: 0 0rem .1rem 0rem !important; white-space: nowrap;}
+.aiTable table th.tableNone {border-width: 0 0.1rem .1rem 0rem !important; white-space: nowrap;}
+.aiTable table td {	border-width: 0 0 0.1rem 0.1rem !important;}
+.aiConBottomBtn {
+	position: fixed;
+	bottom: 0;
+	width: 100dvw;
+	padding: 2rem;
+	background-color: var(--color-white);
+	box-shadow: 0 -0.5rem 0.6rem 0 rgba(0, 0, 0, 0.12);
+}
+.aiConBottomBtn .btnBottomClose {
+	padding: 1.3rem 0;
+	width: 100%;
+	border-radius: 1rem;
+	background-color: #dee6e6;
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: var(--text-body);
+}
+/*  AI 추천 - (대학별성적분석(수시) - 팝업 --- 끝 --- */
+
+
+/* 셀렉인풋 */
+.aiReBtnArea .aiSelectCon {
+	position:relative;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.aiSelectCon .aiSelectIcon.on {border: 0.1rem solid var(--prime-main);}
+.aiReBtnArea .aiSelectCon .aiSelectIcon {
+	width: calc(100dvw - 18.6rem);
+    border-radius: 0.8rem;
+    border: solid 0.1rem var(--prime-main);
+    background-color: var(--color-white);
+    margin-right: 1rem;
+}
+.aiReBtnArea .aiSelectCon .aiSelectIcon button {
+    color: var(--prime-main); text-align: left;
+    height: 4.4rem; line-height: 4.4rem; 
+    font-size: 1.4rem; padding: 0 2.5rem 0.1rem 1.2rem !important; 
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt {
+	position:absolute; 
+	/* opacity: 0; */
+	/* display: block; */
+	top: 4.7rem; left: 0; width: 100%; background:var(--color-white); 
+	border:0.1rem solid var(--prime-main); 
+	border-radius:8px; padding: 0.8rem 0.4rem 1.3rem 0rem; z-index:999;
+}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt ul {
+	width:100%; max-height: 18.8rem; overflow-y:scroll;
+}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt ul li {
+	padding: 0.5rem 1rem 0.7rem 1.2rem;
+}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt ul li:last-of-type {margin-bottom:0;}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt ul li a {
+	display:flex; font-size: 1.4rem; text-align:left;
+	align-items: center; justify-content: space-between;
+}
+.aiReBtnArea .aiSelectCon .regularTestCaseOpt ul li a.sel {color: var(--prime-main);}
+.aiReBtnArea .aiSelectCon .aiSelectIcon .selCustBtn {position: relative; width: 100%;}
+.aiReBtnArea .aiSelectCon .aiSelectIcon .selCustBtn span {
+	max-width: calc((100dvw - 19rem) - 4.3rem);
+	line-height: 4.4rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	letter-spacing: -0.035rem;
+}
+.aiSelectIcon .selCustBtn {
+    position: relative;
+    display: inline-block;
+}
+.aiSelectIcon .selCustBtn::after {
+    content: '';
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    top: 50%;
+    right: 0.8rem;
+    transform: translate(0, -50%);
+    background-image: url(../img/ai/frm_selectbox.png);
+    transition: transform 0.4s ease;
+}
+.aiSelectIcon .selCustBtn.rotated::after {
+    transform: translate(0, -50%) rotate(180deg);
+}
+li.caseOptActive {background-color: var(--bg4);}
+li.caseOptActive a, li.caseOptActive a span {color: var(--prime-main);}
+
+.iInfoTooltip { 
+	margin-top: 1rem;
+	position: absolute;
+	right: 0;
+	top: -1.2rem;
+    z-index: 0;
+}
+.iInfoTooltip .iIcon { 
+	background-color: var(--color-white); 
+	border: .1rem solid var(--prime-main); 
+	border-radius: 999rem; 
+	padding: .3rem .6rem;
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    color: var(--prime-main);
+}
+.iInfoTooltip .iIcon:focus { filter: brightness(0.95); }
+.aiTitleSec #mainBeta {
+	right: -3.2rem;
+    top: -.4rem;
+    z-index: 1;
+}
+.aiTitleSec #mainBeta::after { width: 3rem;}
+
+.displayNone {display: none !important; animation: all 0.5s linear;}
+.hide {display: none !important;}
+.show {animation: all 0.5s both; opacity: 1 !important;}
+
+@keyframes chatShow{
+	0% {transform:translateY(20px); opacity: 0;}
+	100% {transform:translateY(0); opacity: 1;}
+}
+.tabCon.case1.result, .tabCon.case2.result  {
+  	padding: 1.9rem 2rem 18rem;
+}
+.aiContainer .wrapper.wrapperBox {
+	overflow-x : hidden;
+}

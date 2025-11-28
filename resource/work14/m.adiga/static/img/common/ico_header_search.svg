@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    <defs>
+        <clipPath id="vl3zoi1xma">
+            <path data-name="사각형 3803" transform="translate(.395 .395)" style="stroke-linecap:round;fill:#fff;stroke:#707070" d="M0 0h20v20H0z"/>
+        </clipPath>
+    </defs>
+    <g style="clip-path:url(#vl3zoi1xma)">
+        <path data-name="패스 66238" d="M12.784 2.815a7.049 7.049 0 0 1 0 9.969 6.991 6.991 0 0 1-9.969 0 7.049 7.049 0 0 1 9.969-9.969zm5.03 14.994-4.728-4.723" transform="translate(.638 .638)" style="stroke:#222;stroke-linejoin:round;stroke-width:1.5px;fill:none;stroke-linecap:round"/>
+    </g>
+    <path data-name="사각형 3806" style="opacity:.2;fill:none" d="M0 0h20v20H0z"/>
+</svg>

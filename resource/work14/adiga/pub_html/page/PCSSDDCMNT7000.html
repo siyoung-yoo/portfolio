@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+
+<script type="text/javascript" src="../../static/js/comm/validation.js"></script>
+<script type="text/javascript" src="/raonk/raonkupload/js/raonkupload.js"></script>
+<script type="text/javascript" src="../../static/js/comm/raonkFileUpload.js"></script>
+</head>
+<body>
+
+	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+		<div class="popupDim"></div>
+		<div class="popupArea popup1Cont mdPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소 / stPop 상태메시지 600x455 -->
+			<div class="popupInMotion">
+				<div class="popupContainer">
+					<div class="popupContArea">
+						<div class="popTitleBox">
+							<h3 class="popTitle">파일 업로드</h3>
+							<button class="popCloseBtn" onclick="closePopup('popupName');">
+								<span class="hidden">닫기</span>
+							</button>
+						</div>
+
+						<div class="popCont typeSsd">
+							<p class="mB15">아래에 요청된 문서를 PDF 형식으로 첨부해 주세요.</p>
+
+							<!-- [10/31] span.vam 태그 추가 -->
+							<div class="boxLineStyle mB20 center">
+								<p class="vam">농어촌학생전형 학교장 확인서 (학교서식)</p>
+							</div>
+
+							<!-- [10/31] 재제출일 경우 i태그 추가 -->
+							<div class="boxLineStyle mB20 center">
+								<i class="icoOnly _infoPointSvg"></i> <span class="vam">농어촌학생전형 학교장 확인서 (학교서식)</span>
+							</div>
+
+							<div id="component_holder">
+								<script type="text/javascript">
+									const uploaderId = 'upload1'
+
+									var raonUploadkParam = {
+										Id: uploaderId
+										, InitServerXml: "/raonk/raonkupload/handler/raonkhandler.jsp?f=raonkupload.config.xml"
+										, Width: '100%'
+										, Height: '225px'
+										, UploadHolder: "component_holder"
+										, SimpleUIMode: {
+											Use: '1',
+											Mode: 'single',
+											UserCssUrl: '/static/css/customUpload.css'
+										}
+										, UseHtmlProcessByWorker: "0"
+
+										// pdf 파일만 업로드
+										, ExtensionAllowOrLimit: '1'
+										, ExtensionArr: 'pdf'
+									};
+									var upload = new RAONKUpload(raonUploadkParam);
+
+									// default 상태 스타일 추가
+									function fn_customUploaderStyle(uploaderId) {
+										const iframe = document.querySelector("#raonkuploader_frame_"+uploaderId);
+										const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+										const $fileInfoArea = $(innerDoc).find(".file-info-area");
+										const $btnAddFile = $(innerDoc).find(".file-btn-area a[id*=_fileAdd]");
+
+										$(innerDoc).find(".kupload-simple-ui").addClass("customUploader");
+										$fileInfoArea.after('<p class="text">제출할 PDF 파일을 첨부해 주세요.</p>');
+										$btnAddFile.text("파일찾기");
+									}
+
+									// 파일 추가 됐을때 스타일 추가
+									function fn_fileAddStyle(uploaderId) {
+										const iframe = document.querySelector("#raonkuploader_frame_"+uploaderId);
+										const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+										$(innerDoc).find(".kupload-simple-single-ui-area").addClass("has-file");
+									}
+
+									// 파일 삭제 됐을때 스타일 추가
+									function fn_fileDeleteStyle(uploaderId) {
+										const iframe = document.querySelector("#raonkuploader_frame_"+uploaderId);
+										const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+										$(innerDoc).find(".kupload-simple-single-ui-area").removeClass("has-file");
+									}
+
+
+									// 파일 업로드 스타일 수정을 위해 각각 function 추가해주세요
+									function RAONKUPLOAD_CreationComplete(uploaderId) {
+										// 업로드 생성 후 처리내용
+										fn_customUploaderStyle(uploaderId)
+									}
+
+									function RAONKUPLOAD_AfterAddFile(uploadID, paramObj) {
+										// 파일 추가 후 처리할 내용
+										fn_fileAddStyle(uploaderId)
+									}
+
+									function RAONKUPLOAD_AfterDeleteFile(uploadID, paramObj) {
+										// 파일 삭제 후 처리할 내용
+										fn_fileDeleteStyle(uploaderId)
+									}
+								</script>
+							</div>
+
+						</div>
+
+						<div class="popBtm">
+							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
+							<button class="btnCTA _confirm">업로드</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

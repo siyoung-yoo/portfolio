@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31">
+    <g transform="translate(0 .143)">
+        <circle data-name="타원 22" cx="15.5" cy="15.5" r="15.5" transform="translate(0 -.143)" style="fill:#e3edef"/>
+        <g data-name="icon_uni" transform="translate(6 4.308)">
+            <rect data-name="사각형 2367" width="14.58" height="8.577" rx="1" transform="translate(2.011 9.101)" style="stroke:#333;stroke-width:1.5px;fill:#fff"/>
+            <path data-name="선 233" transform="translate(0 17.549)" style="stroke-linecap:round;fill:none;stroke:#333;stroke-width:1.5px" d="M0 0h19"/>
+            <path data-name="사각형 2368" d="M1 0h1a1 1 0 0 1 1 1v2H0V1a1 1 0 0 1 1-1z" transform="translate(8 14.549)" style="stroke:#333;stroke-width:1.5px;fill:#fff"/>
+            <path data-name="선 234" transform="translate(9.301 2.107)" style="stroke-linejoin:round;stroke-linecap:round;fill:none;stroke:#333;stroke-width:1.5px" d="M0 6.692V0"/>
+            <path data-name="패스 2209" d="M14.484 6.976V1l5.355 2.988z" transform="translate(-5.184 -1)" style="fill:#16a1a9;stroke-linejoin:round;stroke-linecap:round;stroke:#333;stroke-width:1.5px"/>
+        </g>
+    </g>
+</svg>

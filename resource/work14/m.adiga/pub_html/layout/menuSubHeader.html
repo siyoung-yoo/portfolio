@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+
+
+	<header class="header">
+		<div class="headerTitle">
+			<button type="button" class="btnHeaderBack">
+				<span class="hidden">이전 화면</span>
+			</button>
+			<h1>
+				<span>메뉴명</span>
+				<button type="button" class="btnMenuSpinner">
+					<span class="hidden">메뉴열기</span>
+				</button>
+			</h1>
+		</div>
+		<div style="margin-left:auto;">
+			<button type="button" class="btnHeaderSearch2" onclick="autoComplete()">
+				<span class="hidden">검색</span>
+			</button>
+		</div>
+
+		<!-- <div class="headerUtil">
+			<button type="button" class="btnHeaderSetting"><span class="hidden">설정 열기</span></button>
+			<button type="button" class="btnEdit"><span class="hidden">수정</span></button>
+			<button type="button" class="btnDelete"><span class="hidden">삭제</span></button>
+			<button type="button" class="btnHeaderSearch"><span class="hidden">검색</span></button>
+			<button type="button" class="btnHeaderFunc"><span>성적관리</span></button>
+		</div> -->
+	</header>
+
+	<div class="menuSpinner">
+		<div class="dim"></div>
+		<div class="scrLock">
+			<ul>
+				<li class="on">
+					<button type="button" class="menus">1 Depth 1</button>
+				</li>
+				<li>
+					<button type="button" class="menus">1 Depth 2</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+</body>
+</html>

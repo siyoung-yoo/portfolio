@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+
+<script>
+	function printPopup() {
+		document.body.classList.add('printOnlyPopup')
+		window.print();
+	}
+
+	window.addEventListener("afterprint", () =>
+		document.body.classList.remove('printOnlyPopup')
+	);
+</script>
+
+<style>
+	@page print-onlyPopup { size: A4 portrait; margin: 0; }
+	@media print {
+		* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+		html, body { min-width: auto; }
+		.printOnlyPopup { page: print-onlyPopup; }
+		.printOnlyPopup .wrapper>*:not(#sbmsnIdntyForm),
+		.printOnlyPopup #sbmsnIdntyForm .popupDim,
+		.printOnlyPopup #sbmsnIdntyForm .popTitleBox,
+		.printOnlyPopup #sbmsnIdntyForm .popCont.typeSsd > *:not(.scroll),
+		.printOnlyPopup #sbmsnIdntyForm .popBtm {
+			display: none;
+		}
+		.printOnlyPopup #sbmsnIdntyForm,
+		.printOnlyPopup #sbmsnIdntyForm .popupArea {
+			position: relative;
+			left: 0;
+			top: 0;
+			transform: none;
+		}
+		.printOnlyPopup #sbmsnIdntyForm .popupArea {
+			width: 100%;
+		}
+		.printOnlyPopup #sbmsnIdntyForm .popupContArea {
+			padding: 0;
+		}
+		.printOnlyPopup #sbmsnIdntyForm .scroll {
+			max-height: initial;
+			padding: 2cm; /* 인쇄 여백 */
+		}
+	}
+</style>
+
+</head>
+<body>
+	<div id="sbmsnIdntyForm" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+		<div class="popupDim"></div>
+		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
+			<div class="popupInMotion">
+				<div class="popupContainer">
+					<div class="popupContArea">
+						<div class="popTitleBox">
+							<h3 class="popTitle">확인증</h3>
+							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+								<span class="hidden">닫기</span>
+							</button>
+						</div>
+
+						<div class="popCont typeSsd">
+							<div class="right mB10">
+								<!--
+									확인증 영역만 인쇄를 위해 별도 script와 style 추가 필요합니다.
+									(header 태그 내 script, style 참고)
+								-->
+								<button type="button" class="btnSmall _stroke withIcon" onclick="printPopup()">
+									<i class="ico _print"></i>인쇄
+								</button>
+							</div>
+
+							<div class="scroll">
+								<div class="printCont">
+									<h4 class="printTitle">고려대학교 서류제출 확인증</h4>
+
+									<div class="tblTitleArea">
+										<p class="body1 med">지원정보</p>
+										<p class="body3">식별번호 : 2025A9900012</p>
+									</div>
+									<table class="cptTbBsc hType tdHasPd">
+										<caption>서류제출 확인증 지원정보 상세</caption>
+										<colgroup>
+											<col style="width: 146px">
+											<col>
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">지원자수(수험번호)</th>
+												<td>
+													<strong class="bclr fwMed wFull">홍길동(25110301234)</strong>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">지원전형</th>
+												<td>
+													<strong class="bclr fwMed wFull">(정시)고려대학교 - 금융빅데이터학부</strong>
+													<p>학생부종합(고른기회) > 국가공헌: 국가보훈 대상자 (1차)</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="tblTitleArea">
+										<p class="body1 med">제출사항</p>
+										<p class="body3">2025-09-14 00:00:00</p>
+									</div>
+									<table class="cptTbBsc hType tdHasPd">
+										<caption>서류제출 확인증 제출사항 상세</caption>
+										<colgroup>
+											<col style="width: 146px">
+											<col>
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">제출내역</th>
+												<td>
+													<ul class="bclr">
+														<li>가족관계 증명서</li>
+														<li>농어촌 학생전형 학교장 확인서(학교서식)</li>
+														<li>주민등록초본</li>
+														<li>중학교 학교생활 기록부</li>
+														<li>서류명01</li>
+														<li>서류명02</li>
+														<li>서류명03</li>
+														<li>서류명04</li>
+														<li>서류명05</li>
+													</ul>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="printFooter">
+										<p>위와 같이 지원 전형에 필요한 모든 서류를 제출하였습니다.</p>
+										<div class="date">yyyy년 mm월 dd일</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="popBtm">
+							<button type="button" class="btnCTA _confirm" onclick="closePopup('popupName');">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

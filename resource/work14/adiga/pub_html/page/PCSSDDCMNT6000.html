@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+
+	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+		<div class="popupDim"></div>
+		<div class="popupArea popup1Cont mdPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소 / stPop 상태메시지 600x455 -->
+			<div class="popupInMotion">
+				<div class="popupContainer">
+					<div class="popupContArea">
+						<div class="popTitleBox">
+							<h3 class="popTitle">전자증명서 발급 신청</h3>
+							<button class="popCloseBtn" onclick="closePopup('popupName');">
+								<span class="hidden">닫기</span>
+							</button>
+						</div>
+
+						<div class="popCont typeSsd">
+							<p class="mB15">정부24를 통해 지원한 모든 특별전형에 제출해야 할 전자문서를 일괄로 발급 받을 수 있습니다.<br>전자증명서는 행정안정부의 정부 전자문서지갑으로 발급됩니다.</p>
+
+							<div class="boxLineStyle typeScroll">
+								<div class="scroll">
+									<ul class="flexList">
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>가족관계증명서</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<!-- [10/31] 재제출일 경우 .resubmit 추가, i태그 추가 -->
+											<span class="resubmit"><i class="ico _infoPointSvg"></i>주민등록 등본</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>차상위 본인부담경감대상자 증명서</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<!-- [10/31] 재제출일 경우 .resubmit 추가, i태그 추가 -->
+											<span class="resubmit"><i class="ico _infoPointSvg"></i> 재제출 서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+										<li>
+											<span class="badgeGov">정부24</span>
+											<span>서류명</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="popBtm">
+							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
+							<button class="btnCTA _confirm">발급받기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,413 @@
+@charset "utf-8";.fullBox { width: 100vw !important; margin-left: -2rem; overflow: hidden; } 
+/*****************************************************************************/
+/* 아코디언 */
+.cptFoldingInfo .accordionCon dl:last-of-type { margin-bottom: 2.4rem; } 
+.cptFoldingInfo .accordionCon dl + dl { margin-top: 2rem; } 
+.cptFoldingInfo .accordionCon { display: none; } 
+.cptFoldingInfo .accordionCon dt { margin-bottom: 0.8rem; } 
+.cptFoldingInfo .accordionCon dd { color: var(--text-sub2); letter-spacing: -0.035rem; } 
+.cptFoldingInfo .accordionCon dd + dd { margin-top: 0.8rem; } 
+.cptFoldingInfo .accordionCon dd.dot { position: relative; padding-left: 12px; } 
+.cptFoldingInfo .accordionCon dd.dot::before { content: ''; display: block; position: absolute; top: 0.9rem; left: 0; width: 4px; height: 4px; background: var(--text-sub2); border-radius: 50%; } 
+/*대입상담*********************************************************************/
+/* 온라인대입상담 */
+.onlineConseView .bgGray { width: 100vw; margin-left: -2rem; margin-bottom: 2rem; padding: 2.5rem 2rem 2rem 2rem; background: var(--bg3); } 
+.onlineConseView .summary { display: flex; margin-bottom: 2.4rem; } 
+.onlineConseView .summary li { position: relative; width: 25%; color: var(--text-sub); font-size: 1.3rem; text-align: center; } 
+.onlineConseView .summary li::after { content: ""; display: block; position: absolute; top: 0; right: 0; width: 1px; height: 58px; background: #e5e5e5; } 
+.onlineConseView .summary li:last-of-type::after { display: none; } 
+.onlineConseView .summary strong { display: block; margin-top: 0.8rem; font-size: 1.8rem; } 
+.onlineConseView .summary span { color: var(--prime-main); font-size: 1.8rem; font-weight: 700; } 
+.onlineConseView .conseBanner { display: block; width: 100%; padding: 1.2rem 1.6rem; background: url(../img/common/ico_arrow_white.svg) no-repeat right 8px center var(--prime-main); border-radius: 0.8rem; color: var(--color-white); font-size: 1.4rem; text-align: left; } 
+.onlineConseView .cptSearchForm._hasFilter { margin-bottom: 0; } 
+.onlineConseView .listWrap .total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.6rem; } 
+.onlineConseView .listWrap .totalCnt { font-size: 1.6rem; } 
+.onlineConseView .listWrap .totalCnt strong { color: var(--prime-main); font-size: 1.6rem; font-weight: 700; } 
+.onlineConseView .listWrap .btnWrap { margin-top: 1.2rem; } 
+.onlineConseView .listWrap .list li + li { margin-top: 1.2rem; } 
+.onlineConseView .listItem { display: block; padding: 2rem; border: 1px solid var(--line1); border-radius: 1rem; } 
+.onlineConseView .listItem .stateArea { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; } 
+.onlineConseView .listItem .state { display: block; padding: 0.3rem 0.9rem; border-radius: 1.2rem; font-size: 1.2rem; } 
+.onlineConseView .listItem .state._request { border: 1px solid #bbb3f8; background: #f4f4fb; color: #8278ce; } 
+.onlineConseView .listItem .state._ongoing { border: 1px solid #8ec3fd; background: #f2f8ff; color: #3b97fb; } 
+.onlineConseView .listItem .state._answer { border: 1px solid #ffba6a; background: #fef8f2; color: #ff8c05; } 
+.onlineConseView .listItem .state._finish { border: 1px solid #86d7dc; background: #f1fbfc; color: #39a6af; } 
+.onlineConseView .listItem .closed { display: block; width: 2rem; height: 2rem; background: url(../img/common/ico_lock.svg) no-repeat center; background-size: cover; } 
+.onlineConseView .listItem .tit { margin-bottom: 1.2rem; color: var(--text-title); font-size: 1.6rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all; } 
+.onlineConseView .listItem .tit .new { display: inline-flex; justify-content: center; align-items: center; width: 2rem; height: 2rem; margin-right: 0.4rem; background: var(--prime-point); border-radius: 50%; color: var(--color-white); font-size: 1.1rem; transform: translateY(-2px); }
+/*2023.12.27 top5 강조효과추가*/
+.onlineConseView .listItem.topList {border:1px solid var(--prime-main);}
+/*2023.12.26 온라인 대입상담 (검색어 하이라이트 표기) */
+.onlineConseView .listWrap .tit strong { color: var(--prime-main); font-size: 1.6rem;} 
+.onlineConseView .listItem .info { display: flex; justify-content: space-between; } 
+.onlineConseView .listItem .info span { color: var(--text-sub3); font-size: 1.3rem; } 
+.onlineConseView .listItem .info .rightBar::after { content: ''; display: inline-block; width: 1px; height: 50%; margin: 0 0.8rem; background: var(--line2); transform: translateY(1px); } 
+.onlineConseView .listItem .info .date { display: inline-block; margin-left: 1.2rem; } 
+.onlineConseView .noWrite { width: 16.3rem; margin: 2.4rem auto 0; } 
+.onlineConseView .cptNoData .hLgt { color: var(--prime-main); } 
+/* 상담하기(글쓰기) */
+.onlineConseForm .formRow .h4 { margin-bottom: 1.6rem; } 
+.onlineConseForm .formRow .formElem+.formElem { display: block; margin-top: 1.2rem; } 
+.onlineConseForm .formRow2 + .formRow2 { margin-top: 2.4rem; } 
+.onlineConseForm .formRow2 h3 { margin-bottom: 1.2rem; font-size: 1.4rem; font-weight: 500; } 
+.onlineConseForm .formRow2._school .d-flex { display: flex; gap: 0.8rem; } 
+.onlineConseForm .formRow2._school .formElem { width: calc(100% - 10.1rem); } 
+.onlineConseForm .formRow2._school button { width: 9.3rem; } 
+.onlineConseForm .formRow3 { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; } 
+.onlineConseForm .formRow3 h3 { font-size: 1.4rem; font-weight: 500; } 
+.onlineConseForm .formRow3 button { display: flex; justify-content: space-between; align-items: center; width: 18.2rem; padding: 12px 14px; border: 1px solid var(--text-sub); border-radius: 1rem; color: var(--text-title); font-size: 1.4rem; font-weight: 500; text-align: left; } 
+.onlineConseForm .formRow3 button .arrow { display: block; width: 1.6rem; height: 1.6rem; background: url(../img/common/ico_drop_arrow.svg) no-repeat center; background-size: cover; transform: rotate(90deg); } 
+.onlineConseForm .saveCheck { margin-top: 2rem; text-align: right; } 
+.onlineConseForm .section._noPd { padding: 0 2.4rem; } 
+.onlineConseForm .section._hasBorder { border-bottom: 1rem solid var(--bg5); } 
+.onlineConseForm .scoreInfo .notice,
+.onlineConseForm .hopeUniv .notice { color: var(--prime-main); font-size: 1.2rem; } 
+.onlineConseForm .hopeUniv .notice { margin-bottom: 2.4rem; } 
+.onlineConseForm .accordion { border: none; padding:2.4rem 0; } 
+.onlineConseForm .accordion .accordionBtn { width:100%; text-align:left; font-weight: 700; font-size:1.6rem; color: var(--text-title); position:relative; } 
+.onlineConseForm .accordion .accordionBtn .arrow { position:absolute; top:50%; right:0; width:2.4rem; height:2.4rem; transform:translate(0,-50%) rotate(0deg); background:url(../img/common/ico_drop_arrow.svg)0 0 no-repeat; } 
+.onlineConseForm .accordion .accordionBtn._open { padding-bottom: 0; } 
+.onlineConseForm .accordion .accordionBtn._open .arrow { transform:translate(0,-50%) rotate(180deg); } 
+.onlineConseForm .accordion .accordionCon { margin: 2.4rem 0; } 
+
+/*온라인상담 상세*/
+.onlineConseDtlView .viewInfo { width:100%; } 
+.onlineConseDtlView .viewInfo > div { display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between; } 
+.onlineConseDtlView .viewInfo > div.topInf { margin-bottom:1.2rem; } 
+.onlineConseDtlView .viewInfo > div.topInf span:first-of-type { font-size:1.6rem; color: var(--text-body); font-weight:500; } 
+.onlineConseDtlView .viewInfo > div.topInf span:last-of-type { font-size:1.4rem; color: var(--prime-main); font-weight:400; } 
+.onlineConseDtlView .viewInfo > div.botInf span:first-of-type { font-size:1.3rem; color: var(--text-sub3); font-weight:400; } 
+.onlineConseDtlView .viewInfo > div.botInf span:last-of-type { font-size:1.3rem; color: var(--text-sub3); font-weight:400; } 
+.onlineConseDtlView .contBox { padding:1.6rem 0; border-top:.1rem solid var(--line3); border-bottom:.1rem solid var(--line3); } 
+.onlineConseDtlView .contBox .tit { font-size:1.6rem; font-weight:400; color:var(--text-title); margin-bottom:.8rem; } 
+.onlineConseDtlView .contBox .desc { font-size:1.4rem; font-weight:400; color: var(--text-sub2); } 
+.onlineConseDtlView .contBox.vertType > div { margin-bottom:1.4rem; display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start; } 
+.onlineConseDtlView .contBox.vertType > div span { font-size:1.4rem; font-weight:400; color: var(--text-title); } 
+.onlineConseDtlView .contBox.vertType > div span:first-of-type { width:11.5rem; font-weight:500; } 
+.onlineConseDtlView .contBox.vertType > div span:last-of-type { width:calc(100% - 11.5rem); } 
+.onlineConseDtlView .contBox.vertType + .infoMsg { margin-top:1.6rem; } 
+.onlineConseDtlView .contBox.vertType + .infoMsg p { font-size:1.3rem; font-weight:400; color: var(--prime-main); line-height:1.46; padding-left:1.6rem; position:relative; } 
+.onlineConseDtlView .contBox.vertType + .infoMsg p::before { content: '※'; position:absolute; top:.1rem; left:0; } 
+
+/* 대학/학과/전형******************************************************************/
+/* 리스트 */
+.ucp .filArea { margin-top: 2.4rem; } 
+.ucp .filArea .cptSearchForm { margin-top: 1.2rem; } 
+.ucp .filSelect { display: flex; align-items: center; position: relative; min-height: 3.6rem; overflow: hidden; } 
+.ucp .filSelect .filSelectItem { display: flex; align-items: center; gap: 0.6rem; width: auto; color: var(--prime-main); } 
+.ucp .filSelect .filSelectItem .delBtn { display: block; width: 1rem; height: 1rem; background: url(../img/common/ico_close_btn.svg) no-repeat center; background-size: cover; } 
+.ucp .filSelect .btnSquBk { position: absolute; top: 50%; right: 0; transform: translateY(-50%); z-index: 2; } 
+.ucp .ucpListWrap .total { margin-bottom: 1.6rem; color: var(--text-title); font-size: 1.6rem; } 
+.ucp .ucpListWrap .total strong { color: var(--prime-main); font-size: 1.6rem; font-weight: 700; } 
+.ucp .ucpListItem { position: relative; margin-bottom: 1.2rem; padding: 2.4rem; border: 1px solid var(--line2); border-radius: 1rem; } 
+.ucp .ucpListItem .univInfo { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.2rem; } 
+.ucp .ucpListItem .inner { display: flex; justify-content: space-between; align-items: center; width: calc(100% - 4rem); } 
+.ucp .ucpListItem .imgArea { width: 4.8rem; height: 4.8rem; margin-bottom:0;} 
+.ucp .ucpListItem .imgArea img { width: 100%; } 
+.ucp .ucpListItem .conArea { width: calc(100% - 6rem); } 
+.ucp .ucpListItem .univName { display: flex; align-items: center; margin-bottom: 0.4rem; color: var(--text-title); font-size: 1.6rem; font-weight: 700; } 
+.ucp .ucpListItem .univName span { color: var(--text-sub2); font-weight: 400; } 
+.ucp .ucpListItem .univLoca { display: flex; align-items: center; gap: 0.6rem; } 
+.ucp .ucpListItem .univCon dl { display: flex; justify-content: space-between; } 
+.ucp .ucpListItem .univCon dl + dl { margin-top: 0.8rem; } 
+.ucp .ucpListItem .univCon dd { display: flex; gap: 1.2rem; } 
+.ucp .ucpListItem .univCon dd strong { color: var(--prime-main); font-weight: 500; } 
+.ucp .ucpListItem .univCon dd p { font-weight: 500; text-align: right; } 
+/* 아코디언 형식 */
+.ucp .ucpListItem._accordion { padding: 2.4rem 1.2rem; } 
+.ucp .ucpListItem._accordion .univInfo { margin-bottom: 0; padding: 0 1.2rem; } 
+.ucp .ucpListItem._accordion .univCon { display: none; margin-top: 2rem; } 
+.ucp .ucpListItem._accordion .classCon { padding: 1.3rem; background: var(--bg2); border-radius: 1rem; } 
+.ucp .ucpListItem._accordion .classCon + .classCon { margin-top: 0.8rem; } 
+.ucp .ucpListItem._accordion .classCon .classTit { margin-bottom: 1.2rem; font-weight: 700; position:relative;}
+.ucp .ucpListItem._accordion .classCon .classTit > span {display:inline-block; margin-top:.7rem;}
+.ucp .ucpListItem._accordion .classCon .classTit button {position:absolute; top:0; right:0;} 
+.ucp .ucpListItem._accordion .univAccordionBtn { display: block; position: absolute; top: 2.4rem; right: 1.6rem; width: 2rem; height: 2rem; background: url(../img/common/ico_qna_arrow.svg) no-repeat center; background-size: cover; transform: rotate(180deg); }  
+.ucp .ucpListItem._accordion .univAccordionBtn2 { margin-bottom: 0; padding: 0 1.2rem; } 
+.ucp .ucpListItem._accordion .univAccordionBtn._close { transform: rotate(0); } 
+/* 전형 */
+.ucp .ucpListItem._admss .inner { align-items: flex-start; } 
+.ucp .ucpListItem._admss .univName { margin-bottom: 0; } 
+.ucp .ucpListItem._admss .univMajor { margin-bottom: 0.8rem; color: var(--prime-main); font-weight: 500; } 
+.ucp .ucpListItem._admss .admssCon { margin-top: 1.6rem; padding: 2rem; background: var(--bg2); border-radius: 1rem; } 
+.ucp .ucpListItem._admss .admssTit { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; gap:.8rem;} 
+.ucp .ucpListItem._admss .admssTit > div { display: flex; align-items: flex-start; gap: 0.4rem; } 
+.ucp .ucpListItem._admss .admssTit strong { font-weight: 700; width:calc(100% - 2.4rem)} 
+.ucp .ucpListItem._admss .admssTit button { background: var(--color-white); margin-top:-.3rem;}
+.ucp .ucpListItem._admss .admssTit > div .cptFavBtn {width:2rem; height:2rem;} 
+.ucp .ucpListItem._admss dd { display: block; font-weight: 500; } 
+/* 상세 */
+.ucpDtl .ucpDtlItem { padding: 2.4rem 2rem; border: 1px solid var(--line2); border-radius: 1rem; } 
+.ucpDtl .ucpDtlItem .univLogo { width: 6.4rem; height: 6.4rem; margin: 0 auto 2rem; } 
+.ucpDtl .ucpDtlItem .univLogo img { width: 100%; } 
+.ucpDtl .ucpDtlItem .univName { display: flex; justify-content: center; align-items: center; gap: 0.8rem; margin-bottom: 1.1rem; } 
+.ucpDtl .ucpDtlItem .univName strong { font-size: 2.4rem; font-weight: 700; } 
+.ucpDtl .ucpDtlItem .univInfo,
+.ucpDtl .ucpDtlItem .link { display: flex; justify-content: center; align-items: center; gap: 0.6rem; } 
+.ucpDtl .ucpDtlItem .link { margin: 2.4rem 0; } 
+.ucpDtl .ucpDtlItem .univInfo p span { color: var(--text-sub); } 
+.ucpDtl .ucpDtlItem .addressWrap { padding-top: 2.4rem; border-top: 1px dashed var(--line2); } 
+.ucpDtl .ucpDtlItem .addressWrap>div { display: flex; align-items: flex-start; gap: 0.6rem; } 
+.ucpDtl .ucpDtlItem .addressWrap>div+div { margin-top: 1.8rem; } 
+.ucpDtl .ucpDtlItem .addressWrap>div img { transform: translateY(2px); } 
+.ucpDtl .ucpDtlItem .addressWrap>div span { color: var(--text-sub); } 
+/* 학과정보 */
+.ucpDtl .ucpDtlClass { display: flex; align-items: flex-end; gap: 0.8rem; margin-top: 1.2rem; padding: 2rem; background: var(--assist5); border-radius: 1rem; } 
+.ucpDtl .ucpDtlClass strong { font-size: 1.6rem; font-weight: 700; } 
+.ucpDtl .tabMenu._dep2 { margin-top: 0; } 
+.ucpDtl .schoolYear { margin: 1.6rem 0; } 
+.ucpDtl .ucpDtlCon hgroup .h4 { color: var(--text-title); } 
+.ucpDtl hgroup .btnText { display: flex; align-items: center; gap: 0.4rem; } 
+.ucpDtl hgroup .btnText span { color: var(--text-sub); } 
+.ucpDtl .ucpDtlCon hgroup .notice { margin: 0; } 
+.ucpDtl .h4 { color: var(--text-title); } 
+.ucpDtl .ucpDtlSwiper .swiper-slide { width: 29.4rem; padding: 2rem; border: 1px solid var(--line2); border-radius: 1rem; }
+/*2023.12.27 추가*/
+.ucpDtl .chartCov {width:100%; overflow-y:hidden;}
+.ucpDtl .chartCov > .borderBox {width:auto;}
+
+/*2024.01.09 통합학과 추가*/
+.courCombArea {width:100%; position:relative; margin-top:2rem;}
+.courCombArea ul li {width:100%; position:relative; margin-bottom:1.2rem;}
+.courCombArea ul li:last-of-type {margin-bottom:0;}
+
+@media all and (max-width:600px) {
+	.ucpDtl .chartCov {width:100%; overflow-y:scroll;}
+	.ucpDtl .chartCov > .borderBox {width:600px !important;}	
+}
+.ucpDtl .borderBox { padding: 2rem; border: 1px solid var(--line2); border-radius: 1rem;}
+.ucpDtl .borderBox > div {width:100% !important; margin-bottom:2rem !important;}
+.ucpDtl .notice { display: flex; align-items: flex-start; gap: 0.4rem; margin-top: 1.6rem; color: var(--text-point2); font-size: 1.2rem; } 
+.ucpDtl .notice img { width: 1.4rem; height: 1.4rem; transform: translateY(2px); } 
+.ucpDtl .notice .icon._alarm { display: block; flex-shrink: 0; width: 1.4rem; height: 1.4rem; background: url(../img/common/ico_info_red.svg) no-repeat center; background-size: cover; transform: translateY(2px); } 
+.ucpDtl .ucpDtlCon { margin-top: 2.4rem; } 
+.ucpDtlCon .appGuide { overflow: hidden; } 
+.ucpDtlCon .appGuide .swiper-slide { width: 18.8rem; } 
+.ucpDtlCon .appGuide .swiper-slide._empty,
+.ucpDtl .ucpDtlSwiper .swiper-slide._empty { width: 2rem; margin-right: 0 !important; padding: 0; border: none; } 
+.ucpDtlCon .appGuide .downloadBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 2rem 2.4rem; background: #f3fafa; border: 1px solid #b0e0e2; border-radius: 1rem; font-size: 1.4rem; font-weight: 500; text-align: left; } 
+.ucpDtlCon .appGuide .downloadBtn:disabled { background: var(--bg3); border-color: var(--line2); color: var(--text-sub3); } 
+.ucpDtlCon .appGuide .downloadBtn:disabled img { content: url(../img/common/ico_down_disable.svg); } 
+.ucpDtlCon.classDtlCon + .classDtlCon { margin-top: 32px; }
+/*20231123 추가*/
+.ucpDtlUnivCon {width:100%; overflow-y:scroll;}
+.ucpDtlUnivCon::-webkit-scrollbar {display:none;}
+/* 원서접수순위 */
+.ucpDtl .appRank .tabMenu._dep3 { margin-bottom: 1.6rem; padding: 0; } 
+.ucpDtl .appRank .h4 { margin-bottom: 2.4rem; } 
+.ucpDtl .appRank .item { padding: 2.4rem; } 
+.ucpDtl .appRank .item + .item { margin-top: 1.2rem; } 
+.ucpDtl .appRank .item .major { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px solid var(--line2); } 
+.ucpDtl .appRank .item .major .rank { display: flex; justify-content: center; align-items: center; width: 3.2rem; height: 3.2rem; background: var(--text-sub3); border-radius: 1.2rem; color: var(--color-white); font-size: 1.8rem; font-weight: 500; } 
+.ucpDtl .appRank .item .major .rank._blue { background: var(--prime-main); } 
+.ucpDtl .appRank .item .major p { padding-top: 0.4rem; } 
+.ucpDtl .appRank .item .major p strong { font-size: 1.6rem; font-weight: 700; } 
+.ucpDtl .appRank .item .major p span { display: block; font-size: 1.6rem; } 
+.ucpDtl .appRank .item .screeningArea { margin-bottom: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px dashed var(--line2); } 
+.ucpDtl .appRank .item .screeningArea dl { align-items: flex-start; } 
+.ucpDtl .appRank .item dl { display: flex; justify-content: space-between; align-items: center; } 
+.ucpDtl .appRank .item dl+dl { margin-top: 0.8rem; } 
+.ucpDtl .appRank .item dd { font-weight: 500; text-align: right; } 
+.ucpDtl .appRank .item dd strong { color: var(--prime-main); font-weight: 500; } 
+/* univDtlView */
+.ucpAppGuideInfo li { position: relative; padding-left: 1.8rem; } 
+.ucpAppGuideInfo li::after { content: "※"; position: absolute; top: 0; left: 0; } 
+/* 대학소개 */
+.ucpDtl .ucpDtlUniv .tabMenu._dep3 { margin: 0 0 2.4rem; padding: 0; } 
+/* univDtlView02 설치학과 */
+.univDtlView02 .totalArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.6rem; } 
+.univDtlView02 .totalArea .total { font-size: 1.6rem; } 
+.univDtlView02 .totalArea .total strong { color: var(--prime-main); font-size: 1.6rem; font-weight: 700; } 
+.univDtlView02 .item, .univDtlView03 .item { border: 1px solid var(--line2); border-radius: 1.2rem; overflow: hidden; } 
+.univDtlView02 .item + .item, .univDtlView03 .item+.item { margin-top: 1.2rem; } 
+.univDtlView02 .item .titArea, .univDtlView03 .item .titArea { display: flex; justify-content: space-between; align-items: center; padding: 1.7rem 2.4rem; background: var(--bg6); border-bottom: 1px solid var(--line2); } 
+.univDtlView02 .item .titArea strong, .univDtlView03 .item .titArea strong { display: block; width: 60%; color: var(--text-title); font-size: 1.6rem; font-weight: 700;white-space:nowrap;text-overflow:ellipsis;overflow:hidden; } 
+.univDtlView02 .item .titArea .affiliation, .univDtlView03 .item .titArea .affiliation { display: block; padding: 0.5rem 1.2rem; border: 1px solid var(--text-sub3); border-radius: 0.8rem; font-size: 1.2rem; } 
+.univDtlView02 .item .conArea, .univDtlView03 .item .conArea { padding: 2rem 2.4rem; } 
+.univDtlView02 .item .conArea dl, .univDtlView03 .item .conArea dl { display: flex; justify-content: space-between; align-items: center; } 
+.univDtlView02 .item .conArea dl+dl, .univDtlView03 .item .conArea dl+dl { margin-top: 0.8rem; } 
+.univDtlView02 .item .conArea dd, .univDtlView03 .item .conArea dd { font-weight: 500; } 
+.univDtlView02 .item .conArea dd strong { color: var(--prime-main); font-weight: 500; } 
+/* univDtlView03 모집인원 */
+.univDtlView03 .tabMenu._dep3 { margin: 2.4rem 0 0 0; padding: 0; } 
+.univDtlView03 .tabCon, .univDtlView05 .tabCon,
+.univDtlView07 .tabCon, .classUnivDtlView01 .tabCon { padding: 0; } 
+.univDtlView03 .item .btnArea button { display: flex; justify-content: center; align-items: center; gap: 0.8rem; width: 100%; padding: 1.2rem 0; background: var(--bg5); color: var(--text-sub); font-size: 1.4rem; font-weight: 500; } 
+.univDtlView03 .item .btnArea button img { transform: rotate(-90deg); } 
+/* univDtlView05 전형평가기준 */
+.univDtlView05 .tabMenu._dep3, .univDtlView07 .tabMenu._dep3 { margin: 2.4rem 0; padding: 0; } 
+.univDtlView05 .notice { margin-bottom: 1.5rem; } 
+.univDtlView05 .cptAccr ul li { padding: 0; }
+/* univDtlView06 */ 
+.univDtlView06 .ucpDtlUniv { margin-top: 2.4rem; }
+/* univDtlView07 대학캐스트 */
+.univDtlView07 .cptSearchForm { margin-top: 2.4rem; } 
+/* collDtlView 전문대학상세 메인 */
+.collDtlView .recepDesk dl { position: relative; padding-left: 1.1rem; } 
+.collDtlView .recepDesk dl::after { content: ''; display: block; position: absolute; top: 0.8rem; left: 0; width: 3px; height: 3px; background: var(--text-sub); border-radius: 50%; } 
+.collDtlView .recepDesk dl + dl { margin-top: 0.8rem; } 
+.collDtlView .recepDesk dd { margin-top: 0.4rem; color: var(--text-sub); } 
+/* classUnivDtlView01 학과 상세 전형정보 */
+.classUnivDtlView01 .tabMenu._dep3 { margin: 2.4rem 0; padding: 0; } 
+.classUnivDtlView01 .ucpListItem .classTit { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; } 
+.classUnivDtlView01 .ucpListItem .classTit button { color: var(--text-title); font-size: 1.6rem; font-weight: 700; text-decoration: underline; } 
+.classUnivDtlView01 .ucpListItem .univCon dd { display: block; font-weight: 500; } 
+.classUnivDtlView01 .ucpListItem .viewBtn { font-size: 1.4rem; font-weight: 500; text-decoration: underline; } 
+/* classUnivDtlView02 학과 상세 전형정보 입시결과 */
+.classUnivDtlView02 .conBox { padding: 2.4rem; border: 1px solid var(--line2); border-radius: 1rem; } 
+.classUnivDtlView02 .conBox + .conBox { margin-top: 1.2rem; } 
+.classUnivDtlView02 .conBox>p { margin-bottom: 2rem; color: var(--text-title); font-size: 1.6rem; font-weight: 700; } 
+.classUnivDtlView02 .conBox dl { display: flex; justify-content: space-between; align-items: flex-start; } 
+.classUnivDtlView02 .conBox dl + dl { margin-top: 0.8rem; } 
+.classUnivDtlView02 .conBox dd { font-weight: 500; } 
+.classUnivDtlView02 .conBox dd p { font-weight: 500; } 
+.classUnivDtlView02 .conBox dd p strong { display: inline-block; min-width: 4.2rem; margin-left: 1.2rem; } 
+.classUnivDtlView02 .conBox dd strong { color: var(--prime-main); font-weight: 500; } 
+/* classUnivDtlView03 학과 상세 전형정보 미제출사유 */
+.classUnivDtlView03 p { position: relative; padding-left: 1.2rem; color: var(--text-sub); } 
+.classUnivDtlView03 p::after { content: ''; display: block; position: absolute; top: 0.8rem; left: 0; width: 4px; height: 4px; background: var(--text-sub); border-radius: 50%; } 
+/* admssUnivDtlView01 전형 상세 */
+.ucpDtl .ucpDtlAdmss { margin-top: 1.2rem; padding: 2rem 0.4rem 0.4rem; background: var(--assist5); border-radius: 1rem; } 
+.ucpDtl .ucpDtlAdmss .classArea { display: flex; align-items: flex-end; gap: 0.8rem; margin-bottom: 1.2rem; padding: 0 1.6rem; } 
+.ucpDtl .ucpDtlAdmss .classArea strong { font-size: 1.6rem; font-weight: 700; } 
+.ucpDtl .ucpDtlAdmss .admssArea { display: flex; flex-flow:row nowrap; align-items:flex-start; justify-content:space-between; padding: 1.2rem 1rem; background: var(--color-white); border-radius: 1rem; gap:1rem;}
+.ucpDtl .ucpDtlAdmss .admssArea > div:last-of-type {width:3.8rem;}
+.ucpDtl .ucpDtlAdmss .admssArea span { display: block; position: relative; font-size: 1.2rem; } 
+.ucpDtl .ucpDtlAdmss .admssArea span + span::before { content: ">"; display: inline-block; margin: 0 0.3rem; } 
+.ucpDtl .ucpDtlAdmss .admssArea span:last-of-type { width: 100%; } 
+.ucpDtl .admssDtlCon hgroup { align-items: center; } 
+.ucpDtl .admssDtlCon dl + dl { margin-top: 2rem; } 
+.ucpDtl .admssDtlCon dl + .likeDt { margin: 2rem 0; } 
+.ucpDtl .admssDtlCon dt, .ucpDtl .admssDtlCon .likeDt { margin-bottom: 1.2rem; padding: 0.8rem 1.6rem; background: var(--bg2); } 
+.ucpDtl .admssDtlCon dd { padding: 0 1.6rem; color: var(--text-sub); } 
+.ucpDtl .admssDtlCon dl + .notice { margin-top: 2rem; padding-right: 1.7rem; } 
+.ucpDtl .admssDtlCon .blueBox { padding: 2rem 6rem 2rem 2rem; background: #f3fafa; border-radius: 0.4rem; } 
+.ucpDtl .admssDtlCon .bgBox { padding: 0.8rem 1.6rem; background: var(--bg2); color: var(--text-sub); text-align: center; } 
+
+/* 검색필터 공통 */
+.ucpSearchPopup .h4, .settingSearchPopup .h4 { margin-bottom: 1.6rem; } 
+.ucpSearchPopup hgroup span, .settingSearchPopup hgroup span { color: var(--text-sub3); } 
+.ucpSearchPopup .univList, .settingSearchPopup .univList { margin-top: 2rem; width:80%; } 
+.ucpSearchPopup .univList li, .settingSearchPopup .univList li { display: flex; align-items: center; gap: 0.6rem; } 
+.ucpSearchPopup .univList span, .settingSearchPopup .univList span { color: var(--prime-main); } 
+.ucpSearchPopup .univList, .ucpSearchPopup .selectionList{overflow: hidden;width:100%;margin: 15px 0 15px 0;}
+.ucpSearchPopup .univList .filSelectItem, .ucpSearchPopup .selectionList .filSelectItem{
+	display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: auto;
+    color: var(--prime-main);
+}
+.ucpSearchPopup .univList button, .settingSearchPopup .univList button, .ucpSearchPopup .selectionList button{ display: block; width: 1rem; height: 1rem; background: url(../img/common/ico_close_btn.svg) no-repeat center; background-size: cover; } 
+.ucp .ucpSearchFilArea, .settingSearchPopup .settingSearchFilArea { display: flex; flex-wrap: wrap; gap: 0.8rem 0.7rem; } 
+.ucp .ucpSearchFilArea .cptChkBtnType, .settingSearchPopup .settingSearchFilArea .cptChkBtnType,
+.ucp .ucpSearchFilArea .cptRdoBtnType,
+.settingSearchPopup .settingSearchFilArea .cptRdoBtnType { width: calc(50% - 0.35rem); } 
+.ucp .ucpSearchFilArea._three .cptChkBtnType, .settingSearchPopup .settingSearchFilArea._three .cptChkBtnType,
+.ucp .ucpSearchFilArea._three .cptRdoBtnType,
+.settingSearchPopup .settingSearchFilArea._three .cptRdoBtnType { width: calc(33.33% - 0.533rem); } 
+.ucp .ucpSearchCon, .settingSearchPopup .settingCon { margin-top: 0.8rem; } 
+.ucp .ucpSearchCon .toggleWrap, .settingSearchPopup .settingCon .toggleWrap { border-color: var(--line2); padding: 0 2rem; box-sizing: border-box; } 
+.ucp .ucpSearchCon .toggleWrap .btnToggle, .settingSearchPopup .settingCon .toggleWrap .btnToggle { display: flex; justify-content: space-between; align-items: center; height: 5rem; padding: 0; font-size: 1.4rem; } 
+.ucp .ucpSearchCon .toggleWrap .btnToggle .icon._arrow, .toggleWrap .btnToggle .icon._arrow { display: block; width: 2.4rem; height: 2.4rem; background: url(../img/common/ico_drop_arrow.svg) no-repeat center; background-size: cover; transform: rotate(180deg); } 
+.ucp .ucpSearchCon .toggleWrap .toggleCon .frmCheck + .frmCheck,
+.settingSearchPopup .settingCon .toggleWrap .toggleCon .frmCheck + .frmCheck { margin-top: 1.2rem; } 
+.ucp .ucpSearchCon .toggleWrap .toggleCon .frmCheck input + label,
+.settingSearchPopup .settingCon .toggleWrap .toggleCon .frmCheck input + label { display: block; padding: 0 3.2rem 0 0; } 
+.ucp .ucpSearchCon .toggleWrap .toggleCon .frmCheck input+label::after,
+.settingSearchPopup .settingCon .toggleWrap .toggleCon .frmCheck input+label::after { left: calc(100% - 2.4rem); } 
+.ucp .ucpSearchCon .toggleWrap._on,
+.settingSearchPopup .settingCon .toggleWrap._on { border-color: var(--text-title); } 
+.ucp .ucpSearchCon .toggleWrap._on .btnToggle,
+.settingSearchPopup .settingCon .toggleWrap._on .btnToggle { color: var(--text-body); } 
+.ucp .ucpSearchCon .toggleWrap._on .btnToggle .icon._arrow,
+.settingSearchPopup .settingCon .toggleWrap._on .btnToggle .icon._arrow { transform: rotate(0); } 
+.ucp .ucpSearchCon .toggleWrap._on .toggleCon,
+.settingSearchPopup .settingCon .toggleWrap._on .toggleCon { padding: 1.4rem 0 2rem; border-color: var(--line3); } 
+
+/* 학과검색 */
+.classSearch .classSearchList { margin-top: 2.4rem; }
+.classSearch .classSearchList li + li { margin-top: 1.2rem; }
+/*마이페이지_기본설정*********************************************************************/
+/* 개입정보 */
+.memberInfoModForm .tabWrap { margin-bottom: 2.4rem; } 
+.memberInfoModForm dl dt { color: var(--text-title); margin-bottom: 0.4rem; font-size: 1.6rem; font-weight: 500; } 
+.memberInfoModForm dl dd { font-size: 1.3rem; } 
+.memberInfoModForm .memberFormCon { position: relative; margin-top: 2.4rem; } 
+.memberInfoModForm .memberFormCon2 { margin-top: 2.4rem; } 
+.memberInfoModForm .memberFormCon .memBreakBtn { position: absolute; top: -0.5rem; right: 0; } 
+.memberInfoModForm .desc { color: var(--text-title); font-size: 1.6rem; } 
+.memberInfoModForm .loginInterLock { position: relative; } 
+.memberInfoModForm .loginInterLock + .loginInterLock { margin-top: 0.8rem; } 
+.memberInfoModForm .loginInterLock input { appearance: none; -moz-appearance: none; -webkit-appearance: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; } 
+.memberInfoModForm .loginInterLock input + label { display: flex; justify-content: center; align-items: center; gap: 0.8rem; width: 100%; height: 100%; padding: 0.8rem 0; border: 1px solid var(--line1); border-radius: 8px; font-weight: 500; } 
+.memberInfoModForm .loginInterLock input:disabled { background: none; } 
+.memberInfoModForm .loginInterLock input:checked + label { border: 2px solid var(--prime-main); border-radius: 1.2rem; } 
+.memberInfoModForm .loginInterLock span { display: block; width: 27px; height: 27px; } 
+.memberInfoModForm .loginInterLock._naver span { background: url(../img/common/naver_login.svg) no-repeat center; background-size: cover; } 
+.memberInfoModForm .loginInterLock._kakao span { background: url(../img/common/kakao_login.svg) no-repeat center; background-size: cover; } 
+.memberInfoModForm .loginInterLock._onepass span { background: url(../img/common/onepass_login.svg) no-repeat center; background-size: cover; } 
+.memberInfoModForm .memberFormRow + .memberFormRow { margin-top: 1.2rem; } 
+.memberInfoModForm .guideNotice { margin-top: 0.8rem; color: var(--text-sub3); font-size: 1.3rem; } 
+.memberInfoModForm .snsArea { width: 100%; margin-top: 20px;}
+.memberInfoModForm .snsArea button {
+    width: 100%;
+    border: .1rem solid var(--line1);
+    border-radius: .8rem;
+    line-height: 4.4rem;
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--text-title);
+    font-weight: 500;
+}
+
+.memberInfoModForm .snsArea button { margin-top: .8rem;}
+
+.memberInfoModForm .snsArea button:first-of-type { margin-top: 0rem;}
+
+.memberInfoModForm .snsArea button span { display: inline-block; width: 2.8rem; height: 2.8rem; vertical-align: middle;margin-right: .8rem;}
+
+.memberInfoModForm .snsArea button.naverLogin span {
+    background: url(../img/common/naver_login.svg)no-repeat;
+}
+
+.memberInfoModForm .snsArea button.kakaoLogin span {
+    background: url(../img/common/kakao_login.svg)no-repeat;
+}
+
+.memberInfoModForm .snsArea button.onepassLogin span {
+    background: url(../img/common/onepass_login.svg)no-repeat;
+}
+
+
+/* 비밀번호 변경 */
+.memberInfoModForm03 .desc { margin-top: 0.4rem; } 
+.memberInfoModForm03 ._caution { padding: 2.4rem 2.2rem 2.4rem 2.4rem; border: 1px solid var(--line1); border-radius: 1rem; } 
+.memberInfoModForm03 ._caution dt { margin-bottom: 1.2rem; } 
+.memberInfoModForm03 ._caution dd { position: relative; padding-left: 1.2rem; color: var(--text-sub2); } 
+.memberInfoModForm03 ._caution dd::after { content: ""; display: block; position: absolute; top: 0.8rem; left: 0; width: 4px; height: 4px; background: var(--text-sub2); border-radius: 50%; } 
+.memberInfoModForm03 ._caution dd + dd { margin-top: 0.8rem; } 
+/* searchSettingForm 검색조건 저장*/
+.searchSettingForm .settingAdd { display: flex; justify-content: center; margin: 2.4rem 0 1.6rem; } 
+.searchSettingForm .settingAdd .addBtn { display: flex; justify-content: center; align-items: center; gap: 0.6rem; width: 50%; font-size: 1.5rem; font-weight: 500; } 
+.searchSettingForm .settingAdd .addBtn .text { text-decoration: underline; text-underline-position: under; } 
+.searchSettingForm .settingAdd .addBtn .icon { display: block; width: 2rem; height: 2rem; background: url(../img/common/ico_btn_plus.svg) no-repeat center; background-size: cover; } 
+.searchSettingForm .settingList { margin-bottom: 1.2rem; } 
+.searchSettingForm .settingItem { position: relative; padding: 2rem; border: 1px solid var(--line1); border-radius: 1rem; } 
+.searchSettingForm .settingItem + .settingItem { margin-top: 1.2rem; } 
+.searchSettingForm .settingItem .tit { margin: 1rem 0 0.4rem; color: var(--text-title); font-size: 1.5rem; font-weight: 500; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all; } 
+.searchSettingForm .settingItem .note { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all; } 
+.searchSettingForm .settingItem .btnArea { display: flex; justify-content: center; align-items: center; gap: 0.9rem; position: absolute; top: 1.8rem; right: 2rem; } 
+.searchSettingForm .settingItem .btnArea .btnText { color: var(--text-sub); font-size: 1.3rem; } 
+.searchSettingForm .settingItem .btnArea .delBtn { display: block; width: 1.2rem; height: 1.2rem; background: url(../img/common/ico_close_btn.svg) no-repeat center; background-size: cover; } 
+/* settingSearchPopup 검색조건설정 */
+.settingSearchPopup .settingSearchRow + .settingSearchRow { margin-top: 1rem; } 
+.settingSearchPopup .settingSearchRow._tit input:valid { border-color: var(--text-title); color: var(--text-title); } 
+.settingSearchPopup .btnWrap { gap: 1.2rem; } 
+.settingSearchPopup .item { color: var(--text-sub); } 
+/*카테고리*********************************************************************/
+/*하위메뉴분류명*/
+
+/*2023.12.26 rMate 차트 항목별 학년도 표기 */
+.titleYearSpace {display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-around;}
+.titleYearSpace  > div {width:max-content;}

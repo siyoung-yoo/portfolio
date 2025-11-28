@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+
+
+<div class="wrapper _fullPopup mainSearchPopup">
+	<div class="header">
+		<div class="headerTitle">
+			<!-- <button type="button" class="btnHeaderBack"><span class="hidden">이전 화면</span></button> -->
+			<h1>통합검색</h1>
+				<a class="hdAiSearch">대화형 검색
+					<span class="hidden">대화형 검색 하러가기</span>
+					<span class="hdAiSrcimg"></span>
+				</a>
+				<p class="hidden" id="mainBeta">대화형 검색 Beta 버전</p>
+		</div>
+		<div class="headerUtil">
+			<button type="button" class="btnHeaderClose" onclick="closePopup()"><span class="hidden">닫기</span></button>
+		</div>
+	</div>
+
+	<div class="container" id="popupSearchbar" style="height : calc(var(--vh, 1vh) * 100);">
+		<div class="contInner searchView">
+			<div class="section">
+				<div class="searchBar">
+					<div class="cptSearchForm">
+						<input type="text" title="검색어 입력" placeholder="검색어를 입력해주세요" id="autoComplet" class="XSSSafeInput" autocomplete="off" onkeyup="autoComplete();" >
+						<button type="button" class="searchBtn" onclick="addRecentTotalSearch()"></button>
+					</div>
+				</div>
+
+				<div class="recentSearch">
+					<div class="titArea">
+						<p class="tit">최근 검색어</p>
+						<button type="button" class="delAllBtn">전체삭제</button>
+					</div>
+
+					<div class="rsList">
+						<ul class="recentList">
+							<div class="noData">최근 검색 내역이 없어요.</div>
+							<!-- <li>최근 검색어 1</li>
+							<li>최근 검색어 2</li> -->
+						</ul>
+					</div>
+				</div>
+
+				<div class="favoriteSearch">
+					<div class="titArea">
+						<div>
+							<button type="button" class="btnSelBtn2 on _h36" value="01"><span>인기</span></button>
+							<button type="button" class="btnSelBtn2 _h36"  value="02"><span>인기학과</span></button>
+						</div>
+						<span class="normTxt"><span>2023.09.08</span> 기준</span>
+					</div>
+
+					<div class="favList">
+						<ul class="popList">
+							<li>
+								<span class="lyt">
+									<a href="#0" class="btnFavData">
+										<span class="no"><span class="cnt">1</span></span>대학교
+									</a>
+								</span>
+								<i class="ico_goup"><span class="hidden">상승</span></i>
+							</li>
+							<li>
+								<span class="lyt">
+									<a href="#0" class="btnFavData">
+										<span class="no"><span class="cnt">2</span></span>강원대학교
+									</a>
+								</span>
+								<i class="ico_goeq"><span class="hidden">보합</span></i>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- 자동완성 -->
+				<div class="autoSearch">
+					<div class="rsList">
+						<ul class="autoList">
+							<li>
+								<span class="sData" style="display: flex; margin-top: 1.3rem;">
+									<span class="icon" style="border-radius: 50%; background: #ccc url('/static/img/common/search_wht.svg')50% 50% no-repeat; display:inline-block; width:2.2rem; height: 2.2rem; margin-right:0.5rem;">
+										<span class="hidden">목록아이콘</span>
+									</span>
+									<span>
+										<a href="#0" class="btnRecData">
+											<span style="color:cadetblue;">검색어</span>
+										</a>
+									</span>
+									<span class="typeSrchOnly"></span>
+								</span>
+							</li>
+							<li>
+								<span class="sData" style="display: flex; margin-top: 1.3rem;">
+									<span class="icon" style="border-radius: 50%; background: #ccc url('/static/img/common/search_wht.svg')50% 50% no-repeat; display:inline-block; width:2.2rem; height: 2.2rem; margin-right:0.5rem;">
+										<span class="hidden">목록아이콘</span>
+									</span>
+									<span>
+										<a href="#0" class="btnRecData">텍스트 텍스트 (<span style="color:cadetblue;">검색어</span> 텍스트)</a>
+									</span>
+									<span class="typeSrchOnly"></span>
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- // 자동완성 -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

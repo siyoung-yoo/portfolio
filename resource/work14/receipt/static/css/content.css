@@ -1,0 +1,479 @@
+@charset "UTF-8";
+
+/* 	로그인, 사용자 등록 페이지 공통 스타일 */
+.loginLabel {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	font: var(--font-bolder) var(--font-16);
+}
+.loginLabel::after {
+	content: '';
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1px;
+	height: 18px;
+	background: #bbb;
+}
+
+.loginCont .formText,
+.signUpCont .formText {
+	height: 54px;
+	background: var(--gray-20);
+	border-color: var(--gray-20);
+}
+.loginCont .formText input,
+.signUpCont .formText input {
+	font-size: 16px;
+}
+
+.loginCont .formText input::-webkit-input-placeholder,
+.signUpCont .formText input::-webkit-input-placeholder {
+	color: var(--text-color_sub);
+}
+.loginCont .formText input:-ms-input-placeholder,
+.signUpCont .formText input:-ms-input-placeholder {
+	color: var(--text-color_sub);
+}
+.loginCont .formText input::placeholder,
+.signUpCont .formText input::placeholder {
+	color: var(--text-color_sub);
+}
+
+.loginCont .formText input:-webkit-autofill,
+.loginCont .formText input:-webkit-autofill:hover,
+.loginCont .formText input:-webkit-autofill:focus,
+.loginCont .formText input:-webkit-autofill:active,
+.signUpCont .formText input:-webkit-autofill,
+.signUpCont .formText input:-webkit-autofill:hover,
+.signUpCont .formText input:-webkit-autofill:focus,
+.signUpCont .formText input:-webkit-autofill:active{
+    -webkit-box-shadow: inset 0 0 0 1000px var(--gray-20);
+    box-shadow: inset 0 0 0 1000px var(--gray-20);
+}
+.loginCont .formText input:autofill,
+.loginCont .formText input:autofill:hover,
+.loginCont .formText input:autofill:focus,
+.loginCont .formText input:autofill:active,
+.signUpCont .formText input:autofill,
+.signUpCont .formText input:autofill:hover,
+.signUpCont .formText input:autofill:focus,
+.signUpCont .formText input:autofill:active{
+    -webkit-box-shadow: inset 0 0 0 1000px var(--gray-20);
+    box-shadow: inset 0 0 0 1000px var(--gray-20);
+}
+
+/* 로그인 페이지 */
+.loginWrap {
+	display: flex;
+	height: 100vh;
+	min-width: 1920px;
+}
+.loginWrap::after {
+	content: '';
+	display: block;
+	flex: 1;
+	min-width: 1000px;
+	background: url(../img/contents/login_bg.png) 50% / cover no-repeat;
+}
+.loginCont {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+.loginCont .contArea {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 16px;
+	width: 580px;
+	margin: 0 auto;
+}
+.loginCont .titleArea {
+	text-align: center;
+	flex-direction: column;
+	gap: 24px;
+	margin: 0 0 24px;
+	font: var(--font-16);
+	color: var(--text-color_sub);
+}
+.loginCont .titleArea .logo {
+	width: 416px; height: 48px;
+	-webkit-mask-repeat: no-repeat; -webkit-mask-position: center center; -webkit-mask-size: contain;
+	mask-repeat: no-repeat; mask-position: center center; mask-size: contain;
+	-webkit-mask-image: url(../img/common/logo_main.svg); mask-image: url(../img/common/logo_main.svg);
+	background-color: #0A1E32;
+}
+.loginCont .btnBoxPoint {
+	margin: 4px 0 0;
+	width: 100%;
+	height: 60px;
+	font: var(--font-18);
+	border-radius: var(--radius-lg);
+}
+.loginCont .formText {
+	padding-left: 24px;
+	border-radius: var(--radius-lg);
+}
+.loginCont .formText .loginLabel {
+	gap: 6px;
+	width: 107px;
+}
+.loginCont .formText i[class^=ico] {
+	width: var(--icon-size_lg);
+	height: var(--icon-size_lg);
+}
+.loginCont .formText input {
+	padding-left: 18px;
+	border-radius: var(--radius-lg);
+}
+.loginCont .footerArea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 40px;
+	width: 100%;
+	padding: 0 40px 20px;
+	font-size: 13px;
+	line-height: 24px;
+	color: var(--text-color_sub);
+}
+.loginCont .footerArea .logo {
+	width: 190px;
+	height: 42px;
+	background: url(../img/common/logo_kcue.svg) 0 0 / 100% auto no-repeat;
+}
+
+/* 	사용자 등록 페이지 */
+.signUpWrap {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 200px);
+	width: 1440px;
+	padding: 40px 20px;
+	margin: 0 auto;
+}
+.signUpStepList {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	border-bottom: 1px solid var(--gray-90);
+}
+.signUpStepList li {
+	position: relative;
+	width: 200px;
+	height: 140px;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 12px;
+}
+.signUpStepList li::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -3px;
+	display: block;
+	width: 100%;
+	height: 6px;
+	border-radius: var(--radius-base);
+}
+.signUpStepList .icoArea {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--gray-20);
+}
+.signUpStepList .icoArea::before {
+	content: '';
+	width: var(--icon-size_lg);
+	height: var(--icon-size_lg);
+}
+.signUpStepList li:nth-of-type(1) .icoArea::before {
+	-webkit-mask-image: url(../img/common/ico_signup_01.svg); mask-image: url(../img/common/ico_signup_01.svg);
+}
+.signUpStepList li:nth-of-type(2) .icoArea::before {
+	-webkit-mask-image: url(../img/common/ico_signup_02.svg); mask-image: url(../img/common/ico_signup_02.svg);
+}
+.signUpStepList li:nth-of-type(3) .icoArea::before {
+	-webkit-mask-image: url(../img/common/ico_signup_03.svg); mask-image: url(../img/common/ico_signup_03.svg);
+}
+.signUpStepList .txt {
+	font: var(--font-16);
+	color: var(--text-color_sub);
+}
+.signUpStepList .txtStep {
+	display: block;
+	font-size: 14px;
+}
+.signUpStepList li.active::before {
+	background-color: var(--fill-color_point);
+}
+.signUpStepList li.active .icoArea {
+	background: var(--fill-color_secondary);
+}
+.signUpStepList li.active .icoArea::before {
+	background-color: var(--text-color_white);
+}
+.signUpStepList li.active .txt {
+	font-weight: var(--font-bolder);
+	color: var(--text-color_point);
+}
+.signUpCont {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 20px;
+	padding: 50px 0 0;
+}
+.signUpCont .endImgArea {
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+}
+.signUpCont .titleArea {
+	flex-direction: column;
+	justify-content: center;
+	gap: 8px;
+	margin: 0;
+	font: var(--font-16);
+	text-align: center;
+}
+.signUpCont .signUpTitle {
+	font-size: 20px;
+	font-weight: var(--font-bold);
+	color: var(--text-color_dark);
+}
+.signUpCont .btnArea {
+	margin: 10px 0 0;
+}
+.signUpCont .typeTerms {
+	width: 100%;
+	height: 500px;
+	padding: 30px 20px;
+}
+.signUpCont .typeTerms .termsArea {
+	height: 100%;
+	font: var(--font-14);
+	text-align: left;
+}
+.signUpCont .boxLineStyle.typeForm {
+	width: 700px;
+	margin: 0 auto;
+	padding: 60px 50px;
+	font: var(--font-14);
+	text-align: left;
+}
+.signUpCont .formText {
+	padding-left: 20px;
+}
+.signUpCont .formText .loginLabel {
+	width: 76px;
+}
+.signUpCont .formText input {
+	padding: 0 20px 0 16px;
+}
+
+/* 메인 페이지 */
+.mainBoardGroup {
+	display: flex;
+	gap: 20px;
+	margin: 30px 0 0;
+}
+.mainBoardGroup .boardListWrap {
+	width: calc((100% - 20px) / 2);
+}
+
+/* 개인정보처리방침 페이지 */
+.policyList i[class*=ico] { width: 32px; height: 32px; -webkit-mask-image: none; mask-image: none; background-color: transparent; background-size: contain; background-repeat: no-repeat; -webkit-mask: none; mask: none; }
+.policyList i.icon01  { background-image: url(../img/contents/ico_policy_01.svg); }
+.policyList i.icon02  { background-image: url(../img/contents/ico_policy_02.svg); }
+.policyList i.icon03  { background-image: url(../img/contents/ico_policy_03.svg); }
+.policyList i.icon04  { background-image: url(../img/contents/ico_policy_04.svg); }
+.policyList i.icon051 { background-image: url(../img/contents/ico_policy_05_1.svg); }
+.policyList i.icon052 { background-image: url(../img/contents/ico_policy_05_2.svg); }
+.policyList i.icon06  { background-image: url(../img/contents/ico_policy_06.svg); }
+.policyList i.icon07  { background-image: url(../img/contents/ico_policy_07.svg); }
+.policyList i.icon08  { background-image: url(../img/contents/ico_policy_08.svg); }
+.policyList i.icon091 { background-image: url(../img/contents/ico_policy_09_1.svg); }
+.policyList i.icon092 { background-image: url(../img/contents/ico_policy_09_2.svg); }
+.policyList i.icon10  { background-image: url(../img/contents/ico_policy_10.svg); }
+.policyList i.icon11  { background-image: url(../img/contents/ico_policy_11.svg); }
+.policyList i.icon12  { background-image: url(../img/contents/ico_policy_12.svg); }
+.policyList i.icon13  { background-image: url(../img/contents/ico_policy_13.svg); }
+
+.policySection {
+	margin: 30px 0 0;
+}
+.policySection .boardListWrap {
+	border-width: 0 0 1px;
+	border-radius: 0;
+}
+.policySection .boardListWrap .boardTitle {
+	justify-content: center;
+	height: 54px;
+	font-weight: var(--font-bold);
+	border-top: 1px solid var(--gray-90);
+	border-radius: 0;
+}
+.policySection .boardListWrap .boardCont {
+	height: auto;
+	padding: 35px 0 25px;
+	margin: 0 auto;
+}
+.policySection .policyList {
+	display: flex;
+	flex-wrap: wrap;
+}
+.policySection .policyList li {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font: var(--font-bold) var(--font-15);
+}
+.policySection .boardListWrap .policyList {
+	justify-content: center;
+	gap: 60px;
+}
+.policySection .boardListWrap .policyList li {
+	flex-direction: column;
+	gap: 35px;
+}
+.policySection .boardListWrap .policyList i[class*=ico] {
+	width: 100px;
+	height: 100px;
+}
+.policySection .boxLineStyle {
+	padding: 40px;
+}
+.policySection .boxLineStyle .policyList {
+	gap: 24px;
+}
+.policySection .boxLineStyle .policyList li {
+	width: calc(50% - 12px);
+}
+
+/* 서비스가이드 페이지 */
+.guideArea i[class*=ico] { -webkit-mask-image: none; mask-image: none; background-color: transparent; background-size: contain; background-repeat: no-repeat; -webkit-mask: none; mask: none; }
+.guideArea i.icoArrowR { background: url(../img/contents/ico_arrow_r.svg) 0 0 / contain no-repeat; transform: translateY(4px); margin-right: 4px; }
+
+.guideArea {
+	margin-top: 20px;
+}
+.guideArea .guideList {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4px;
+	position: relative;
+}
+.guideArea .guideList .listBox {
+	height: 44px;
+	width: calc(100% / 3);
+	text-align: center;
+}
+.guideArea .guideList .title a {
+	width: 100%;
+	display: inline-block;
+	background-color: var(--gray-20);
+	border-radius: var(--radius-lg);
+	font: var(--font-bold) 16px/44px NotoSans;
+	color: var(--text-color_disabled);
+}
+.guideArea .guideList .title a:hover {
+	color: var(--text-color_point);
+}
+.guideArea .guideList .title a.active,
+.guideArea .guideList .title a.active:hover {
+	background-color: var(--fill-color_point);
+	color: var(--text-color_white);
+}
+.guideArea .guideSubList {
+	display: none;
+	align-items: center;
+	width: calc(100% - 40px);
+	margin: 20px;
+	border-bottom: 1px solid var(--border-color_readonly);
+	position: absolute;
+	left: 0;
+	top: 44px;
+}
+.guideArea .guideSubList li.active::after {
+	content: "";
+	display: block;
+	background-color: var(--fill-color_point);
+	height: 2px;
+	width: 100%;
+}
+.guideArea .guideSubList li a {
+	padding: 0 16px 20px;
+	display: inline-block;
+	font: var(--font-14);
+	color: var(--text-color_disabled);
+}
+.guideArea .guideSubList li a:hover {
+	color: var(--text-color_point);
+}
+.guideArea .guideSubList li.active a {
+	color: var(--text-color_default);
+	font-weight: var(--font-bold);
+}
+.guideArea #contentsArea {
+	margin-top: 80px;
+}
+.guideArea #contentsArea .guideConBox {
+	background-color: var(--fill-color_disabled);
+	border-radius: var(--radius-lg);
+	padding: 20px;
+}
+.guideArea #contentsArea .stepArea,
+.guideArea #contentsArea .stepArea .list {
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 20px;
+}
+.guideArea #contentsArea .stepArea {
+	display: none;
+}
+.guideArea #contentsArea .stepArea.active {
+	display: flex;
+}
+.guideArea #contentsArea .stepArea h4 {
+	font: var(--font-bold) var(--font-18);
+	color: var(--text-color_dark);
+}
+.guideArea .stepInfo,
+.guideArea .stepArea .imgArea {
+	padding: 20px;
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--border-color_default);
+}
+.guideArea .stepInfo {
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 10px;
+}
+.guideArea .stepInfo li {
+	font-size: 14px;
+	line-height: 1.65em;
+	color: var(--text-color_default);
+	padding-left: 23px;
+	text-indent: -23px;
+}
+.guideArea .stepInfo .num {
+	color: var(--text-color_dark);
+	font-weight: var(--font-bold);
+}
+.guideArea .stepArea .imgArea {
+	background-color: var(--fill-color_default);
+}

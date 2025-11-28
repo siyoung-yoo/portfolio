@@ -1,0 +1,1156 @@
+@charset "utf-8"; /*========================================================================================================*/
+
+/*주석 정리해드리겠습니다. 번거로우시겠지만 부탁드립니다 ^^*/
+
+/*-------------------------------- { 분류명(예: 팝업, 폼, 기타등등) } --------------------------------------*/
+
+/*소분류명(예: 팝업상단, select 등등)*/
+.thankyou { width: 100%; } 
+
+/*소분류명(예: 팝업상단, select 등등)*/
+.thankyou { width: 100%; } 
+
+/*소분류명(예: 팝업상단, select 등등)*/
+.thankyou { width: 100%; } 
+
+/*========================================================================================================*/
+
+/* 대학/학과/전형 공통 */
+/* 아코디언 */
+.commonUnivAccordion .accordionItem { margin-bottom: 12px; padding: 23px 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; box-sizing: border-box; } 
+.commonUnivAccordion .accordionItem:last-of-type { margin-bottom: 0; } 
+.commonUnivAccordion .accordionBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; font-size: 20px; font-weight: 500; } 
+.commonUnivAccordion .accordionBtn>span { display: flex; align-items: center; } 
+.commonUnivAccordion .accordionBtn .ico._down { display: block; width: 20px; height: 20px; background: url("../img/common/btn_arrow_down.png") no-repeat center; background-size: cover; transition: all 0.2s; } 
+.commonUnivAccordion .accordionCon { display: none; margin-top: 20px; padding: 27px 0 17px; border-top: 1px solid var(--line-color-ty2); } 
+.commonUnivAccordion .accordionCon .d-flex { display: flex; align-items: flex-start; } 
+.commonUnivAccordion .accordionCon .accordionConInner { width: calc(100% - 42px) } 
+.commonUnivAccordion .accordionCon .accordionConInner .h5 { margin-bottom: 16px; } 
+.commonUnivAccordion .qnaCircle { display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; margin-right: 12px; border-radius: 50%; color: #fff; font-family: 'roboto'; font-size: 16px; } 
+.commonUnivAccordion .qnaCircle._q { background: var(--prime-color-main); } 
+.commonUnivAccordion .qnaCircle._a { background: var(--text-color-body); } 
+
+/* 아코디언 라인 */
+.accordionLine { display: none; height: 1px; background: var(--text-color-title); }
+.accordionLine.on { display: block; } 
+
+/* 아코디언 열림 */
+.commonUnivAccordion .accordionItem.on { border-color: var(--text-color-body); } 
+.commonUnivAccordion .accordionItem.on .accordionBtn .ico._down { transform: rotate(180deg); } 
+
+/* 대학리스트 테이블형태 */
+.ucpTable2 { width: 100%; } 
+/* .ucpTable2 .tooltipArea { width: 100%; height: 100%; display: flex; align-items: center; gap: 5px; justify-content: center; margin-left: 0; }  */
+.ucpTable2 .tooltipArea:hover .tooltipCont { display: inline-block; } 
+.ucpTable2 .tooltipArea.glbTooltip .tooltipCont { width: max-content; } 
+.ucpTable2 .tooltipArea.glbTooltip .tooltipTit { width: max-content; }
+.ucpTable2 th .tooltipArea .ttFrm {position:relative;} 
+.ucpTable2 th .tooltipArea span { margin: 0;} 
+.ucpTable2 .ucpTable td { padding: 18px 0; } 
+.ucpTable2 th .tooltipCont { top: 35px; left:0; }
+.ucpTable2.type02 th .tooltipCont { top: 35px !important}
+/* .ucpTable2 th:nth-of-type(2) .tooltipCont { left:110px; }  */
+.ucpTable2 th .tooltipCont:before {content: ""; border-bottom: 7px solid var(--basic-color); border-left: 5px solid transparent; border-right: 5px solid transparent; position: absolute; top: 9px; left: -8px;}
+.ucpTable2 th .tooltipCont:after {content: ""; position: absolute; top: -15px; left: 10px; border-bottom: 10px solid var(--tooltip-color); border-left: 5px solid transparent; border-right: 5px solid transparent;}
+.ucpTable2 .tooltipArea.glbTooltip .tooltipCont .pointColor { color: var(--tooltip-point-color); margin-right: 0; } 
+.ucpTable2 th.first .tooltipCont { right: calc(-50% + 100px); } 
+.ucpTable2 th:nth-child(2) .tooltipCont { right: calc(-50% - 20px); } 
+.ucpTable2 th:nth-child(4) .tooltipCont { right: calc(-50% - 50px); } 
+.ucpTable2 th { height: 80px; border-top: 2px solid var(--text-color-title); border-bottom: 1px solid var(--line-color-ty1); font-size: 16px; font-weight: 500; text-align: center;  }
+.ucpTable2 tr.first th {padding-top:20px; height:auto !important; padding-bottom:5px;}
+.ucpTable2 tr.first th:nth-of-type(2) {border-bottom:0;}
+.ucpTable2 tr.last th {border-top:0; padding-bottom:20px; height:auto !important; font-size:14px; color:#666; font-weight:400;}
+.ucpTable2 th .d-flex { display: flex; justify-content: center; align-items: center; margin: 0; } 
+.ucpTable2 th span { display: inline-block; margin-right: 5px; } 
+.ucpTable2 tr.last td { border-color: var(--text-color-title); } 
+.ucpTable2 td { padding: 23px 0; border-bottom: 1px solid var(--line-color-ty1); font-size: 16px; text-align: center; } 
+.ucpTable2 td strong { font-weight: 400; } 
+.ucpTable2 .univName { display: flex; align-items: center; padding-left: 20px; text-align: left; } 
+.ucpTable2 .univName img { width: 30px; height: 30px; margin-right: 7px; } 
+.ucpTable2 .univLoca,
+.ucpTable2 .univRate { display: flex; justify-content: center; align-items: center; } 
+.ucpTable2 .univLoca img { margin-right: 6px; } 
+.ucpTable2 .univRate.first:not(.last) { margin-bottom: 4px; } 
+.ucpTable2 .univRate dt { margin-right: 4px; } 
+.ucpTable2 td .frmCompare { display: inline-block; } 
+.ucpTable2 td .frmFavorite { margin: 0 auto; }
+
+/* 대학리스트 테이블형태 */
+.ucpTable { width:100%; } 
+.ucpTable .tooltipArea { width: 100%; height: 100%; display: flex; align-items: center; gap: 5px; justify-content: center; margin-left: 0; } 
+.ucpTable .tooltipArea:hover .tooltipCont { display: inline-block; } 
+.ucpTable .tooltipArea.glbTooltip .tooltipCont { width: auto; } 
+.ucpTable .tooltipArea.glbTooltip .tooltipTit { width: auto; } 
+.ucpTable th .tooltipArea span { margin: 0; position:relative;} 
+.ucpTable .ucpTable td { padding: 18px 0; } 
+.ucpTable th .tooltipCont { top: 23px; } 
+.ucpTable .tooltipArea.glbTooltip .tooltipCont .pointColor { color: var(--tooltip-point-color); margin-right: 0; } 
+.ucpTable th:first-child .tooltipCont { right: calc(-50% + 100px); } 
+.ucpTable th:nth-child(2) .tooltipCont { right: calc(-50% - 20px); } 
+.ucpTable th:nth-child(4) .tooltipCont { right: calc(-50% - 50px); } 
+.ucpTable th { height: 64px; border-top: 2px solid var(--text-color-title); border-bottom: 1px solid var(--line-color-ty1); font-size: 16px; font-weight: 500; text-align: center; } /* JH Code */ 
+.ucpTable th .d-flex { display: flex; justify-content: center; align-items: center; margin: 0; } 
+.ucpTable th span { display: inline-block; margin-right: 5px; } 
+.ucpTable tr:last-of-type td { border-color: var(--text-color-title); } 
+.ucpTable td { padding: 11px 0; border-bottom: 1px solid var(--line-color-ty1); font-size: 16px; text-align: center; } /* JH Code */
+.ucpTable td strong { font-weight: 400; } 
+.ucpTable .univName { display: flex; align-items: center; padding-left: 20px; text-align: left; } 
+.ucpTable .univName img { width: 30px; height: 30px; margin-right: 7px; } 
+.ucpTable .univName2 { display: flex; align-items: center; padding-left: 20px; text-align: left; width: 300px; float: left; } 
+.ucpTable .univName2 img { width: 30px; height: 30px; margin-right: 7px; } 
+.ucpTable .univBtn { display: flex; float: right; }
+.ucpTable .univLoca,
+.ucpTable .univRate { display: flex; justify-content: center; align-items: center; } 
+.ucpTable .univLoca img { margin-right: 6px; } 
+.ucpTable .univRate:first-child:not(:last-of-type) { margin-bottom: 4px; } 
+.ucpTable .univRate dt { margin-right: 4px; } 
+.ucpTable td .frmCompare { display: inline-block; } 
+.ucpTable td .frmFavorite { margin: 0 auto; } 
+.col04 .ucpTable dl {font-size:16px !important;}
+.col04 .ucpTable dl dt,
+.col04 .ucpTable dl dd strong {font-weight:400 !important;}
+/* 윈도우 팝업 */
+.ucpWindowPopup { width: 1350px; margin: 0 auto; } 
+.ucpWindowPopup .tableWrap { width: 100%; } 
+
+/* 대학선택 안했을 때 */
+.ucp .noDataMsg { color: var(--text-color-sub); padding: 23px 0; /* border-top: 1px solid var(--line-color-ty1); */ /*불필요 확인 김태형*/
+ font-size: 16px; text-align: center; } 
+.ucp .ucpTableWrap .noDataMsg { border: none; padding: 0; } 
+.ucp.admssDtl .noDataMsg { font-size: 14px; } 
+
+/* 대학/학과/전형_대학정보 */
+/* 오른쪽 필터 결과 대학 리스트(admssFilterResultList) */
+.ucpFilterResult { max-height: 126px; } 
+
+/* 대학비교 플로팅 (_compareList) */
+._compareList { display: none; position: fixed; bottom: -198px; left: 50%; width: 1400px; padding: 32px 0 32px 40px; background: #fff; border: 2px solid var(--prime-color-main); border-bottom: none; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -3px 20px 0 rgba(0, 0, 0, 0.1); transform: translateX(-50%); transition: bottom 0.2s; z-index: 10; box-sizing: border-box; } 
+
+._compareList .comUnivList li { width: 33.33%; position: relative; border: 1px solid var(--line-color-ty2); border-radius: 12px; overflow: hidden; box-sizing: border-box; } 
+
+._compareList .comUnivList .titBox { display: flex; align-items: center; margin-bottom: 14px; padding: 0 4px 16px; border-bottom: 1px dashed var(--line-color-ty2); } 
+
+._compareList .comUnivList .delBtn { display: block; position: absolute; top: 16px; right: 16px; width: 12px; height: 12px; background: url("../img/common/ico_close_popup.png") no-repeat center; background-size: cover; border: none; text-indent: -9999px; overflow: hidden; } 
+._compareList .comUnivList .noneMsg { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; min-height: 156px; background: #f8f8f8; color: var(--text-color-sub); font-size: 16px; text-align: center; } 
+
+._compareList .comOpenBtn { display: block; position: absolute; top: 30px; right: 36px; width: 36px; height: 36px; background: url("../img/common/ico_top.png") no-repeat center; background-size: cover; border: none; text-indent: -9999px; transition: all 0.2s; overflow: hidden; } 
+
+/*대학정보 전용 예외처리 20231023*/
+._compareList.onlyForUniv .compareListInner { align-items:flex-start; } 
+._compareList.onlyForUniv .comUnivList .titBox { margin-bottom:0 !important; padding:0 4px !important; border-bottom:0 !important; } 
+._compareList.onlyForUniv .comUnivList .noneMsg { min-height:auto !important; } 
+
+/* 대학정보-일반대학-전형평가기준, 대입특징 univDtlView07.html univDtlView08.html */
+.ucpUnivDtl .tabMenu { justify-content: flex-start; } 
+.ucpUnivDtl .tabMenu>li { max-width: 152px; }
+.ucpUnivDtl .noData {display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;height:335px;text-align:center;font-size:16px;font-weight:400;color:var(--text-color-sub);}
+.ucpUnivDtl .noData::before {content:'';width:48px;height:48px;display:flex;background:url(../img/common/ico_nodata.png) 0 0 no-repeat;background-size:48px;} 
+.univDtlView07 .univInfoCon { padding-top: 0; } 
+.univDtlView07 .univInfoCon .noticeArea { display: flex; align-items: center; margin: 32px 0 24px; } 
+.univDtlView07 .univInfoCon .noticeArea p { margin-left: 6px; color: #e52800; font-size: 14px; } 
+
+/* 대학정보-일반대학-대학상세-popup */
+.univDetailPopup .univList li { margin-bottom: 12px; font-size: 16px; } 
+.univDetailPopup .univList li:last-of-type { margin-bottom: 0; } 
+.univDetailPopup .univList .color-blue { color: var(--prime-color-main); } 
+
+/* 학과정보_일반대학_학과소개 classUnivDtlView01.html / classUnivDtlView02.html */
+.ucp .classTit { margin-top: 16px; padding: 22px 32px; background: #e3edef; border-radius: 12px; }
+.ucp .classTit div.innerClsTit { display: flex; align-items: flex-end; margin-bottom:20px;} 
+.ucp .classTit div.courCombArea ul li {margin-bottom:20px;}
+.ucp .classTit div.courCombArea ul li:last-of-type {margin-bottom:0px;}
+.ucp .classTit .h3 { margin: 0 12px 0 0; } 
+.ucp .classTit p { font-size: 16px; }
+.ucp.mapUcp .classTit {padding:20px;}
+.ucp.mapUcp .classTit label span {display:inline-block; vertical-align:top; word-break:keep-all;} 
+.classUnivDtl .classCon { margin-top: 40px; font-size: 16px; } 
+.classUnivDtlView01 .classCon .h3 { margin-bottom: 16px; } 
+.classUnivDtlView02 .total { margin-bottom: 16px; font-size: 20px; font-weight: 500; } 
+
+/* 대학정보_모집인원_변경사항 popup univDtlView05.html */
+.univDtlView05 .tableWrap { width: 100%; } 
+
+/* 대학정보_대학캐스트 univDtlView09.html */
+.univDtlView09 .optionArea { margin-bottom: 32px; padding: 40px 46px; background: var(--bg-color-ty1); border-radius: 12px; } 
+.univDtlView09 .optionArea .optionRow { display: flex; align-items: center; } 
+.univDtlView09 .optionArea .optionRow h5 { font-size: 16px; font-weight: 500; margin-right: 40px; } 
+.univDtlView09 .searchBar { margin-bottom: 32px; } 
+.univDtlView09 .searchBar ._inner { position: relative; width: 732px; } 
+.univDtlView09 .searchBar .frmInput input { padding-right: 60px; border: none; } 
+.univDtlView09 .searchBar .btnSearch { position: absolute; top: 50%; right: 0; transform: translateY(-50%); } 
+.univDtlView09 .tabArea ul { display: flex; gap: 8px; } 
+.univDtlView09 .tabArea .tabBtn { display: flex; justify-content: center; align-items: center; width: 130px; height: 46px; background: #fff; border: 1px solid var(--line-color-ty2); border-radius: 23px; color: var(--text-color-sub); font-size: 16px; box-sizing: border-box; } 
+.univDtlView09 .tabArea .tabBtn.on { background: var(--prime-color-main); border-color: var(--prime-color-main); color: #fff; } 
+.univDtlView09 .tabArea .tabBtn.on img { content: url(../img/common/ico_check_w.png); } 
+.univDtlView09 .tabArea .tabBtn img { width: 16px; margin-right: 8px; } 
+.univDtlView09 .tabCon { display: none; } 
+.univDtlView09 .tabCon.on { display: block; } 
+.univDtlView09 .tblList .title { display: flex; align-items: center; } 
+.univDtlView09 .tblList .title img { width: 20px; margin-left: 12px; } 
+
+/* 학과정보_일반대학_리스트_입시결과 popup classUnivListView02.html */
+.classUnivListView02 .subDesc { color: var(--text-color-sub3); } 
+.classUnivListView02 .univBox { display: flex; align-items: flex-start; padding: 40px; border: 2px solid var(--prime-color-main); } 
+.classUnivListView02 .univBox .imgBox { width: 100px; margin-right: 32px; } 
+.classUnivListView02 .univBox .imgBox img { width: 100%; } 
+.classUnivListView02 .univBox .txtBox { width: calc(100% - 132px); } 
+.classUnivListView02 .univBox .uniTitle { display: flex; justify-content: space-between; align-items: center; } 
+.classUnivListView02 .univBox .uniTitle .h3 { display: flex; align-items: flex-end; margin-bottom: 12px; } 
+.classUnivListView02 .univBox .uniTitle .h3 span { display: block; margin-left: 12px; color: var(--text-color-sub); font-size: 16px; font-weight: 400; } 
+.classUnivListView02 .univBox .uniTitle .TitleSideLabel { display: flex; } 
+.classUnivListView02 .univBox .uniTitle .TitleSideLabel li:first-of-type { margin-right: 8px; } 
+.classUnivListView02 .univBox .uniInfo li { position: relative; margin-bottom: 8px; padding-left: 14px; color: var(--text-color-sub); font-size: 16px; } 
+.classUnivListView02 .univBox .uniInfo li:last-of-type { margin-bottom: 0; } 
+.classUnivListView02 .univBox .uniInfo li::after { content: ''; display: block; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--text-color-sub); transform: translateY(-50%); } 
+.classUnivListView02 .univBox .uniInfo li span { display: inline-block; position: relative; margin-right: 33px; } 
+.classUnivListView02 .univBox .uniInfo li span::after { content: ''; display: block; position: absolute; top: 50%; right: -17px; width: 1px; height: 12px; background: var(--line-color-ty1); transform: translateY(-50%); } 
+.classUnivListView02 .univBox .uniInfo li span.mL { margin-left: 26px; padding-left: 14px; } 
+.classUnivListView02 .univBox .uniInfo li span.mL::before { content: ''; display: block; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; border-radius: 50%; background: var(--text-color-sub); transform: translateY(-50%); } 
+.classUnivListView02 .termInfo { margin-top: 32px; } 
+/*20230825 classUnivListView02.html 전년도 입시결과 용어 안내 전용 테이블 css 추가 */
+.classUnivListView02 .termInfo table tr td { padding:28px; word-break:keep-all; vertical-align: top; text-align: left; } 
+.classUnivListView02 .tableWrap .h4 { margin-bottom: 16px; } 
+.classUnivListView02 .tableWrap table,
+.classUnivListView02 .tableWrap .cptTbComp { width: 100%; } 
+.classUnivListView02 .tableWrap td { padding: 28px 16px; } 
+.classUnivListView02 .tableWrap td dl { display: flex; align-items: flex-start; line-height: 1.57; } 
+.classUnivListView02 .tableWrap td dl.noFlex { display: block; } 
+.classUnivListView02 .tableWrap td dt { flex-shrink: 0; font-weight: 500; } 
+.classUnivListView02 .tableWrap td dd p,
+.classUnivListView02 .tableWrap td .pL14 { padding-left: 14px; } 
+.classUnivListView02 .tableWrap td .notice { margin-top: 8px; } 
+.classUnivListView02 .infoBox .total { margin-bottom: 16px; font-size: 20px; font-weight: 500; } 
+/* .classUnivListView02 .infoBox table { margin-bottom: 16px; 불필요하여 제거함 -20230825 김태형 } */
+.classUnivListView02 .infoDesc p { margin-bottom: 8px; font-size: 14px; } 
+.classUnivListView02 .infoDesc p:last-of-type { margin-bottom: 0; } 
+.classUnivListView02 .infoDesc p span { display: block; margin-left: 14px; } 
+
+/* 전형정보 전문대학 리스트 페이지 admssCollListView */
+.admssListView .ucpTableWrap th .d-flex { display: flex; justify-content: center; align-items: center; margin: 0; } 
+/* 전형정보 상세 페이지 admssUnivDtlView01, admssUnivDtlView02, admssCollDtlView01, admssCollDtlView02 */
+.admssDtl.uniInfoCommon .rtCont .TitleSideLabel li { border: none; } 
+.admssDtl.uniInfoCommon .rtCont .TitleSideLabel li a { display: flex; padding: 0 20px; } 
+.admssDtl .majorBox { display: block; margin-bottom: 40px; padding: 4px; } 
+.admssDtl .majorBox .topArea { display: flex; justify-content: space-between; align-items: center; padding: 19px 28px 0 28px; } 
+.admssDtl .majorBox .major { display: flex; align-items: flex-end; } 
+.admssDtl .majorBox .majorLink { display: flex; align-items: center; } 
+.admssDtl .majorBox .majorLink li:first-of-type { margin-right: 5px; } 
+.admssDtl .majorBox .selectionInfo { position: relative; margin-top: 32px; padding: 20px 28px; background: #fff; border-radius: 12px; font-size: 16px; } 
+.admssDtl .majorBox .selectionInfo strong { display: block; margin-bottom: 4px; font-weight: 500; } 
+.admssDtl .majorBox .selectionInfo .anaBtn { position: absolute; right: 28px; bottom: 15px; } 
+.admssDtl .admssDtlSection .colorRed { color: #e52800; font-size: 14px; } 
+.admssDtl .admssDtlSection .titArea { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; } 
+.admssDtl .admssDtlSection .h3 { margin-bottom: 0; } 
+.admssDtl .admssDtlSection .tableNotice { display: flex; align-items: center; margin-top: 16px; } 
+.admssDtl .admssDtlSection .tableNotice img { margin-right: 6px; } 
+.admssDtl .admssDtlSection table.cptTbRowBtn td { padding: 20px; } 
+.admssDtl .admssDtlSection table strong { font-weight: 500; } 
+.admssDtl .admssDtlSection .desc { font-size: 14px; } 
+/* 어디가비교 popoup compareUnivPopup01,02,03,04 */
+
+._comparePopup .addComUnivBtn { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; border: none; background: none; color: var(--text-color-sub2); font-size: 16px; } 
+._comparePopup .addComUnivBtn img { margin-bottom: 10px; } 
+
+/* 어디가비교 popup compareUnivPopup01.html */
+
+._comparePopup .comUnivInfo .tableItem { position: relative; padding: 0 16px; font-size: 16px; text-align: center; } 
+._comparePopup .comUnivInfo .tableItem .tableItemIn { padding: 13px 0; border-bottom: 1px solid rgba(299, 299, 299, 0.2); box-sizing: border-box; } 
+._comparePopup .comUnivInfo .tableItemTall .tableItemIn { padding: 50px 0; } 
+._comparePopup .comUnivInfo .tableHead { width: 260px; background: var(--prime-color-main); color: #c4e7e9; text-align: center; } 
+._comparePopup .comUnivInfo .comUnivInfoTableBody { width: calc((100% - 204px) / 3); border-right: 1px solid var(--line-color-ty1); box-sizing: border-box; } 
+._comparePopup .comUnivInfo .comUnivInfoTableBody:last-of-type { border: none; } 
+._comparePopup .comUnivInfo .comUnivInfoTableBody .tableItem:last-of-type .tableItemIn,
+._comparePopup .comUnivInfo .tableHead .tableItem:last-of-type .tableItemIn { border: none; } 
+._comparePopup .comUnivInfo .comUnivInfoTableBody .tableItem .tableItemIn { border-bottom: 1px solid var(--line-color-ty3); } 
+._comparePopup .comStandardInfo .btnArea,
+._comparePopup .comUnivInfo .tableBtnArea { display: flex; justify-content: space-between; align-items: center; padding: 9px; background: #f2f2f2; } 
+._comparePopup .comStandardInfo .btnArea button,
+._comparePopup .comUnivInfo .tableBtnArea button { display: block; width: 14px; height: 14px; border: none; text-indent: -9999px; overflow: hidden; } 
+._comparePopup .comStandardInfo .btnArea .changeBtn,
+._comparePopup .comUnivInfo .tableBtnArea .changeBtn { background: url("../img/contents/uni_ico_change.png") no-repeat center; background-size: cover; } 
+._comparePopup .comStandardInfo .btnArea .delBtn,
+._comparePopup .comUnivInfo .tableBtnArea .delBtn { background: url("../img/contents/uni_icon_close.png") no-repeat center; background-size: cover; } 
+
+/* 어디가비교 popup compareUnivPopup02.html */
+
+._comparePopup .comSelectionInfo .recruitPeriod > p { margin-right: 20px; font-size: 16px; } 
+
+._comparePopup .comSelectionInfo .tableHead .d-flex ._right { display: flex; justify-self: center; align-items: center; width: 70px; border-right: 1px solid rgba(299, 299, 299, 0.2); box-sizing: border-box; } 
+
+._comparePopup .comSelectionInfo .tableHead .d-flex ._left .tableItemIn { border-bottom: 1px solid rgba(299, 299, 299, 0.2); } 
+
+/* 어디가비교 popup compareUnivPopup03.html */
+
+._comparePopup .comStandardInfo .comStandardItem,
+._comparePopup .comCharacter .comCharacterItem { width: 33.33%; border-right: 1px solid var(--line-color-ty1); } 
+._comparePopup .comStandardInfo .comStandardItem:last-of-type,
+._comparePopup .comCharacter .comCharacterItem:last-of-type { border: none; } 
+._comparePopup .comStandardInfo .btnArea { width: 100%; padding: 10px 8px; } 
+
+._comparePopup .comStandardInfo .nameArea .frmRadio input+label::after { top: 3px; transform: translateY(0); } 
+
+._comparePopup .comStandardInfo .comparePopTable { width: 100%; table-layout: auto; } 
+._comparePopup .comStandardInfo .comparePopTable thead th { padding: 14px 0; background: #f9f9f9; border-top: 1px solid var(--text-color-title); border-bottom: 1px solid var(--line-color-ty1); font-size: 16px; text-align: center; } 
+._comparePopup .comStandardInfo .comparePopTable tbody { font-size: 16px; } 
+._comparePopup .comStandardInfo .comparePopTable tbody th { width: 174px; padding-left: 24px; border: 1px solid var(--line-color-ty3); border-top: none; border-left: none; font-weight: 400; } 
+._comparePopup .comStandardInfo .comparePopTable tbody td { width: calc(100% - 174px); padding: 20px; border-bottom: 1px solid var(--line-color-ty3); } 
+
+/* 어디가비교 popup compareUnivPopup04.html */
+
+._comparePopup .comCharacter .topArea .d-flex { display: flex; align-items: center; } 
+._comparePopup .comCharacter .topArea .d-flex p { margin-right: 20px; font-size: 16px; } 
+._comparePopup .comCharacter .comCharacterCon { display: none; } 
+._comparePopup .comCharacter .comCharacterCon.on { display: block; } 
+
+/* 어디가비교 popup compareUnivPopup05.html */
+.compareUnivPopup05 .addUnivCon { display: flex; justify-content: space-between; align-items: flex-start; } 
+.compareUnivPopup05 .scrollBox { border: 1px solid var(--line-color-ty1); border-radius: 12px; overflow: hidden; } 
+.compareUnivPopup05 .scrollBox .titArea { padding: 13px 0; border-bottom: 1px solid var(--line-color-ty3); background: #f2f2f2; font-size: 16px; text-align: center; } 
+.compareUnivPopup05 .scrollBox .conArea { padding: 20px 8px 20px 0; } 
+.compareUnivPopup05 .scrollBox .conArea ul { overflow: auto; } 
+.compareUnivPopup05 .popBtm { margin-top: 32px; border-top: 1px solid var(--line-color-ty3); } 
+
+/* 비교대학 추가 공통 체크 박스 스타일 */
+.compareUnivPopup05 .conArea li { position: relative; } 
+.compareUnivPopup05 .conArea li input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; appearance: none; -moz-appearance: none; -webkit-appearance: none; cursor: pointer; } 
+.compareUnivPopup05 .conArea li input + label { display: flex; align-items: center; width: 100%; height: 36px; padding-left: 20px; color: var(--text-color-sub); font-size: 16px; cursor: pointer; box-sizing: border-box; } 
+.compareUnivPopup05 .conArea li input:hover + label { background: #fde0db; } 
+.compareUnivPopup05 .conArea li input:checked + label { background: url(../img/common/ico_check.png) no-repeat right 10px center var(--line-color-ty1); color: var(--text-color-title); } 
+.compareUnivPopup05 .leftFilter { width: 232px; } 
+.compareUnivPopup05 .leftFilter .searchCon { display: none; } 
+.compareUnivPopup05 .leftFilter .searchCon.on { display: block; } 
+.compareUnivPopup05 .tab { display: flex; overflow: hidden; } 
+.compareUnivPopup05 .tab li { width: 50%; } 
+.compareUnivPopup05 .tab li:first-of-type .tabBtn { border-right: none; border-top-left-radius: 12px; border-bottom-left-radius: 12px; } 
+.compareUnivPopup05 .tab li:last-of-type .tabBtn { border-left: none; border-top-right-radius: 12px; border-bottom-right-radius: 12px; } 
+.compareUnivPopup05 .tab .tabBtn { display: block; width: 100%; padding: 13px 0; border: 1px solid var(--line-color-ty2); color: var(--text-color-sub); font-size: 16px; box-sizing: border-box; } 
+.compareUnivPopup05 .tab .tabBtn.on { border-color: var(--prime-color-main); background: var(--prime-color-main); color: #fff; } 
+.compareUnivPopup05 .loca ul { height: 166px; } 
+.compareUnivPopup05 .rightList { width: 400px; } 
+.compareUnivPopup05 .tabCon { display: none; } 
+.compareUnivPopup05 .tabCon.on { display: block; } 
+.compareUnivPopup05 .univList ul { max-height: 350px; } 
+/* select 교체 크기 */
+.comSelectTpStk a { text-align: left; } 
+.comSelectTpStk.w107 { width: 107px; }
+.comSelectTpStk.w107 button {min-width:auto !important;} 
+.comSelectTpStk.w113 { width: 113px; } 
+.comSelectTpStk.w171 { width: 171px; } 
+.comSelectTpStk.w225 { width: 225px; } 
+/* 대입상담 입력 폼 공통 */
+.uve .onlineFormCon { position: relative; } 
+.uve .onlineFormCon .topArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-right: 50px; } 
+.uve .onlineFormCon .titArea { display: flex; align-items: center; font-size: 14px; } 
+.uve .onlineFormCon .titArea .h3 { margin-bottom: 0; } 
+.uve .onlineFormCon .titArea strong { display: block; margin: 0 20px 0 4px; } 
+.uve .onlineFormCon .titArea .desc { color: var(--text-color-sub2); } 
+.uve .onlineFormCon .selectArea { display: flex; align-items: center; } 
+.uve .onlineFormCon .selectArea .comSelectTpStk { width: 325px; margin-right: 8px; } 
+.uve .onlineFormCon .selectArea .btnSrc { width: 70px; height: 44px; } 
+.uve .onlineFormCon th { padding: 16px; } 
+.uve .onlineFormCon td { padding: 12px 16px; } 
+.uve .onlineFormCon .cptTbBsc.vType tbody tr td { padding:12px 16px; } /*20230829 김태형 추가*/
+.uve .onlineFormCon .borderRightNone { border-right: none; } 
+.uve .onlineFormCon .selCustBtn { background: #fff; } 
+.uve .onlineFormCon .accordionCon { position: relative; } 
+.uve .onlineFormCon .d-flex { display: flex; align-items: center; } 
+.uve .onlineFormCon .subjectRow { gap: 8px; } 
+.uve .onlineFormCon .subjectRow .comSelectTpStk,
+.uve .onlineFormCon .subjectRow .frmInput { width: 50%; } 
+.uve .onlineFormCon .btnBox button { display: block; width: 36px; height: 36px; border: 1px solid var(--text-color-sub2); border-radius: 6px; text-indent: -9999px; overflow: hidden; box-sizing: border-box; } 
+.uve .onlineFormCon .btnBox .studentEditBtn { background: url(../img/contents/uve_edit.png) no-repeat center; background-size: 24px 24px; margin-right: 8px; } 
+.uve .onlineFormCon .studentCon .tabCon { position: static; } 
+.uve .onlineFormCon .studentCon .addBtn { display: block; position: absolute; top: 0; right: 0; width: 32px; height: 32px; background: url(../img/contents/uve_plus_btn.png) no-repeat center; background-size: cover; text-indent: -9999px; overflow: hidden; box-sizing: border-box; } 
+.uve .onlineFormCon .btnBox .delBtn { background: url(../img/contents/uve_del.png) no-repeat center; background-size: 24px 24px; } 
+.uve .onlineFormCon .accordionBtn, .admssExpoDtlView .accordionBtn { display: block; position: absolute; top: 12px; right: 0; width: 20px; height: 20px; background: url(../img/contents/uve_accordion.png) no-repeat center; background-size: cover; } 
+.uve .onlineFormCon .accordionBtn.open,
+.admssExpoDtlView .accordionBtn.open { transform: rotate(180deg); } 
+.uve .onlineFormCon .editBtn { display: flex; width: 126px; margin: 20px 0 0 auto; } 
+
+/* 대입상담 필터 공통 */
+.uveFil .titArea { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--line-color-ty3); font-size: 16px; } 
+.uveFil .smallTxt { font-size: 14px; } 
+.uveFil .uveFilBox { margin-top: 16px; padding: 0; border: 0; } 
+.uveFil .uveFilBox .afMid { margin: 0; } 
+.uveFil .uveFilItem { margin-top: 8px; } 
+.uveFil ul { display: flex; justify-content: flex-start; align-items: center; flex-wrap: wrap; gap: 8px; } 
+.uveFil li { position: relative; } 
+.uveFil .half li { width: calc(50% - 4px); margin: 0; } 
+.uveFil input[type="radio"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; appearance: none; -moz-appearance: none; -webkit-appearance: none; cursor: pointer; } 
+.uveFil input[type="radio"] + label { display: flex; justify-content: center; align-items: center; height: 44px; border: 1px solid var(--line-color-ty2); border-radius: 8px; color: var(--text-color-sub); font-size: 14px; text-align: center; box-sizing: border-box; } 
+.uveFil input[type="radio"]:checked+label { background: var(--prime-color-main); border-color: var(--prime-color-main); color: #fff; } 
+.uveFil.borderBx { padding: 15px 20px 20px; border: 1px solid var(--line-color-ty1); border-radius: 8px; } 
+.uveFil .choiceList { display: block; } 
+.uveFil .choiceList li { margin-bottom: 8px; color: var(--prime-color-main); font-size: 14px; } 
+.uveFil .choiceList li:last-of-type { margin-bottom: 0; } 
+
+/* 대입상담_비대면온라인상담 온라인상담메인 inputUntactForm.html */
+.uveConBox { position: relative; margin-top: 40px; } 
+.inputUntactForm .cptActFil.ty02 .afMid .iptCov input[type="text"]+a.schBtn { background: url(../img/contents/uve_fil_search.png) no-repeat center; } 
+.inputUntactForm .cptActFil.ty02 .afMid { margin-bottom: 16px; } 
+.inputUntactForm .cptActFil.ty02 .univName { font-size: 14px; } 
+.inputUntactForm .dateArea { padding: 0 20px; border: 1px solid var(--line-color-ty1); border-radius: 8px; } 
+.inputUntactForm .dateArea .choiceDateBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; height: 52px; color: var(--text-color-body); font-size: 16px; font-weight: 500; text-align: left; box-sizing: border-box; } 
+.inputUntactForm .dateArea .choiceDateBtn:disabled { color: #a6a6a6; } 
+.inputUntactForm .dateArea .reserveDate { display: none; padding: 15px 0 20px; border-top: 1px solid var(--line-color-ty3); } 
+.inputUntactForm .dateArea .reserveDate.on { display: block; } 
+.inputUntactForm .dateArea .reserveDate li:first-of-type { margin-bottom: 12px; } 
+.inputUntactForm .dateArea .reserveDate dl { display: flex; align-items: center; font-size: 16px; } 
+.inputUntactForm .dateArea .reserveDate dt { width: 45%; padding-left: 27px; background-size: 20px 20px; box-sizing: border-box; } 
+.inputUntactForm .dateArea .reserveDate dd { width: 55%; color: var(--text-color-sub); } 
+.inputUntactForm .dateArea .reserveDate .date dt { background: url(../img/contents/uve_calendar.png) no-repeat left center; } 
+.inputUntactForm .dateArea .reserveDate .time dt { background: url(../img/contents/uve_clock.png) no-repeat left center; } 
+.inputUntactForm .choiceDateBtn img { transform: rotate(-90deg); } 
+.inputUntactForm .noData { display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 55px 0; border: 1px solid var(--line-color-ty2); border-radius: 12px; } 
+.inputUntactForm .noData .iconCircle { display: block; width: 122px; height: 122px; margin-bottom: 12px; background: url(../img/contents/untact_nodata.png) no-repeat center #f8f8f8; border-radius: 50%; } 
+.inputUntactForm .noData p { text-align: center; } 
+.inputUntactForm .noData strong { display: block; margin-bottom: 4px; font-size: 24px; font-weight: 500; } 
+.inputUntactForm .noData span { color: var(--text-color-sub); font-size: 18px; } 
+.inputUntactForm th .comSelectTpStk button.selCustBtn { padding:0 30px 0 20px; } 
+
+/* 기본정보 입력 */
+.onlineFormCon .h3 { margin-bottom: 24px; } 
+.uvebaseInfo th { width: 150px; } 
+.uvebaseInfo td { padding: 12px 16px; } 
+.uvebaseInfo .comSelectTpStk button.selCustBtn { font-weight: 400; } 
+.uvebaseInfo .d-flex { display: flex; align-items: center; gap: 8px; } 
+.uvebaseInfo .phoneRow>div { width: 33.33%; } 
+.uvebaseInfo .mailRow { gap: 0; } 
+.uvebaseInfo .mailRow .mailId { width: calc(40% - 39px); } 
+.uvebaseInfo .mailRow span { display: block; width: 39px; text-align: center; } 
+.uvebaseInfo .mailRow .mailAddress { width: calc(30% - 4px); margin-right: 8px; } 
+.uvebaseInfo .mailRow .mailSelect { width: calc(30% - 4px); } 
+.uvebaseInfo .schoolRow .frmInput { width: calc(100% - 70px); } 
+.uvebaseInfo .schoolRow .frmInput input:disabled { background: #fff; border-color: var(--line-color-ty1); color: var(--text-color-body); } 
+.uvebaseInfo .inputArea .schoolRow .btnSrc { width: 70px; height: 44px; } 
+.inputUntactForm .useAgreeArea .h4 { margin-bottom: 16px; } 
+.inputUntactForm .useAgreeArea p { margin-bottom: 20px; font-size: 16px; } 
+.inputUntactForm .useAgreeArea ul { margin-bottom: 40px; color: var(--text-color-sub); font-size: 15px; line-height: 1.53; } 
+.inputUntactForm .useAgreeArea .frmCheck input { width: auto; } 
+.inputUntactForm .useAgreeArea .frmCheck label { font-weight: 500; } 
+
+/* 추가정보 입력 */
+.inputUntactForm .moreInfo .moreTit { position: relative; } 
+.inputUntactForm .hopeUniv .d-flex .comSelectTpStk,
+.inputUntactForm .questionCon .comSelectTpStk { width: 334px; } 
+.inputUntactForm .moreInfo .moreTit::after { content: ""; display: block; position: absolute; top: 50%; right: 0; width: calc(100% - 103px); height: 1px; background: var(--line-color-ty2); transform: translateY(-50%); } 
+.inputUntactForm .moreInfo .h3 strong { font-size: 14px; font-weight: 500; } 
+.inputUntactForm .moreInfo .questionCon textarea { display: block; width: 100%; height: 200px; margin-top: 16px; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 6px; font-size: 14px; resize: none; overflow: auto; box-sizing: border-box; } 
+.inputUntactForm .moreInfo .questionCon textarea:focus { border-color: var(--text-color-title); } 
+
+/* 대입상담_비대면온라인상담 대학검색 popup choosingUniv.html */
+.choosingUniv .conBox { display: flex; justify-content: space-between; align-items: flex-start; } 
+.choosingUniv .leftBox { width: 232px; } 
+.choosingUniv .univList { width: 400px; } 
+.choosingUniv .univList ul,
+.choosingUniv .univList .noDataMsg { height: 340px; } 
+.choosingUniv .univList .noDataMsg { display: flex; justify-content: center; align-items: center; flex-direction: column; color: var(--text-color-sub); font-size: 16px; } 
+.choosingUniv .univList .noDataMsg img { margin-bottom: 12px; } 
+/* .choosingUniv .scrollBox { overflow: hidden; } 
+.choosingUniv .scrollBox .titArea { padding: 13px 0; border-bottom: 1px solid var(--line-color-ty3); background: #f2f2f2; font-size: 16px; text-align: center; } 
+.choosingUniv .scrollBox .conArea { padding: 20px 8px 20px 0; } 
+.choosingUniv .scrollBox .conArea ul { overflow: auto; }  */
+.choosingUniv .conArea li { position: relative; } 
+.choosingUniv .conArea li input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; appearance: none; -moz-appearance: none; -webkit-appearance: none; cursor: pointer; } 
+.choosingUniv .conArea li input+label { display: flex; align-items: center; width: 100%; height: 36px; padding-left: 20px; color: var(--text-color-sub); font-size: 16px; cursor: pointer; box-sizing: border-box; } 
+.choosingUniv .conArea li input:hover+label { background: #fde0db; } 
+.choosingUniv .conArea li input:checked+label { background: url(../img/common/ico_check.png) no-repeat right 10px center var(--line-color-ty1); color: var(--text-color-title); } 
+.choosingUniv .leftBox .loca ul { height: 250px; }
+.choosingUniv .popBtm { margin-top: 32px; padding-top:0;}  
+
+/* 대입상담_상담신청 완료(팝업) inputUntactCompView.html */
+.inputUntactCompView .modDivision { text-align: center; } 
+.inputUntactCompView .modDivision .doneMsg { margin: 10px 0 20px; font-size: 28px; font-weight: 500; } 
+.inputUntactCompView .modDivision p { font-size: 16px; } 
+.inputUntactCompView .modDivision .desc { margin-bottom: 29px; color: var(--text-color-sub); } 
+
+/* 대입상담_고등학교검색(팝업) choosingSchoolView.html */
+.choosingSchoolView .conArea { height: 280px; } 
+.choosingSchoolView .schoolList { height: 100%; padding: 20px 8px 20px 0; border: 1px solid var(--line-color-ty1); border-radius: 12px; box-sizing: border-box; } 
+.choosingSchoolView .schoolList ul { height: 100%; overflow-y: auto; } 
+.choosingSchoolView .schoolList li { position: relative; } 
+.choosingSchoolView .schoolList li input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; appearance: none; -moz-appearance: none; -webkit-appearance: none; cursor: pointer; } 
+.choosingSchoolView .schoolList li input+label { display: flex; align-items: center; width: 100%; height: 36px; padding-left: 20px; color: var(--text-color-sub); font-size: 16px; cursor: pointer; box-sizing: border-box; } 
+.choosingSchoolView .schoolList li input:checked+label { background: url(../img/common/ico_check.png) no-repeat right 10px center var(--line-color-ty1); color: var(--text-color-title); } 
+
+/* 대입상담_상담신청 onlineConseForm.html */
+.uve .essential, .admssExpoPerAppForm01 .essential,
+.admssExpoPerAppForm02 .essential, .admssExpoGroupAppForm01 .essential,
+.admssExpoGroupAppForm02 .essential { display: inline-block; margin-left: 5px; color: #e52800; } 
+.onlineConseForm .cptTbBsc td textarea { display: block; height: 200px; padding: 12px 16px; border: 1px solid var(--line-color-ty1); border-radius: 6px; font-size: 14px; resize: none; overflow: auto; outline: none; box-sizing: border-box; } 
+.onlineConseForm .cptTbBsc td textarea:focus { border-color: var(--text-color-title); } 
+.onlineConseForm th .comSelectTpStk button.selCustBtn { padding:0 30px 0 10px; } 
+.onlineConseForm .btnGroup { display: flex; justify-content: center; align-items: center; gap: 12px; }
+/*2023.12.20 수능/모의고사 점수 및 등급 가운데 정렬 처리*/
+.onlineConseForm #csatImtexmResult td input {text-align:center;} 
+
+/* 대입상담_상담상세 onlineConseDtlView.html */
+.onlineConseDtlView .scrollBox { height: 168px; overflow-y: auto; } 
+.onlineConseDtlView .qstnCn { min-height: 168px;} 
+.onlineConseDtlView .accordionCon { display: none; } 
+.onlineConseDtlView .btnGroup { justify-content: space-between; gap: 0; }
+.onlineConseDtlView .btnGroup.arrgExcp {justify-content: center;} 
+.onlineConseDtlView .btnGroup div { display: flex; gap: 12px; } 
+.onlineConseDtlView .studentScore { display: flex; justify-content: space-between; align-items: flex-start; } 
+.onlineConseDtlView .studentScore li { width: calc(33.33% - 16.66px); } 
+.onlineConseDtlView .studentScore .h5 { margin-bottom: 16px; } 
+.onlineConseDtlView .studentScore th { text-align: center; } 
+.onlineConseDtlView .cptTextArea textarea { padding: 0; } 
+
+/* 대입상사_상담faq리스트 conseFaqView.html */
+.conseFaqView .uveFil { padding: 20px; } 
+.conseFaqView .uveFil .cptActFil { padding: 0; border: none; } 
+.conseFaqView .uveFil .cptActFil .afMid { margin: 10px 0 0 0; } 
+.uve .ltCont .link { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: var(--bg-color-ty2); border-radius: 12px; font-size: 16px; font-weight: 500; } 
+.uve .ltCont .link span { display: block; width: 40px; height: 40px; } 
+.uve .ltCont .link._online { margin-top:10px; } 
+.uve .ltCont .link._untact { margin-top: 10px; } 
+.uve .ltCont .link._counFaq span { background:url(../img/common/ico_faq.png)center center no-repeat; } 
+.uve .ltCont .link._online span { background:url(../img/common/ico_online.png)center center no-repeat; } 
+.uve .ltCont .link._untact span { background:url(../img/common/icon_untact.png)center center no-repeat; } 
+/* .conseFaqView .rtCont .h3 { margin-bottom: 20px; } */
+.conseFaqView .rtCont .topArea,
+.onlineConseListView .listArea .topArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; } 
+.conseFaqView .rtCont .total,
+.onlineConseListView .listArea .total { font-size: 20px; font-weight: 500; } 
+.conseFaqView .rtCont .topArea.modTabWrap .tabMenu>li,
+.onlineConseListView .listArea .modTabWrap .tabMenu>li { width: 146px; padding-left: 6px; }
+.conseFaqView .faqList {margin-top:20px;} 
+.conseFaqView .faqList li { margin-bottom: 12px; } 
+.conseFaqView .faqList li:last-of-type { margin-bottom: 0; } 
+.conseFaqView .faqList a { display: block; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.conseFaqView .faqList a:hover { border-color: var(--text-color-title); } 
+.conseFaqView .faqList .titArea { display: flex; justify-content: space-between; align-items: center; } 
+.conseFaqView .faqList .tit { width: calc(100% - 150px); font-size: 20px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } 
+.conseFaqView .faqList .tit strong { font-weight: 500; } 
+.conseFaqView .faqList .cate { width: 150px; color: var(--text-color-sub3); font-size: 16px; text-align: right; } 
+.conseFaqView .faqList .answerArea { margin-top: 24px; padding: 24px 0 8px; border-top: 1px solid var(--line-color-ty3); font-size: 16px; }
+.conseFaqView .faqList .answerArea div {max-height:40px; overflow:hidden;} 
+.conseFaqView .faqList .answerArea strong { font-weight: 400; } 
+.conseFaqView .noData { display: flex; justify-content: center; align-items: center; flex-direction: column; height: 355px; border-top: 2px solid var(--text-color-body); border-bottom: 1px solid var(--text-color-body); } 
+.conseFaqView .noData p { margin-top: 12px; font-size: 16px; color: var(--text-color-sub); } 
+
+/* 대입상담_상담FAQ상세 conseFaqDtlView.html */
+.conseFaqDtlView .titArea { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px dotted var(--line-color-ty2); } 
+.conseFaqDtlView .titArea .cate { display: block; width: fit-content; padding: 11px 20px; background: #f2f2f2; border-radius: 8px; color: var(--prime-color-main); font-size: 18px; text-align: center; margin-right:24px;} 
+.conseFaqDtlView .titArea .tit { display: block; font-size: 20px; font-weight: 500; } 
+.conseFaqDtlView .answerArea { padding-bottom: 40px; border-bottom: 1px solid var(--line-color-ty3); } 
+.conseFaqDtlView .answerArea p { position: relative; margin-bottom: 32px; font-size: 16px; } 
+/* .conseFaqDtlView .answerArea > p::after { content: ''; display: block; position: absolute; top: 10px; left: 0px; width: 4px; height: 4px; background: var(--text-color-sub); border-radius: 50%; }  */
+.conseFaqDtlView .answerArea .refer { font-size: 16px; } 
+
+/*대입상담 만족도 조사 추가 231121*/
+.onlineConseDtlView .ratingCon {width:100%;}
+.onlineConseDtlView .ratingCon .starRate {display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between;}
+.onlineConseDtlView .ratingCon .starRate .rateList {}
+.onlineConseDtlView .ratingCon .starRate .rateList ul {display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start; gap:40px;}
+.onlineConseDtlView .ratingCon .starRate .rateList ul li {width:max-content;}
+.onlineConseDtlView .ratingCon .starRate .rateList ul li label {display:inline-block; vertical-align: middle;}
+.onlineConseDtlView .ratingCon .starRate .rateList ul li label span.starBg {display:inline-block; vertical-align: middle; width:82px; height:28px; background:url(../img/common/ico_fav_on.png)0 50% repeat-x; text-indent:-99999px;}
+/* .onlineConseDtlView .ratingCon .starRate .rateList ul li label span.starBg.rt3 {width:100px;} */
+.onlineConseDtlView .ratingCon .starRate .rateList ul li label span.starBg.rt2 {width:54px;}
+.onlineConseDtlView .ratingCon .starRate .rateList ul li label span.starBg.rt1 {width:26px;}
+.onlineConseDtlView .ratingCon .starRate .saveBtn a {display:inline-block; width:126px; height:50px; line-height:50px; border:1px solid #666; border-radius:8px; font-size:16px; color:#333; font-weight:500; text-align:center;}
+
+/* 대입상담_상담리스트 onlineConseListView.html */
+.onlineConseListView .uveFil.borderBx { padding: 20px; } 
+.onlineConseListView .uveFil .cptActFil { padding: 0; border: none; } 
+.onlineConseListView .uveFil .afMid { margin: 10px 0 0 0; } 
+.uve .summaryArea .summary { display: flex; align-items: center; border-top-left-radius: 12px; border-top-right-radius: 12px; overflow: hidden; border:1px solid #ccc; border-bottom:0;} 
+.uve .summaryArea .summary li { display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative; width: 25%; padding: 56px 0 44px; background: #fcfcfc; } 
+.uve .summaryArea .summary li::after { content: ''; display: block; position: absolute; top: 50%; right: 0; width: 1px; height: 46px; background: var(--line-color-ty3); transform: translateY(-50%); } 
+.uve .summaryArea .summary li:last-of-type::after { display: none; } 
+.uve .summaryArea .summary .cate { color: var(--text-color-sub); font-size: 15px; } 
+.uve .summaryArea .summary strong { display: block; margin-top: 2px; font-size: 24px; font-weight: 400; } 
+.uve .summaryArea .summary strong .prm01 { font-weight: 700; } 
+.uve .summaryArea .guide { display: flex; align-items: stretch; background: var(--prime-color-main); border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; overflow: hidden; } 
+.uve .summaryArea .guide p { width: 75%; padding: 17px 0 17px 73px; color: #fff; font-size: 18px; font-weight: bold; box-sizing: border-box; } 
+.uve .summaryArea .guide .request { display: flex; justify-content: center; align-items: center; width: 25%; background: rgba(0, 0, 0, 0.2); color: #fff; font-size: 16px; } 
+.uve .summaryArea .guide .request img { margin-left: 6px; } 
+.onlineConseListView .listArea .noData { display: flex; justify-content: center; align-items: center; flex-direction: column; height: 355px; border-top: 1px solid var(--line-color-ty1); border-bottom: 1px solid var(--line-color-ty1); box-sizing: border-box; } 
+.onlineConseListView .listArea .noData p { margin-top: 12px; color: var(--text-color-sub); font-size: 16px; } 
+.onlineConseListView .counselList { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px; } 
+.onlineConseListView .counselList li { width: calc(50% - 12px); } 
+.onlineConseListView .counselList .counselItem { display: flex; justify-content: space-between; flex-direction: column; height: 100%; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; box-sizing: border-box; } 
+.onlineConseListView .counselList .counselItem:hover { border:1px solid var(--prime-color-main); } 
+.onlineConseListView .counselItem .topArea { display: flex; justify-content: flex-start; align-items: center; gap: 6px; margin-bottom: 10px; } 
+.onlineConseListView .counselItem .topArea .state { display: flex; justify-content: center; align-items: center; width: 62px; height: 24px; border-radius: 12px; font-size: 12px; } 
+.onlineConseListView .counselItem .topArea .state._request { background: #f4f4fb; border: 1px solid #bbb3f8; color: #8278ce; } 
+.onlineConseListView .counselItem .topArea .state._pendingCons { background: #f2f8ff; border: 1px solid #8ec3fd; color: #3b97fb; } 
+.onlineConseListView .counselItem .topArea .state._answer { background: #fef8f2; border: 1px solid #ffba6a; color: #ff8c05; } 
+.onlineConseListView .counselItem .topArea .state._finish { background: #f1fbfc; border: 1px solid #86d7dc; color: #39a6af; } 
+.onlineConseListView .counselItem .topArea .close { display: block; width: 24px; height: 24px; background: url(../img/contents/uve_lock.png) no-repeat center; background-size: cover; text-indent: -9999px; overflow: hidden; } 
+.onlineConseListView .counselItem .titArea { position: relative; margin-bottom: 28px; font-size: 16px; font-weight: 500; overflow: hidden; white-space: normal; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; line-height: 1.5; } 
+.onlineConseListView .counselItem .titArea .new { display: inline-block; width: 20px; height: 20px; background: url(../img/contents/uve_new.png) no-repeat center; background-size: cover; border-radius: 50%; text-indent: -9999px; overflow: hidden; transform: translateY(3px); } 
+.onlineConseListView .counselItem .infoArea { display: flex; justify-content: space-between; align-items: center; color: var(--text-color-sub); font-size: 14px; } 
+.onlineConseListView .counselItem .infoArea .category { display: flex; align-items: center; gap: 17px; } 
+.onlineConseListView .counselItem .infoArea .category .model { position: relative; } 
+.onlineConseListView .counselItem .infoArea .category .model::after { content: ''; display: block; position: absolute; top: 50%; right: -8px; width: 1px; height: 12px; background: var(--line-color-ty2); transform: translateY(-50%); } 
+.onlineConseListView .counselItem .infoArea .info { display: flex; align-items: center; } 
+.onlineConseListView .counselItem .infoArea .info .party { display: flex; justify-content: center; align-items: center; width: 38px; height: 22px; margin-right: 8px; background: var(--prime-color-main); border-radius: 5px; color: #fff; } 
+.onlineConseListView .counselItem .infoArea .info .writer { margin-right: 12px; } 
+.onlineConseListView .operationGuide,
+.telConseGuideView .operationGuide { margin-top: 80px; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.onlineConseListView .operationGuide .accordionBtn,
+.telConseGuideView .operationGuide .accordionBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 20px; font-weight: 500; } 
+.onlineConseListView .operationGuide .accordionBtn img,
+.telConseGuideView .operationGuide .accordionBtn img { transform: rotate(180deg); } 
+.onlineConseListView .operationGuide .accordionBtn.close img,
+.telConseGuideView .operationGuide .accordionBtn.close img { transform: rotate(0); } 
+.onlineConseListView .operationGuide .accordionCon,
+.telConseGuideView .operationGuide .accordionCon { display: none; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line-color-ty1); } 
+.onlineConseListView .operationGuide .grayBox,
+.telConseGuideView .operationGuide .grayBox { padding: 32px; background: var(--bg-color-ty2); border-radius: 8px; } 
+.onlineConseListView .operationGuide dt,
+.telConseGuideView .operationGuide dt { margin-bottom: 10px; font-size: 18px; font-weight: 500; } 
+.onlineConseListView .operationGuide dd,
+.telConseGuideView .operationGuide dd { color: var(--text-color-sub); font-size: 16px; } 
+.onlineConseListView .operationGuide ul,
+.telConseGuideView .operationGuide ul { margin-top: 8px; } 
+.onlineConseListView .operationGuide li,
+.telConseGuideView .operationGuide li { position: relative; margin-bottom: 8px; padding-left: 13px; } 
+.onlineConseListView .operationGuide li::after,
+.telConseGuideView .operationGuide li::after { content: ''; display: block; position: absolute; top: 50%; left: 0; width: 4px; height: 4px; background: var(--text-color-sub); border-radius: 50%; transform: translateY(-50%); } 
+.onlineConseListView .operationGuide li:last-of-type,
+.telConseGuideView .operationGuide li:last-of-type { margin-bottom: 0; } 
+
+/* 대입상담_진로진학센터 telConseGuideView.html */
+.telConseGuideView .callBox { display: flex; align-items: center; gap: 17px; padding: 36px 29px; } 
+.telConseGuideView .callBox span { display: block; width: 72px; height: 72px; background: url(../img/common/main_cs_icon.png) no-repeat center var(--bg-color-ty3); background-size: 36px; border-radius: 26px; } 
+.telConseGuideView .callBox .txtBox p { padding-left: 2px; font-size: 16px; font-weight: 500; } 
+.telConseGuideView .callBox .txtBox strong { font-size: 28px; } 
+.telConseGuideView .linkArea li { margin-bottom: 12px; } 
+.telConseGuideView .linkArea li:last-of-type { margin-bottom: 0; } 
+.telConseGuideView .linkArea .linkItem { display: flex; justify-content: space-between; align-items: center; padding: 20px 12px 20px 73px; border: 1px solid var(--line-color-ty1); border-radius: 8px; font-size: 16px; } 
+.telConseGuideView .linkArea .linkItem._faq { background: url(../img/contents/uve_faq.png) no-repeat left 29px center; background-size: 28px; } 
+.telConseGuideView .linkArea .linkItem._online { background: url(../img/contents/uve_online.png) no-repeat left 29px center; background-size: 28px; } 
+.telConseGuideView .linkArea .linkItem._untact { background: url(../img/contents/uve_untact.png) no-repeat left 29px center; background-size: 28px; } 
+.telConseGuideView .guide.callGuide { padding: 16px 0; justify-content: center; align-items: center; color: #fff; font-size: 14px; } 
+.telConseGuideView .callGuide strong { display: block; margin-right: 24px; padding-left: 36px; background: url(../img/contents/uve_call.png) no-repeat left center; background-size: 28px; font-family: "roboto"; font-size: 24px; font-weight: 500; } 
+.telConseGuideView .guide.callGuide .weekend { margin: 0 24px 0 12px; } 
+.telConseGuideView .callGuide .notice { color: #aefffd; } 
+.telConseGuideView .operationGuide { margin-top: 40px; } 
+.telConseGuideView .operationGuide .notice { margin-top: 8px; color: var(--text-color-sub3); font-size: 14px; } 
+.telConseGuideView .h3 { margin-bottom: 28px; } 
+.telConseGuideView .shortCut { display: flex; flex-wrap: wrap; gap: 20px; } 
+.telConseGuideView .shortCut li { width: calc(20% - 16px); } 
+.telConseGuideView .shortCut .shortCutItem { display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 8px; padding: 32px 0; border: 1px solid var(--line-color-ty1); border-radius: 12px; box-sizing: border-box; } 
+.telConseGuideView .shortCut .shortCutItem:hover { border-color: var(--text-color-title); } 
+.telConseGuideView .shortCut .shortCutItem strong { font-size: 18px; } 
+.telConseGuideView .shortCut .shortCutItem span { display: flex; align-items: center; gap: 4px; color: var(--text-color-sub); font-size: 14px; } 
+
+/* 대입상담_상담일자선택(팝업) choosingDateView.html */
+.choosingDateView dl { margin-bottom: 20px; } 
+.choosingDateView dt { margin-bottom: 4px; color: var(--text-color-title); font-size: 20px; font-weight: 500; } 
+.choosingDateView dd { color: var(--text-color-sub); font-size: 16px; } 
+.choosingDateView .reserve { display: flex; align-items: stretch; padding: 20px 0; border-top: 1px solid var(--line-color-ty3); border-bottom: 1px solid var(--line-color-ty3); } 
+.choosingDateView ._date { width: 177px; border-right: 1px solid var(--line-color-ty3); } 
+.choosingDateView ._time { width: calc(100% - 177px); padding: 0 39px 0 36px; } 
+.choosingDateView .reserveList { height: 300px; overflow-y: auto; box-sizing: border-box; } 
+.choosingDateView .reserveItem { margin-bottom: 20px; } 
+.choosingDateView .reserveItem:last-of-type { margin-bottom: 0; } 
+.choosingDateView .frmRadio input+label { padding-left: 34px; color: var(--text-color-sub); font-size: 16px; }
+.choosingDateView .frmRadio input:disabled+label {color:#ccc;}/*20231208 추가*/
+.choosingDateView .reserveList._time .reserveItem { display: flex; justify-content: space-between; align-items: center; } 
+.choosingDateView .reserveItem .people { color: var(--text-color-sub); font-size: 16px; } 
+
+/* 대입상담_관심전형불러오기(팝업) onlineIntAdmissPopup.html */
+.onlineIntAdmissPopup .frmRadio label { margin: 0 auto; } 
+
+/* 대입정보센터 공통 */
+.uct .filBox { padding-bottom: 20px; } 
+.uct .uctCon { margin-top: 40px; } 
+.uct .expoFil { padding: 13px 20px 20px; border: 1px solid var(--line-color-ty1); border-radius: 8px; } 
+.uct .expoFil dt { margin-bottom: 15px; padding-bottom: 13px; border-bottom: 1px solid var(--line-color-ty3); font-size: 16px; } 
+.uct .expoFil dd strong { font-size: 16px; font-weight: 500; } 
+.uct .expoFil .univType, .expoForm .univType { display: block; width: fit-content; margin-bottom: 10px; padding: 3px 9px; background: var(--prime-color-main); border-radius: 12px; color: #fff; font-size: 12px; } 
+
+/* 대입정보센터_대입박람회/설명회 리스트 admssExpoView.html */
+.admssExpoView .dateArea { display: flex; justify-content: center; align-items: center; } 
+.admssExpoView .dateArea .comSelectTpStk { width: 127px; margin-right: 6px; flex-shrink: 0; } 
+.admssExpoView .dateArea .comSelectTpStk button.selCustBtn { padding: 0 32px 0 16px; } 
+.admssExpoView .dateArea .modTabWrap .tabMenu>li button { padding: 0; width: 55px; } 
+.admssExpoView .dateArea .modTabWrap .tabMenu>li:first-of-type button { width: 69px; } 
+.admssExpoView .topArea { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; } 
+.admssExpoView .topArea .total { font-size: 20px; font-weight: 500; } 
+.admssExpoView .topArea.modTabWrap .tabMenu>li { width: 146px; padding-left: 6px; } 
+.admssExpoView .expoList { width:100%; display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 24px; } 
+.admssExpoView .expoList > li { width: calc(33.33% - 16px); height:315px; } 
+.admssExpoView .expoList a { display:block; width:100%; height:100%; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; position:relative; }
+.admssExpoView .expoList a.on {border:1px solid var(--prime-color-main);}/*2024.01.02 추가*/
+.admssExpoView .expoList a > div { width: 100%; } 
+.admssExpoView .expoList a > div.statusBox { width:100%; background:#f8f8f8; border-radius:12px; padding: 24px 0; text-align:center; margin-top:12px; } 
+.admssExpoView .expoList a > div.statusBox ul { display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; gap:16px; } 
+.admssExpoView .expoList a > div.statusBox ul li { position:relative; } 
+.admssExpoView .expoList a > div.statusBox ul li span:first-of-type { font-size:16px; color:var(--text-color-title); font-weight:500; margin-bottom:4px; display:inline-block; } 
+.admssExpoView .expoList a > div.statusBox ul li span:last-of-type { display:inline-block; height:30px; line-height:28px; padding: 0 12px; text-align:center; font-size:14px; font-weight:400; background:var(--color-white); border-radius:8px; } 
+.admssExpoView .expoList a > div.statusBox ul li span.processing { border:1px solid var(--prime-color-main); color: var(--prime-color-main); } 
+.admssExpoView .expoList a > div.statusBox ul li span.scheduled { border:1px solid var(--prime-color-point); color: var(--prime-color-point); } 
+.admssExpoView .expoList a > div.statusBox ul li span.finished { border:1px solid var(--text-color-sub); color: var(--text-color-sub); } 
+.admssExpoView .expoList a > div.statusBox .noList { padding:17px 0; font-size:16px; color: var(--text-color-sub2); font-weight:400; } 
+.admssExpoView .expoList a > div:last-of-type { position:absolute; width:calc(100% - 48px); bottom:24px; left:50%; transform:translate(-50%,0); } 
+.admssExpoView .expoList .typeArea { display: flex; align-items: center; margin-bottom: 10px; gap:4px;}
+.admssExpoView .expoList .typeArea .recommend {display: block; padding: 3px 9px; background: var(--prime-color-main); border-radius: 12px; color: #fff; font-size: 12px; text-align: center;} 
+.admssExpoView .expoList .typeArea .univType { display: block; padding: 3px 9px; background: #445776; border-radius: 12px; color: #fff; font-size: 12px; text-align: center; } 
+.admssExpoView .expoList .typeArea .univType.coll { background: #eb7300; } 
+.admssExpoView .expoList .typeArea .state { font-size: 13px; } 
+.admssExpoView .expoList .typeArea .state.ongoging { color: var(--prime-color-main); } 
+.admssExpoView .expoList .typeArea .state.plan { color: var(--prime-color-point); } 
+.admssExpoView .expoList .typeArea .state.finish { color: var(--text-color-sub); } 
+.admssExpoView .expoList .tit { font-size: 16px; font-weight: 500; overflow: hidden; white-space: normal; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.admssExpoView .expoList .loca { margin-bottom: 10px; font-size: 16px; } 
+.admssExpoView .expoList .term { color: var(--text-color-sub2); font-size: 14px; } 
+
+/* 대입정보센터_대학박람회/설명회 상세 admssExpoDtlView.html */
+.admssExpoDtlView .ltCont ._strokeGreen { box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15) } 
+.admssExpoDtlView .ltCont .btnCon.addBtn { margin-bottom: 8px; } 
+.admssExpoDtlView .expoCon { position: relative; } 
+.admssExpoDtlView .expoCon .h3, .admssExpoPerAppForm01 .uctCon .h3 { display: flex; align-items: center; margin-bottom: 16px; } 
+.admssExpoDtlView .expoCon .h3 span { display: block; margin-left: 4px; font-size: 14px; font-weight: 500; } 
+.admssExpoDtlView .expoCon .btnArea { display: flex; justify-content: center; align-items: center; gap: 8px; } 
+.admssExpoDtlView .expoCon .btnArea .btnMd { width: 82px; } 
+.admssExpoDtlView .expoCon .accordionCon { display: block; } 
+.admssExpoDtlView .expoCon .univList { border-top: 1px solid var(--text-color-title); border-bottom: 1px solid var(--text-color-title); } 
+.admssExpoDtlView .expoCon .univList table { width: 100%; } 
+.admssExpoDtlView .expoCon .univList td { padding: 17px 20px; border: 1px solid var(--line-color-ty1); font-size: 14px; text-align: center; } 
+.admssExpoDtlView .expoCon .univList tr:first-of-type td { border-top: none; } 
+.admssExpoDtlView .expoCon .univList tr:last-of-type td { border-bottom: none; } 
+.admssExpoDtlView .expoCon .univList td:first-of-type { border-left: none; } 
+.admssExpoDtlView .expoCon .univList td:nth-of-type(5) { border-right: none; } 
+.admssExpoDtlView .btnGroup { display: flex; justify-content: center; } 
+
+/* 대입정보센터_신청서 공통 */
+.expoForm .dateBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; } 
+.expoForm .dateBtn img { transform: rotate(-90deg); } 
+.admssExpoPerAppForm01 ._caution { padding: 32px 36px; } 
+.expoForm .inputArea td { padding: 12px 15px; } 
+.expoForm .inputArea .w109 { width: 109px; } 
+.expoForm .inputArea .w251 { width: 251px; } 
+.expoForm .inputArea .w319 { width: 319px; } 
+.expoForm .inputArea .w339 { width: 339px; } 
+.expoForm .inputArea .w343 { width: 343px; } 
+.expoForm .inputArea .w351 { width: 351px; } 
+.expoForm .inputArea .d-flex.gap32 { gap: 32px; } 
+.expoForm .inputArea .d-flex.gap12 { gap: 12px; } 
+.expoForm .inputArea .mailRow .atSign { display: block; margin: 0 4px; font-size: 16px; } 
+.expoForm .inputArea .hopeRow .frmInput { display: flex; align-items: center; gap: 12px; } 
+.expoForm .inputArea .hopeRow .frmInput label { font-size: 14px; } 
+.expoForm .agreeArea p { margin-bottom: 20px; font-size: 16px; } 
+.expoForm .agreeArea .listTxt .refMark { font-size: 15px; } 
+.expoForm .btnGroup { display: flex; justify-content: center; gap: 12px; } 
+
+/* 대입정보센터_1:1대입상담 신청 admssExpoPerAppForm01.html */
+.expoForm01 .agreeArea .h3 { margin-bottom: 16px; } 
+.expoForm01 .agreeArea .frmCheck { display: inline-block; } 
+.expoForm01 .agreeArea label { font-weight: 500; } 
+
+/* 대입정보센터_1:1대입상담(개인) 접수확인 admssExpoPerAppForm02.html */
+.expoForm02 .h4 { margin-bottom: 12px; } 
+.expoForm02 .inputArea td>p { padding: 10px 0; } 
+.expoForm02 .inputArea .univType,
+.expoForm04 .univType { display: inline-block; margin: 0 8px 0 0; } 
+.expoForm02 .frmInput.tableInput input { width: 100%; } 
+
+/* 대입상담_1:1대입상담(개인) 상세/수정 admssExpoPerAppForm03.html */
+.expoForm03 .userInfo { position: relative; margin-top: 90px; } 
+.expoForm03 .userInfo td>p { display: block; padding: 12px 0; } 
+.expoForm03 .userInfo .printBtn { position: absolute; top: -50px; right: 0; width: 108px; } 
+.expoForm03 .btnGroup { display: flex; justify-content: space-between; } 
+.expoForm03 .d-flex { display: flex; gap: 12px; } 
+
+/* 대입정보센터_1:1대입상담(개인) 접수증 admssExpoPerAppForm04.html */
+.expoForm04 .h4 { margin-bottom: 28px; } 
+.expoForm04 td { padding: 24px 15px; } 
+
+/* 대입정보센터_고교단체관람 신청 admssExpoGroupAppForm01.html */
+.admssExpoGroupAppForm01 .inputArea { margin-top: 72px; } 
+
+/* 마이페이지 리스트 상단 부분 공통 */
+.mpg .listArea .topArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; } 
+.mpg .listArea .topArea .total { font-size: 20px; font-weight: 500; } 
+.mpg .listArea .topArea .optionArea { display: flex; align-items: center; gap: 13px; } 
+.mpg .listArea .topArea .orderBtn { display: block; width: 24px; height: 24px; background: url(../img/common/ico_setting.png) no-repeat center; background-size: cover; } 
+
+/* 마이페이지 관심대학/전형/진로 공통 myInterestView01, myInterestView02, myInterestView04 */
+.myInterest .listArea .topArea .btnSmall.ty03 { width: 105px; } 
+.myInterest .ucpTable th .univName { display:block; text-align:center; } 
+.myInterest .noData, .scoreAnlsHistForm .noData, .receptionHist .noData { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 64px 0; border-top: 2px solid var(--text-color-body); border-bottom: 1px solid var(--text-color-body); font-size: 16px; text-align: center; } 
+.myInterest .noData .notice, .scoreAnlsHistForm .noData .notice, .receptionHist .noData .notice { margin: 12px 0; color: var(--text-color-sub); } 
+.myInterest .noData .desc, .scoreAnlsHistForm .noData .desc { margin-bottom: 24px; color: var(--text-color-title); } 
+.myInterest .noData .btnCTA.miniCTA, .scoreAnlsHistForm .noData .btnCTA.miniCTA { width: 150px; } 
+.myInterest .className, .myInterest .relatedJob, .scoreAnlsHistForm .listItem .admss { display: flex; flex-direction: column; padding-left: 20px; color: var(--prime-color-main) !important; text-align: left; } 
+.myInterest .className .major::after { content: '>'; } 
+.myInterest .className .depth2::before,
+.myInterest .relatedJob .depth1::before,
+.myInterest .relatedJob .depth2::before,
+.scoreAnlsHistForm .listItem .admss .depth1::before,
+.scoreAnlsHistForm .listItem .admss .depth2::before { content: '>'; } 
+/* 마이페이지_관심대학/전형/진로 순서편집 팝업 myInterestView03, myInterestView06, myInterestView08 */
+.myOrderEdit .univList { height: 428px; padding-right: 6px; overflow-y: auto; } 
+.myOrderEdit .univList li { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-top: 1px solid var(--line-color-ty3); color: var(--text-color-title); font-size: 16px; cursor: pointer; } 
+.myOrderEdit .univList li:last-of-type { border-bottom: 1px solid var(--line-color-ty3); } 
+.myOrderEdit .univList li:hover { background: #fde0db; } 
+.myOrderEdit .univList li.mouseDown { background: var(--line-color-ty1); } 
+.myOrderEdit .univList .orderEditBtn { display: block; width: 24px; height: 24px; background: url(../img/common/ico_ham.png) no-repeat center; background-size: cover; text-indent: -9999px; overflow: hidden; } 
+.myOrderEdit .className { margin-top: 3px; padding: 0; } 
+/* 마이페이지_관심진로 myInterestView07 */
+.myInterestView07 .noData .notice { margin-bottom: 24px; } 
+.myInterestView07 .job,
+.myInterestView07 .relatedJob { padding-left: 15px; text-align: left; } 
+.myInterestView07 .job { display: block; } 
+
+/* 마이페이지_어디가알림 alarmSettingView.html */
+.alarmSettingView .alarmList { display: flex; flex-wrap: wrap; align-items: stretch; gap: 20px; } 
+.alarmSettingView .alarmList li { width: calc(50% - 10px); height: 219px; } 
+.alarmSettingView .alarmItem { display: block; height: 100%; border: 1px solid var(--line-color-ty2); border-radius: 12px; overflow: hidden; } 
+.alarmSettingView .alarmItem .typeArea { display: flex; justify-content: space-between; align-items: center; padding: 17px 24px; background: #f9f9f9; border-bottom: 1px solid var(--line-color-ty2); } 
+.alarmSettingView .alarmItem .typeArea .type { display: flex; justify-content: center; align-items: center; height: 30px; padding: 0 12px; border: 1px solid var(--text-color-sub2); border-radius: 8px; font-size: 14px; } 
+.alarmSettingView .alarmItem .typeArea .method { color: var(--text-color-title); font-size: 16px; font-weight: 500; } 
+.alarmSettingView .alarmItem .contArea { display: flex; flex-direction: column; justify-content: space-between; height: calc(100% - 64px); padding: 20px 24px 17px 24px; box-sizing: border-box; } 
+.alarmSettingView .alarmItem .contArea .cont { margin-bottom: 20px; font-size: 16px; overflow: hidden; white-space: normal; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; word-break: break-all; } 
+.alarmSettingView .alarmItem .contArea .new { display: inline-block; width: 20px; height: 20px; background: url(../img/contents/uve_new.png) no-repeat center; background-size: cover; border-radius: 50%; text-indent: -9999px; overflow: hidden; transform: translateY(3px); } 
+.alarmSettingView .alarmItem .contArea .dateArea { display: flex; justify-content: space-between; color: var(--text-color-sub); font-size: 15px; } 
+.alarmSettingView .noData, .scheduleMngeView .noData { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 64px 0; border: 1px solid var(--line-color-ty3); border-radius: 12px; } 
+.alarmSettingView .noData .notice,
+.scheduleMngeView .noData .notice { margin-top: 12px; color: var(--text-color-sub); font-size: 16px; } 
+
+/* 마이페이지_어디가 알림 설정 alarmSettingDtlView.html */
+/* 토글 */
+.cptToggle { position: relative; width: 40px; height: 24px; } 
+.cptToggle input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; } 
+.cptToggle input+label { display: block; position: relative; width: 100%; height: 100%; background: #fff; border: 1px solid var(--text-color-sub); border-radius: 12px; text-indent: -9999px; overflow: hidden; box-sizing: border-box; } 
+.cptToggle input+label::after { content: ''; display: block; position: absolute; top: 50%; left: 4px; width: 16px; height: 16px; background: var(--text-color-sub); border-radius: 50%; transform: translateY(-50%); } 
+.cptToggle input:checked+label { border-color: var(--prime-color-main); } 
+.cptToggle input:checked+label::after { background: var(--prime-color-main); transform: translate(100%, -50%); } 
+.cptToggle input:disabled+label { border-color: var(--line-color-ty1); background: #f8f8f8; } 
+.cptToggle input:disabled+label::after { background: var(--line-color-ty1); } 
+.alarmSettingDtlView .modDivision { padding-right: 12px; } 
+.alarmSettingDtlView .contArea { margin-bottom: 20px; border: 1px solid var(--line-color-ty1); border-radius: 12px; overflow: hidden; } 
+.alarmSettingDtlView .contArea:last-of-type { margin-bottom: 0; } 
+.alarmSettingDtlView .contArea .titArea { display: flex; align-items: center; padding: 22px 20px; background: #f2f2f2; border-bottom: 1px solid var(--line-color-ty1); } 
+.alarmSettingDtlView .contArea .titArea h2 { margin-right: 10px; font-size: 16px; font-weight: 500; } 
+.alarmSettingDtlView .contArea .titArea span { color: var(--text-color-sub); font-size: 14px; } 
+.alarmSettingDtlView .contArea .alarmList li { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--line-color-ty1); } 
+.alarmSettingDtlView .contArea .alarmList li:last-of-type { border: none; } 
+.alarmSettingDtlView .contArea .alarmList dd { margin-top: 4px; color: var(--text-color-sub); font-size: 16px; } 
+
+/* 마이페이지_일정리스트 scheduleMngeView.html */
+.scheduleMngeView .myScheduleAppBtn { margin-top: 20px; } 
+.scheduleMngeView .scheduleTopArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; } 
+.scheduleMngeView .scheduleTopArea .todayBtn { width: 59px; height: 44px; background: #f3fafa; border: 1px solid var(--prime-color-main); border-radius: 8px; color: var(--prime-color-main); font-size: 14px; text-align: center; } 
+.scheduleMngeView .scheduleTopArea .date { display: flex; align-items: center; gap: 40px; } 
+.scheduleMngeView .scheduleTopArea .date strong { font-size: 24px; } 
+.scheduleMngeView .scheduleTopArea .date .calBtn { width: 28px; height: 28px; text-indent: -9999px; overflow: hidden; } 
+.scheduleMngeView .scheduleTopArea .date .calBtn._prev { background: url(../img/common/ico_pg_next.png) no-repeat center; background-size: cover; transform: rotate(180deg); } 
+.scheduleMngeView .scheduleTopArea .date .calBtn._next { background: url(../img/common/ico_pg_next.png) no-repeat center; background-size: cover; } 
+.scheduleMngeView .scheduleTopArea .d-flex { display: flex; gap: 16px; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab { display: flex; width: 100px; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab li { width: 50%; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab { display: block; width: 100%; height: 44px; border: 1px solid var(--line-color-ty1); background-size: 24px 24px; text-indent: -9999px; overflow: hidden; box-sizing: border-box; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab.on { border-color: var(--prime-color-main); } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab._calendar { background: url(../img/common/ico_calendar.png) no-repeat center; border-right: 1px solid var(--prime-color-main); border-top-left-radius: 8px; border-bottom-left-radius: 8px; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab._calendar.on { background: url(../img/common/ico_calendar_on.png) no-repeat center; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab._list { background: url(../img/common/ico_list.png) no-repeat center; border-left: none; border-top-right-radius: 8px; border-bottom-right-radius: 8px; } 
+.scheduleMngeView .scheduleTopArea .myScheduleTab .btnTab._list.on { background: url(../img/common/ico_list_on.png) no-repeat center; } 
+.scheduleMngeView .myScheduleCon { display: none; position: relative; } 
+.scheduleMngeView .myScheduleCon.on { display: block; } 
+.scheduleMngeView .myScheduleCon .cptTbBsc { border-bottom-color: var(--line-color-ty3); } 
+.scheduleMngeView .myScheduleCon .calendar { width: 100%; } 
+.scheduleMngeView .myScheduleCon .calendar th { width: 14.28%; } 
+.scheduleMngeView .myScheduleCon .calendar td { padding: 0; text-align: left; } 
+.scheduleMngeView .myScheduleCon .calendar td:first-of-type a { color: #e52800; } 
+.scheduleMngeView .myScheduleCon .calendar a { display: block; position: relative; height: 150px; padding: 14px 24px; font-size: 16px; font-weight: 500; box-sizing: border-box; } 
+.scheduleMngeView .myScheduleCon .calendar .today a::after { content: ''; display: block; position: absolute; top: -1px; left: -1px; width: calc(100% + 2px); height: calc(100% + 2px); border: 1px solid var(--prime-color-main); } 
+.scheduleMngeView .myScheduleCon .calendar .scheduleDot { display: block; width: 12px; height: 12px; position: absolute; top: 53px; left: 24px; background: #6854ff; border-radius: 50%; } 
+.scheduleMngeView .sortSelect { width: 127px; position: absolute; top: -76px; right: 116px; } 
+.scheduleMngeView .scheduleListItem { display: flex; align-items: center; margin-bottom: 12px; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.scheduleMngeView .scheduleListItem:last-of-type { margin-bottom: 0; } 
+.scheduleMngeView .scheduleListItem .date,
+.scheduleMngeView .scheduleListItem .period { display: block; width: 90px; margin-right: 20px; color: var(--text-color-sub3); font-size: 16px; } 
+.scheduleMngeView .scheduleListItem .date .sun { color: #e52800; } 
+.scheduleMngeView .scheduleListItem ul { width: calc(100% - 110px); } 
+.scheduleMngeView .scheduleListItem li { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; } 
+.scheduleMngeView .scheduleListItem li:last-of-type { margin-bottom: 0; } 
+.scheduleMngeView .scheduleListItem .tit { font-size: 18px; font-weight: 500; } 
+.scheduleMngeView .scheduleListItem .tit:hover { color: var(--prime-color-main); text-decoration: underline; } 
+.scheduleMngeView .scheduleListItem .period { width: auto; margin: 0; } 
+.scheduleMngeView .scheduleListItem._event { padding-left: 44px; } 
+.scheduleMngeView .scheduleListItem._event ul { width: 100%; } 
+.scheduleMngeView .noData .notice { margin: 12px 024px; } 
+.scheduleMngeView .noData .btnCTA { width: 124px; } 
+
+/* 마이페이지_일정등록 scheduleMngeForm.html */
+.scheduleMngeForm .frmInput.tableInput input { width: 100%; } 
+.scheduleMngeForm td { padding: 12px 16px; } 
+.scheduleMngeForm .essential { position: relative; } 
+/* .scheduleMngeForm .essential::after { content: ''; display: block; position: absolute; top: 0; right: -6px; width: 5px; height: 5px; background: var(--prime-color-point); border-radius: 50%; }  20231123 사용안함*/
+.scheduleMngeForm .cptTextArea { padding: 0; height: 207px; overflow: hidden; } 
+.scheduleMngeForm .cptTextArea textarea { height: 100%; padding: 12px 16px; overflow-y: auto; } 
+.scheduleMngeForm .cptTextArea textarea:read-only { background: #f8f8f8; } 
+
+/* 마이페이지_일정상세 scheduleMngeDtlView.html */
+.scheduleMngeDtlView td { padding: 17px 16px; } 
+.scheduleMngeDtlView td p { overflow: hidden; white-space: normal; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.scheduleMngeDtlView._ty02 .popBtm { gap: 0; } 
+.scheduleMngeDtlView._ty02 .popBtm .btnCTA { width: 100%; } 
+
+/* 마이페이지_분석내역 scoreAnlsHistForm.html */
+.scoreAnlsHistForm .listArea .comSelectTpStk { width: 119px; } 
+.scoreAnlsHistForm .listItem { display: flex; align-items: center; margin-bottom: 12px; border: 1px solid var(--line-color-ty1); border-radius: 12px; font-size: 16px; } 
+.scoreAnlsHistForm .listItem:last-of-type { margin-bottom: 0; } 
+.scoreAnlsHistForm .listItem .num,
+.scoreAnlsHistForm .listItem .loca,
+.scoreAnlsHistForm .listItem .recruit { width: 8%; text-align: center; } 
+.scoreAnlsHistForm .listItem .btnArea { width: 12%; text-align: center; } 
+.scoreAnlsHistForm .listItem .univ { width: 20%; } 
+.scoreAnlsHistForm .listItem .univName { display: flex; align-items: center; } 
+.scoreAnlsHistForm .listItem .univName img { width: 30px; height: 30px; margin-right: 7px; } 
+.scoreAnlsHistForm .listItem .admss { width: 32%; padding: 20px 0; }
+.scoreAnlsHistForm .listItem .admss a {cursor:pointer;}
+.scoreAnlsHistForm .listItem .admss a:hover {color:var(--prime-color-main);}
+.scoreAnlsHistForm .listItem .date { width: 12%; text-align: center; } 
+.scoreAnlsHistForm .noData, .receptionHist .noData { border: 1px solid var(--line-color-ty3); border-radius: 12px; } 
+
+/* 마이페이지_신청접수 공통 */ 
+.receptionHist .listArea .btnSmall { width: auto; padding: 0 15px 0 20px; } 
+.receptionHist .noData .notice { margin-bottom: 24px; } 
+.receptionHist .noData .btnCTA.miniCTA { width: auto; padding: 0 22px; border-radius: 8px; } 
+.receptionHist .list { display: flex; flex-wrap: wrap; gap: 24px; } 
+.receptionHist .listItem { width: calc(50% - 12px); } 
+.receptionHist .listItem a { display: flex; justify-content: space-between; align-items: flex-start; flex-direction: column; gap: 28px; height: 100%; padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.receptionHist .listItem a>div { width: 100%; } 
+.receptionHist .listItem .typeArea { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; } 
+.receptionHist .listItem .type { display: block; padding: 0 9px; border: 1px solid var(--line-color-ty1); border-radius: 12px; font-size: 12px; line-height:22px; height:24px; } /*상하내부여백(패딩) 빼고 높이 및 행간 추가*/
+.receptionHist .listItem .state { display: block; padding: 0 9px; background: #eee; border: 1px solid #c9c9c9; border-radius: 12px; color: var(--text-color-sub); font-size: 12px; line-height:22px; height:24px; } /*상하내부여백(패딩) 빼고 높이 및 행간 추가*/
+.receptionHist .listItem .state._ongoing { background: #f2f8ff; border-color: #8ec3fd; color: #3b97fb; } 
+.receptionHist .listItem .tit { color: var(--text-color-title); font-size: 16px; font-weight: 500; display: -webkit-box; overflow: hidden; white-space: normal; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.receptionHist .listItem .date, .receptionHist .listItem .time { display: flex; gap: 6px; color: var(--text-color-sub); font-size: 14px; } 
+/*20231101 추가*/
+.receptionHist .listItem .bottomInfo { display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between; } 
+.receptionHist .listItem .bottomInfo .memStat span { font-size:14px; color: var(--text-color-sub3); font-weight:500; } 
+/* 마이페이지_대학별행사신청내역 receptionHistView01.html */
+.receptionHistView01 .listItem { width: calc(33.33% - 16px); } 
+.receptionHistView01 .typeArea .d-flex { display: flex; align-items: center; } /*상하 중앙 정렬 추가*/
+.receptionHistView01 .typeArea .univ { display: block; color: var(--text-color-sub); font-size: 13px; } 
+.receptionHistView01 .typeArea .univ::after { content: ''; display: inline-block; width: 1px; height: 12px; margin: 0 8px; background: var(--line-color-ty1); } 
+.receptionHistView01 .locaArea { display: flex; justify-content: space-between; flex-direction: column; gap: 4px; height: 102px; } 
+.receptionHistView01 .loca strong { font-size: 14px; } 
+.receptionHistView01 .loca p { font-size: 16px; font-weight: 500; display: -webkit-box; overflow: hidden; white-space: normal; text-overflow: ellipsis; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+/* 마이페이지_Q&A신청내역,제안및건의 receptionHistView02.html, receptionHistView03.html */
+.receptionHistView02 .listItem .d-flex, 
+.receptionHistView03 .listItem .d-flex,
+.receptionHistView04 .listItem .d-flex { display: flex; justify-content: space-between; width: 100%; } 
+.receptionHistView02 .listItem .write,
+.receptionHistView03 .listItem .write,
+.receptionHistView04 .listItem .write { display: flex; gap: 12px; color: var(--text-color-sub); font-size: 14px; } 
+/* 마이페이지_화상삼담신청내역 receptionHistView04.html */
+.receptionHistView04 .listItem a { gap: 19px; } 
+.receptionHistView04 .listItem .tit { -webkit-line-clamp: 1; } 
+.receptionHistView04 .listItem .time { margin-bottom: 6px; } 
+.receptionHistView04 .listItem .loca { color: var(--text-color-sub); font-size: 14px; } 
+
+/* 마이페이지_대입원서지원정보 applyHistView.html */
+.applyHistView .contTitleBox { margin-bottom: 30px; } 
+.applyHistView .method { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line-color-ty3); } 
+.applyHistView .infoArea { padding: 24px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.applyHistView .accordionBtn { display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 20px; font-weight: 500; } 
+.applyHistView .accordionBtn .ico._down { display: block; width: 20px; height: 20px; background: url("../img/common/btn_arrow_down.png") no-repeat center; background-size: cover; transition: all 0.2s; } 
+.applyHistView .accordionItem.on .accordionBtn .ico { transform: rotate(180deg); } 
+.applyHistView .accordionCon { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line-color-ty3); } 
+.applyHistView .accordionCon .listTxt { padding: 20px; background: var(--bg-color-ty2); border-radius: 8px; } 
+.applyHistView .btnGroup { display: flex; justify-content: center; } 
+/* 마이페이지_대입원서지원정보상세 applyHistDtlView.html */
+.applyHistDtlView .summaryArea { padding: 20px 24px 32px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.applyHistDtlView .summaryArea .result { display: flex; align-items: center; gap: 30px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--line-color-ty3); } 
+.applyHistDtlView .state { display: inline-block; width:max-content; padding: 8px 16px; border-radius: 6px; color: #fff; font-size: 14px; } 
+.applyHistDtlView .state._right { background: var(--prime-color-main); } 
+.applyHistDtlView .state._break { background: var(--prime-color-point); } 
+.applyHistDtlView .summaryArea .date { display: flex; align-items: center; gap: 30px; font-size: 16px; } 
+.applyHistDtlView .summaryArea .date dt { color: var(--text-color-title); } 
+.applyHistDtlView .summaryArea .date dd { color: var(--text-color-sub); } 
+.applyHistDtlView .applyCon .h3 { margin-bottom: 28px; } 
+.applyHistDtlView .applyCon .noData { color: var(--text-color-sub2); } 
+.applyHistDtlView .applyCon .titArea { display: flex; align-items: center; gap: 20px; margin-bottom: 28px; } 
+.applyHistDtlView .applyCon .titArea .h3 { margin-bottom: 0; } 
+.applyHistDtlView .applyCon .titArea span { color: var(--text-color-sub); font-size: 16px; } 
+.applyHistDtlView .applyCon .titArea span.state { position:absolute; top:-1px; right:0; color:#fff; } 
+
+/* 마이페이지_서브메인 lnb mypageMainView */
+.mypageMainView .myLNB { padding: 28px 20px 20px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.mypageMainView .myLNB .flag { display: block; padding: 7px 12px; border-radius: 17px; font-size: 14px; } 
+.mypageMainView .myLNB .alarmArea { display: flex; justify-content: flex-end; gap: 22px; margin-bottom: 12px; } 
+.mypageMainView .myLNB .alarmArea .alarm { display: block; position: relative; width: 26px; height: 26px; } 
+.mypageMainView .myLNB .alarmArea .alarm._myalarm { background: url(../img/common/head_alm_icon.png) no-repeat center; background-size: cover; } 
+.mypageMainView .myLNB .alarmArea .alarm._mySchedule { background: url(../img/common/ico_my_schedule.png) no-repeat center; background-size: cover; } 
+.mypageMainView .myLNB .alarmArea .alarm .count { display: block; position: absolute; top: -8px; right: -11px; height: 20px; padding: 0 6px; background: var(--prime-color-point); border-radius: 10px; color: #fff; font-size: 13px; font-weight: 500; word-break: normal; } 
+.mypageMainView .myLNB .infoArea { margin-bottom: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--line-color-ty2); color: var(--text-color-sub); font-size: 24px; } 
+.mypageMainView .myLNB .infoArea strong { color: var(--text-color-title); font-size: 28px; font-weight: 700; } 
+.mypageMainView .myLNB .day { margin-bottom: 20px; font-size: 26px; font-weight: 500; } 
+.mypageMainView .myLNB .editBtn { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 14px 16px 14px 20px; background: var(--prime-color-main); border-radius: 12px; } 
+.mypageMainView .myLNB .editBtn .d-flex { display: flex; align-items: center; gap: 12px; color: #fff; font-size: 18px; font-weight: 500; } 
+.mypageMainView .myLNB .editBtn .flag { border: 1px solid #fff; } 
+.mypageMainView .myLNB .editBtn .ico { display: block; width: 28px; height: 28px; background: url(../img/common/ico_arrow_right_w.png) no-repeat center; background-size: cover; } 
+.mypageMainView .myLNB .helpArea dt { margin-bottom: 16px; font-size: 16px; font-weight: 500; } 
+.mypageMainView .myLNB .helpArea .helpItem { display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 12px; color: var(--text-color-title); font-size: 18px; } 
+.mypageMainView .myLNB .helpArea .helpItem .flag { border: 1px solid var(--text-color-sub); color: var(--text-color-sub); font-size: 14px; font-weight: 500; } 
+.mypageMainView .myLNB .helpArea .helpItem._link { background: url(../img/common/ico_arrow_right_blue.png) no-repeat right 16px center; border: 1px solid var(--prime-color-main); } 
+.mypageMainView .myLNB .helpArea .helpItem._link .flag { background: var(--prime-color-main); border-color: var(--prime-color-main); color: #fff; }
+.mypageMainView .myLNB .helpArea dd.helpItem { margin-top: 16px; background: #f0f0f0; color: var(--text-color-sub); } 
+.mypageMainView .myLNB .helpArea dd {margin-bottom:8px;}
+.mypageMainView .myLNB .helpArea dd:last-of-type {margin-bottom:0;} 
+/* 마이페이지_서브메인 */
+.mpgmainPrintBtn{ position:absolute; top:4px; right:5px; display: block; width: 26px; height: 26px; background: url(../img/common/ico_print.png) no-repeat center; background-size: cover; } 
+.mypageMainView .myCon { margin-top: 40px; } 
+.mypageMainView .titArea { margin-bottom: 20px; } 
+.mypageMainView .titArea hgroup { display: flex; justify-content: space-between; align-items: center; } 
+.mypageMainView .titArea .desc { margin-top: 8px; color: var(--text-color-sub); font-size: 16px; } 
+.mypageMainView .careArea .list { display: flex; position: relative; border: 1px solid var(--line-color-ty2); border-radius: 16px; } 
+.mypageMainView .careArea .studentList { width: calc(100% - 180px); padding: 24px 28px 24px 34px; overflow: hidden; box-sizing: border-box; } 
+.mypageMainView .careArea .studentItem input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; appearance: none; -moz-appearance: none; -webkit-appearance: none; cursor: pointer; } 
+.mypageMainView .careArea .studentItem input+label { display: flex; flex-direction: column; padding: 24px 24px 24px 20px; border: 1px solid #aaa; border-radius: 12px; font-size: 16px; } 
+.mypageMainView .careArea .studentItem input:checked+label { border-width: 2px; border-color: var(--prime-color-main); background: #e8f5f6; } 
+.mypageMainView .careArea .studentItem .school { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 16px; border-bottom: 1px dashed var(--line-color-ty2); color: var(--text-color-title); font-weight: 500; } 
+.mypageMainView .careArea .studentItem .school .grade { display: block; padding: 7px 12px; background: var(--prime-color-main); border-radius: 17px; color: #fff; font-size: 14px; font-weight: 500; flex-shrink: 0; } 
+.mypageMainView .careArea .studentItem .school strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } 
+.mypageMainView .careArea .studentItem .name { color: var(--text-color-title); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } 
+.mypageMainView .careArea .studentItem .studentId { color: var(--text-color-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } 
+.mypageMainView .careArea .studentItem .studentIdBox { display: flex; justify-content: space-between; gap: 12px; } 
+.mypageMainView .careArea .studentItem .studentflag { padding: 3px 9px; border-radius: 12px; font-size: 12px; flex-shrink: 0; } 
+.mypageMainView .careArea .studentItem .studentflag._ing { color: #3b97fb; border: solid 1px #8ec3fd; background-color: #f2f8ff; } 
+.mypageMainView .careArea .studentItem .studentflag._refuse { background-color: var(--line-color-ty3); color: #888; } 
+.mypageMainView .careArea .studentItem .studentflag._connecting { background-color: #f4faf6; border:1px solid #94d4a6; color: #3cb85f; } 
+.mypageMainView .careArea .studentItem.noData { display: flex; justify-content: center; align-items: center; border: 1px dashed var(--line-color-ty1); border-radius: 12px; color: var(--text-color-sub2); font-size: 16px; text-align: center; min-height:165px; /*20231101 추가*/}
+.mypageMainView .careArea .swiperBtnWrap { display: flex; position: absolute; top: -40px; right: 0; width: 48px; border: 1px solid var(--line-color-ty3); border-radius: 4px; overflow: hidden; } 
+.mypageMainView .careArea .swiperBtn { display: block; width: 50%; height: 24px; text-indent: -9999px; overflow: hidden; box-sizing: border-box; } 
+.mypageMainView .careArea .swiperBtn._prev { background: url(../img/common/ico_pg_next.png) no-repeat center; background-size: cover; transform: rotate(180deg); } 
+.mypageMainView .careArea .swiperBtn._next { background: url(../img/common/ico_pg_next.png) no-repeat center; background-size: cover; border-left: 1px solid var(--line-color-ty3); } 
+.mypageMainView .careArea .btnArea { position: relative; z-index: 2; width: 180px; border-left: 1px solid var(--line-color-ty2); } 
+.mypageMainView .careArea .btnArea .addBtn { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 23px; width: 100%; height: 100%; background: #f9f9f9; border-top-right-radius: 16px; border-bottom-right-radius: 16px; color: var(--text-color-sub2); font-size: 16px; } 
+.mypageMainView .summaryArea .titArea { font-size: 20px; font-weight: 500; }  
+.mypageMainView .summaryArea .listWrap { border-radius: 12px; overflow: hidden; } 
+.mypageMainView .summaryArea .titArea { display: flex; align-items: flex-end; gap: 17px; } 
+.mypageMainView .summaryArea .titArea .tip { position: relative; padding: 15px 20px; background: var(--text-color-body); border-radius: 8px; color: #fff; font-size: 14px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); } 
+.mypageMainView .summaryArea .titArea .tip::before { content: ""; position: absolute; bottom: 13px; left: -10px; border-right: 10px solid var(--text-color-body); border-top: 5px solid transparent; border-bottom: 5px solid transparent; } 
+.mypageMainView .summaryArea .titArea .tip strong { color: #34c8cf; font-weight: 500; } 
+.mypageMainView .summaryArea .list { display: flex; } 
+.mypageMainView .summaryArea .list li { position: relative; width: 25%; } 
+.mypageMainView .summaryArea .list li::after { content: ''; display: block; position: absolute; top: 50%; right: 0; width: 1px; height: 46px; background: var(--line-color-ty3); transform: translateY(-50%); } 
+.mypageMainView .summaryArea .list li:last-of-type::after { display: none; } 
+.mypageMainView .summaryArea .list a { display: flex; justify-content: center; align-items: center; gap: 20px; height: 100%; padding: 38px 0 32px; background: var(--bg-color-ty3); } 
+.mypageMainView .summaryArea .list dt { color: var(--text-color-title); font-size: 15px; } 
+.mypageMainView .summaryArea .list dd { font-size: 24px; } 
+.mypageMainView .summaryArea .banner { display: flex; align-items: stretch; background: var(--prime-color-main); border-bottom-right-radius: 12px; border-bottom-left-radius: 12px; overflow: hidden; } 
+.mypageMainView .summaryArea .banner p { width: 75%; padding: 17px 0 17px 73px; color: #fff; font-size: 18px; font-weight: 500; box-sizing: border-box; } 
+.mypageMainView .summaryArea .banner a { display: flex; justify-content: center; align-items: center; gap: 6px; width: 25%; background: rgba(0, 0, 0, 0.2); color: #fff; font-size: 16px; } 
+.mypageMainView .myData .list { display: flex; gap: 15px; } 
+.mypageMainView .myData .list .listItem { display: flex; align-items: stretch; width: calc(20% - 12px); height: 234px; border: 1px solid var(--line-color-ty1); border-radius: 12px; } 
+.mypageMainView .myData .list .listItem:hover { border-color: var(--text-color-body); } 
+.mypageMainView .myData .list .summary { display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 100%; padding: 20px 0 32px 22px; } 
+.mypageMainView .myData .list .summary .total { color: var(--text-color-title); } 
+.mypageMainView .myData .list .d-flex { display: flex; justify-content: space-between; align-items: center; padding-right: 12px; } 
+.mypageMainView .myData .list .openBtn { display: block; width: 28px; height: 28px; background: url(../img/common/ico_pg_next.png) no-repeat center; background-size: cover; text-indent: -9999px; overflow: hidden; } 
+.mypageMainView .myData .list .con { padding-right: 22px; } 
+.mypageMainView .myData .list .total { margin-bottom: 6px; font-size: 28px; } 
+.mypageMainView .myData .list .average { margin-bottom: 16px; color: var(--text-color-sub); font-size: 14px; } 
+.mypageMainView .myData .list progress { width: 100%; height: 8px; appearance: none; -moz-appearance: none; -webkit-appearance: none; } 
+.mypageMainView .myData .list progress::-webkit-progress-bar { background: var(--line-color-ty3); border-radius: 4px; } 
+.mypageMainView .myData .list progress::-webkit-progress-value { background: var(--prime-color-main); border-radius: 4px; } 
+.mypageMainView .myApp { display: flex; justify-content: space-between; align-items: flex-end; padding: 40px; border: 1px solid var(--line-color-ty2); border-radius: 12px; } 
+.mypageMainView .myApp .titArea { margin-bottom: 0; } 
+.mypageMainView .myApp .titArea .desc { font-size: 14px; } 
+.mypageMainView .myApp .list { display: flex; gap: 16px; } 
+.mypageMainView .myApp .appLink { display: block; padding: 12px 22px; background: var(--prime-color-main); border-radius: 8px; color: #fff; font-size: 14px; } 
+/* 마이페이지_레이어 */
+.mypageMainView .myData .listItem .layerArea { display: none; } 
+.mypageMainView .myData .listItem .layerArea .noData { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; height: calc(100% - 38px); color: var(--text-color-sub2); font-size: 14px; } 
+.mypageMainView .myData .listItem.on { position: absolute; width: 60%; background: #fff; border-width: 2px; border-color: var(--prime-color-main); } 
+.mypageMainView .myData .listItem.on:hover { border-color: var(--prime-color-main); } 
+.mypageMainView .myData .listItem:first-of-type.on+.listItem { margin-left: 20%; } 
+.mypageMainView .myData .listItem:nth-of-type(2).on { left: 20%; } 
+.mypageMainView .myData .listItem:nth-of-type(2).on+.listItem { margin-left: 20%; } 
+.mypageMainView .myData .listItem:nth-of-type(3).on,
+.mypageMainView .myData .listItem:nth-of-type(5).on { left: calc(40% + 6px); } 
+.mypageMainView .myData .listItem:nth-of-type(4).on { left: 20%; } 
+.mypageMainView .myData .listItem:nth-of-type(4).on,.mypageMainView .myData .listItem:nth-of-type(5).on { flex-direction: row-reverse; } 
+.mypageMainView .myData .listItem:nth-of-type(4).on+.listItem { margin-left: 20%; } 
+.mypageMainView .myData .listItem.on .summary { width: calc(33.33% - 12px); } 
+.mypageMainView .myData .listItem.on .openBtn { transform: rotate(180deg); } 
+.mypageMainView .myData .listItem.on .layerArea { display: block; } 
+.mypageMainView .myData .layerArea { position: relative; width: calc(66.66% + 12px); padding: 20px 25px 25px 24px; } 
+.mypageMainView .myData .layerArea::after { content: ''; display: block; position: absolute; top: 24px; left: 0; width: 1px; height: 184px; background: var(--line-color-ty2); } 
+.mypageMainView .myData .listItem:nth-of-type(4) .layerArea::after,
+.mypageMainView .myData .listItem:nth-of-type(5) .layerArea::after { left: 100%; } 
+.mypageMainView .myData .layerArea .tit { margin-bottom: 14px; color: var(--text-color-title); font-size: 16px; font-weight: 500; } 
+.mypageMainView .myData .layerArea .btnArea { display: flex; gap: 14px; position: absolute; top: 20px; right: 25px; } 
+.mypageMainView .myData .layerArea .btnArea .btnItem { display: block; width: 16px; height: 17px; text-indent: -9999px; overflow: hidden; } 
+.mypageMainView .myData .layerArea .btnArea .link { background: url(../img/common/ico_setting.png) no-repeat center; background-size: cover; } 
+.mypageMainView .myData .layerArea .btnArea .link.text { display: block; width: auto; height: auto; margin-right: 8px; background: none; color: var(--text-color-sub); font-size: 15px; text-indent: 0; } 
+.mypageMainView .myData .layerArea .btnArea .closeBtn { background: url(../img/common/ico_close_popup.png) no-repeat center; background-size: cover; } 
+
+/* 마이페이지_관심진로 레이어 */
+.mypageMainView .myData .favJob { display: flex; gap: 18px; } 
+.mypageMainView .myData .favJob li { width: calc(50% - 9px); } 
+.mypageMainView .myData .favJob li.noList { width: 100%; } 
+.mypageMainView .myData .favJob li.noList .commNoData { margin-top:25px; } 
+.mypageMainView .myData .favJob a { display: flex; flex-direction: column; justify-content: space-between; height: 148px; padding: 20px 10px 27px 20px; border: 1px solid #b0e0e2; border-radius: 12px; } 
+.mypageMainView .myData .favJob .job { font-size: 16px; font-weight: 500; } 
+.mypageMainView .myData .favJob .type { color: var(--text-color-sub); font-size: 14px; } 
+.mypageMainView .myData .favJob .depth2::before { content: ">"; } 
+
+/* 마이페이지_직업심리검사 레이어 */
+.mypageMainView .myData .jobTest {height: 154px; overflow: hidden auto; padding-right: 4px;}
+.mypageMainView .myData .jobTest li { margin-bottom: 8px; } 
+.mypageMainView .myData .jobTest li:last-of-type { margin-bottom: 0; } 
+.mypageMainView .myData .jobTest a { display: flex; align-items: center; padding: 12px; border: 1px solid var(--line-color-ty2); border-radius: 8px; color: var(--text-color-sub); font-size: 14px; } 
+.mypageMainView .myData .jobTest .type { display: block; color: #16a0aa; margin-right: 15px; } 
+.mypageMainView .myData .jobTest .title { width: 50%; margin-right: 7px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all; } 
+
+/* 마이페이지_관심대학 레이어 */
+.mypageMainView .myData .favUniv .top,
+.mypageMainView .myData .favAdmss .top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; } 
+.mypageMainView .myData .favUniv .top .tit, .mypageMainView .myData .favAdmss .top .tit { margin: 0; } 
+.mypageMainView .myData .favUniv .tab, .mypageMainView .myData .favAdmss .tab { display: flex; gap: 17px; } 
+.mypageMainView .myData .favUniv .tab li:first-of-type, .mypageMainView .myData .favAdmss .tab li:first-of-type { position: relative; } 
+.mypageMainView .myData .favUniv .tab li:first-of-type::after,
+.mypageMainView .myData .favAdmss .tab li:first-of-type::after { content: ""; display: block; position: absolute; top: 50%; right: -8px; width: 1px; height: 10px; background: var(--line-color-ty2); transform: translateY(-50%); } 
+.mypageMainView .myData .favUniv .tab .favUnivTabBtn, .mypageMainView .myData .favAdmss .tab .favAdmssTabBtn { color: var(--text-color-sub); font-size: 15px; } 
+.mypageMainView .myData .favUniv .tab .favUnivTabBtn.active, .mypageMainView .myData .favAdmss .tab .favAdmssTabBtn.active { font-weight:bold; } 
+.mypageMainView .myData .favUnivList, .mypageMainView .myData .favAdmssList { display: none; } 
+.mypageMainView .myData .favUnivList.on,
+.mypageMainView .myData .favAdmssList.on { display: block; } 
+.mypageMainView .myData .favUnivList li { margin-bottom: 8px; } 
+.mypageMainView .myData .favUnivList li:last-of-type,
+.mypageMainView .myData .favAdmss li:last-of-type,
+.mypageMainView .myData .score li:last-of-type { margin: 0; } 
+.mypageMainView .myData .favUnivList a,
+.mypageMainView .myData .score a { display: flex; justify-content: space-between; align-items: center; padding: 8px 20px 8px 10px; border: 1px solid var(--line-color-ty2); border-radius: 8px; } 
+.mypageMainView .myData .favUnivList a div { display: flex; align-items: center; gap: 10px; } 
+.mypageMainView .myData .favUnivList a .num,
+.mypageMainView .myData .favAdmss a .num { display: flex; justify-content: center; align-items: center; width: 28px; height: 28px; background: var(--prime-color-main); border-radius: 50%; color: #fff; font-family: 'roboto'; font-size: 16px; font-weight: 500; } 
+.mypageMainView .myData .favUnivList a .name,
+.mypageMainView .myData .favAdmss a .admss,
+.mypageMainView .myData .score a .recurit,
+.mypageMainView .myData .score a .admss { color: #16a0aa; font-size: 14px; } 
+.mypageMainView .myData .favUnivList a .loca,
+.mypageMainView .myData .favAdmssList a .name,
+.mypageMainView .myData .score a .date,
+.mypageMainView .myData .score a .name { color: var(--text-color-sub); font-size: 14px; } 
+
+/* 마이페이지_관심전형 레이어 */
+.mypageMainView .myData .favAdmssList li, .mypageMainView .myData .score li { margin-bottom: 12px; } 
+.mypageMainView .myData .favAdmssList a { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px 12px 12px; border: 1px solid var(--line-color-ty2); border-radius: 8px; } 
+.mypageMainView .myData .favAdmssList a .d-flex { display: flex; align-items: flex-start; gap: 6px; width: calc(100% - 38px); padding: 0; } 
+.mypageMainView .myData .favAdmssList a .d-flex div { width: calc(100% - 34px); } 
+.mypageMainView .myData .favAdmssList a .name, .mypageMainView .myData .score a .name { display: block; margin-bottom: 3px; width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;} 
+.mypageMainView .myData .favAdmssList a .admss,
+.mypageMainView .myData .score a .admss { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all; } 
+.mypageMainView .myData .favAdmssList a .depth2::before,
+.mypageMainView .myData .score a .depth2::before { content: ">"; } 
+
+/* 마이페이지_성적 레이어 */
+.mypageMainView .myData .score a { padding: 12px; } 
+.mypageMainView .myData .score a .d-flex { display: flex; align-items: flex-start; gap: 10px; width: calc(100% - 90px); padding: 0; } 
+.mypageMainView .myData .score a .d-flex div { width: calc(100% - 36px); } 
+
+/* 마이페이지_성적관리 schoolScoreMngeForm */
+.schoolScoreMngeForm .flex .btns .printBtn {display: block; width: 26px; height: 26px; margin-left: 12px; padding: 0; background: url(../img/common/ico_print.png) no-repeat center; background-size: cover; }

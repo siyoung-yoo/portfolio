@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+    <defs>
+        <clipPath id="66qhrkepva">
+            <path data-name="사각형 1579" style="fill:none" d="M0 0h60v60H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="그룹 2083" style="clip-path:url(#66qhrkepva)">
+        <path data-name="패스 2209" d="M28.676 12.308c.254-.023.5-.064.762-.064 3.794 0 6.868 2.561 6.868 5.723v9.919c0 3.162-3.074 5.725-6.868 5.725-.261 0-.762-.065-.762-.065" transform="translate(21.929 9.363)" style="fill:#16a1a9"/>
+        <path data-name="패스 2210" d="M28.676 12.308c.254-.023.5-.064.762-.064 3.794 0 6.868 2.561 6.868 5.723v9.919c0 3.162-3.074 5.725-6.868 5.725-.261 0-.762-.065-.762-.065" transform="translate(21.929 9.363)" style="stroke:#111;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+        <path data-name="패스 2211" d="M8.631 12.308c-.254-.023-.5-.064-.762-.064C4.074 12.244 1 14.8 1 17.967v9.919c0 3.162 3.074 5.725 6.868 5.725.261 0 .508-.042.762-.065l1.17-.166" transform="translate(.765 9.363)" style="fill:#16a1a9"/>
+        <path data-name="패스 2212" d="M8.631 12.308c-.254-.023-.5-.064-.762-.064C4.074 12.244 1 14.8 1 17.967v9.919c0 3.162 3.074 5.725 6.868 5.725.261 0 .508-.042.762-.065l1.17-.166" transform="translate(.765 9.363)" style="stroke:#111;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+        <path data-name="패스 2213" d="M30.559 32.491a3.817 3.817 0 0 1-3.817 3.815H16.06a3.815 3.815 0 1 1 0-7.631h10.682a3.817 3.817 0 0 1 3.817 3.815" transform="translate(9.362 21.929)" style="fill:#e6e6e6"/>
+        <path data-name="패스 2214" d="M30.559 32.491a3.817 3.817 0 0 1-3.817 3.815H16.06a3.815 3.815 0 1 1 0-7.631h10.682a3.817 3.817 0 0 1 3.817 3.816z" transform="translate(9.362 21.929)" style="stroke:#111;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+        <path data-name="패스 2215" d="M18.423 51.213A15.263 15.263 0 0 1 5.325 36.1V16.261A15.26 15.26 0 0 1 20.586 1h10.685a15.26 15.26 0 0 1 15.26 15.261v25.947" transform="translate(4.072 .765)" style="stroke-linecap:round;stroke:#111;stroke-linejoin:round;stroke-width:2px;fill:none"/>
+    </g>
+</svg>

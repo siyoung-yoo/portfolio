@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+			<div class="ltrtCont mpg alarmSettingView">
+
+				<div class="ltCont">
+					<div class="cptSearchArea">
+						<button type="button" class="btnCon _strokeGreen betweenIcon">
+							<span>특별전형 지원현황</span><i class="ico _quickGo"></i>
+						</button>
+					</div>
+				</div>
+				<!-- // .ltCont -->
+
+				<div class="rtCont">
+					<!-- 리스트 -->
+					<div class="listArea">
+						<div class="topArea">
+							<div class="total">총 <span class="prm01">6</span>건</div>
+
+							<div class="optionArea">
+								<button type="button" class="orderBtn" onclick="ssdPopup()">
+									<span class="hidden">알림설정</span>
+								</button>
+							</div>
+						</div>
+
+						<!-- 알림 없는 경우 -->
+						<!-- <div class="noData">
+							<img src="../../static/img/common/ico_nodata.png" alt="경고">
+							<p class="notice">알림 내역이 없어요.</p>
+						</div> -->
+						<!-- // *** 기존 ADIGA 영역 *** -->
+
+						<!-- *** !!신규 추가 영역 *** -->
+						<ul class="alarmList typeSsd">
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span class="new"></span>알림 메시지 내용입니다. 알림 메시지는 줄넘김 처리가 됩니다.<br>알림 메시지 유형에 따라 아이콘이 구분되어 노출됩니다.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>남서울대학교</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span class="new"></span>줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>경희대학교</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span></span>알림 메시지 내용입니다. 알림 메시지는 줄넘김 처리가 됩니다.<br>알림 메시지 유형에 따라 아이콘이 구분되어 노출됩니다.<br> NEW 아이콘이 없습니다.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>남서울대학교</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span></span>줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>어디가</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span></span>알림 메시지 내용입니다. 알림 메시지는 줄넘김 처리가 됩니다.<br>알림 메시지 유형에 따라 아이콘이 구분되어 노출됩니다.<br> NEW 아이콘이 없습니다.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>남서울대학교</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+							<li>
+								<a href="#" class="alarmItem">
+									<!-- 콘텐츠 -->
+									<div class="contArea">
+										<!-- 내용 -->
+										<div class="cont">
+											<span></span>줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.줄넘김 처리 없이 텍스트 문구가 길어요. 줄넘김 처리 없이 텍스트 문구가 길어요.
+										</div>
+										<!-- 날짜 및 작성자-->
+										<div class="dateArea">
+											<!-- 날짜 -->
+											<span>2025-09-25</span>
+											<!-- 작성자 -->
+											<span>연세대학교</span>
+										</div>
+									</div>
+									<!-- // 콘텐츠 -->
+								</a>
+							</li>
+						</ul>
+						<!-- // ** !!신규 추가 영역 ** -->
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- // 서브페이지 컨텐츠 영역 END -->
+
+
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+
+	<!-- 퍼블 확인용 Script -->
+    <script>
+        function ssdPopup() {
+            window.open('PCSSDALM2000.html', '_blank');
+        }
+    </script>
+    <!-- // 퍼블 확인용 Script -->
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+	.tempPage { width: 100%; padding: 50px; }
+	.guideSection { display: flex; align-items: flex-start; gap: 20px; }
+	.formText, .selectBox { flex: none; max-width: 200px; }
+</style>
+</head>
+<body>
+	<div class="tempPage">
+
+		<div class="guideSection">
+			<div class="formText">
+				<input type="text" placeholder="placeholder" title="입력">
+			</div>
+
+			<div class="formText">
+				<input type="text" placeholder="placeholder" title="입력" value="value">
+			</div>
+
+			<div class="formText readonly">
+				<input type="text" placeholder="placeholder" title="입력" value="readonly" readonly>
+			</div>
+
+			<div class="formText readonly">
+				<input type="text" placeholder="placeholder" title="입력" value="disabled (스타일 고정)" disabled>
+			</div>
+
+			<div class="formText disabled">
+				<input type="text" placeholder="placeholder" title="입력" value="disabled" disabled>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="guideSection">
+			<div class="formText onlyNum">
+				<input type="text" placeholder="숫자만 입력" title="숫자만 입력">
+			</div>
+
+			<div class="formText h200">
+				<textarea name="" id="" placeholder="textarea 사용시 formText에 높이값 지정해서 사용" title="입력"></textarea>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="guideSection">
+			<div class="formText">
+				<input type="text" placeholder="placeholder" title="검색어 입력">
+				<button type="button" class="btnSearch"><span class="srOnly">검색</span></button>
+			</div>
+
+			<div class="formText">
+				<input type="text" placeholder="placeholder" title="검색어 입력" value="value">
+				<button type="button" class="btnSearch"><span class="srOnly">검색</span></button>
+			</div>
+
+			<div class="formText readonly">
+				<input type="text" placeholder="placeholder" title="검색어 입력" value="readonly" readonly>
+				<button type="button" class="btnSearch" disabled><span class="srOnly">검색</span></button>
+			</div>
+
+			<div class="formText readonly">
+				<input type="text" placeholder="placeholder" title="검색어 입력" value="disabled (스타일 고정)" disabled>
+				<button type="button" class="btnSearch" disabled><span class="srOnly">검색</span></button>
+			</div>
+
+			<div class="formText disabled">
+				<input type="text" placeholder="placeholder" title="검색어 입력" value="disabled" disabled>
+				<button type="button" class="btnSearch" disabled><span class="srOnly">검색</span></button>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="guideSection">
+			<div class="formText datepicker">
+				<input type="text" placeholder="YYYY-MM-DD" title="날짜 입력">
+			</div>
+
+			<div class="dateRange">
+				<div class="formText datepicker">
+					<input type="text" placeholder="YYYY-MM-DD" title="시작 날짜 입력">
+				</div>
+				<div class="textMid">~</div>
+				<div class="formText datepicker">
+					<input type="text" placeholder="YYYY-MM-DD" title="종료 날짜 입력">
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="guideSection">
+			<div class="selectBox">
+				<button type="button" class="btnSelect" title="선택">선택해주세요</button>
+				<div class="optionList">
+					<div class="scrollY">
+						<button type="button">option 01</button>
+						<button type="button">option 02</button>
+						<button type="button">option 03</button>
+						<button type="button">option 04</button>
+						<button type="button">option 05</button>
+						<button type="button">option 06</button>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<div class="selectBox toggleUp">
+					<button type="button" class="btnSelect" title="선택">위로 열림</button>
+					<div class="optionList">
+						<div class="scrollY">
+							<button type="button">option 01</button>
+							<button type="button">option 02</button>
+							<button type="button">option 03</button>
+							<button type="button">option 04</button>
+							<button type="button">option 05</button>
+							<button type="button">option 06</button>
+						</div>
+					</div>
+				</div>
+
+				<p class="mt10 mb10">팝업 내 tableControls 안에 있는<br>셀렉트박스는 defult가 위로 열림<br>(toggleUp 클래스 추가 안함)</p>
+			</div>
+
+			<div class="selectBox readonly">
+				<button type="button" class="btnSelect" title="선택" disabled>readonly</button>
+				<div class="optionList">
+					<div class="scrollY">
+						<button type="button">option 01</button>
+						<button type="button">option 02</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="selectBox disabled">
+				<button type="button" class="btnSelect" title="선택" disabled>disabled</button>
+				<div class="optionList">
+					<div class="scrollY">
+						<button type="button">option 01</button>
+						<button type="button">option 02</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="listInline">
+			<div class="formChk">
+				<input type="radio" name="radioA" id="radioA01">
+				<label for="radioA01">기본</label>
+			</div>
+
+			<div class="formChk">
+				<input type="radio" name="radioA" id="radioA02" checked>
+				<label for="radioA02">선택됨</label>
+			</div>
+
+			<div class="formChk">
+				<input type="radio" name="radioB" id="radioB01" disabled>
+				<label for="radioB01">비활성화</label>
+			</div>
+
+			<div class="formChk">
+				<input type="radio" name="radioB" id="radioB02" checked disabled>
+				<label for="radioB02">선택된 비활성화</label>
+			</div>
+
+			<div class="formChk icoOnly">
+				<input type="radio" name="radioC" id="radioC01">
+				<label for="radioC01"></label>
+			</div>
+
+			<div class="formChk icoOnly">
+				<input type="radio" name="radioC" id="radioC02" checked>
+				<label for="radioC02"></label>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="listInline">
+			<div class="formChk">
+				<input type="checkbox" id="chk01">
+				<label for="chk01">기본</label>
+			</div>
+
+			<div class="formChk">
+				<input type="checkbox" id="chk02" checked>
+				<label for="chk02">선택됨</label>
+			</div>
+
+			<div class="formChk">
+				<input type="checkbox" id="chk03" disabled>
+				<label for="chk03">비활성화</label>
+			</div>
+
+			<div class="formChk">
+				<input type="checkbox" id="chk04" checked disabled>
+				<label for="chk04">선택된 비활성화</label>
+			</div>
+
+			<div class="formChk icoOnly">
+				<input type="checkbox" id="chk05">
+				<label for="chk05"></label>
+			</div>
+
+			<div class="formChk icoOnly">
+				<input type="checkbox" id="chk06" checked>
+				<label for="chk06"></label>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

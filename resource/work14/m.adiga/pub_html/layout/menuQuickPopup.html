@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+
+
+<div class="wrapper _fullPopup" id="quickPopup">
+	<!--header area-->
+	<div class="header">
+		<div class="headerTitle">
+			<!-- <button type="button" class="btnHeaderBack"><span class="hidden">이전 화면</span></button> -->
+			<h1>메뉴편집</h1>
+		</div>
+		<div class="headerUtil">
+			<button type="button" class="btnHeaderClose" onclick="fnQuickPopup();">
+				<span class="hidden">닫기</span>
+			</button>
+		</div>
+	</div>
+	<!--//header area-->
+
+	<!--contents area-->
+	<div class="container">
+		<div class="contInner menuSettPage">
+			<div class="section">
+				<div class="infoMsg">
+					<p>※ 메뉴 등록은 최대 3개까지 선택 가능합니다.</p>
+					<p>※ 선택한 순서로 노출 됩니다.</p>
+				</div>
+				<div class="menuList">
+					<div class="menuCov">
+						<p class="menuTit">메뉴 타이틀</p>
+						<div class="menus">
+							<div class="filterArea">
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId01">
+									<label for="menuId01">
+										<span>메뉴명01</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId02">
+									<label for="menuId02">
+										<span>메뉴명02</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId03">
+									<label for="menuId03">
+										<span>메뉴명03</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId04">
+									<label for="menuId04">
+										<span>메뉴명04</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="menuCov">
+						<p class="menuTit">메뉴 타이틀</p>
+						<div class="menus">
+							<div class="filterArea">
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId11">
+									<label for="menuId11">
+										<span>메뉴명01</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId12">
+									<label for="menuId12">
+										<span>메뉴명02</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId13">
+									<label for="menuId13">
+										<span>메뉴명03</span>
+									</label>
+								</div>
+								<div class="cptChkBtnType">
+									<input type="checkbox" id="menuId14">
+									<label for="menuId14">
+										<span>메뉴명04</span>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="btnWrap _CTA">
+				<button type="button" class="btnCancel" onclick="fnQuickPopup();"><span>닫기</span></button>
+				<button type="button" class="btnConfirm" onclick="fnQuickPopup();"><span>저장</span></button>
+			</div>
+		</div>
+	</div>
+	<!--//contents area-->
+</div>
+
+
+</body>
+</html>

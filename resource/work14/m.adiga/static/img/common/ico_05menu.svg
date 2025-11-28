@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <defs>
+        <clipPath id="f0smf0qgna">
+            <path data-name="사각형 1680" style="fill:red;opacity:.24" d="M0 0h28v28H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="마스크 그룹 21" style="clip-path:url(#f0smf0qgna)">
+        <g data-name="그룹 2131" transform="translate(5 3)">
+            <rect data-name="사각형 288" width="18" height="19.612" rx="2.376" transform="translate(0 2.42)" style="stroke-width:1.2px;fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round"/>
+            <path data-name="사각형 289" transform="translate(5.471)" style="fill:#34c8cf;stroke:#707070;stroke-width:1.2px" d="M0 0h7.057v4.149H0z"/>
+            <path data-name="사각형 290" transform="translate(5.471)" style="stroke-width:1.2px;fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round" d="M0 0h7.057v4.149H0z"/>
+            <path data-name="선 4" transform="translate(6.085 9.092)" style="stroke-width:1.2px;fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round" d="M0 0h5.829"/>
+            <path data-name="선 5" transform="translate(6.085 14.688)" style="stroke-width:1.2px;fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round" d="M0 0h5.829"/>
+        </g>
+    </g>
+</svg>

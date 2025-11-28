@@ -1,0 +1,56 @@
+@charset "utf-8";
+@import url("./sub01.css");
+@import url("./sub02.css");
+@import url("./sub03.css");
+@import url("./sub04.css");
+
+/*****************************************************************************/
+/* from _kim.css *************************************************************/
+
+/* from _suh.css *************************************************************/
+hgroup {margin-bottom:1.6rem;display:flex;align-items:center;justify-content:space-between;}
+hgroup .h4, .paragraph hgroup .h4 {margin-bottom:0;}
+.paragraph .h4 {margin-bottom:1.6rem;}
+.txtRef {margin:2rem 0 4rem;font-size:1.2rem;color:var(--prime-main);}
+
+.h4stit {margin-bottom:1.2rem;font-size:1.4rem;font-weight:700;color:var(--text-title);padding-left:2.2rem;background:url(../img/common/ico_arrow_tail.svg) 0 50% no-repeat;background-size:1.4rem;}
+
+.boxBrdGray {padding:2rem;border-radius:1rem;border:1px solid var(--line2);background-color:var(--color-white);}
+.boxBrdGray .h4 {margin-bottom:0.8rem;}
+.boxBrdGray .p {color:var(--text-sub2);}
+
+.dotArea + .h4stit {margin-top:2rem;}
+.dotArea {position:relative;}
+.dotArea li {display:table;min-height:2.1rem;}
+.dotArea li:not(:first-of-type) {margin-top:0.8rem;}
+.dotArea li::before {content:'';width:1.2rem;display:table-cell;background:url(../img/common/bul_dot.svg) 0 0.9rem no-repeat;background-size:0.4rem;}
+
+/*two-way input range*/
+.cptRangeBox {width:100%;padding-bottom:3rem;}
+.cptRangeBox .rangeTxtCov {width:100%; text-align:center;}
+.cptRangeBox .rangeTxtCov .rangeValue {display:inline-block; width:max-content; min-width:10rem; border:.1rem solid var(--line2); border-radius:1rem; padding:.5rem .1rem; position:relative; margin-bottom:1.6rem; text-align:center; }
+.cptRangeBox .rangeTxtCov .rangeValue:before {border-top:1rem solid var(--color-white); border-left:1rem solid transparent; border-right:1rem solid transparent; border-bottom:1rem solid transparent; content: ""; position:absolute; top:3rem; left:4rem; z-index:2;}
+.cptRangeBox .rangeTxtCov .rangeValue:after {border-top:1rem solid var(--line2); border-left:1rem solid transparent; border-right:1rem solid transparent; border-bottom:1rem solid transparent; content: ""; position:absolute; top:3.1rem; left:4rem; z-index:1;}
+.cptRangeBox .rangeTxtCov .rangeValue span {font-size:1.4rem; font-weight:400; color: var(--prime-main);}
+.cptRangeBox .rangeTxtCov .rangeValue .rangeGap {display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; gap:.5rem;}
+.cptRangeBox .twoWaySlider {width:100%;height:100%;min-height:2.4rem;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;position:relative;}
+.cptRangeBox .twoWaySlider input {width:calc(100% - 2rem);height:100%;left:1rem;position:absolute;border:none; pointer-events:none;z-index:10;appearance:none;opacity:0;}
+.cptRangeBox .twoWaySlider input::-webkit-slider-thumb {pointer-events:all;width:2.5rem;height:1.5rem;appearance:none;}
+.cptRangeBox .twoWaySlider .track {position:absolute;top:1rem;left:0.6rem;width:calc(100% - 1.2rem);height:0.4rem;background-color:var(--line1);border-radius:0.2rem;}
+.cptRangeBox .twoWaySlider .range {position:absolute;top:0;bottom:0;left:0;right:0;height:0.4rem;background-color:var(--prime-main);border-radius:0.2rem;}
+.cptRangeBox .twoWaySlider .thumb {position:absolute;top:-0.8rem;transform:translateY(-0.25rem);width:2.4rem;height:2.4rem;background-color:var(--color-white);border-radius:50%;border:0.2rem solid var(--prime-main);}
+.cptRangeBox .twoWaySlider .thumb .levelArea {display:flex;position:absolute;bottom:-3rem;width:max-content;font-weight:500;font-size:1.4rem; color: var(--text-body);}
+.cptRangeBox .twoWaySlider .thumb.left .levelArea {left:-0.6rem;}
+.cptRangeBox .twoWaySlider .thumb.right .levelArea {right:-0.6rem;}
+.cptRangeBox .twoWaySlider .left {left:0;}
+.cptRangeBox .twoWaySlider .right {right:0;}
+/* debug */
+/* .cptRangeBox .twoWaySlider input {top:3rem;appearance:auto;opacity:1;}
+.cptRangeBox .twoWaySlider input:first-of-type {top:1rem;}
+.cptRangeBox .twoWaySlider .track {position:relative;margin-top:5rem;}
+.cptRangeBox .twoWaySlider input::-webkit-slider-thumb {background-color:red;} */
+/* from _yeom.css ************************************************************/
+
+/* from _kang.css ************************************************************/
+
+/*****************************************************************************/

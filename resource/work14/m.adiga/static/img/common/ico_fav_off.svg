@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #aeaeae;
+        stroke: #aeaeae;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: none;
+        opacity: 0.3;
+      }
+    </style>
+  </defs>
+  <g id="ico_즐겨찾기" transform="translate(-387 -82)">
+    <path id="패스_9" data-name="패스 9" class="cls-1" d="M5.658,14.274a.051.051,0,0,1,.017.052L4.266,21.687a.607.607,0,0,0,.89.647l6.566-3.615a.05.05,0,0,1,.055,0l6.566,3.615a.608.608,0,0,0,.89-.647l-1.409-7.361a.05.05,0,0,1,.017-.052l5.466-5.127A.609.609,0,0,0,22.968,8.1l-7.436-.935a.051.051,0,0,1-.045-.032L12.3.349a.608.608,0,0,0-1.1,0L8.012,7.131a.05.05,0,0,1-.045.032L.531,8.1A.608.608,0,0,0,.192,9.147Z" transform="translate(389.5 84.5)"/>
+    <rect id="사각형_27" data-name="사각형 27" class="cls-2" width="28" height="28" transform="translate(387 82)"/>
+  </g>
+</svg>

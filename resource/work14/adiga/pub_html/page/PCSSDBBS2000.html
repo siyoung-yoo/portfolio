@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+			<div class="ltrtCont mpg">
+
+				<div class="ltCont">
+					<div class="admMenu">
+						<ul class="admMenuList mTzero">
+							<li class="on">
+								<a href="javascript:void(0)">시스템 문의</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)">나의 문의 이력</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="cptSearchLine"></div>
+
+					<button type="button" class="btnCon _strokeGreen betweenIcon">
+						<span>특별전형 지원현황</span><i class="ico _quickGo"></i>
+					</button>
+				</div>
+				<!-- // .ltCont -->
+
+				<div class="rtCont">
+					<div class="tit">
+						<!-- [10/17] 문구 수정 -->
+						<h3 class="h3 mB8">시스템 문의하기</h3>
+						<p class="body1 reg sclr01">※ 서비스 이용에 불편한 점이나 어려운 점이 있으신가요? 시스템 담당자의 도움이나 지원이 필요하시다면 문의 사항을 남겨주세요.</p>
+						<!-- // [10/17] 문구 수정 -->
+						<p class="mB10 mT20 body4"><span class="required">*</span> 표시는 필수 입력 사항입니다.</p>
+					</div>
+
+					<div class="cptTbBsc hType tdHasPd">
+						<table>
+							<caption>시스템 문의하기</caption>
+							<colgroup>
+								<col style="width:150px;">
+								<col style="width:auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">문의유형<span class="required">*</span></th>
+									<td>
+										<div class="comSelectTpStk tbType typeLg w320px">
+											<button type="button" class="selCustBtn">선택</button>
+											<div class="optArea">
+												<div class="optInner">
+													<span class="divLine"></span>
+													<input type="hidden" data-msg="분류">
+													<ul>
+														<li><a href="#none">전자 증명서 발급</a></li><!-- [10/17] 문구 수정 -->
+														<li><a href="#none">일반 문서 업로드</a></li>
+														<li><a href="#none">서류 제출</a></li>
+														<li><a href="#none">기타</a></li><!-- [10/17] 값 추가 -->
+													</ul>
+												</div>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">제목<span class="required">*</span></th>
+									<td>
+										<div class="frmInput tableInput">
+											<input type="text" placeholder="제목을 입력해 주세요." aria-label="문의 제목을 입력해 주세요">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">내용<span class="required">*</span></th>
+									<td>
+										<div class="cptTextArea">
+											<textarea placeholder="내용을 20글자 이상 입력해 주세요." aria-label="내용을 20글자 이상 입력해 주세요"></textarea>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="btnWrap">
+						<button type="button" class="btnCTA _confirm"><span>문의사항 등록</span></button>
+					</div>
+				</div>
+				<!-- // .rtCont -->
+
+			</div>
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+</body>
+</html>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <g data-name="그룹 2723">
+        <g data-name="그룹 2721">
+            <path data-name="패스 65385" d="M729.322 847.08a1.719 1.719 0 0 1-1.716-1.723v-34.18a1.72 1.72 0 0 1 1.716-1.724h43.384a1.72 1.72 0 0 1 1.716 1.724v34.18a1.719 1.719 0 0 1-1.716 1.723" transform="translate(-722.841 -801.902)" style="stroke:#111;stroke-width:1.5px;fill:#fff"/>
+            <g data-name="그룹 2720">
+                <path data-name="패스 65386" d="M753.677 869.146h22.349v.17c0 2.085-1.379 3.773-3.08 3.773h-46.931c-1.7 0-3.079-1.688-3.079-3.773v-.17h30.741z" transform="translate(-721.308 -825.062)" style="stroke-linecap:round;stroke-linejoin:round;fill:#38b8be;stroke:#111;stroke-width:1.5px"/>
+            </g>
+            <path data-name="선 348" transform="translate(25.029 12.519)" style="fill:#c5e7f7;stroke-linecap:round;stroke-linejoin:round;stroke:#111;stroke-width:1.5px" d="M0 0h6.288"/>
+        </g>
+        <g data-name="그룹 2722">
+            <path data-name="패스 65387" d="m757.457 824.265-6.062 7.666h3.427v7.613h5.271v-7.613h3.427z" transform="translate(-732.987 -808.685)" style="fill:#feae6d;stroke-linecap:round;stroke-linejoin:round;stroke:#111;stroke-width:1.5px"/>
+            <path data-name="패스 65388" d="m768.487 854.9 6.062-7.667h-3.426v-7.612h-5.271v7.612h-3.427z" transform="translate(-736.609 -813.726)" style="stroke-linecap:round;stroke-linejoin:round;stroke:#111;stroke-width:1.5px;fill:#fff"/>
+        </g>
+    </g>
+    <path style="fill:none;opacity:.2" d="M0 0h56v56H0z"/>
+</svg>

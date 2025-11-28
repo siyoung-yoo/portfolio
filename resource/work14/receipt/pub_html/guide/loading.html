@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/content.css" />
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script> <!-- 퍼블만 사용하는 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+
+	<div id="wrapper">
+		<div data-include="../layout/header.html #header"></div>
+
+		<div id="container">
+
+			<div data-include="../layout/sideInfo.html #sideInfo"></div>
+
+			<div class="content" id="bodyContent">
+
+				<nav class="breadcrumbWrap" aria-label="현재 경로"><!-- aria-label은 수정X / 고정 텍스트 입니다 -->
+					<ol class="breadcrumb">
+						<li><a href="#0"><i class="icoHome"></i><span class="srOnly">홈</span></a></li>
+						<li><a href="#0">메뉴명 1</a></li>
+						<li><a href="#0">메뉴명 1-1</a></li>
+					</ol>
+				</nav>
+				<!-- // breadcrumb -->
+
+				<!-- 컨텐츠 START -->
+				<div class="contWrap">
+					컨텐츠 영역
+				</div>
+				<!-- // 컨텐츠 END -->
+
+			</div>
+
+			<div data-include="../layout/footer.html #footer"></div>
+		</div>
+	</div>
+
+
+	<div id="loadingAction">
+		<div style="display: flex; justify-content: center; align-items: center;">
+			<img src="../../static/img/contents/loading.gif" alt="로딩이미지">
+			<span class="syncMsg" style="display:none; font-size: 20px; font-weight: 500; color: white;padding-top: 600px"><span id="syncTarget">데이터</span> 동기화 중 입니다. 시간이 다소 소요될 수 있습니다. (1~3분)</span>
+		</div>
+	</div>
+</body>
+</html>

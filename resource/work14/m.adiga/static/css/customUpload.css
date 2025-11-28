@@ -1,0 +1,146 @@
+/*
+	* raonkupload 스타일 override *
+	- SimpleUIMode > Mode: 'single'일 경우만 스타일 적용됨
+	- pdf 파일 이미지만 반영되어 있음
+*/
+
+* {
+	font-family:  "NotoSans", "roboto" !important;
+	color: #333 !important;
+	box-sizing: border-box;
+}
+html, body { font-size: 10px !important; }
+
+.customUploader .kupload-simple-single-ui {
+	position: relative;
+	height: auto !important;
+	padding: 0;
+	background: #f5f5f5;
+	border: 0.1rem solid #ccc;
+	border-radius: 0.8rem;
+}
+
+.customUploader .kupload-simple-single-ui-area {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 2rem;
+	text-align: center;
+	font: 400 1.6rem/1.2 "NotoSans";
+}
+
+.customUploader .kupload-simple-single-ui-area .file-info-area {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: 6.4rem;
+	background: url(../img/common/ico_upload_file.svg) 50% 0 / 6.4rem auto no-repeat;
+}
+.customUploader .kupload-simple-single-ui-area .text {
+	padding: 1.6rem 0;
+	font-size: 1.4rem;
+}
+.customUploader .kupload-simple-single-ui-area .file-btn-area {
+	position: initial;
+	width: 100%;
+	height: auto;
+	border: 0;
+	transform: none;
+}
+.customUploader .kupload-simple-single-ui-area a svg {
+	display: none;
+}
+.customUploader .kupload-simple-single-ui-area a[id*=_fileAdd] {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6rem;
+	max-width: 30rem;
+	width: 100%;
+	height: 4.4rem;
+	font: 500 1.4rem/4.2rem "NotoSans";
+	border-radius: 0.8rem;
+	border: 0.1rem solid #666;
+	background-color: #fff;
+	overflow: hidden;
+}
+.customUploader .kupload-simple-single-ui-area a[id*=_fileAdd]:hover::after {
+	content: '';
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.04);
+}
+.customUploader .kupload-simple-single-ui-area a[id*=_fileAdd]::before {
+	content: '';
+	display: inline-block;
+	width: 2rem;
+	height: 2rem;
+	margin-top: -0.4rem;
+	overflow: hidden;
+	-webkit-mask-repeat: no-repeat; -webkit-mask-position: 0 0; -webkit-mask-size: 2.2rem auto; mask-repeat: no-repeat; mask-position: 0 0; mask-size: 2.2rem auto;
+	-webkit-mask-image: url(../img/common/ico_search.svg); mask-image: url(../img/common/ico_search.svg); background-color: #666;
+}
+
+/* 파일 업로드 후 */
+.customUploader .kupload-simple-single-ui-area.has-file .text,
+.customUploader .kupload-simple-single-ui-area.has-file .file-btn-area {
+	display: none;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-info-area {
+	background: none;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-info-area .file-info {
+	position: static;
+	display: block;
+	width: 100%;
+	height: auto;
+	padding: 0 3rem 0 5rem;
+	margin: 0;
+	font-size: 0;
+	text-align: left;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-info span {
+	display: inline;
+	margin: 0;
+	font: 400 1.4rem/1.2 "NotoSans", "roboto";
+	text-align: left;
+	word-break: break-all;
+    white-space: normal;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-ext[title=".pdf"]::before {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 4.8rem;
+	height: 4.8rem;
+	background: url(../img/common/ico_pdf.svg) 0 0 / 100% auto no-repeat;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-info span.file-ext {
+	word-break: keep-all;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-info span.file-size {
+	display: block;
+	width: 100%;
+	font-size: 1.3rem;
+	padding: 0;
+	border: 0;
+	margin: 0.6rem 0 0;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-list-icons {
+	right: 0;
+}
+.customUploader .kupload-simple-single-ui-area.has-file .file-list-icons a {
+	width: 2.4rem;
+	height: 2.4rem;
+	background: #888 url(../img/ai/ico_close_wht_2.png) 50% 50% / 0.8rem auto no-repeat;
+	cursor: pointer;
+	border-radius: 50%;
+}

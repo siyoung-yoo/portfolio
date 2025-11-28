@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<body>
+
+
+	<div id="sideInfo" class="scrollY">
+		<div class="inner">
+			<div class="userArea">
+				<div class="userName">ㅇㅇ대학교(지역)</div>
+				<p class="userInfo">테스트 관리자</p>
+				<button type="button" class="btnBoxGray">로그아웃 <i class="icoLogout"></i></button>
+			</div>
+
+			<ul class="documentNotice">
+				<li><a href="#0"><i class="icoArea"></i>전자문서 수취<br><strong>n</strong>건</a></li>
+				<li><a href="#0"><i class="icoArea"></i>전자문서 열람<br><strong>n</strong>건</a></li>
+				<li><a href="#0"><i class="icoArea"></i>전자문서 다운<br><strong>n</strong>건</a></li>
+			</ul>
+
+
+			<!--
+				[메뉴 드롭다운]
+				- 드롭다운영역 기본 상태 : 닫힘
+				- .btnToggle에 open 있을 경우 > 드롭다운영역 기본 상태 : 열림
+				- aria-controls 값과 드롭다운영역의 id값 매핑 필수
+
+				[메뉴 활성화]
+				* 메뉴 active 기능은 퍼블스크립트(pub_ui.js)에만 구현되어 있습니다.
+				* pub_ui.js > initMenuActions() 참고
+
+				[10/21 수정사항]
+				* lnb 메뉴 현행화(메뉴구조도 v1.02 기준)
+				* lnb 메뉴 토글 상태 재정의
+					기본 상태 : 서류관리 메뉴만 열림 상태 / 데이터 관리, 통계관리 메뉴 닫힘 상태
+
+				[10/23 수정사항]
+				* .btnToggle 버튼 관련 마크업 수정
+					aria-expanded 속성 삭제, span.srOnly 태그 삭제 > 스크립트로 처리
+			-->
+			<div class="menuListWrap">
+				<div class="menuList"><!-- 선택된 메뉴 그룹에 acitve 클래스 추가 -->
+					<div class="title">
+						<a href="#0">서류관리</a>
+						<button type="button" class="btnToggle open" aria-controls="MenuAList"></button>
+					</div>
+					<ul class="subList" id="MenuAList">
+						<li><a href="#0">제출서류 수신 관리</a></li><!-- 선택된 메뉴 a태그에 acitve 클래스 추가 -->
+						<li><a href="#0">제출서류 다운로드 관리</a></li>
+						<li><a href="#0">지원자별 서류 제출 및 수신 현황</a></li>
+						<li><a href="#0">서류별 제출 및 수신 현황</a></li>
+						<li><a href="#0">지원자별 서류제출 현황</a></li>
+						<li><a href="#0">모집단위별 서류제출 현황</a></li>
+						<li><a href="#0">전형별 서류제출 현황</a></li>
+					</ul>
+				</div>
+
+				<div class="menuList">
+					<div class="title">
+						<a href="#0">데이터관리</a>
+						<button type="button" class="btnToggle" aria-controls="MenuBList"></button>
+					</div>
+					<ul class="subList" id="MenuBList">
+						<li><a href="#0">사용자접속로그 조회</a></li>
+						<li><a href="#0">제출서류 열람 이력 조회</a></li>
+						<li><a href="#0">제출서류 수신 이력 조회</a></li>
+						<li><a href="#0">제출서류 다운로드(파일생성) 이력 조회</a></li>
+						<li><a href="#0">제출서류 재제출 이력 조회</a></li>
+						<li><a href="#0">권한부여 이력 조회</a></li>
+					</ul>
+				</div>
+
+				<div class="menuList">
+					<div class="title">
+						<a href="#0">통계관리</a>
+						<button type="button" class="btnToggle" aria-controls="MenuCList"></button>
+					</div>
+					<ul class="subList" id="MenuCList">
+						<li><a href="#0">전자증명서 열람 통계</a></li>
+						<li><a href="#0">전자증명서 다운로드 통계</a></li>
+						<li><a href="#0">전자증명서 전형별 통계</a></li>
+						<li><a href="#0">전자증명서 모집단위별 통계</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

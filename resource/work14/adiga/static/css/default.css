@@ -1,0 +1,274 @@
+@charset "UTF-8";
+/*------------------------------------------------------@웹폰트--------------------------------------------------------------*/
+/* Noto Sans KR Light */
+
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 300;
+	src: url("../webfont/NotoSansKR-Light.eot");
+	src: url("../webfont/NotoSansKR-Light.eot?#iefix") format("embedded-opentype"), 
+			url("../webfont/NotoSansKR-Light.woff") format("woff");
+}
+/* Noto Sans KR Regular */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 400;
+	src: url("../webfont/NotoSansKR-Regular.eot");
+	src: url("../webfont/NotoSansKR-Regular.eot?#iefix") format("embedded-opentype"), 
+			url("../webfont/NotoSansKR-Regular.woff") format("woff");
+}
+/* Noto Sans KR Medium */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 500;
+	src: url("../webfont/NotoSansKR-Medium.eot");
+	src: url("../webfont/NotoSansKR-Medium.eot?#iefix") format("embedded-opentype"), 
+		url("../webfont/NotoSansKR-Medium.woff") format("woff");
+}
+/* Noto Sans KR Bold */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 700;
+	src: url("../webfont/NotoSansKR-Bold.eot");
+	src: url("../webfont/NotoSansKR-Bold.eot?#iefix") format("embedded-opentype"), 
+		url("../webfont/NotoSansKR-Bold.woff") format("woff");
+}
+/* Noto Sans KR Black */
+@font-face {
+	font-family: "NotoSans";
+	font-style: normal;
+	font-weight: 900;
+	src: url("../webfont/NotoSansKR-Black.eot");
+	src: url("../webfont/NotoSansKR-Black.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Black.woff") format("woff");
+}
+
+/* Roboto Light */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 300;
+	src: url("../webfont/Roboto-Light.ttf") format("truetype");
+}
+/* Roboto Regular */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 400;
+	src: url("../webfont/Roboto-Regular.ttf") format("truetype");
+}
+
+/* Roboto Medium */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 500;
+	src: url("../webfont/Roboto-Medium.ttf") format("truetype");
+}
+
+/* Roboto Bold */
+@font-face {
+	font-family: "roboto";
+	font-style: normal;
+	font-weight: 600;
+	src: url("../webfont/Roboto-Bold.ttf") format("truetype");
+}
+* {
+  margin: 0;  padding: 0;  -webkit-text-size-adjust: none;  word-break: break-all; letter-spacing: -0.02em; box-sizing:border-box;
+}
+
+*, *::before, *::after {
+  -webkit-moz-box-sizing: border-box;  -ms-moz-box-sizing: border-box;  -o-moz-box-sizing: border-box;  box-sizing: border-box;
+}
+
+body.scrLock {overflow:hidden;}
+
+html, body, div, span, object, iframe, font, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub,
+sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, article, aside, canvas, details,
+figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  margin: 0;  padding: 0;  font-size: 100%;  vertical-align: baseline;  background: transparent; border:0;
+}
+
+table {
+  border-collapse: collapse;  border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+nav, ul, ol, dl {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after {
+  content: '';
+  content: none;
+}
+
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+a {
+  margin: 0;  padding: 0;  font-size: 100%;  word-break: break-all;  vertical-align: baseline;  background: transparent;
+}
+
+ins {
+  background-color: #ff9;  color: #000;  text-decoration: none;
+}
+
+mark {
+  background-color: #ff9;  color: #000;  font-style: italic;  font-weight: bold;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+  text-decoration: none;  border-bottom: medium none;  cursor: default;
+}
+
+hr {
+  display: block;  height: 1px;  border: 0;  border-top: 1px solid #cccccc;  margin: 1em 0;  padding: 0;
+}
+
+legend, caption {
+  display: none;  clear: both;
+}
+
+label {
+  cursor: pointer;
+}
+
+button {
+  margin: 0;  font: inherit;  color: inherit;  vertical-align: middle;  cursor: pointer; border:0 none; background:transparent;
+}
+
+/* 2024/10/17 성적분석 산출내역 팝업 > 전형정보 보기 버튼  */
+.txtBox .uniInfo >li button {
+    background-color: var(--prime-color-main);
+    color: var(--color-white);
+    font-size: 14px;
+    margin-left: 12px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    transform: translateY(-11px);
+    margin-bottom: -16px;
+}
+
+
+.txtBox .uniInfo >li button:hover {
+  filter : brightness(106%);
+}
+/* 2024/10/17 성적분석 산출내역 팝업 > 전형정보 보기 버튼  */
+
+input {
+  margin: 0;  font: inherit;  color: inherit;  vertical-align: middle;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;  border: 0;
+}
+
+input[type="text"] {
+  font-family:  "NotoSans", "roboto";  font-size: 14px; color: var(--text-color-body);
+}
+
+input[type="text"],input[type="password"],input[type="tel"],input[type="email"],input[type="date"],input[type="number"] {
+  background: var(--color-white);  border: 1px solid #d9d9d9;  -webkit-border-radius: 0;  -webkit-appearance: none;
+}
+
+input[type="button"],input[type="reset"],input[type="submit"] {
+  cursor: pointer;  -webkit-border-radius: 0;  -webkit-appearance: none;
+}
+
+input[type="checkbox"] {
+  width: 18px;  height: 18px;  padding: 0;
+}
+input[type="radio"] {
+  width: 15px;  height: 15px;  padding: 0;
+}
+
+input::placeholder {color: var(--text-color-sub2);}
+input::-webkit-input-placeholder {color: var(--text-color-sub2);}
+input:-ms-input-placeholder {color: var(--text-color-sub2);}
+
+textarea {
+  margin: 0;  resize: none;  font: inherit;  color: inherit;  width: 100%;  border: 1px solid #ddd;  
+  padding: 10px;  background: none;  -webkit-border-radius: 1px;  -webkit-appearance: none;
+}
+
+select {
+  margin: 0;  font: inherit;  color: inherit;  vertical-align: middle;  background: var(--color-white);
+  -webkit-border-radius: 0;  border: 1px solid #d0d0d0; -webkit-appearance: none; -moz-appearance:none; appearance:none;
+}
+select::-ms-expand {display:none}
+.select {width:100%; margin-left:7px; padding-left:25px; color:var(--text-color-body); font-size:16px;}
+.select:first-child {margin-left:0;}
+
+optgroup {
+  font: inherit;  color: inherit;  margin: 0;
+}
+
+
+
+img {
+  vertical-align: top;
+  transform:translateZ(0); /*20230403 이미지 정상 랜더링 전용 css 추가*/
+}
+
+a:link {
+  text-decoration: none;  color: var(--text-color-body);
+}
+a:visited, a:hover, a:active {
+  color: var(--text-color-body);  text-decoration: none;
+}
+
+address, em {
+  font-style: normal;
+}
+
+/* blind */
+.blind {
+  overflow: hidden;  position: absolute;  top: 0;  left: 0;  width: 0;  height: 0;  font-size: 0;  line-height: 0;
+}
+
+/* skipnavi */
+#skipnavi {
+  position: fixed;  left: 0;  top: 0;  width: 100%;  margin-left: 0;  z-index: 99999;
+}
+#skipnavi a {
+  position: absolute;  left: -99999px;
+}
+
+#skipnavi a:focus, #skipnavi a:active {
+  position: relative;  left: 0;  z-index: 9999;  width: 100%;  padding: 10px;  text-decoration: none;
+}
+
+/* html 설정 */
+html, body {
+  font-family: "NotoSans", "roboto" !important;  font-size: 12px;  color: var(--text-color-body);
+}
+.skip .quickBtn {display: block; width: 100%; height: 0px;background: #092473; font-size: 15px; color: var(--color-white); overflow: hidden; text-align: center;}
+.skip .quickBtn:focus {height:auto;}
+
+.float-l {float:left;}
+.float-r {float:right;}
+.clear:after {content:""; display:block; clear:both;}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" href="../../static/css/default.css" />
+<link rel="stylesheet" href="../../static/css/common.css" />
+<link rel="stylesheet" href="../../static/css/sub.css" />
+<link rel="stylesheet" href="../../static/css/main.css" />
+<link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+<!-- Jquery -->
+<script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script type="text/javascript" src="../../static/js/comm/common.js"></script>
+<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+</head>
+<body>
+	<div class="wrapper">
+
+		<div data-include="../layout/menuSubHeader.html .header"></div>
+		<div data-include="../layout/menuSubHeader.html .menuSpinner"></div>
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+			<div class="contInner">
+				<div class="section">
+					<div class="headerUtil contUtil flex">
+						<button type="button" class="btnHeaderAlarm"><span class="hidden">알림</span></button>
+						<button type="button" class="btnNotice"><span class="hidden">공지사항</span></button>
+					</div>
+
+					<div class="ssdTitleArea">
+						<h2 class="h4">특별전형 서류 발급/제출</h2>
+						<img src="../../static/img/common/logo_dpaper.svg" alt="정부 전자문서지갑 로고">
+					</div>
+
+					<div class="boxFlexWrap">
+						<div class="boxLineStyle linePoint">
+							<div class="titleArea"><h4 class="h4">전자 증명서</h4></div>
+							<p>발급 받아야 할 <strong class="fcMain bold">99</strong>건의 전자 증명서가 있습니다.</p>
+							<div class="btnWrap">
+								<button type="button" class="btnConfirm">전자 증명서 발급신청</button>
+							</div>
+						</div>
+
+						<div class="boxLineStyle linePoint">
+							<div class="titleArea"><h4 class="h4">서류 일괄 제출</h4></div>
+							<p><strong class="fcMain bold">99</strong>건의 전자 문서와
+								<strong class="fcMain bold">99</strong>건의 일반 문서 제출이 필요합니다.</p>
+							<div class="btnWrap">
+								<button type="button" class="btnConfirm">서류 제출</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- [11/06] 인증 상태 요약정보 추가 -->
+					<div class="ssdListSummary">
+						<h3 class="title">총 <em class="fcMain">N</em>건</h3>
+						<div class="uniRstBox">
+							<p class="totYCnt">수험번호 인증 <em class="fcMain">n</em>건</p>
+							<p class="totNCnt">수험번호 미인증 <em class="fcPoint">n</em>건</p>
+						</div>
+					</div>
+					<!-- // [11/06] 인증 상태 요약정보 추가 -->
+
+					<!--
+						수험번호 미인증 : ssdListWrap + cnAuth
+						제출대기 : ssdListWrap
+						제출준비 : ssdListWrap + ready
+						제출완료 : ssdListWrap + complete
+					-->
+					<!-- 수험번호 미인증 START -->
+					<div class="ssdListWrap cnAuth">
+						<div class="listHeader">
+							<div class="state">수험번호 인증</div>
+						</div>
+
+						<!-- .cnAuth 클래스 추가 시, .listCont 영역 css로 display: none 처리함 -->
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="btnArea">
+									<button type="button" class="btnRndStr">내 문의 <strong class="fcMain">0</strong>/0</button>
+									<button type="button" class="btnRndStr"><i class="icoQeMsg"></i> 문의하기</button>
+								</div>
+
+								<div class="name"><span class="flag"></span></div>
+							</div>
+
+							<div class="infoArea">
+								<p></p>
+								<ul>
+									<li class="strong"></li>
+									<li></li>
+									<li><i class="icoCall"></i> </li>
+								</ul>
+								<p class="redInfo fcTextBody"></p>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li><div class="text">문서 발급 및 업로드</div></li>
+									<li><div class="text">서류 제출</div></li>
+									<li><div class="text">제출 완료</div></li>
+								</ul>
+							</div>
+
+							<div class="btmBtnArea">
+							</div>
+						</div>
+
+						<!-- .cnAuth 클래스 삭제 시, .cnAuthArea 영역 css로 display: none 처리함 -->
+						<div class="cnAuthArea">
+							<button type="button" class="btnSquStr">수험번호 인증</button>
+							<p class="redInfo fcTextBody">지원한 전형의 수험 번호를 입력하면<br>서류 정보를 확인할 수 있습니다</p>
+						</div>
+					</div>
+					<!-- // 수험번호 미인증 END -->
+
+					<!-- 제출대기 START -->
+					<div class="ssdListWrap">
+						<div class="listHeader">
+							<div class="state">제출대기</div>
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="btnArea">
+									<button type="button" class="btnRndStr">내 문의 <strong class="fcMain">3</strong>/5</button>
+									<button type="button" class="btnRndStr"><i class="icoQeMsg"></i> 문의하기</button>
+								</div>
+
+								<div class="name"><span class="flag">정시</span>ㅇㅇ대학교</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li class="strong">금융빅데이터학부</li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoCall"></i> 070-1234-5678</li>
+								</ul>
+								<p class="redInfo fcTextBody">서류 제출에 필요한 전자 문서와 일반 문서를 확인해주세요.</p>
+								<!-- <p class="redInfo fcTextBody">서류 제출을 위해 전자 문서를 발급 받아 주세요.</p>
+								<p class="redInfo fcTextBody">서류 제출을 위해 일반 문서를 업로드해 주세요.</p> -->
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li><div class="text">문서 발급 및 업로드</div></li>
+									<li><div class="text">서류 제출</div></li>
+									<li><div class="text">제출 완료</div></li>
+								</ul>
+							</div>
+
+							<div class="btmBtnArea">
+								<button type="button" class="btnDefault">전자 증명서 발급</button>
+								<button type="button" class="btnDefault">제출 서류 보기</button>
+							</div>
+						</div>
+					</div>
+					<!-- // 제출대기 END -->
+
+					<!-- 제출준비 START -->
+					<div class="ssdListWrap ready">
+						<div class="listHeader">
+							<div class="state">제출준비</div>
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="btnArea">
+									<button type="button" class="btnRndStr">내 문의 <strong class="fcMain">3</strong>/5</button>
+									<button type="button" class="btnRndStr"><i class="icoQeMsg"></i> 문의하기</button>
+								</div>
+
+								<div class="name"><span class="flag">정시</span>ㅇㅇ대학교</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li class="strong">금융빅데이터학부</li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoCall"></i> 070-1234-5678</li>
+								</ul>
+								<p class="redInfo fcTextBody">서류 제출에 필요한 전자 문서와 일반 문서를 확인해주세요.</p>
+								<!-- <p class="redInfo fcTextBody">서류 제출을 위해 전자 문서를 발급 받아 주세요.</p>
+								<p class="redInfo fcTextBody">서류 제출을 위해 일반 문서를 업로드해 주세요.</p> -->
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li><div class="text">문서 발급 및 업로드</div></li>
+									<li><div class="text">서류 제출</div></li>
+									<li><div class="text">제출 완료</div></li>
+								</ul>
+							</div>
+
+							<div class="btmBtnArea">
+								<button type="button" class="btnDefault">서류 제출</button>
+								<button type="button" class="btnDefault">제출 서류 보기</button>
+							</div>
+						</div>
+					</div>
+					<!-- // 제출준비 END -->
+
+					<!-- 제출완료 START -->
+					<div class="ssdListWrap complete">
+						<div class="listHeader">
+							<div class="state">제출완료</div>
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="btnArea">
+									<button type="button" class="btnRndStr">내 문의 <strong class="fcMain">3</strong>/5</button>
+									<button type="button" class="btnRndStr"><i class="icoQeMsg"></i> 문의하기</button>
+								</div>
+
+								<div class="name"><span class="flag">정시</span>ㅇㅇ대학교</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li class="strong">금융빅데이터학부</li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoCall"></i> 070-1234-5678</li>
+								</ul>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li><div class="text">문서 발급 및 업로드</div></li>
+									<li><div class="text">서류 제출</div></li>
+									<li><div class="text">제출 완료</div></li>
+								</ul>
+							</div>
+
+							<div class="btmBtnArea">
+								<button type="button" class="btnDefault">확인증</button>
+								<button type="button" class="btnDefault">제출 서류 보기</button>
+							</div>
+						</div>
+					</div>
+					<!-- // 제출완료 END -->
+
+
+					<!-- 서비스 이용 도우미 START -->
+					<div class="boxLineStyle">
+						<div class="titleArea">
+							<h4 class="h4">서비스 이용 도우미</h4>
+							<i class="icoHelpServie"></i>
+						</div>
+
+						<p>서비스 이용에 어려움이 있으신가요?<br>도움이 필요하면 아래 서비스를 이용해 주세요.</p>
+
+						<div class="btnWrap flexWrap">
+							<button type="button" class="btnDefault02">문의 이력 <i class="icoSvgArrR"></i></button>
+							<button type="button" class="btnDefault02">시스템 문의 <i class="icoSvgArrR"></i></button>
+						</div>
+					</div>
+					<!-- // 서비스 이용 도우미 END -->
+
+					<div class="btnWrap _mt16">
+						<button type="button" class="btnDefault02">매뉴얼</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+		<div data-include="../layout/footer.html #footer"></div>
+		<div data-include="../layout/appbar.html #appbar"></div>
+
+		<div data-include="../layout/menuPopup.html #menuPopup"></div>
+		<div data-include="../layout/menuSearchPopup.html .mainSearchPopup"></div>
+	</div>
+	<!-- // .wrapper -->
+</body>
+</html>

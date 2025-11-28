@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <g data-name="ico_poopup close">
+        <path data-name="패스 28" d="M17.663.337a1.149 1.149 0 0 0-1.626 0L9 7.374 1.962.337A1.149 1.149 0 0 0 .337 1.962L7.374 9 .337 16.038a1.149 1.149 0 1 0 1.626 1.626L9 10.626l7.038 7.038a1.149 1.149 0 0 0 1.626-1.626L10.626 9l7.038-7.038a1.149 1.149 0 0 0 0-1.626" transform="translate(7 7)" style="fill:#333;stroke:#fff;stroke-width:.8px;opacity:.9"/>
+        <path data-name="사각형 4845" style="fill:none;opacity:.2" d="M0 0h32v32H0z"/>
+    </g>
+</svg>

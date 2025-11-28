@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
+    <g data-name="그룹 2739">
+        <g data-name="그룹 2738" transform="translate(2.88 8.026)">
+            <path data-name="패스 65406" d="M770.161 1066.813h-18.15l2.867-10.4H767.3z" transform="translate(-736.212 -1023.116)" style="stroke:#111;stroke-linecap:round;stroke-width:1.5px;fill:#fff"/>
+            <rect data-name="사각형 2672" width="29.987" height="4.228" rx="2" transform="translate(9.882 41.583)" style="fill:#38b8be;stroke:#111;stroke-linecap:round;stroke-width:1.5px"/>
+            <path data-name="사각형 2673" d="M5.156 0h39.438a5.156 5.156 0 0 1 5.156 5.156V28.92a5.154 5.154 0 0 1-5.15 5.155H5.154A5.154 5.154 0 0 1 0 28.92V5.156A5.156 5.156 0 0 1 5.156 0z" style="stroke:#111;stroke-linecap:round;stroke-width:1.5px;fill:#fff"/>
+        </g>
+    </g>
+    <g data-name="그룹 2741" transform="translate(11.462 2.946)">
+        <circle data-name="타원 158" cx="11.497" cy="11.497" transform="matrix(.926 -.379 .379 .926 0 9.98)" style="stroke-linejoin:round;fill:#feae6d;stroke:#111;stroke-linecap:round;stroke-width:1.5px" r="11.497"/>
+        <g data-name="그룹 2740">
+            <path data-name="패스 65408" d="M765.8 998.351v15.4h15.4a15.4 15.4 0 0 0-15.4-15.4z" transform="translate(-749.468 -998.351)" style="stroke-linejoin:round;stroke:#111;stroke-linecap:round;stroke-width:1.5px;fill:#fff"/>
+        </g>
+    </g>
+    <path style="fill:none;opacity:.2" d="M0 0h56v56H0z"/>
+</svg>

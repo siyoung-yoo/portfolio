@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+
+			<div class="divFull">
+				<div class="mB20">
+					<h3 class="h3 tclr">정부 전자문서 지갑 신청</h3>
+					<p class="body1 reg sclr01">전자문서지갑 발급 신청 정보를 확인해 주세요.</p>
+				</div>
+
+				<div class="flexFormWrap">
+					<div class="formRow">
+						<div class="frmInput">
+							<label for="form01">이름</label>
+							<input type="text" id="form01" value="홍길동" readonly>
+						</div>
+
+						<div class="frmInput">
+							<label for="form02">성별</label>
+							<input type="text" id="form02" value="남" readonly>
+						</div>
+
+						<div class="frmInput">
+							<label for="form03">내외국인</label>
+							<input type="text" id="form03" value="내국인" readonly>
+						</div>
+					</div>
+
+					<div class="formRow">
+						<div class="frmInput">
+							<label for="form11">휴대폰번호</label>
+							<input type="text" id="form11" value="010-1111-2222" readonly>
+						</div>
+
+						<div class="frmInput">
+							<label for="form12">생년월일</label>
+							<input type="text" id="form12" value="20050101" readonly>
+						</div>
+					</div>
+
+					<div class="formRow">
+						<div class="frmInput">
+							<label for="form31">이메일</label>
+							<input type="email" id="form31" title="이메일 입력">
+						</div>
+					</div>
+				</div>
+
+				<div class="btnWrap">
+					<a href="#0" class="btnCTA _default"><span>취소</span></a>
+					<a href="#0" class="btnCTA _confirm"><span>발급</span></a>
+				</div>
+			</div>
+
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+</body>
+</html>

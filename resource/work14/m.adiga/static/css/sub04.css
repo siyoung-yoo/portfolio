@@ -1,0 +1,614 @@
+@charset "utf-8"; /*****************************************************************************/
+/*지도검색*********************************************************************/
+/*하위메뉴분류명*/
+
+/*카테고리*********************************************************************/
+/*하위메뉴분류명*/
+
+/*-------------------------------------------------------------------
+대학/학과/전형 > 지도검색 > 지도검색 : 공통
+-------------------------------------------------------------------*/
+/* 위치 아이콘 */
+.pinMarkerico { padding: 1rem 1.5rem; background-color: var(--prime-main); border-radius: 5rem; font-size: 1.8rem; color: var(--color-white); font-weight: 500; } 
+.pinMarkerico .mapDataCov { display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; gap:0.4rem; } 
+.pinMarkerico .mapDataCov img { width: 3.1rem; margin-right: 0.4rem; } 
+.pinMarkerico .mapDataCov span { display:inline-block; width:11rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--color-white);} 
+.pinMarkerico::after { content: ''; position: absolute; top: calc(100% - 0.5rem); left: calc(50% - 0.5rem); width: 0; height: 0; border-top: 0.5rem solid var(--prime-main); border-left: 0.5rem solid var(--prime-main); border-bottom: 0.5rem solid transparent; border-right: 0.5rem solid transparent; transform: rotate(-135deg); } 
+/* 화면 너비 100 */
+.mapSearchWrap .mapArea { width:100vw; margin-left:-2rem; min-height: calc(100vh - 5rem); position:relative; z-index:1; } 
+/* 지도검색에서만 사용하는 검색상자 */
+.mapSearchWrap .mapArea .cptSearchForm._map { position: absolute; z-index: 5; top: 1.2rem; left: 2rem; right: 2rem; width: calc(100% - 4rem); } 
+/* 화면 사이즈 터치앤드래그 조절 */
+.mapSearchWrap .scrollUp { display: block; padding-top: 1rem; padding-bottom: 2rem; width: 100%; } 
+.mapSearchWrap .scrollUp:active { background-color: transparent !important; } 
+.mapSearchWrap .scrollUp::before { display: block; content: ''; width: 2rem; height: 2rem; margin: 0 auto; background:url(../../static/img/common/dragArrow.svg)0 0 no-repeat; transition:all .4s;}
+.mapSearchWrap .scrollUp._on::before {transform:rotate(180deg);}
+.mapSearchWrap .btnHeaderBack { margin-top: 0; } 
+/* 학교 리스트 */
+.mapSearchWrap .cptUniList { display: flex; flex-direction: column; background-color: var(--color-white); position: absolute; top: 47%; bottom: 5rem; z-index: 5; width: 100%; border-radius: 2rem 2rem 0 0; box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.16); overflow-y: hidden; } 
+.mapSearchWrap .cptGrid { height: 100dvh; padding: 0 2rem 4rem; overflow-y: auto; } 
+.mapSearchWrap .cptGrid .gridSection:active { border-color: var(--text-title); } 
+:where(.mapSearchView01,.mapSearchView02) .cptSearchForm._hasFilter { margin-bottom: 0; } /* 임시 css */
+/* 검색결과 */
+.mapSearchWrap .cptGrid .gridSection .gridTop .gtLt .schInfo p.schNm { margin-bottom: 0.2rem; } 
+.mapSearchWrap .cptGrid .gridSection .gridTop .gtLt .schLogo { flex-shrink: 0; } 
+.mapSearchWrap .cptGrid .gridSection .gtLt { width: calc(100% - 2.8rem); } 
+.mapSearchWrap .cptGrid .gridSection .schInfo { width: calc(100% - 6rem); } 
+.mapSearchWrap .cptGrid .gridSection .gridTop .gtLt .schInfo p.loc { overflow: hidden; white-space:nowrap; text-overflow: ellipsis; } 
+.mapSearchWrap .cptGrid .gridSection .depart { margin-top: 0.4rem; font-size: 1.4rem; color: var(--text-title); font-weight: 500; } 
+.mapSearchWrap .cptGrid .gridSection .depart .detail { color: var(--text-sub3); font-weight: 400; margin-left: 0.4rem; } 
+/* 검색시 색상변경 */
+.mapSearchWrap .cptGrid .gridSection .gridTop .gtLt .schInfo p.schNm span.primeColor { font-size: 1.6rem; font-weight: bold; color: var(--prime-main); } 
+/* 연도 빨간색상 */
+.mapSearchWrap .infoYear { margin: 0.8rem 2rem 1.6rem auto; color: var(--text-point2); font-size: 1.2rem; text-align: right; } 
+/* 안내 빨간색상 */
+.mapSearchWrap .tabCon p.redInfo { display: flex; gap: 0.6rem; } 
+.mapSearchWrap .tabCon p.redInfo::before { content: ''; display: block; width: 1.6rem; height: 1.6rem; margin-top: 0.4rem; flex-shrink: 0; background: url(../../static/img/common/ico_info_red.svg) no-repeat center center/contain; } 
+.mapSearchWrap .tabCon p.redInfo { margin-top: 0.8rem; font-size: 1.3rem; color: var(--text-point2); } 
+/* 색상변경 */
+.mapSearchWrap .primeColor { color: var(--prime-main); } 
+/* 탭 내용 하단 영역 */
+.mapSearchWrap .tabCon { margin-bottom: 4rem; } 
+/* 대학 상세 - 탭 */
+:where(.mapSearchView04,.mapSearchView06) .tabWrap::before { content: ''; display: block; width: 100%; height: 1rem; margin-top: 2.4rem; background-color: var(--bg5); } 
+/* :where(.mapSearchView04,.mapSearchView06) .tabCon { padding: 2.4rem 2rem 0; } */
+:where(.mapSearchView04,.mapSearchView06) .tabCon .sample { width: 100%; height: 20rem; line-height: 20rem; padding: 0.6rem 0 1.8rem; opacity: 0.4; background-color: #f00; color: var(--color-white); text-align: center; font-size: 2rem; } 
+:where(.mapSearchView04,.mapSearchView06) .tabTitle { margin-bottom: 1.6rem; font-size: 1.6rem; font-weight: 700; color: var(--text-title); }
+:where(.mapSearchView04,.mapSearchView06) .tabTitle+div {position:relative; width:100%; height:20rem;} 
+:where(.mapSearchView04,.mapSearchView06) .tabTitle:not(:first-child) { margin-top: 4rem; } 
+
+.mapSearchWrap .cptRdDual { padding: 0 2rem; } 
+/*-------------------------------------------------------------------
+대학/학과/전형 > 지도검색 > 지도검색 > 인기/관심 리스트 (mapSearchView01, 02)
+-------------------------------------------------------------------*/
+.mapSearchView02 .cptGrid { margin-top: 2.4rem; } 
+/*-------------------------------------------------------------------
+대학/학과/전형 > 지도검색 > 검색 결과 > 검색필터(팝업창) (mapSearchView03)
+-------------------------------------------------------------------*/
+.mapSearchView03 .filterArea._column3 { gap: 0.7rem; } 
+.mapSearchView03 .filterArea._column3 > div { width: calc(33.33% - 0.47rem); } 
+/*-------------------------------------------------------------------
+대학/학과/전형 > 지도검색 > 지도검색 > 대학 상세 (mapSearchView04)
+-------------------------------------------------------------------*/
+.ucp .uniDetaillyt { background-color: var(--color-white); position: absolute; top: 10%; bottom: 5rem; z-index: 5; width: 100%; border-radius: 2rem 2rem 0 0; box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.16); overflow-y: hidden; } 
+.mapSearchView04 .scrollUp { padding-bottom: 1rem; } 
+/* 상세 팝업 */
+.mapSearchView04 .d-flex { display: flex; align-items: center; } 
+.mapSearchView04 .d-flex._spacebtw { justify-content: space-between; } 
+.mapSearchView04 .detailTitle,
+.mapSearchView04 .menuTitle .cptFavBtn { display: inline-block; vertical-align: middle; } 
+.mapSearchView04 .detailTitle { word-break: keep-all; } 
+.mapSearchView04 .uniDetail { height: calc(100% - 3.4rem); overflow-y: scroll; } 
+.mapSearchView04 .uniDetail .section { padding: 0 2rem; } 
+
+.mapSearchView04 .uniDetail .lytDetailTitle { margin-top: 1rem; margin-bottom: 2.3rem; padding-bottom: 2.3rem; text-align: center; border-bottom: 0.1rem dashed var(--line2); } 
+.mapSearchView04 .uniDetail .lytDetailTitle .d-flex { justify-content: center; gap: 0.6rem; } 
+.mapSearchView04 .uniDetail .lytDetailTitle .loc { color: var(--text-sub); } 
+.mapSearchView04 .uniDetail .lytDetailTitle .menuTitle { margin: 0 auto 1.2rem; max-width: 26rem; } 
+.mapSearchView04 .uniDetail .uniMainImg { width: 6.4rem; margin-bottom: 2rem; } 
+.mapSearchView04 .uniDetail .linkBtn { margin-top: 2.4rem; } 
+.mapSearchView04 .uniDetail .linkBtn button { font-size: 1.4rem; font-weight: 500; } 
+/* 상세 팝업 - 주소 */
+.mapSearchView04 .lytDetail:not(:last-child) { padding-bottom: 2.3rem; margin-bottom: 2.3rem; border-bottom: 0.1rem dashed var(--line2); } 
+.mapSearchView04 .address::before { content: ''; display: inline-block; width: 1.6rem; height: 1.6rem; margin-right: 0.6rem; background: url(../../static/img/common/icon_map.svg) no-repeat center center/contain; } 
+.mapSearchView04 .phone::before { content: ''; display: inline-block; width: 1.6rem; height: 1.6rem; margin-right: 0.6rem; background: url(../../static/img/common/icon_phone.svg) no-repeat center center/contain; } 
+.mapSearchView04 :where(.address,.phone) { display: flex; color: var(--text-sub); font-size: 1.4rem; } 
+.mapSearchView04 .phone { margin-top: 1.6rem; } 
+/* 상세 팝업 - 대입특징 */
+.mapSearchView04 .caseInfo { margin-top: 1.6rem; gap: 0.9rem; } 
+.mapSearchView04 .caseInfo span { width: calc(50% - 0.45rem); font-size: 1.4rem; font-weight: 500; padding: 1.05rem 0; border-radius: 0.8rem; border: solid 0.1rem var(--prime-main); text-align: center; } 
+/* 탭1 */
+.mapSearchView04 .tab1 .sample { height: 12rem; line-height: 12rem; } 
+.mapSearchView04 .tab1 .tabSubTitle { margin-bottom: 1.6rem; padding: 0.8rem 2rem; border-radius: 1.2rem; background-color: var(--assist5); font-size: 1.6rem; font-weight: 500; } 
+.mapSearchView04 .tab1 .departmentList > li { padding: 2.4rem; border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.mapSearchView04 .tab1 .departmentList > li +li { margin-top: 1.2rem; } 
+.mapSearchView04 .tab1 .lytDepartmentTitle { display: flex; padding-bottom: 1.55rem; margin-bottom: 1.55rem; font-weight: 500; color: var(--text-title); border-bottom: 0.1rem dashed var(--line2); } 
+.mapSearchView04 .tab1 .lytDepartmentTitle .departmentTitle { padding-top: 0.4rem; font-weight: bold; font-size: 1.6rem; } 
+.mapSearchView04 .tab1 .lytDepartmentTitle .departmentTitle span { display: block; font-weight: normal; } 
+.mapSearchView04 .tab1 .numItem { display: flex; align-items: center; justify-content: center; width: 3.2rem; height: 3.2rem; margin-right: 1.2rem; border-radius: 1.2rem; font-size: 1.8rem; background-color: var(--prime-main); color: var(--color-white); } 
+.mapSearchView04 .tab1 .departmentCont { display: flex; justify-content: space-between; padding-bottom: 1.55rem; margin-bottom: 1.55rem; font-size: 1.6rem; gap: 0.8rem; border-bottom: 0.1rem dashed var(--line2); } 
+.mapSearchView04 .tab1 .departmentCont span:first-child { width: 5rem; flex-shrink: 0; } 
+.mapSearchView04 .tab1 .departmentCont span:last-child { font-weight: 500; text-align: right; } 
+.mapSearchView04 .tab1 .departmentList .lytInfo li { justify-content: space-between; } 
+.mapSearchView04 .tab1 .departmentList .lytInfo li + li { margin-top: 0.8rem; } 
+.mapSearchView04 .tab1 .departmentList .lytInfo li > span:last-child { font-weight: 500; } 
+.mapSearchView04 .tab1 .mT40 { margin-top: 4rem; } 
+/* 전문대학 탭1 */
+.mapSearchView04 .tab1 .colList li + li { margin-top: 0.8rem; } 
+.mapSearchView04 .tab1 .colList li p { display: flex; align-items: center; gap: 0.8rem; } 
+.mapSearchView04 .tab1 .colList li p::before { content: ''; display: inline-block; width: 0.3rem; height: 0.3rem; background: url(../../static/img/common/bul_dot.svg) no-repeat center center/contain; } 
+.mapSearchView04 .tab1 .colList li span { display: inline-block; margin-left: 1.1rem; } 
+.mapSearchView04 .tab1 .colList span { color: var(--text-sub); } 
+/* 탭2 */
+.mapSearchView04 .tab2 .d-flex._spacebtw { margin-bottom: 1.6rem; } 
+.mapSearchView04 .tab2 .d-flex._spacebtw .tabTitle { margin-bottom: 0; } 
+.mapSearchView04 .tab2 .redInfo { margin-bottom: 2.4rem; } 
+.mapSearchView04 .tab2 .mB20 { margin-bottom: 2rem; } 
+.mapSearchView04 .tab2 .btnWrap { margin-top: 1.2rem; } 
+/* 탭3 */
+.mapSearchView04 .tab3 .lytDepartmentList { margin-top: 1.2rem; } 
+.mapSearchView04 .tab3 .lytDepartmentList > li { padding: 2rem; border-radius: 1rem; border: solid 0.1rem var(--line1); } 
+.mapSearchView04 .tab3 .lytDepartmentList > li + li { margin-top: 1.2rem; } 
+.mapSearchView04 .tab3 .titleBox { align-items: flex-end; } 
+.mapSearchView04 .tab3 .titleBox span:first-child { color: var(--text-title); font-size: 1.6rem; font-weight: 500; } 
+.mapSearchView04 .tab3 .titleBox span:last-child { margin-left: 0.6rem; color: var(--text-sub3); } 
+.mapSearchView04 .tab3 .lytInfo { padding-top: 1.2rem; } 
+.mapSearchView04 .tab3 .lytInfo li { display: flex; align-items: flex-start; justify-content: space-between; } 
+.mapSearchView04 .tab3 .lytInfo li > div > span:last-child { margin-left: 1.2rem; } 
+.mapSearchView04 .tab3 .lytInfo li + li { margin-top: 0.8rem; } 
+.mapSearchView04 .tab3 .lytInfo li p { color: var(--text-sub); } 
+.mapSearchView04 .tab3 .lytInfo li span { font-weight: 500; } 
+.mapSearchView04 .tab3 .lytInfo .primeColor { font-weight: 500; } 
+.mapSearchView04 .tab3 .btnWrap { margin-top: 1.2rem; } 
+/* 탭4 */
+.mapSearchView04 .tab4 .cptSearchForm input { border: 0; } 
+.mapSearchView04 .tab4 .cptSearchForm { margin-top: 1.2rem; } 
+.mapSearchView04 .tab4 .cptBList { margin-top: 2.4rem; } 
+.mapSearchView04 .tab4 .category { display: block; text-align: left; font-size: 1.4rem; color: var(--text-sub); margin-bottom: 0.4rem; } 
+/* 2줄 overflow */
+.mapSearchView04 .tab4 .cptBList ul li button span.fstLine { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+/*-------------------------------------------------------------------
+대학/학과/전형 > 지도검색 > 지도검색 > 대학 상세 (mapSearchView06)
+-------------------------------------------------------------------*/
+.mapSearchView06 .scroll { overflow-y: scroll; height: calc(100% - 3.4rem); } 
+
+.mapSearchView06 .lytDepartment { padding: 0 2rem; } 
+.mapSearchView06 .departmentTitle { display: flex; gap: 1.1rem; align-items: center; margin-bottom: 2.4rem; } 
+.mapSearchView06 .departmentTitle > p { font-size: 1.8rem; font-weight: 500; } 
+.mapSearchView06 .departmentTitle > p span { font-size: 1.4rem; margin-left: 0.6rem; color: var(--text-sub3); font-weight: normal; } 
+.mapSearchView06 .departmentCard { border-radius: 1rem; border: solid 0.1rem var(--line1); padding: 2rem; } 
+.mapSearchView06 .uniTitleBox { display: flex; align-items: flex-end; margin-bottom: 0.8rem; } 
+.mapSearchView06 .uniTitleBox .title { color: var(--text-title); font-size: 1.6rem; font-weight: 500; } 
+.mapSearchView06 .uniTitleBox .uniType { margin-left: 0.6rem; font-size: 1.4rem; color: var(--text-sub3); } 
+.mapSearchView06 .departmentCard .primeColor { font-weight: 500; } 
+.mapSearchView06 .departmentCard .mR8 { margin-right: 0.8rem; } 
+.mapSearchView06 .departmentCard .mL4 { margin-left: 0.4rem; } 
+.mapSearchView06 .infoYear { margin-right: 0; margin-bottom: 0; } 
+.mapSearchView06 .tabTitle { margin-bottom: 0.8rem; } 
+
+.mapSearchView06 .departmentCard .location { display: flex; align-items: center; margin-bottom: 1.7rem; } 
+.mapSearchView06 .departmentCard .location img { margin-right: 0.6rem; width: 1.6rem; } 
+.mapSearchView06 .departmentCard .location span { font-size: 1.4rem; color: var(--text-sub); } 
+.mapSearchView06 .departmentCard .lytInfo { border-top: 0.1rem solid var(--line2); padding-top: 1.1rem; } 
+.mapSearchView06 .departmentCard .lytInfo li { display: flex; align-items: flex-start; justify-content: space-between; font-size: 1.6rem; } 
+.mapSearchView06 .departmentCard .lytInfo li:last-child { margin-bottom: 0; } 
+.mapSearchView06 .departmentCard .lytInfo li + li { margin-top: 0.8rem; } 
+.mapSearchView06 .departmentCard .lytInfo li p { color: var(--text-sub); } 
+/* 탭1 */
+.mapSearchView06 .tab1 p:not(.tabTitle,.redInfo) { color: var(--text-sub); } 
+
+/* 탭2 */
+.mapSearchView06 .tab2 .uniTitleBox { flex-wrap: wrap; margin-bottom: 1.5rem; } 
+.mapSearchView06 .tab2 .detail { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.8rem; font-size: 1.4rem; } 
+.mapSearchView06 .tab2 .detail span { color: var(--text-sub); } 
+.mapSearchView06 .tab2 .departmentCard:active { border-color: var(--text-title); } 
+.mapSearchView06 .tab2 .departmentCard .lytInfo { padding-top: 1.5rem; } 
+.mapSearchView06 .tab2 li { margin-bottom: 1.2rem; } 
+
+/*-------------------------------------------------------------------
+대입정보센터 > 공통
+-------------------------------------------------------------------*/
+/* 제목과 셀렉트 */
+.uct .titleSelectBox { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; } 
+.uct .titleSelectBox p { font-size: 1.6rem; font-weight: 500; margin-right: 2rem; } 
+.uct .titleSelectBox .formElem { width: calc(100% - 6.4rem); } 
+.uct .titleSelectBox:last-child { margin-bottom: 0; } 
+/* 패딩 */
+.uct .pdB16 { padding-bottom: 1.6rem; } 
+/* 상세페이지 공통 */
+.uctDetailPage .sample { display: grid; place-items: center; height: 25.6rem; opacity: 0.4; background-color: #f00; color: var(--color-white); font-size: 4rem; font-weight: bold; } 
+.uctDetailPage .rightBdInfo { margin-left: auto; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 상세 > 박람회 접수확인 > 상세 (admssExpoAppDtlView)
+대입정보센터 > 대입박람회/설명회 > 상세 (admssExpoDtlView)
+-------------------------------------------------------------------*/
+.uct .admssList { border-top: 0.1rem solid var(--line2); padding: 1.6rem 0; } 
+.uct .admssList li { display: flex; } 
+.uct .admssList li + li { margin-top: 1.4rem; } 
+.uct .admssList li p { min-width: 35.3%; font-weight: 500; color: var(--text-title); } 
+.uct .admssList .listBtn { justify-content: center; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 리스트 (admssExpoView01)
+대입정보센터 > 대학별 행사안내 > 리스트 (univEventView01)
+-------------------------------------------------------------------*/
+.uct .lytAdmssExpoList > li { padding: 2rem; border-radius: 1.2rem; border: solid 0.1rem var(--line1); } 
+.uct .lytAdmssExpoList > li + li { margin-top: 1rem; } 
+.uct .lytAdmssExpoList .label { padding: 0.3rem 0.9rem; border-radius: 1.2rem; border: solid 0.1rem var(--line1); font-size: 1.2rem; } 
+.uct .lytAdmssExpoList .title { margin-top: 1rem; font-size: 1.5rem; font-weight: 500; color: var(--text-title); } 
+.uct .lytAdmssExpoList .stateList { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1.2rem; padding: 2rem 0; border-radius: 1.2rem; text-align: center; background-color: #f8f8f8; } 
+.uct .lytAdmssExpoList .stateList p { font-size: 1.4rem; font-weight: 500; color: var(--text-title); margin-bottom: 0.6rem; } 
+.uct .lytAdmssExpoList .loc { margin-top: 2rem; } 
+.uct .lytAdmssExpoList .date { margin-top: 0.8rem; color: var(--text-sub3); font-size: 1.3rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 전형 평가기준 및 결과공개 > 리스트 (criteriaAndResultView01)
+대입정보센터 > 대학별 대입특징 > 리스트 (characteristicsView01
+-------------------------------------------------------------------*/
+.uctListPage { margin-bottom: 4rem; } 
+.uctListPage .cptSearchForm { margin-top: 1.2rem; } 
+.uctListPage .cptCnt { margin-top: 2.4rem; } 
+.uctListPage .btnWrap { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 행사안내 > 리스트 (univEventView01)
+-------------------------------------------------------------------*/
+.univEventView01 .labelBox { display: flex; justify-content: space-between; align-items: center; } 
+.univEventView01 .labelBox .locLabel { font-size: 1.3rem; color: var(--text-sub); } 
+.univEventView01 .lytAdmssExpoList .title { margin-top: 0.8rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 전형 평가기준 및 결과공개 > 리스트 > 검색필터(팝업창) (criteriaAndResultView02) 
+-------------------------------------------------------------------*/
+/* mapSearchView03와 중복되는 코드 */
+.uctFilterPage .radioTitle { margin-bottom: 1.6rem; } 
+.uctFilterPage .filterArea { padding: 0; } 
+.uctFilterPage .filterArea._column3 { gap: 0.7rem; } 
+.uctFilterPage .filterArea._column3 > div { width: calc(33.33% - 0.47rem); } 
+.uctFilterPage .filterArea._column4 { gap: 0.7rem; } 
+.uctFilterPage .filterArea._column4 > div { width: calc(25% - 0.6rem); } 
+.uctFilterPage .filterArea .lines2 { line-height: 2.1rem; } 
+.uctFilterPage .filterArea .lines2 span { display: block; font-size: 1.2rem; color: inherit; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 전형 평가기준 및 결과공개 > 상세 > 공통(탭) (criteriaAndResultDtlView01)
+-------------------------------------------------------------------*/
+.wrapCARDV .tabCon { padding: 2.4rem 0; } 
+.wrapCARDV .infoList li { display: flex; justify-content: space-between; align-items: center; padding: 2rem; border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.wrapCARDV .infoList li + li { margin-top: 0.8rem; } 
+.wrapCARDV .infoList li p { color: var(--text-title); font-size: 1.4rem; } 
+.wrapCARDV .infoList li button { flex-shrink: 0; } 
+.wrapCARDV > .section:not(:first-of-type) { padding-top: 1.2rem; } 
+#bsCARDVInfo .sample { display: grid; place-items: center; height: 25.6rem; opacity: 0.4; background-color: #f00; color: var(--color-white); font-size: 4rem; font-weight: bold; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 대입특징 > 상세 (characteristicsDtlView)
+-------------------------------------------------------------------*/
+.characteristicsDtlView .titleSelectBox .formElem { width: calc(100% - 9.8rem); } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 상세 (admssExpoDtlView)
+-------------------------------------------------------------------*/
+.admssExpoDtlView .cptBDetail .titBox p.bdInfo { margin: 0; width: auto; } 
+.admssExpoDtlView .admssExpoState { display: flex; align-items: center; justify-content: space-between; margin: 1.2rem 0 2rem; } 
+.admssExpoDtlView .admssExpoState p.bdInfo span.bdDate { font-weight: 500; color: var(--prime-main); } 
+
+.admssExpoDtlView .scheduleDelBtn { padding: 0.8rem 1.2rem; border-radius: 0.8rem; border: solid 0.1rem var(--text-sub); color: var(--text-title); font-size:1.4rem;} 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 상세 > 박람회 신청 (admssExpoAppForm)
+대입정보센터 > 대입박람회/설명회 > 상세 > 박람회 접수확인 > 신청정보입력팝업 (admssExpoAppView)
+-------------------------------------------------------------------*/
+.admssExpoAppFormPage .iptInfo { width: 100%; margin-bottom: 4rem; position: relative; } 
+.admssExpoAppFormPage .iptInfo > p { display: inline-block; font-size: 1.6rem; font-weight: 500; color: var(--text-title); margin-bottom: 1.4rem; } 
+.admssExpoAppFormPage .iptInfo .iptInfoElem { display: flex; flex-direction: column; gap: 10px; }
+.admssExpoAppFormPage .iptInfo .iptInfoElem .iptInfoElTx { font-size: 15px; }
+.admssExpoAppFormPage .essential { position: relative; } 
+.admssExpoAppFormPage .essential::after { content: ''; display: block; position: absolute; top: 0; right: -0.6rem; width: 0.5rem; height: 0.5rem; background: var(--prime-point); border-radius: 50%; } 
+.admssExpoAppFormPage .iptInfo .halfForm { display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start; gap:.8rem; margin-top:.8rem; } 
+.admssExpoAppFormPage .iptInfo .halfForm > * { width:50%; } 
+.admssExpoAppFormPage .iptInfo > .formElem + .formElem { display: block; margin-top: 0.8rem; } 
+.admssExpoAppFormPage .cptHsSearch .splitIpt > .formElem { width: calc(100% - 10.1rem); } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 상세 > 박람회 신청 > 상담일자 선택 팝업 (admssExpoAppSelPopup)
+-------------------------------------------------------------------*/
+#bsAdmssExpoAppSel .lytRadio { display: flex; padding-top: 0.3rem; } 
+#bsAdmssExpoAppSel .lytRadio li + li { margin-top: 2.8rem; } 
+#bsAdmssExpoAppSel .lytRadio .frmRadio label { display: flex; align-items: center; } 
+#bsAdmssExpoAppSel .frmRadio input:disabled { background-color: var(--color-white); } 
+#bsAdmssExpoAppSel .dateRdo { padding-left: 0.4rem; width: 39%; } 
+#bsAdmssExpoAppSel .dateRdo label span { color: #888; } 
+#bsAdmssExpoAppSel .dateRdo input:disabled+label span { color: #ccc; } /*20231208 추가*/
+#bsAdmssExpoAppSel .timeRdo { border-left: 0.1rem solid var(--line3); padding-left: 3rem; } 
+#bsAdmssExpoAppSel .timeRdo label span:last-child { margin-left: 2rem; word-break: keep-all; } 
+#bsAdmssExpoAppSel .timeRdo label span { color: var(--text-title); } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입박람회/설명회 > 상세 > 박람회 접수확인 > 상세 (admssExpoAppDtlView)
+-------------------------------------------------------------------*/
+.admssExpoAppDtlView .cptBDetail .titBox p.bdInfo span { color: var(--text-sub3); } 
+.admssExpoAppDtlView .admssList:last-child { border-bottom: 0.1rem solid var(--line2); } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 행사안내 > 상세 (univEventDtlView)
+-------------------------------------------------------------------*/
+.cptBDetail .titBox p.bdInfo span.primeColor { color: var(--prime-main); font-weight: 500; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 행사안내 > 상세 > 행사안내 신청 / 수정 (univEventDtlAppForm)
+-------------------------------------------------------------------*/
+.univEventDtlAppForm .admssList { padding-bottom: 0; } 
+.univEventDtlAppForm .radioBox { display: flex; gap: 2rem; } 
+.univEventDtlAppForm .frmRadio label { display: flex; align-items: center; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 행사안내 > 상세 > 행사안내 접수확인 > 상세 (univEventDtlAppDtlView) 
+-------------------------------------------------------------------*/
+.univEventDtlAppDtlView .btnWrap { padding-top: 1.6rem; } 
+.univEventDtlAppDtlView .admssList:last-child { border-bottom: 0.1rem solid var(--line2); } 
+/*-------------------------------------------------------------------
+대입정보센터 >대입일정 >리스트 > 검색필터(uctScheduleView02)
+-------------------------------------------------------------------*/
+.uctScheduleView02 .cptChkFolding button { display: block; width: 100%; margin-bottom: 0.8rem; padding: 1.2rem 1rem 1.2rem 1.2rem; text-align: left; border-radius: 0.8rem; border: solid 0.1rem var(--text-title); position: relative; } 
+.uctScheduleView02 .cptChkFolding button span.foldArrow { position: absolute; top: 50%; right: 1rem; width: 2.4rem; height: 2.4rem; transform: translate(0,-50%) rotate(0deg); background: url(../img/common/ico_drop_arrow.svg)no-repeat; } 
+.uctScheduleView02 .cptChkFolding button span.foldArrow.on { transform: translate(0,-50%) rotate(180deg); } 
+.uctScheduleView02 .chkAccptFdrop {display:none;}
+.uctScheduleView02 .cptChkFolding._marginB .RadioBox { margin-bottom: 4rem; } 
+.uctScheduleView02 .cptChkBtnType { margin-bottom: 0.8rem; } 
+
+
+/*-------------------------------------------------------------------
+대입정보센터 > 대입일정> 상세(팝업창) (uctScheduleDtlView)
+-------------------------------------------------------------------*/
+#bsScheduleDetail .innerCon { padding-bottom: 1.6rem; } 
+#bsScheduleDetail .cptTable th,#bsScheduleDetail .cptTable td { text-align: left; } 
+#bsScheduleDetail .btnDefault { color: var(--text-body); border: 0.1rem solid var(--text-sub); background-color: var(--color-white); } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입뉴스 > 리스트 (uctNewsView01)
+-------------------------------------------------------------------*/
+.uctNewsView01 .cptSearchForm { margin-top: 1.2rem; } 
+.uctNewsView01 .newsList li { border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.uctNewsView01 .newsList li + li { margin-top: 1.2rem; } 
+.uctNewsView01 .newsList li a { display: inline-block; width: 100%; padding: 2.4rem 2rem; } 
+.uctNewsView01 .newsList .title { width: 100%; margin-bottom: 2rem; font-size: 1.6rem; font-weight: 500; color: var(--text-title); overflow: hidden; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.uctNewsView01 .newsList .title .important { font-size: 1.6rem; color: var(--prime-main); margin-right: 0.8rem; } 
+.uctNewsView01 .newsList .title.newIco { display: flex; gap: 0.8rem; } 
+.uctNewsView01 .newsList .title.newIco::before { content: ''; display: block; width: 1.8rem; height: 1.8rem; margin-top: 0.5rem; background: url(../img/common/ico_new.svg) no-repeat; flex-shrink: 0; } 
+.uctNewsView01 .newsList .contant { color: var(--text-title); overflow: hidden; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.uctNewsView01 .newsList .dateBox { margin-top: 1.1rem; display: flex; justify-content: space-between; } 
+.uctNewsView01 .newsList .dateBox p { display: flex; align-items: center; } 
+.uctNewsView01 .newsList .dateBox span { color: var(--text-sub3); font-size: 1.3rem; } 
+.uctNewsView01 .newsList .dateBox span + span:not(.downloadIcon)::before { content: ''; display: inline-block; width: 0.1rem; height: 1rem; background: var(--text-sub3); margin: 0 1rem; } 
+.uctNewsView01 .downloadIcon::before { content: ''; display: block; width: 2rem; height: 2rem; margin-left: 0.4rem; background: url(../../static/img/common/ico_file.svg) no-repeat center center/contain; } 
+.uctNewsView01 .btnWrap { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입뉴스 > 상세(팝업창) uctNewsDtlView 
+-------------------------------------------------------------------*/
+.uctNewsDtlView .linkBtn { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입전략자료실 > 리스트 uctArchiveView01 
+-------------------------------------------------------------------*/
+.uctArchiveView01 .cptSearchForm { margin-top: 1.2rem; } 
+.uctArchiveView01 .archiveList li { border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.uctArchiveView01 .archiveList li + li { margin-top: 1.2rem; } 
+.uctArchiveView01 .archiveList a { display: flex; align-items:center; padding: 2rem; } 
+.uctArchiveView01 .archiveList img { display: block; width: 8rem; height:10.3rem; margin-right: 2rem; } 
+.uctArchiveView01 .archiveList .contant { width: calc(100% - 10rem); } 
+.uctArchiveView01 .archiveList .title { display: inline-block; width: 100%; font-size: 1.6rem; font-weight: 500; color: var(--text-title); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; } 
+.uctArchiveView01 .archiveList .title.newIco::before { content: ''; display: inline-block; width: 1.8rem; height: 1.8rem; margin-bottom: -0.3rem; margin-right: 0.4rem; background: url(../img/common/ico_new.svg) no-repeat; flex-shrink: 0; } 
+.uctArchiveView01 .archiveList .contant > p:not(.title) { margin-top: 0.8rem; border-radius: 0.8rem; background-color: var(--bg2); padding: 1.1rem 1.2rem; color: var(--text-sub); } 
+.uctArchiveView01 .archiveList .downloadIco { display: flex; } 
+.uctArchiveView01 .archiveList .downloadIco span { margin-left: 0.2rem; color:var(--prime-main); } 
+.uctArchiveView01 .archiveList .downloadIco::before { content: ''; display: inline-block; width: 2rem; height: 2rem; margin-right: 0.4rem; background: url(../../static/img/common/ico_file.svg) no-repeat center center/contain; } 
+.uctArchiveView01 .archiveList .noDownload { display: flex; justify-content: center; } 
+.uctArchiveView01 .archiveList .noDownload::before { content: ''; display: block; width: 5.5rem; height: 2.4rem; background: url(../../static/img/contents/no_img2.svg) no-repeat center center/contain; } 
+.uctArchiveView01 .archiveList .dateBox { margin-top: 0.8rem; } 
+.uctArchiveView01 .archiveList .dateBox span { display:inline-block; vertical-align:middle; color: var(--text-sub3); } 
+.uctArchiveView01 .archiveList .dateBox span + span::before { content: ''; display: inline-block; width: 0.1rem; height: 1.2rem; margin: 0 .3rem; background: var(--text-sub3); }
+/*2023.12.20 레이아웃 수정관련 css 추가*/
+.uctArchiveView01 .archiveList .dateBox > span {display:block; margin-top:.3rem;}
+.uctArchiveView01 .archiveList .dateBox > p > span:last-of-type {display:inline-block; width:calc(100% - 3.3rem); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } 
+.uctArchiveView01 .btnWrap { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대입전략자료실 > 상세(팝업창) uctArchiveDtlView 
+-------------------------------------------------------------------*/
+.uctArchiveDtlView .keyWordWrap { overflow: hidden; margin-top: 2rem; } 
+.uctArchiveDtlView .keyWordWrap ul { display: flex; gap: 0.6rem; overflow-y: auto; } 
+.uctArchiveDtlView .keyWordWrap button { padding: 0.7rem 2.4rem; border-radius: 1.7rem; border: solid 0.1rem var(--line1); white-space: nowrap; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 홍보 PlatForm > 대입정보매거진(탭) (uctInfoMgznView)
+-------------------------------------------------------------------*/
+.uctInfoMgznView .cptCnt { margin-top: 0; } 
+.uctInfoMgznView .InfoMgznList > li { border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.uctInfoMgznView .InfoMgznList > li + li { margin-top: 1.2rem; } 
+.uctInfoMgznView .InfoMgznList > li a { display: block; padding: 2rem; } 
+.uctInfoMgznView .InfoMgznList .title { margin-bottom: 1.2rem; font-weight: 500; color: var(--text-title); } 
+.uctInfoMgznView .InfoMgznList li a > div { display: flex; gap: 1rem; align-items: flex-start; } 
+.uctInfoMgznView .InfoMgznList img { width: 8rem; } 
+.uctInfoMgznView .InfoMgznList ul { width: calc(100% - 9rem); } 
+.uctInfoMgznView .InfoMgznList ul li { display: flex; white-space : nowrap ; overflow: hidden;text-overflow: ellipsis;width: 100%; box-sizing: border-box; } 
+.uctInfoMgznView .InfoMgznList ul li span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; width: 100%; } 
+.uctInfoMgznView .InfoMgznList ul li::before { content: ''; display: inline-block; width: 0.3rem; height: 0.3rem; margin-top: 0.9rem; flex-shrink: 0; margin-right: 0.8rem; background: url(../../static/img/common/bul_dot.svg) no-repeat center center/contain; } 
+.uctInfoMgznView .btnWrap { margin-top: 1.2rem; } 
+.uctInfoMgznView.contInner > .section > .tabWrap .tabCon.pdB16 { padding-bottom: 1.6rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 홍보 PlatForm > 대학캐스트(탭) (uctCastView01)
+-------------------------------------------------------------------*/
+.uctCastView01 .cptSearchForm { margin-top: 1.2rem; } 
+.uctCastView01 .cptBList .fstLine { margin-bottom: 2rem; } 
+.uctCastView01 .cptBList .content { text-align: left; color: var(--text-title); } 
+.uctCastView01 .cptBList ul li button span.fstLine.newIco::after { top:1.4rem; } 
+.uctCastView01 .cptBList :is(li button span.fstLine, .content) { overflow: hidden; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: keep-all; } 
+.uctCastView01 .cptBList .sndLine { margin-top: 1.2rem; } 
+.uctCastView01 .cptBList ul li button span.sndLine span { color: var(--text-sub3); font-size: 1.3rem; } 
+.uctCastView01 .cptBList .castDate { margin-left: auto; } 
+.uctCastView01.contInner > .section > .tabWrap .tabCon.pdB16 { padding-bottom: 1.6rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 장애인전형 > 리스트 disabledAdmssView01
+-------------------------------------------------------------------*/
+.disabledAdmssView01 .cptGrid .gridSection { padding: 2.4rem 1.2rem 1.2rem; } 
+.disabledAdmssView01 .gridTop { padding: 0 1.2rem; } 
+.disabledAdmssView01 .grayBox { margin-top: 2rem; padding: 2rem; border-radius: 1rem; background-color: var(--bg2); } 
+.disabledAdmssView01 .grayBox li { display: flex; } 
+.disabledAdmssView01 .grayBox li + li { margin-top: 0.8rem; } 
+.disabledAdmssView01 .grayBox .primeColor { color: var(--prime-main); font-weight: 500; } 
+.disabledAdmssView01 .grayBox p:last-child { margin-left: auto; font-weight: 500; } 
+.disabledAdmssView01 .grayBox img { width: 1.8rem; height: 1.8rem; } 
+/*-------------------------------------------------------------------
+대입정보센터 > 대학별 장애인전형 > 상세 disabledAdmssDtlView
+-------------------------------------------------------------------*/
+/* 상단 리스트 */
+.disabledAdmssDtlView .InfoList p:first-child { width: 8rem; } 
+.disabledAdmssDtlView .InfoList p:last-child { font-size: 1.4rem; color: var(--text-title); } 
+.disabledAdmssDtlView .InfoList li { display: flex; align-items: center; } 
+.disabledAdmssDtlView .InfoList li:first-child { margin-bottom: 2.2rem; } 
+.disabledAdmssDtlView .InfoList li:nth-child(2) { margin-bottom: 1.2rem; } 
+.disabledAdmssDtlView .InfoList .formElem { width: calc(100% - 8rem); } 
+/* 하단 리스트 */
+.disabledAdmssDtlView .detailList > li { padding: 2rem; border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.disabledAdmssDtlView .detailList > li + li { margin-top: 1rem; } 
+.disabledAdmssDtlView .detailList .title { display: flex; align-items: center; font-size: 1.6rem; font-weight: bold; color: var(--text-title); } 
+.disabledAdmssDtlView .detailList .title span { margin-left: 0.6rem; color: var(--text-sub2); font-weight: 400; } 
+.disabledAdmssDtlView .detailList .department { margin-top: 0.4rem; color: var(--text-sub3); } 
+.disabledAdmssDtlView .detailList ul { margin-top: 2rem; } 
+.disabledAdmssDtlView .detailList ul li { display: flex; justify-content: space-between; } 
+.disabledAdmssDtlView .detailList ul li + li { margin-top: 0.8rem; } 
+.disabledAdmssDtlView .detailList ul li p:last-child { font-weight: 500; } 
+.disabledAdmssDtlView .detailList .primeColor { color: var(--prime-main); } 
+/*-------------------------------------------------------------------
+마이페이지 > 마이페이지 서브메인 (mypageView)
+-------------------------------------------------------------------*/
+.mpg .pdB16 { padding-bottom: 1.6rem; } 
+/* 회색배경 유저정보 */
+.mypageView .lytUser { width:100vw; margin-left:-2rem; background-color: var(--bg2); padding: 2.4rem 2rem; } 
+.mypageView .userBox { display: flex; justify-content: space-between; } 
+.mypageView .userBox .username { font-size: 1.8rem; color: var(--text-sub); } 
+.mypageView .userBox .username span { font-size: 2rem; color: var(--text-title); margin-right: 0.2rem; font-weight: bold; } 
+.mypageView .userBox .username .userIdSpan { font-size: 1.8rem; color: var(--text-sub); font-weight: normal; } 
+.mypageView .userBox .iconBox { display: flex; } 
+/* 카운트 영역을 위해 박스사이즈를 임의로 늘림 */
+.mypageView .userBox .alarmBox { display: flex; align-items: center; position: relative; width: 4.7rem; } /* 박스 너비 32 + 간격 15 => 너비를 47로 지정 : 알림 숫자영역을 늘리기 위함 */
+.mypageView .userBox .scheduleBox { display: flex; align-items: center; position: relative; width: 4.7rem; margin-right: -1.5rem; } /* 너비를 47로 지정 => 늘어난 15만큼 제자리로 이동: 알림 숫자영역을 늘리기 위함 */
+.mypageView .userBox .count { position: absolute; bottom: 1.4rem; left: 1.8rem; padding: 0.1rem 0.5rem; border-radius: 0.9rem; background-color: var(--prime-point); color: var(--color-white); font-size: 1.2rem; width: max-content; } 
+/* ../../mobile/webapp/static/img/common/ico_drop_arrow.svg 임시로 아이콘 추가 */
+.mypageView .userBox .alarmIcon { display: block; width: 3.2rem; height: 3.2rem; background: url(../../static/img/common/ico_mp_alarm.svg) no-repeat center center/contain; } 
+.mypageView .userBox .scheduleIcon { display: block; width: 3.2rem; height: 3.2rem; background: url(../../static/img/common/ico_calendar.svg) no-repeat center center/contain;; } 
+.mypageView .lytUser .btnWrap { margin-top: 2.4rem; gap: 0.7rem; } 
+.mypageView .lytUser .btnWrap button { display: flex; align-items: center; justify-content: center; padding: 0; } 
+.mypageView .lytUser .btnWrap .userInfoBtn { background-color: var(--prime-main); color: var(--color-white); } 
+.mypageView .lytUser .btnWrap .userInfoBtn::after { content: ''; display: block; width: 2rem; height: 2rem; margin-bottom: -0.2rem; background: url(../../static/img/common/ico_arrow_white.svg) no-repeat center center/contain; } 
+.mypageView .lytUser .btnWrap .userInfoBtn span { padding: 0.6rem 1rem; border-radius: 1.4rem; border: solid 0.1rem var(--color-white); margin-right: 0.6rem; line-height: 1; } 
+.mypageView .lytUser .btnWrap .scheduleBtn { background-color: #e0e0e0; color: var(--text-sub); } 
+.mypageView .title { margin-top: 2.4rem; } 
+.mypageView .title span { color: var(--prime-main); font-size: 1.6rem; font-weight: bold; } 
+/* 진행중인 상담 */
+.mypageView .consultingList { margin-top: 1.6rem; } 
+.mypageView .consultingList li+li { margin-top: 0.8rem; } 
+.mypageView .consultingList li a { display: flex; align-items: center; padding: 1.3rem 2.4rem 1.3rem 2rem; border-radius:0.8rem; border: solid 0.1rem var(--line2); } 
+.mypageView .consultingList li img { margin-right: 1.4rem; width: 2.8rem; } 
+.mypageView .consultingList li p:nth-child(2) { font-size: 1.6rem; } 
+.mypageView .consultingList li p:last-child { margin-left: auto; font-size: 1.8rem; color: var(--text-title); font-weight: 500; } 
+/* 진행중인 상담이 없을 경우 */
+.mypageView .consultingList0 button { display: block; width: 100%; padding: 1.5rem 0; border-radius: 0.8rem; border: solid 0.1rem var(--prime-main); font-size: 1.6rem; color: var(--prime-main); } 
+.mypageView .consultingList0 li+ li { margin-top: 0.8rem; } 
+
+.mypageView .consultingBtn { display: flex; width: 100%; margin: 1.2rem 0 4rem; padding: 1.2rem 0.8rem 1.2rem 1.6rem; border-radius: 1rem; background-color: var(--prime-main); color: var(--color-white); } 
+.mypageView .consultingBtn::after { content: ''; display: block; margin-left: auto; width: 2rem; height: 2rem; background: url(../../static/img/common/ico_arrow_white.svg) no-repeat center center/contain; } 
+.mypageView .applicationInfo { margin-top: 0.4rem; color: var(--text-sub); } 
+/* ADIGA 신청/접수 */
+.mypageView .applicationTitle { margin-bottom: 0; } 
+.mypageView .applicationList { display: flex; gap: 0.7rem; margin-top: 1.6rem; margin-bottom: 4rem; } 
+.mypageView .applicationList li { width: calc(33.33% - 0.47rem); } 
+.mypageView .applicationList li button { width: 100%; padding: 1.2rem 0; border-radius: 1rem; background-color: var(--prime-main); color: var(--color-white); } 
+/*-------------------------------------------------------------------
+마이페이지 > 공통 
+-------------------------------------------------------------------*/
+/* 공통 스타일 리스트 */
+.mpgListStyle { margin-top: 1.6rem; } 
+.mpgListStyle li a { display: block; padding: 2rem; border-radius: 1rem; border: solid 0.1rem var(--line1); } 
+.mpgListStyle li + li { margin-top: 1.2rem; } 
+.mpgListStyle .labelBox { display: flex; justify-content: space-between; } 
+.mpgListStyle .labelBox .alarmFlag { font-size: 1.2rem; color: var(--text-title); } 
+.mpgListStyle .title { margin-top: 0.8rem; font-size: 1.6rem; color: var(--text-title); font-weight: 500; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.alarmSettingView .mpgListStyle .title {white-space: inherit !important; text-overflow: initial !important; overflow: visible !important; }
+.mpgListStyle .dateBox { display: flex; justify-content: space-between; margin-top: 1rem; } 
+.mpgListStyle .dateBox span { font-size: 1.3rem; color: var(--text-body); } 
+.mpgListStyle .dateBox span + span { display: inline-block; margin-left: 0.6rem; }
+.mpgListStyle .dateBox p {display:flex; flex-flow:row nowrap; align-items:center; justify-content:flex-start; gap:.5rem;}
+/*20240105 읽음 추가*/
+.mpgListStyle li.readed .labelBox .mpgFlag span,
+.mpgListStyle li.readed .labelBox .alarmFlag, 
+.mpgListStyle li.readed .title,
+.mpgListStyle li.readed .dateBox span {color: var(--line2) !important;} 
+/* 공통 스타일 리스트 2 */
+.mpgListStyle._style2 .labelBox { align-items: center; } 
+.mpgListStyle._style2 .title { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.mpgListStyle._style2 .loc { margin-top: 1.4rem; } 
+.mpgListStyle._style2 .locFlag { font-size: 1.3rem; color: var(--text-sub); } 
+/*-------------------------------------------------------------------
+마이페이지 > 관심대학/전형/진로 > 공통
+-------------------------------------------------------------------*/
+.myInterestPage .section { padding-bottom: 4rem; } 
+.myInterestPage .tabMenu._dep3 { margin-top: 2.4rem; } 
+.myInterestPage .tabMenu._dep3 + .tabCon { padding-top: 1.6rem; } 
+.myInterestPage .tabMenu._dep3 + .tabCon .cptCnt { margin-top: 0; } 
+/*-------------------------------------------------------------------
+마이페이지 > 관심대학/전형/진로 > 관심대학 > 일반대학(탭) (myInterestUvtView01)
+-------------------------------------------------------------------*/
+:where(.myInterestUvtView01,.myInterestUvtView02,.myInterestAdmssView01,.myInterestJobView) .cptNoData .ndtInner p.txtDark { font-weight: normal; margin-bottom: 0.4rem; } 
+:where(.myInterestUvtView01,.myInterestUvtView02,.myInterestAdmssView01,.myInterestJobView) .cptNoData .ndtInner p.txtNorm { font-size: 1.4rem; margin-bottom: 2rem; } 
+:where(.myInterestUvtView01,.myInterestUvtView02,.myInterestAdmssView01,.myInterestJobView) .cptNoData button.btnConfirm { width: auto; margin: 0 auto; padding: 1.2rem 2rem; } 
+/*-------------------------------------------------------------------
+마이페이지 > 관심대학/전형/진로 > 관심진로 (myInterestJobView)
+-------------------------------------------------------------------*/
+.myInterestJobView .myInterestJobList li a { display: flex; padding: 2rem; border-radius: 1rem; border: solid 0.1rem var(--line2); } 
+.myInterestJobView .myInterestJobList li + li { margin-top: 1.2rem; } 
+.myInterestJobView .myInterestJobList .titleBox p { margin-bottom: 0.8rem; font-size: 1.6rem; font-weight: bold; color: var(--text-title); } 
+.myInterestJobView .myInterestJobList .titleBox span { color: var(--text-sub2); } 
+.myInterestJobView .myInterestJobList .cptFavBtn { flex-shrink: 0; margin-left: auto; padding-left: 1.2rem; width: 4rem; } 
+.myInterestJobView .btnWrap { margin-top: 1.2rem; } 
+.myInterestJobView .cptCnt { margin-top: 0; } 
+/*-------------------------------------------------------------------
+마이페이지 > 어디가 알림 > 알림리스트 (alarmSettingView)
+-------------------------------------------------------------------*/
+.alarmSettingView .cptCntBox { display: flex; align-items: center; margin-top: 1.2rem; } 
+.alarmSettingView .cptCnt { margin: 0; } 
+.alarmSettingView .formElem { margin-left: auto; } 
+.alarmSettingView .btnWrap { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+마이페이지 > 어디가 알림 > 알림설정 (alarmSettingForm)
+-------------------------------------------------------------------*/
+#bsAlarmSetting .title { font-size: 1.6rem; font-weight: 500; } 
+#bsAlarmSetting .title:not(:first-child) { margin-top: 3.9rem; } 
+#bsAlarmSetting .titleInfo { display: block; margin-top: 0.2rem; color: var(--text-sub); } 
+#bsAlarmSetting .settingList { margin-top: 2.1rem; border-top: 0.1rem solid var(--line3); } 
+#bsAlarmSetting .settingList li { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 0.1rem solid var(--line3); } 
+#bsAlarmSetting .settingList .textBox p { color: var(--text-title); } 
+#bsAlarmSetting .settingList .textBox span { font-size: 1.2rem; color: var(--text-sub); } 
+#bsAlarmSetting .settingList .cptTogChk { height: 2.4rem; } 
+/*-------------------------------------------------------------------
+마이페이지 > 일정관리 > 일정 리스트(달력) (scheduleMngeView)
+-------------------------------------------------------------------*/
+.schedulePage .schedule { width:100vw; margin-left:-2rem; } 
+.schedulePage .dateInfo { display: flex; justify-content: space-between; align-items: center; width:100vw; height: 6.4rem; margin-left:-2rem; background-color: #f0f0f0; padding: 0 2rem; border-top: 0.1rem solid var(--line2); border-bottom: 0.1rem solid var(--line2); } 
+.schedulePage .dateInfo p { font-size: 1.6rem; font-weight: 500; } 
+.schedulePage .scheduleList { margin-top: 2.4rem; } 
+.schedulePage .scheduleList li { border-radius: 1rem; border: solid 0.1rem var(--line2); padding: 2rem; } 
+.schedulePage .scheduleList li + li { margin-top: 1.2rem; } 
+.schedulePage .scheduleList li p { font-size: 1.6rem; color: var(--text-title); overflow: hidden; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; word-break: break-all; } 
+.schedulePage .scheduleList li span { display: block; margin-top: 0.8rem; font-size: 1.3rem; color: var(--text-sub3); } 
+.schedulePage .btnWrap { margin-top: 1.2rem; } 
+/*-------------------------------------------------------------------
+마이페이지 > 일정관리 > 일정 등록 (scheduleMngeForm)
+-------------------------------------------------------------------*/
+#bsScheduleMnge .cptTable th { text-align: left; padding-left: 1.2rem; } 
+#bsScheduleMnge .cptTable td { padding: 1.1rem; } 
+#bsScheduleMnge .essential { position: relative; color: var(--text-title); } 
+#bsScheduleMnge .essential::after { content: ''; display: block; position: absolute; top: 0; right: -0.6rem; width: 0.5rem; height: 0.5rem; background: var(--prime-point); border-radius: 50%; } 
+/*-------------------------------------------------------------------
+마이페이지 > 일정관리 > 일정 리스트(달력) > 분류 선택 (scheduleMngeSelView)
+-------------------------------------------------------------------*/
+#bsScheduleMngeSel .filterArea { margin-bottom: 0; padding: 0; } 
+#bsScheduleMngeSel .checkboxInfo { margin-top: 1.6rem; margin-bottom: 1.6rem; color: var(--text-sub); } 
+/*-------------------------------------------------------------------
+ 마이페이지 > 일정관리 > 일정 상세 (scheduleMngeDtlView) 
+-------------------------------------------------------------------*/
+.scheduleMngeDtlView :is(.cptTable th, .section .cptTable tbody td) { text-align: left; } 
+/*-------------------------------------------------------------------
+마이페이지 >성적관리 >수능/모의고사(cSatScoreMngeView)
+-------------------------------------------------------------------*/
+.cSatScoreMngeView .tabMenu._dep3 { margin-top: 2.4rem; } 
+/* .cSatScoreMngeView .formElem { width: 10.6rem; } */
+/*20231207 추가*/
+/* .cSatScoreMngeView .filterArea {justify-content:space-between;} */
+/* .cSatScoreMngeView .filterArea div {width: auto !important;}  */
+/*-------------------------------------------------------------------
+마이페이지 >신청/접수 >Q&A 신청 내역(receptionHistQAView)
+마이페이지 >신청/접수 >제안 및 건의 신청 내역(receptionHistSugView)
+-------------------------------------------------------------------*/
+:where(.receptionHistQAView, .receptionHistSugView) .cptCnt { margin-top: 0; } 
+/*-------------------------------------------------------------------
+마이페이지 >신청/접수 >제안 및 건의 신청 내역(receptionHistSugView)
+-------------------------------------------------------------------*/
+.receptionHistSugView .btnBox { display: flex; justify-content: space-between; align-items: center; } 
+.receptionHistSugView .btnBox .cptCnt { width: auto; margin-bottom: 0; } 
+.receptionHistSugView .tabCon { padding: 1.9rem; } 
+.receptionHistSugView .mpgListStyle { margin-top: 1.1rem; } 
+/*-------------------------------------------------------------------
+마이페이지> 신청/접수> 대학별 행사 신청 내역 receptionHistUvtView
+-------------------------------------------------------------------*/
+.receptionHistUvtView .cptCnt { margin-top: 0; } 
+.receptionHistUvtView .btnWrap { margin-top: 1.2rem; } 
+
+/*지도검색 통합학과*/
+.courCombArea.map {background:#e3edef; border-radius:.8rem; padding: 2rem;}
+.courCombArea.map ul li {margin-bottom:1.2rem;}
+.courCombArea.map ul li:last-of-type {margin-bottom:0;} 

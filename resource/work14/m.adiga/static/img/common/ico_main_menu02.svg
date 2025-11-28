@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <clipPath id="k3yt77auma">
+            <path data-name="사각형 4498" style="fill:none" d="M0 0h22.807v26.439H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="그룹 5481" transform="translate(4.673 3)" style="clip-path:url(#k3yt77auma)">
+        <path data-name="패스 66714" d="M13.155 25.8a5.09 5.09 0 0 0 3.123-1.3l4.594-4.595a5.087 5.087 0 0 0 1.294-3.123V2.578A1.835 1.835 0 0 0 20.336.75H2.578A1.835 1.835 0 0 0 .75 2.578v21.391A1.834 1.834 0 0 0 2.578 25.8z" transform="translate(-.054 -.054)" style="fill:none"/>
+        <path data-name="패스 66715" d="M13.155 25.8a5.09 5.09 0 0 0 3.123-1.3l4.594-4.595a5.087 5.087 0 0 0 1.294-3.123V2.578A1.835 1.835 0 0 0 20.336.75H2.578A1.835 1.835 0 0 0 .75 2.578v21.391A1.834 1.834 0 0 0 2.578 25.8z" transform="translate(-.054 -.054)" style="stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;fill:none"/>
+        <path data-name="패스 66716" d="M3.532 20.01A1.833 1.833 0 0 0 1.7 21.838v3.523c0 1.007.581 1.247 1.293.535L7.59 21.3c.712-.711.47-1.292-.535-1.292z" transform="translate(13.228 -1.447)" style="fill:none"/>
+        <path data-name="패스 66717" d="M3.532 20.01A1.833 1.833 0 0 0 1.7 21.838v3.523c0 1.007.581 1.247 1.293.535L7.59 21.3c.712-.711.47-1.292-.535-1.292z" transform="translate(13.228 -1.447)" style="stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;fill:none"/>
+        <path data-name="선 765" transform="translate(5.977 6.891)" style="fill:#fff" d="M0 0h3.92"/>
+        <path data-name="선 766" transform="translate(5.977 6.891)" style="stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;fill:none" d="M0 0h3.92"/>
+        <path data-name="선 767" transform="translate(5.977 11.376)" style="fill:#fff" d="M0 0h3.92"/>
+        <path data-name="선 768" transform="translate(5.977 11.376)" style="stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;fill:none" d="M0 0h3.92"/>
+    </g>
+    <path data-name="사각형 4755" style="opacity:.2;fill:none" d="M0 0h32v32H0z"/>
+</svg>

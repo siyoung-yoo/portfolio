@@ -1,0 +1,281 @@
+@charset "utf-8";
+/* ----------
+Intro
+---------- */
+
+
+/* *** intro *** */
+#introContent {
+	box-sizing:border-box;
+	position: relative;
+	scrollbar-width: none; 
+}
+#introContent .intro-tit {
+	padding: 2rem 2rem 0;
+	text-align: center;
+	position: relative;
+}
+#introContent .intro-tit img {
+	box-sizing:border-box; 
+	width: 70%;
+	margin-right: 2rem;
+}
+#introContentInner {
+	box-sizing:border-box; 
+	margin: 2rem; 
+	overflow-x: hidden;
+	box-shadow: 0 0 0.8rem 0 rgba(0, 0, 0, 0.12);
+	background-color: var(--color-white);
+	border-radius: 0.8rem;
+}
+/* basic interlocution  */
+/* container */
+#container {
+	padding-top: 5rem;
+	scrollbar-width: none;
+}
+#container #introInfo {
+	padding: 1.2rem 2rem 0;
+}
+#container #introInfo > li {
+	display: flex;
+	margin-bottom: 1.5rem;
+	gap: .6rem;
+}
+#container #introInfo > li:last-child {
+	margin-bottom: 2.5rem;
+}
+#introInfo > li > div:first-child {
+	margin: -.4rem 0 0 -.4rem;
+	width: 4rem;
+}
+#introInfo > li > div.infoDesc {
+    width: calc(100% - 4rem);
+}
+#introInfo > li > .infoDesc h4 {
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: var(--text-title);
+	letter-spacing: -0.035rem;
+	word-break: keep-all;
+	line-height: 1.3em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#introInfo > li > .infoDesc h4 a.moreBtn {
+	padding: .4rem 1rem;
+	background: var(--bg4);
+	color: var(--prime-main);
+	border-radius: 999rem;
+	border: .1rem solid var(--prime-main);
+	display: inline-block;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+#introInfo > li > .infoDesc > p {
+	font-size: 1.4rem;
+	color: var(--text-sub);
+	letter-spacing: -0.035rem;
+	margin-top: .6rem;
+	line-height: 1.3;
+	word-break: keep-all;
+}
+#introInfo > li > .infoDesc > p span {
+	font-weight: 500;
+	color: var(--prime-main);
+	word-break: keep-all;
+	letter-spacing: -0.035rem;
+}
+#introInfo .infoDesc .descSub {
+	margin-top: .6rem;
+	display: flex;
+	align-items: flex-start;
+}
+#introInfo .infoDesc .descSub img {
+	width: 1.2rem;
+	margin: .3rem .6rem 0 0;
+}
+#introInfo .infoDesc .descSub span {
+	font-size: 1.3rem;
+	color: var(--text-sub2);
+}
+#introInfo .infoDesc .questionEx {
+	margin-top: 1.2rem;
+}
+#introInfo .infoDesc .questionEx li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	position: relative;
+}
+#introInfo .infoDesc .questionEx li p {
+	padding: .6rem 1rem;
+	border-radius: .8rem;
+	text-align: center;
+	line-height: 1.28;
+	word-break: keep-all;
+	height: 7rem;
+	font-size: 1.3rem;
+	font-weight: 400;
+	letter-spacing: -0.035rem;
+	display: flex;
+    align-items: center;
+	overflow: hidden;
+}
+#introInfo .infoDesc .questionEx li p.userQ {
+	background-color: var(--color-white);
+	border: .1rem solid var(--line2);
+	color: var(--text-sub);
+	width: 40%;
+	justify-content: center;
+}
+#introInfo .infoDesc .questionEx li p.recomQ {
+	background-color: var(--bg4);
+	border: .1rem solid var(--prime-main);
+	color: var(--prime-main);
+	width: 54%;
+}
+#introInfo .infoDesc .questionEx li p.recomQ::before {
+	background: url("../../img/ai/intro_info_next.png") no-repeat;
+	width: .8rem; height: .6rem;
+	content: "";
+	display: inline-block;
+	position: absolute; left: 41.7%;
+	background-size: cover;
+}
+#introContentInner ul.intro-guide {
+	display: flex;
+	align-items: center;
+}
+#introContentInner .intro-guide li {
+	box-sizing:border-box; 
+	text-align: center;
+	padding: 1.5rem 2.5rem 1.7rem;
+	flex-shrink: 0;
+}
+#introContentInner .intro-guide li .guide-btn {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+}
+#introContentInner .intro-guide li .guide-btn .ai-category {
+	border: .1rem solid var(--line2);
+	border-radius: 999rem;
+	padding: 0.5rem 1rem;
+	color: var(--text-sub3);
+}
+#introContentInner .intro-guide li .guide-btn .txt {
+	letter-spacing: -0.04rem;
+	font-weight: 500;
+	font-size: 1.6rem;
+	color: var(--text-title);
+	margin-top: 1.2rem;
+	display:-webkit-box; 
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical; 
+	overflow: hidden;
+	
+}
+#introContent .swiper-pagination-bullet {
+	width: 1rem;
+	height: 1rem;
+	background-color: var(--line2);
+	opacity: 1;
+	cursor: pointer;
+}
+#introContent .swiper-pagination-bullet-active {
+	width: 2.4rem;
+	height: 1rem;
+	background-color: #16a1a9;
+	border-radius: 999rem;
+	transition: all 0.4s;
+}
+#introContent .ai_intro_swiper_page {
+	text-align: center;
+	padding-bottom: 5rem;
+}
+
+/* *** introLoading *** */
+#introLoading {
+    margin: 30px auto 0;
+	*zoom:1; 
+	padding: 0 20px 0;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	height: 70vh;
+}
+#introLoading #introLoadingInner .intro-loading {
+	text-align: center;
+}
+#introLoading #introLoadingInner .intro-loading img {
+	margin-bottom: 1rem;
+}
+#introLoading #introLoadingInner .intro-loading h3 {
+	font-size: 2.2rem;
+	letter-spacing: -0.14rem;
+	font-weight: 600;
+	color:var(--text-title);
+	line-height: 1.45;
+}
+#introLoading #introLoadingInner .intro-loading h3 span.loading-color-txt {
+	color:var(--prime-main);
+	font-size: 2.2rem;
+	font-weight: 600;
+}
+#introLoading #introLoadingInner .intro-loading .loading-bar-area {
+	position: relative;
+	margin: 4rem 0;
+	overflow: hidden;
+	box-shadow: 0 0 0.8rem 0 rgba(0, 0, 0, 0.12);
+	border-radius: 1rem;
+}
+#introLoading #introLoadingInner .intro-loading .loading-bar-area .loading-bar-bg {
+	width: 100%;
+	height: 1.2rem;
+	background-color: var(--color-white);
+}
+#introLoading #introLoadingInner .intro-loading .loading-bar-area .loading-bar {
+	width: 16rem;
+	height: 1.2rem;
+	border-radius: 1rem;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+	background-color: #16a1a9;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+#introLoading #introLoadingInner .intro-loading .loading-time {
+	font-size: 1.8rem;
+	color: var(--text-title);
+	font-weight: 500;
+	line-height: 1.6;
+	letter-spacing: -0.045rem;
+	margin-bottom: 3rem;
+}
+#introLoading #introLoadingInner .intro-loading .loading-time .loading-time-style {
+	color: var(--text-sub);
+	font-size: 1.8rem;
+	font-weight: 500;
+}
+#introLoading #introLoadingInner .intro-loading .loading-time .loading-time-m,
+#introLoading #introLoadingInner .intro-loading .loading-time .loading-time-s {
+	color: var(--prime-main);
+	font-size: 1.8rem;
+	font-weight: 500;
+}
+#introLoading #introLoadingInner .intro-loading p {
+	font-size: 1.6rem;
+	line-height: 1.56;
+	letter-spacing: -0.045rem;
+	color: var(--text-sub);
+	margin-top: 3rem;
+	white-space: nowrap;
+}
+#introLoading #introLoadingInner .intro-loading p .loading-people {
+	font-size: 1.8rem;
+	color: var(--prime-main);
+	font-weight: 600;
+}

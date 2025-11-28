@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+    <defs>
+        <clipPath id="gi9bf5enda">
+            <path data-name="사각형 3116" style="fill:none" d="M0 0h26v25.235H0z"/>
+        </clipPath>
+        <clipPath id="y5nozj9g3b">
+            <path data-name="사각형 3119" style="stroke-width:1.5px;stroke:#707070;fill:none" d="M0 0h26v25.235H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="그룹 3092">
+        <g data-name="그룹 3089" style="clip-path:url(#gi9bf5enda)" transform="translate(3.061 3.491)">
+            <path data-name="사각형 3115" d="M0 0h24.471v9.529a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5V0z" transform="translate(.765 9.941)" style="stroke:#222;stroke-linejoin:round;stroke-width:1.5px;fill:none"/>
+        </g>
+        <g data-name="그룹 3091" style="clip-path:url(#y5nozj9g3b)" transform="translate(3.061 3.491)">
+            <path data-name="사각형 3118" d="M5 0h14.471a5 5 0 0 1 5 5v1.882H0V5a5 5 0 0 1 5-5z" transform="translate(.765 3.059)" style="stroke:#222;stroke-linejoin:round;stroke-width:1.5px;fill:none"/>
+            <path data-name="선 560" transform="translate(6.882)" style="stroke:#222;stroke-linejoin:round;stroke-width:1.5px;fill:none" d="M0 0v6.118"/>
+            <path data-name="선 561" transform="translate(19.118)" style="stroke:#222;stroke-linejoin:round;stroke-width:1.5px;fill:none" d="M0 0v6.118"/>
+        </g>
+    </g>
+    <path data-name="사각형 4757" style="opacity:.2;fill:none" d="M0 0h32v32H0z"/>
+</svg>

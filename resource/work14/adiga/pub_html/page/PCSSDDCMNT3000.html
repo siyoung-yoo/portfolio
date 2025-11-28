@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+
+	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+		<div class="popupDim"></div>
+		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
+			<div class="popupInMotion">
+				<div class="popupContainer">
+					<div class="popupContArea">
+						<div class="popTitleBox">
+							<h3 class="popTitle">발급 안내</h3>
+							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+								<span class="hidden">닫기</span>
+							</button>
+						</div>
+
+						<div class="popCont typeSsd">
+							<div class="scroll">
+
+								<!-- p태그 삭제 후 사용해주세요 -->
+								<p style="text-align: center; padding: 200px 0; background: #f0f0f0;">발급 안내 영역 입니다.</p>
+
+							</div>
+						</div>
+
+						<div class="popBtm">
+							<button type="button" class="btnCTA _confirm" onclick="closePopup('popupName');">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

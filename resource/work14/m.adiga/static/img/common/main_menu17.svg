@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+    <defs>
+        <clipPath id="ipm40d2fia">
+            <path data-name="사각형 1681" transform="translate(-5 -4)" style="fill:red;opacity:.24" d="M0 0h36v36H0z"/>
+        </clipPath>
+    </defs>
+    <g data-name="마스크 그룹 22" style="clip-path:url(#ipm40d2fia)" transform="translate(5 4)">
+        <g data-name="그룹 2132">
+            <path data-name="패스 94" d="M23.165 6.021A5.271 5.271 0 1 1 17.9.75a5.271 5.271 0 0 1 5.27 5.271" transform="translate(-2.305 -.75)" style="stroke-width:1.2px;stroke:#707070;fill:#fff"/>
+            <path data-name="패스 95" d="M23.165 6.021A5.271 5.271 0 1 1 17.9.75a5.271 5.271 0 0 1 5.265 5.271z" transform="translate(-2.305 -.75)" style="fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2px"/>
+            <path data-name="패스 96" d="M27.273 29.978v-9.454a4.9 4.9 0 0 0-4.9-4.9H11.96a4.9 4.9 0 0 0-4.9 4.9v9.455" transform="translate(-1.577 -2.699)" style="fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2px"/>
+            <path data-name="패스 97" d="M10.445 14.7H2.02a1.271 1.271 0 0 0-1.27 1.27v5.8a1.27 1.27 0 0 0 1.27 1.27h2.374l1.839 3.185 1.84-3.185h2.372a1.269 1.269 0 0 0 1.27-1.27v-5.8a1.27 1.27 0 0 0-1.27-1.27" transform="translate(-.75 -2.577)" style="fill:#34c8cf;stroke-width:1.2px;stroke:#707070"/>
+            <path data-name="패스 98" d="M10.445 14.7H2.02a1.271 1.271 0 0 0-1.27 1.27v5.8a1.27 1.27 0 0 0 1.27 1.27h2.374l1.839 3.185 1.84-3.185h2.372a1.269 1.269 0 0 0 1.27-1.27v-5.8a1.27 1.27 0 0 0-1.27-1.27z" transform="translate(-.75 -2.577)" style="fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2px"/>
+            <path data-name="선 1" transform="translate(3.156 16.3)" style="fill:#17baed;stroke-width:1.2px;stroke:#707070" d="M0 0h4.652"/>
+            <path data-name="선 2" transform="translate(3.156 16.3)" style="fill:none;stroke:#111;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2px" d="M0 0h4.652"/>
+        </g>
+    </g>
+</svg>

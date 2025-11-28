@@ -1,0 +1,389 @@
+@charset "utf-8";
+
+:root {
+	/* 메인&포인트 컬러 */
+ 	--prime-color-main: #0D8199;
+ 	--prime-color-point: #f2674a;
+
+	/* 텍스트 컬러 */
+ 	--text-color-title: #111;
+	--text-color-body: #333;
+	--text-color-sub: #666;
+	--text-color-sub2: #888;
+	--text-color-sub3: #888;
+	--color-white: #fff;
+
+	/* 라인 컬러 */
+ 	--line-color-ty1: #ccc;
+	--line-color-ty2: #ddd;
+	--line-color-ty3: #e5e5e5;
+
+	/*보조컬러*/
+ 	--sub-color-ty1: #031f5f;
+	--sub-color-ty2: #faa73f;
+
+	/*미정*/
+ 	--sub-color-ty3: #d11f59;
+	/*미정*/
+
+ 	/*배경컬러*/
+ 	--bg-color-ty1: #f4f5f6;
+	--bg-color-ty2: #f5f5f5;
+	--bg-color-ty3: #f7f7f7;
+	--bg-color-ty4: #f3fafa;
+}
+
+
+/*sample mark*/
+.jnf .jobInfoGraph span.temp {display:block; width:100%; height:390px; background-color:#ff0000; opacity:0.4; color:#fff; font-weight:bold; font-size:50px; text-align:center; padding-top:150px;}
+/*// sample mark*/
+
+/*대입정보센터 관련사이트안내*/
+.relatedSiteInfoView {position:relative; width:100%;}
+.relatedSiteInfoView ul {display:flex; flex-flow:row wrap; align-items: center; justify-content: flex-start; gap:40px 30px; }
+.relatedSiteInfoView ul li {position:relative;}
+.relatedSiteInfoView ul li > div {display:flex; flex-flow:row nowrap; align-items: flex-start; justify-content: flex-start; gap:20px;}
+.relatedSiteInfoView ul li > div > div:first-of-type {width:250px;}
+.relatedSiteInfoView ul li > div > div:last-of-type {width:400px;}
+.relatedSiteInfoView ul li > div > div:last-of-type > a {display:inline-block; font-size:18px; color:var(--text-color-body); font-weight:500; padding-right:24px; background:url(../img/common/ico_link.png)right center no-repeat; background-size:20px 20px; margin-bottom:10px;}
+.relatedSiteInfoView ul li > div > div:last-of-type > p {font-size:14px; color: var(--text-color-sub); font-weight:400; line-height:24px;}
+
+/*대입정보센터 대입제도안내*/
+.uctSys .ltCont .cptBxGry {border:1px solid var(--line-color-ty1); border-radius:12px; padding:20px;}
+.uctSys .ltCont .cptBxGry ul li {border-bottom:1px solid var(--line-color-ty1);}
+.uctSys .ltCont .cptBxGry ul li a {display:block; width:100%; height:64px; line-height:64px; font-size:18px; color:var(--text-color-body); font-weight:500; text-align:center; border-radius:12px;}
+.uctSys .ltCont .cptBxGry ul li.on {border-bottom:0;}
+.uctSys .ltCont .cptBxGry ul li.on a {background: var(--prime-color-main); color:var(--color-white); font-weight:bold;}
+
+.uctSys .rtCont .paragraph {margin-bottom:40px;}
+.uctSys .rtCont .paragraph p.contTit {margin-bottom:16px;}
+.uctSys .rtCont .paragraph ul.hType {display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start; gap:10px}
+.uctSys .rtCont .paragraph ul.hType li button {border:1px solid #666; padding:0 65px 0 45px; line-height:50px; background: url(../img/common/ico_link02.png)right 40px center no-repeat; border-radius:12px; font-size:16px; color: var(--text-color-body); font-weight:500;}
+.uctSys .rtCont .paragraph ul.hType li button:hover {background: rgba(0,0,0,0.04) url(../img/common/ico_link02.png)right 40px center no-repeat;}
+.uctSys .rtCont .paragraph ul.vType {width:100%;}
+.uctSys .rtCont .paragraph ul.vType li {display:flex; flex-flow: row nowrap; align-items: flex-start; justify-content: flex-start; margin-bottom:20px;}
+.uctSys .rtCont .paragraph ul.vType li span.no {font-size:16px; color:var(--text-color-body); font-weight:400; display:inline-block; margin-right:5px; width:18px;}
+
+/*마이페이지 회원정보수정*/
+.insPerData .joinInput {margin-bottom:30px;}
+.insPerData .joinInput,
+.changePwd .joinInput {margin-top:40px;}
+.insPerData .joinInput:last-of-type,
+.changePwd .joinInput:last-of-type {margin-bottom:60px;}
+.insPerData .btnArea,
+.changePwd .btnArea {display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; gap:10px;}
+
+/*마이페이지 개인정보 인증수단 목록 추가*/
+.mpg .rtCont .certMthdListWrap{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+.mpg .rtCont .certMthdListWrap .certMthd{ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 50px;
+    background-color: var(--color-white);
+    border: 1px solid var(--line-color-ty1);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.mpg .rtCont .certMthdListWrap img{ margin-right: 8px;}
+
+/*마이페이지 회원정보수정 기본정보*/
+.mpg .mpgInsTit {width:100%; display:flex; flex-flow: row nowrap; align-items: center; justify-content: space-between; margin-bottom:15px;}
+.mpg .tableCover {margin-bottom:60px;}
+.span.required {color:#e52800; font-size:14px; font-weight:500; display:inline-block; vertical-align:middle; margin-left:5px; }
+.mpg .tableCover .infoSpan {font-size:17px; font-weight:400; color: var(--prime-color-main);}
+.mpg .tableCover .tbFlx {display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between;}
+.mpg .tableCover .tbFlx input[type="text"] {width:260px; border:1px solid var(--line-color-ty1); height:44px; line-height:44px; font-size:16px; color:var(--text-color-body); border-radius:6px; padding-left:20px;}
+.mpg .tableCover td button:not(.selCustBtn) {font-size:16px; color:var(--text-color-body); border:1px solid var(--text-color-sub); text-align:center; height:44px; line-height:44px; padding: 0 22px; border-radius:8px; }
+.mpg .tableCover tr th {font-size:14px; font-weight:500; color: var(--text-color-title);}
+.mpg .tableCover tr td {font-size:14px; font-weight:400; color: var(--text-color-body);}
+.mpg .tableCover tr td .emailForm {display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start;}
+.mpg .tableCover tr td .emailForm > input[type="text"]:first-of-type {width:320px; border:1px solid var(--line-color-ty1); height:44px; line-height:44px; font-size:16px; color:var(--text-color-body); border-radius:6px;padding-left:20px;}
+.mpg .tableCover tr td .emailForm > input[type="text"]:last-of-type {width:250px; border:1px solid var(--line-color-ty1); height:44px; line-height:44px; font-size:16px; color:var(--text-color-body); border-radius:6px; margin-right:12px; padding-left:20px;}
+.mpg .tableCover tr td .emailForm > span {font-size:16px; color:var(--text-color-body); font-weight:400; line-height:44px; margin:0 12px;}
+.mpg .tableCover tr td .emailForm .comSelectTpStk {width:calc(100% - 621px) !important;}
+.mpg .tableCover tr td .phoneNumb {width:320px; border:1px solid var(--line-color-ty1); height:44px; line-height:44px; font-size:16px; color:var(--text-color-body); border-radius:6px; padding-left:20px;}
+
+.mpg .myHelper .helperGroup {width:100%;}
+.mpg .myHelper .helperGroup ul {display:flex; flex-flow: row wrap; align-items: center; justify-content: flex-start; gap:17px;}
+.mpg .myHelper .helperGroup ul li {width:249px; position:relative; }
+.mpg .myHelper .helperGroup ul li a {display:block;width:100%;height:100%;min-height: 140px;border:1px solid var(--line-color-ty1);border-radius:8px;padding:20px;background: var(--color-white);}
+.mpg .myHelper .helperGroup ul li a .helperTop {width:100%;display:flex;flex-flow: row nowrap;justify-content: space-between;}
+.mpg .myHelper .helperGroup ul li a .helperTop > .grpBox {display:flex;flex-flow:row nowrap;align-items: flex-start;justify-content: flex-start;}
+.mpg .myHelper .helperGroup ul li a .helperTop > .grpBox span.cate {display: block;width:57px;height:36px;text-align:center;border:1px solid var(--text-color-sub);border-radius:6px;line-height:34px;font-size:14px;color:var(--text-color-body);min-width: 57px;}
+.mpg .myHelper .helperGroup ul li a .helperTop > .grpBox p {font-size:18px;color: var(--text-color-body);font-weight:500;margin-left:12px;height: 54px;vertical-align: top;display: inline-block;width: 115px;}
+.mpg .myHelper .helperGroup ul li a .helperTop > span.arrow {background: url(../img/common/select_down.png) top right no-repeat;width: 24px;height:24px;display: block;transform: translate(6px, 2px) rotate(-90deg);background-size: contain;}
+.mpg .myHelper .helperGroup ul li a .helperTop > span.delete {background: url(../img/common/ico_close_popup.png)center right no-repeat; background-size:contain; width:14px; height:14px; display:inline-block; }
+.mpg .myHelper .helperGroup ul li a .helperBot {width:100%; display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-end; margin-top:17px;}
+.mpg .myHelper .helperGroup ul li a .helperBot span.processing {background: #f2f8ff; border:1px solid #8ec3fd; border-radius:12px; padding:0 9px; height:24px; line-height:22px; font-size:12px; color:#3b97fb; font-weight:400;text-align:center;}
+.mpg .myHelper .helperGroup ul li a .helperBot span.denied {background:var(--line-color-ty3); border:1px solid var(--line-color-ty3); border-radius:12px; padding: 0 9px; height:24px; line-height:22px; font-size:12px; color:var(--text-color-sub2); font-weight:400; text-align:center;}
+.mpg .myHelper .helperGroup ul li a:hover {border:1px solid var(--prime-color-main) !important; background:#f3fafa !important;}
+.mpg .myHelper .helperGroup ul li a:hover .helperTop > .grpBox span.cate {background: var(--prime-color-main); border:1px solid var(--prime-color-main); color:var(--color-white);}
+.mpg .myHelper .helperGroup ul li a:hover .helperTop > .grpBox p {color: var(--prime-color-main);}
+
+.mpg .loginAff {margin-top:60px;}
+.mpg .loginAff > div:last-of-type {display:flex; flex-flow: row nowrap; align-items: center; justify-content: center; gap:10px;}
+.mpg .loginAff > div:last-of-type button {width:calc(50% - 5px); height:60px; line-height:60px; border:2px solid var(--line-color-ty1); border-radius:12px; display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; gap:12px;}
+.mpg .loginAff > div:last-of-type button.naverLoginBtn span.logoIco {display:inline-block; width:32px; height:32px; background: url(../img/common/ico_naver.png)center center no-repeat; }
+.mpg .loginAff > div:last-of-type button.kakaoLoginBtn span.logoIco {display:inline-block; width:32px; height:32px; background: url(../img/common/ico_kakao.png)center center no-repeat; }
+.mpg .loginAff > div:last-of-type button.onepassLoginBtn span.logoIco {display:inline-block; width:32px; height:32px; background: url(../img/common/ico_onepass.png)center center no-repeat; }
+.mpg .loginAff > div:last-of-type button span:last-of-type {font-size:18px; color: var(--text-color-title); font-weight:bold;}
+.mpg .loginAff > div:last-of-type button:hover {background:#e8f5f6; border:2px solid var(--prime-color-main);}
+#scCateChange .dvsItem {padding:0;}
+#scCateChange .radioForm {width:100%; background:var(--bg-color-ty3); padding:24px; display:flex; flex-flow:row nowrap; align-items: center; justify-content: center; margin-top:20px;}
+#scCateChange .radioForm > div {width:50%;}
+
+.mpg .btnGroup { display: flex; justify-content: center; align-items: center; gap: 12px; } 
+
+/*마이페이지 비밀번호 변경*/
+.mpg .joinInput label {font-size:16px; color: var(--text-color-title); font-weight:500;}
+.mpg .joinInput ._placeholder {font-size:14px; color:var(--text-color-sub2); font-weight:400;}
+.changePwd .cptBxGry {margin-top:40px !important;}
+.changePwd .btnArea {margin-top:60px;}
+
+/*마이페이지 전화상담연동이력*/
+.telHistoryList {width:100%;}
+.telHistoryList ul {display:flex; flex-flow:row wrap; align-items: center; justify-content: flex-start; gap:24px 24px;}
+.telHistoryList ul li {width:calc(33.3333% - 16px); border:1px solid var(--line-color-ty1); border-radius:12px; padding: 24px;}
+/* .telHistoryList ul li:hover {border:1px solid var(--prime-color-main);} */
+.telHistoryList ul li .listTop {width:100%; margin-bottom:20px;}
+.telHistoryList ul li .listTop > span {padding:0 9px; text-align:center; display:inline-block; border-radius:12px; line-height:24px; font-size:12px; font-weight:400;}
+.telHistoryList ul li .listTop .agree {background: var(--prime-color-main); color: var(--color-white);}
+.telHistoryList ul li .listTop .disagree {background-color: var(--line-color-ty3); color:var(--text-color-body);}
+.telHistoryList ul li .listBot {display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between;}
+.telHistoryList ul li .listBot span.telNum {font-size:16px; color: var(--text-color-title); font-weight:500;}
+.telHistoryList ul li .listBot span.historyTime {font-size:14px; color: var(--text-color-sub); font-weight:400;}
+
+.noDataCov .noData {position:relative; width:100%; height:178px; overflow:hidden; border-radius:12px;}
+.noDataCov .noData > div {position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); -webkit-transform:translate(-50%,-50%); -ms-transform:translate(-50%,-50%); -moz-transform:translate(-50%,-50%); -o-transform:translate(-50%,-50%);}
+.noDataCov .noData > div span.noDataIco {display:block; width:52px; height:52px; margin:0 auto; background: url(../img/common/ico_nodata.png) center center no-repeat;}
+.noDataCov .noData > div > p {margin-top:10px; font-size:16px; color:var(--text-color-sub); font-weight:400; text-align:center;}
+
+/*마이페이지 - 검색조건저장*/
+.saveCondition .commFlex > div {width:50%;}
+.saveCondition .commFlex div:last-of-type {width:100%; display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-end; gap:24px;}
+.saveCondition .commFlex div:last-of-type button {display:flex; flex-flow: row nowrap; align-items: center; justify-content: center;}
+.saveCondition .commFlex div:last-of-type button span:first-of-type {font-size:18px; color: var(--text-color-body); font-weight:500; text-decoration:underline;}
+.saveCondition .commFlex div:last-of-type button span:last-of-type {display:inline-block; width:32px; height:32px; background: url(../img/common/ico_btn_plus.png)center center no-repeat;}
+.svCondList {width:100%;}
+.svCondList ul {display:flex; flex-flow:row wrap; align-items: center; justify-content: flex-start; gap:24px 24px;}
+.svCondList ul li {width:calc(33.3333% - 16px); border:1px solid var(--line-color-ty1); border-radius:12px; padding: 24px;}
+/* .svCondList ul li:hover {border:1px solid var(--prime-color-main);} */
+.svCondList ul li .listTop {width:100%; margin-bottom:20px; display:flex; flex-flow: row nowrap; align-items: center; justify-content: space-between;}
+.svCondList ul li .listTop > span {padding:0 9px; text-align:center; display:inline-block; border-radius:12px; line-height:24px; font-size:12px; font-weight:400;}
+.svCondList ul li .listTop .fyDgree {background: var(--prime-color-main); color: var(--color-white);}
+.svCondList ul li .listTop .tyDgree {background-color: var(--line-color-ty3); color:var(--text-color-body);}
+.svCondList ul li .listTop > div {display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-end; gap:23px;}
+.svCondList ul li .listTop > div > a.insert {font-size:13px; color: var(--text-color-sub); font-weight:400; text-decoration:underline;}
+.svCondList ul li .listTop > div > a.delete {background: url(../img/common/ico_close_popup.png)center right no-repeat; background-size:contain; width:14px; height:14px; display:inline-block; cursor:pointer;}
+.svCondList ul li .listBot {width:100%; display:block;}
+.svCondList ul li .listBot span.headTit {display:block; font-size:16px; color: var(--text-color-title); font-weight:500; width:100%; overflow:hidden; text-overflow:ellipsis; white-space: nowrap; }
+.svCondList ul li .listBot span.subTit {display:block; margin-top:8px; font-size:16px; color:var(--text-color-body); font-weight:400; width:100%; overflow:hidden; text-overflow:ellipsis; white-space: nowrap; }
+.scrCondPop .condTit {width:100%; display:flex; flex-flow: row nowrap; align-items: center; justify-content: space-between; margin-bottom:16px;}
+.scrCondPop .condTit p {color: var(--text-color-body); }
+.scrCondPop .condTit span {color: var(--text-color-sub);}
+.scrCondPop .cptActFil {border:0; padding:0;}
+.scrCondPop .cptActFil .afBot {display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start; gap:12px; margin-top:0;}
+.scrCondPop .cptActFil .afBot > div {width:calc(50% - 6px);}
+.scrCondPop .cptActFil .afBot input[type=radio] { width: 0; height: 0; position: absolute; left: -9999px; } 
+.scrCondPop .cptActFil .afBot input[type=radio] + label { display: block; width: 100%; height: 44px; line-height: 44px; box-sizing: border-box; position: relative; display: inline-block; border: 1px solid var(--line-color-ty2); background: var(--color-white); text-align: center; cursor: pointer;  border-radius: 8px; color: var(--text-color-sub);} 
+.scrCondPop .cptActFil .afBot input[type=radio] + label:hover::after { content: ''; width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 8px; background-color: rgba(0,0,0,0.1 ); }
+.scrCondPop .cptActFil .afBot input[type=radio]:checked + label { font-weight: 500; background-color: var(--prime-color-main); color: var(--color-white); border-color: var(--prime-color-main); z-index: 1; } 
+.scrCondPop .cptActFil .afBot input[type=radio]:checked + label:hover::after { content: ''; width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-radius: 8px; background-color: rgba(0,0,0,0.04); }
+.scrCondPop .chkListCommon {width:100%; display:flex; flex-flow: row wrap; align-items: center; justify-content: flex-start; gap:8px 8px;}
+.scrCondPop .chkListCommon.chkList01 > div {width:calc(25% - 6px);}
+.scrCondPop .chkListCommon.chkList02 > div {width:calc(25% - 6px);}
+.scrCondPop .chkListCommon.chkList03 > div {width:calc(25% - 6px);}
+.scrCondPop .chkListCommon.chkList04 > div {width:calc(25% - 6px);}
+.scrCondPop .chkListCommon.chkList05 > div {width:calc(33.3333% - 6px);}
+.scrCondPop .chkListCommon.chkList06 > div {width:calc(50% - 4px);}
+.scrCondPop .chkListCommon.chkList07 > div {width:calc(50% - 4px);}
+.scrCondPop .chkListCommon.chkList08 > div {width:calc(25% - 6px);}
+.scrCondPop .chkListCommon.chkList09 > div {width:calc(33.3333% - 6px);}
+.scrCondPop .chkListCommon.chkList10 > div {width:calc(33.3333% - 6px);}
+.scrCondPop .filDropdownList.exception ul {display:block;}
+.scrCondPop .filDropdownList.exception ul li {width:100%;}
+.scrCondPop .filDropdownList.exception ul li:nth-last-child(2) {margin-bottom:12px;}
+.scrCondPop .filDropdownList ul{width:100%; display:flex; flex-flow: row wrap; align-items: center; justify-content: flex-start; gap:0 10px;}
+.scrCondPop .filDropdownList ul li {width:calc(50% - 5px);}
+.scrCondPop .filDropdownList ul li:nth-last-child(1),
+.scrCondPop .filDropdownList ul li:nth-last-child(2) {margin-bottom:0;}
+
+/*대학비교하기 대입정보센터 맞춤 수정 [대학별입시정보 > 대학별 대입특징 목록 & 전형평가기준 및 전년도결과 공개 목록*/
+.criteriaAndResultView ._compareList,
+.characteristicsView ._compareList {bottom:-150px !important;}
+.criteriaAndResultView ._compareList.on,
+.characteristicsView ._compareList.on {bottom:0 !important;}
+.criteriaAndResultView ._compareList .comUnivList li .comUnivListItem,
+.characteristicsView ._compareList .comUnivList li .comUnivListItem {display: flex; flex-flow:column; justify-content: center; height:110px;}
+.criteriaAndResultView ._compareList .comUnivList .titBox,
+.characteristicsView ._compareList .comUnivList .titBox {padding:0; margin:0; border-bottom:0;}
+.criteriaAndResultView ._compareList .comUnivList .noneMsg,
+.characteristicsView ._compareList .comUnivList .noneMsg {min-height:110px;}
+
+/*회원서비스 - 개인정보처리방침 & 이용약관 & 저작권 정책 & 이메일주소 무단수집거부*/
+.policyMenu {width:100%; border:1px solid var(--line-color-ty1); border-radius:12px; padding:20px;}
+.policyMenu .policyMenuList {width:100%;}
+.policyMenu .policyMenuList li {width:100%; position:relative; height:64px;}
+.policyMenu .policyMenuList li::before {display:none !important;}
+.policyMenu .policyMenuList li a {display:block; width:100%; height:64px; line-height:64px; font-size:18px; color:var(--text-color-body); text-align:center; border-bottom:1px solid var(--line-color-ty2); background:var(--color-white); }
+.policyMenu .policyMenuList li:last-of-type a {border-bottom:0;}
+.policyMenu .policyMenuList li.on a {border-bottom:0; background:var(--prime-color-main); color:var(--color-white);border-radius:12px;}
+
+/*성적분석 샘플화면*/
+.sampleArea {position:absolute; top:0; left:0; background: transparent; width:100%; height:100%; z-index:99;}
+.sampleArea .sampleCov {position:relative; width:100%; height:100%;}
+.sampleArea .sampleLine {position:absolute; top:50%; left:50%; width:740px; transform:translate(-50%,-50%); background: rgba(255, 255, 255, 0.65); border:1px solid #e52800;font-size:55px; font-weight:400; color: #e52800; text-align:center; padding:7% 0;}
+
+
+/*회원서비스 컨텐츠 페이지*/
+/*개인정보처리방침*/
+.rtCont .startTitle {font-size:24px; color:#111; font-weight:bold; letter-spacing:-0.6px; line-height:20px;}
+.rtCont .startDesc {margin:16px 0 40px 0; font-size:18px; color:#111; font-weight:400; line-height:27px; letter-spacing: -0.45px;}
+.rtCont .artiDesc {font-size:14px; color:#666; font-weight:400; line-height:22px; letter-spacing:-0.35px; margin-bottom:20px;}
+.rtCont .subTitle{font-size:20px;font-weight:500;margin-bottom:10px;}
+
+.rtCont.policy .artiList {border:1px solid #ccc; padding:40px; border-radius:12px; margin-bottom:20px;}
+.rtCont.policy .artiList ul {display:flex; flex-flow: row wrap; align-items: center; justify-content: flex-start;}
+.rtCont.policy .artiList ul li {width:50%; font-size:16px; color:#333; font-weight:500; line-height:18px; letter-spacing: -0.8px; margin-bottom:24px;}
+.rtCont.policy .artiList ul li.noMg {margin:0;}
+.rtCont.policy .artiList.labelList li {display:flex; align-items:center;gap:6px;}
+.rtCont.policy img.policyThumbnail{width:32px;height:32px;}
+.rtCont.policy img.policyLabel{cursor:pointer;}
+.rtCont.policy table td {font-size:14px; color:#111; font-weight:500;}
+.rtCont.policy table td a {font-size:14px; color:#0D8199; font-weight:400; text-decoration:underline;}
+
+.rtCont.policy .cptFilDropdown .filDropdownTbl th{
+	padding: 15px;
+	border-bottom: 1px solid var(--line-color-ty1);
+    background-color: #f9f9f9;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color-title);
+    line-height: 20px;
+    text-align: center;
+    border-right: 1px solid var(--line-color-ty1);
+}
+.rtCont.policy .cptFilDropdown .filDropdownTbl td{
+	font-weight: 100;
+	padding: 15px;
+    border-right: 1px solid var(--line-color-ty1);
+    border-bottom: 1px solid var(--line-color-ty1);
+}
+.rtCont.policy .cptFilDropdown .filDropdownTbl th:last-of-type,
+.rtCont.policy .cptFilDropdown .filDropdownTbl td:last-of-type { border-right:0;}
+
+
+
+.rtCont.policy .cptFilDropdown {margin-bottom:16px;}
+.rtCont.policy .cptFilDropdown:last-of-type {margin-bottom:0;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li > div {display:flex; flex-flow:row nowrap; align-items: flex-start; justify-content: flex-start; gap:.5rem;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li > div > * {font-size:14px; color:#666; font-weight:400; line-height:22px;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li > a.directLnk {display:inline-block; font-size:14px; color: #0D8199; margin-top:10px; text-decoration:underline;}
+.rtCont.policy .cptFilDropdown .btnCover button {position:relative; width:100%; text-align: left;}
+.rtCont.policy .cptFilDropdown .btnCover button.labelBtn {display:flex; align-items:center; gap:6px;}
+.rtCont.policy .cptFilDropdown .btnCover button i {position:absolute; top:50%; right:0; transform: translate(0,-50%);}
+.rtCont.policy .cptFilDropdown.open .btnCover button i {transform:translate(0,-50%) rotate(180deg);}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .singleSpace {padding-left:15px; margin-top:5px;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .doubleSpace {padding-left:15px; margin-top:5px;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .chefList {width:100%; padding-left:15px; margin-top:12px; margin-bottom:12px;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .chefList:last-of-type {margin-bottom:0;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .previousList {display:block; padding-left:15px; margin-top:12px; }
+.rtCont.policy .cptFilDropdown .filDropdownList > li .previousList > div {display:flex; flex-flow:row nowrap; align-items:center; justify-content:flex-start; gap:20px 10px; margin-bottom:16px;}
+.rtCont.policy .cptFilDropdown .filDropdownList > li .previousList > div > a {color: var(--prime-color-main);}
+
+/*이메일 무단 수집거부*/
+.policy .highlightTxt01 {font-size:20px; color: var(--prime-color-main); margin-bottom:20px;}
+.policy .highlightTxt02 {font-size:16px; color: var(--prime--color-point); font-weight:500; line-height:2.3rem; margin-bottom:2.4rem;}
+.policy .agmtChap {border:1px solid #ccc; border-radius:12px; padding:20px; }
+.policy .agmtChap span {font-size:16px; color:#333; font-weight:500; line-height:18px;margin-bottom:12px;}
+.policy .btnWrap {max-width:220px; margin:0 auto; background-color: #0D8199; padding:19px 40px; text-align:center; font-size:18px; color:#fff; font-weight:500; line-height:20px; border-radius:12px;}
+
+.termspol .highlightTxt01 {font-size:20px; color: var(--prime-color-main); margin-bottom:20px; }
+.termspol .highlightTxt01.topSpace {margin-top:20px;}
+.termspol .terms {margin-bottom:40px;}
+.termspol .terms:last-of-type {margin-bottom:0;}
+.termspol .terms .tit {font-size:16px; color: var(--text-color-title); font-weight:500; margin-bottom:12px;}
+.termspol .terms .desc {font-size:14px; color: var(--text-color-sub); font-weight:400; line-height:22px; margin-bottom:10px;}
+.termspol .terms .desc:last-of-type {margin-bottom:0;}
+.termspol .terms .desc ul {padding-left:20px;}
+.termspol .terms .desc ul li {font-size:14px; color: var(--text-color-sub); font-weight:400; line-height:22px; margin-bottom:10px;}
+
+/*저작권정책*/
+.representWord {font-size:1.4rem; color: var(--text-body); font-weight:500; line-height:2.3rem;}
+.cpTxt {margin-top:2.4rem;}
+.cpTxt .desc {font-size:1.4rem; color: var(--text-sub); font-weight:400; line-height:2.3rem; margin-bottom:2rem;}
+.cpTxt .desc:last-of-type{margin-bottom:0}
+
+/*2023.12.14 고교학점제 페이지 추가*/
+/*공통*/
+.uctHighschool .ltCont .fixedBox {width:300px;}
+.uctHighschool .ltCont .fixedBox.strScr {position:fixed; top:107px; height:auto; overflow-y:hidden; overflow-x:hidden; padding-right:20px; padding-bottom:20px;}
+.uctHighschool .ltCont .fixedBox.endScr {height:auto; top:107px; bottom:auto;}
+.contSection {width:100%; position:relative; margin-bottom:60px;}
+.contSection:last-of-type {margin-bottom:0;}
+.contSection > p.title {font-size:24px; color:#111; font-weight:bold; line-height:20px; letter-spacing:-0.6px; margin-bottom:16px;}
+.contSection > p.subTitle {font-size:20px; color:#111; font-weight:500; line-height:27px; letter-spacing:-0.5px; margin-bottom:16px;}
+.contSection > p.desc {font-size:16px; color:#333; font-weight:400; line-height:25px; letter-spacing:-0.4px; margin-bottom:16px;}
+.contSection > p.desc b {font-weight:500;}
+
+/*seciton01*/
+.sec01List {width:100%; position:relative;}
+.sec01List li {width:100%; border:1px solid #ccc; border-radius:12px; padding:24px 40px; margin-bottom:16px;}
+.sec01List li:last-of-type {margin-bottom:0;}
+.sec01List li > .liContCov {display:flex; flex-flow: row nowrap; align-items: center; justify-content: space-between;}
+.sec01List li > .liContCov p.bxTit {font-size:20px; color:#333; font-weight:500; line-height:20px; letter-spacing:-0.5px; margin-bottom:16px;}
+.sec01List li > .liContCov p.bxDesc {font-size:16px; color:#111; font-weight:400; line-height:28px; letter-spacing:-0.4px;}
+.sec01List li > .liContCov .icon {display:block; width:129px; height:129px; }
+.sec01List li.li01 > .liContCov .icon {background:url(../img/contents/ico_sec01li01.png)50% 50% no-repeat;}
+.sec01List li.li02 > .liContCov .icon {background:url(../img/contents/ico_sec01li02.png)50% 50% no-repeat;}
+.sec01List li.li03 > .liContCov .icon {background:url(../img/contents/ico_sec01li03.png)50% 50% no-repeat;}
+
+/*section02*/
+.sec02Column {width:100%; margin-bottom:40px; position:relative;}
+.sec02Column > p.subTitle {font-size:20px; color:#111; font-weight:500; line-height:27px; letter-spacing:-0.5px; margin-bottom:16px;}
+.sec02Column > p.desc {font-size:16px; color:#333; font-weight:400; line-height:25px; letter-spacing:-0.4px; margin-bottom:16px;}
+.sec02Column .sec02List {width:100%;}
+.sec02Column .sec02List li {background:#f7f7f7; border-radius:12px; padding:24px; margin-bottom:16px; display:flex; flex-flow:row nowrap; align-items: flex-start; justify-content: flex-start; gap:8px;}
+.sec02Column .sec02List li .icon {width:54px; height:54px; border-radius:50%; background:url(../img/contents/ico_speak.png)50% 50% no-repeat;}
+.sec02Column .sec02List li div {width:calc(100% - 62px);}
+.sec02Column .sec02List li div p.tit {font-size:16px; color:#111; font-weight:bold; letter-spacing:-0.4px; margin-bottom:8px;}
+.sec02Column .sec02List li div p.desc {font-size:15px; color:#666; font-weight:400; letter-spacing:-0.38px; word-break:keep-all;}
+
+/*seciton03*/
+.imgArea {width:100%; position:relative; margin-bottom:24px;}
+.imgArea img {display:block; width:100%;}
+.sec03List {width:100%; position:relative;}
+.sec03List li {width:100%; margin-bottom:20px;}
+.sec03List li:last-of-type {margin-bottom:0;}
+.sec03List li p.topTit {font-size:18px; color:#333; font-weight:500; line-height:24px; letter-spacing:-0.45px; margin-bottom:4px;}
+.sec03List li p.desc {font-size:16px; color:#333; font-weight:400; line-height:24px; letter-spacing:-0.4px;}
+
+/*section04*/
+.sec04List {width:100%; position:relative; display:flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start; gap:14px; margin-top:8px;}
+.sec04List li {border:1px solid #ccc; border-radius:20px; background:#fff; padding:43px 0; text-align:center;}
+.sec04List li .icon {display:block; margin:0 auto 15px;}
+.sec04List li.li01 .icon {width:100px; height:120px; background:url(../img/contents/ico_sec03li01.png)50% 50% no-repeat;}
+.sec04List li.li02 .icon {width:133px; height:120px; background:url(../img/contents/ico_sec03li02.png)50% 50% no-repeat;}
+.sec04List li.li03 .icon {width:131px; height:107px; background:url(../img/contents/ico_sec03li03.png)50% 50% no-repeat; margin-bottom:28px;}
+.sec04List li .tit {font-size:24px; color:#111; font-weight:500; line-height:24px; letter-spacing:-0.6px; margin-bottom:4px;}
+.sec04List li .desc {font-size:14px; color:#333; font-weight:400; line-height:22px; letter-spacing:-0.35px; word-break:keep-all; padding:0 31px;}
+.sec04List li.li02 .desc {padding: 0 16px;}
+
+/* 241011 디지털원패스 , pass 버튼 추가 */
+.addBtnArea {display: flex; justify-content: center; align-items: center; padding: 40px 0; gap: 10px;}
+.addBtnAreaJoin {position: absolute; top: 10px; right: 0;}
+.joinSocialLogin {display: flex; align-items: center; justify-content: center; width: 350px; height: 60px; background-color: var(--color-white); border: 1px solid var(--line-color-ty1); border-radius: 12px; font-size: 18px; font-weight: 500;}
+.joinSocialLogin img {margin-right: 8px; width: 32px; vertical-align: middle;}
+.joinSocialLogin:hover {background: rgb(232, 245, 246); border: 1px solid var(--prime-color-main);}
+.joinPassTitle {font-weight: 600; font-size: 20px; color: var(--text-color-sub); display: inline-block; margin: 0 8px 0 4px;}

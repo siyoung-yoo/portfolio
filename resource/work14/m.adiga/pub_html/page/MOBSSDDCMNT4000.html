@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" href="../../static/css/swiper.css" />
+<link rel="stylesheet" href="../../static/css/default.css" />
+<link rel="stylesheet" href="../../static/css/common.css" />
+<link rel="stylesheet" href="../../static/css/guide/common2.css" />
+<link rel="stylesheet" href="../../static/css/sub.css" />
+<link rel="stylesheet" href="../../static/css/main.css" />
+<link rel="stylesheet" href="../../static/css/rMateChartH5.css" />
+<link rel="stylesheet" href="../../static/css/ai.css" />
+<link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+<!-- Jquery -->
+<script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script type="text/javascript" src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script type="text/javascript" src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script type="text/javascript" src="../../static/js/comm/swiper.js"></script>
+<script type="text/javascript" src="../../static/js/comm/common.js"></script>
+<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+
+<!-- 현재 페이지에만 사용하는 스크립트 -->
+<script>
+	// 팝업 show/hide 를 위한 퍼블 페이지 확인용 스크립트
+	$(document).on("click", "._fullPopup .btnWrap._CTA button, #btnPopupOpen", function() {
+		fnOnEventToggle('#tempPopupId')
+	})
+</script>
+</head>
+<body>
+	<div class="btnWrap" style="padding: 10vh 10%">
+		<button type="button" class="btnConfirm" id="btnPopupOpen">팝업 열기</button>
+	</div>
+
+
+	<div id="tempPopupId">
+
+		<!-- 팝업 START -->
+		<div class="wrapper _fullPopup onEventNeed _on"> <!-- class - on : 팝업오픈 -->
+
+			<div class="header">
+				<div class="headerTitle">
+					<h1>정부 전자문서 지갑 안내</h1>
+				</div>
+				<div class="headerUtil">
+					<!-- <button type="button" class="btnHeaderFunc"><span class="hidden1">Function</span></button> Function Button -->
+					<button type="button" class="btnHeaderClose menuHeader"><span class="hidden">닫기</span></button>
+				</div>
+			</div>
+
+			<!-- 컨텐츠 영역 START -->
+			<div class="container" id="bodyContent">
+				<div class="contInner _hasCTA">
+					<div class="section">
+
+						<div class="popupFullCont typeSsd">
+							<div class="flexCont">
+								<img src="../../static/img/common/logo_dpaper.svg" alt="정부 전자문서지갑">
+
+								<div class="wordKeep">
+									대학 특별전형 지원에 필요한 전자 증명서를  발급 받기 위해 “<strong class="fcMain bold">정부 전자 문서 지갑</strong>” 신청이 필요합니다.
+									<br>또한 신청 후 생성한 “<strong class="fcMain bold">정부 전자 문서 지갑</strong>”을 통해 모든 전자 증명서의 발급 및 보관을 할 수 있습니다.
+								</div>
+
+								<strong class="fcTitle bold">전자문서지갑 신청 화면으로 이동하시겠습니까?</strong>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- 하단 고정 푸터 -->
+					<div class="btnWrap _CTA">
+						<button type="button" class="btnCancel"><span>취소</span></button>
+						<button type="button" class="btnConfirm"><span>확인</span></button>
+					</div>
+				</div>
+			</div>
+			<!-- // 컨텐츠 영역 END -->
+
+		</div>
+		<!-- // 팝업 END -->
+
+	</div>
+
+</body>
+</html>

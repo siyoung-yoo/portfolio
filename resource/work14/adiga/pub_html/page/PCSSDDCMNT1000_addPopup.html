@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+
+<script>
+	$(function() {
+
+		// 제출 서류리스트 토글 기능
+		$(document).on("click", ".btnToggle", function() {
+			const $toggleTarget = $(this).closest(".ssdListWrap").find(".toggleCont");
+
+			if ($(this).hasClass("open")) {
+				$toggleTarget.slideUp(150);
+				$(this).removeClass("open").attr("aria-expanded", false);
+				$(this).find(".hidden").text("리스트 보기")
+			} else {
+				$toggleTarget.slideDown(150);
+				$(this).addClass("open").attr("aria-expanded", true);
+				$(this).find(".hidden").text("리스트 닫기")
+			}
+		})
+	})
+</script>
+</head>
+<body>
+	<div data-include="../layout/skipnavi.html #skipnavi"></div>
+	<div class="wrapper">
+		<div id="headerWrap">
+			<div data-include="../layout/header.html #header"></div>
+		</div>
+		<div data-include="../layout/subHeader.html #menuSubHeader"></div>
+
+
+
+		<!-- 컨텐츠 영역 START -->
+		<div class="container" id="bodyContent">
+			<div class="ltrtCont">
+				<div class="ltCont">
+					<div class="modTabWrap">
+						<ul class="cptSearchRad typeTab">
+							<li>
+								<input type="radio" name="radioA" id="radioA01" checked>
+								<label class="body1 reg btnTab" for="radioA01">알림<span class="body3">(0)</span></label>
+							</li>
+							<li>
+								<input type="radio" name="radioA" id="radioA02">
+								<label class="body1 reg btnTab" for="radioA02">공지사항<span class="body3">(99)</span></label>
+							</li>
+						</ul>
+
+						<div class="tabCon on"><!-- default: 알림 탭이 활성화 상태 / on 클래스 추가 -->
+							<div class="cptActFil typeSsd">
+								<div class="titleArea">
+									<h4 class="h4 bold">알림</h4>
+									<a href="#0" class="linkText">전체보기</a>
+								</div>
+								<ul class="linkList">
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용입니다.</div><span class="new"></span>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용입니다. 알림 메시지 내용입니다. 알림 메시지 내용입니다.</div>
+												<span class="new"></span>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용알림 메시지 내용입니다. 알림 메시지 내용입니다. 알림 메시지 내용입니다.</div>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용입니다.</div>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용알림 메시지 내용입니다. 알림 메시지 내용입니다. 알림 메시지 내용입니다.</div>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div><!-- // 알림 탭 영역 -->
+
+						<div class="tabCon">
+							<div class="cptActFil typeSsd">
+								<div class="titleArea">
+									<h4 class="h4 bold">공지사항</h4>
+									<a href="#0" class="linkText">전체보기</a>
+								</div>
+								<ul class="linkList type02">
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용입니다.</div><span class="new"></span>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용입니다. 알림 메시지 내용입니다. 알림 메시지 내용입니다.</div>
+												<span class="new"></span>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<div class="contArea">
+												<div class="cont">알림 메시지 내용알림 메시지 내용입니다. 알림 메시지 내용입니다. 알림 메시지 내용입니다.</div>
+											</div>
+											<span class="date">09.25</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div><!-- // 공지사항 탭 영역 -->
+					</div>
+
+					<div class="cptActFil typeSsd">
+						<div class="titleArea">
+							<h4 class="h4 bold">서비스 이용 도우미</h4>
+							<i class="ico _helpService"></i>
+						</div>
+
+						<p class="body1 reg">서비스 이용에 어려움이 있으신가요?<br>도움이 필요하면 아래 서비스를 이용해 주세요.</p>
+
+						<div class="btnArea">
+							<button type="button" class="btnCon _strokeGreen">
+								<span>문의 이력</span><i class="ico _quickGo"></i>
+							</button>
+							<button type="button" class="btnCon _strokeGreen">
+								<span>시스템 문의</span><i class="ico _quickGo"></i>
+							</button>
+						</div>
+					</div>
+
+					<button type="button" class="btnCon _strokeGreen">매뉴얼</button>
+				</div>
+				<!-- // .ltCont -->
+
+				<div class="rtCont">
+					<div class="commFlex itemEnd">
+						<div class="titleArea">
+							<h3 class="h3">특별전형 지원 현황</h3>
+							<p class="body1 reg sclr01">지원한 대학/학과에 필요한 서류의 제출 현황을 확인해 주세요.</p>
+						</div>
+						<img src="../../static/img/logo_dpaper.png" alt="정부 전자문서지갑 로고">
+					</div>
+
+					<div class="pointBanner">
+						<div class="titArea">
+							<h4 class="h4 mB5">특별전형 서류 발급/제출</h4>
+							<p class="body3 sclr01">특별전형에 제출해야 할 <strong class="prm01">99</strong>건의 전자 증명서와 <strong class="prm01">99</strong>건의 일반 문서가 있습니다.</p>
+						</div>
+						<ul class="btnArea">
+							<li>
+								<button type="button" class="btnCTA _confirm btnApply">전자 증명서 발급신청</button>
+								<div class="fixedTip">발급 받아야 할 <strong class="prm01">99</strong>건의 전자 증명서가 있습니다.</div>
+							</li>
+							<li><button type="button" class="btnCTA _confirm">서류 제출</button></li>
+						</ul>
+					</div>
+
+					<!--
+						제출대기 : ssdListWrap
+						제출준비 : ssdListWrap + ready
+						제출완료 : ssdListWrap + complete
+					-->
+					<!-- 제출대기 START -->
+					<div class="ssdListWrap">
+						<div class="listHeader">
+							<div class="state">제출대기</div>
+							<p class="desc">서류 제출에 필요한 전자 증명서와 일반 문서를 확인해주세요.</p>
+							<!-- <p class="desc">서류 제출을 위해 전자 증명서를 발급 받아 주세요.</p>
+							<p class="desc">서류 제출을 위해 일반 문서를 업로드해 주세요.</p> -->
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+
+								<div class="btnArea">
+									<button type="button" class="btnCon _stroke">내 문의 <strong class="prm01">99</strong>/5</button>
+									<button type="button" class="btnCon _stroke" onclick="openPopup('popupCmnt');"><i class="icoOnly sm _qeMsg"></i> 문의하기</button>
+								</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li><strong>금융빅데이터학부</strong></li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoOnly sm _call"></i> 070-1234-5678</li>
+								</ul>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li>
+										<div class="text">문서 발급 및 업로드</div>
+										<button type="button" class="btnCon _strokeGreen">전자 증명서 발급</button>
+									</li>
+									<li>
+										<div class="text">서류 제출</div>
+										<button type="button" class="btnCon _strokeGreen">서류 제출</button>
+									</li>
+									<li>
+										<div class="text">제출 완료</div>
+										<button type="button" class="btnCon _strokeGreen">확인증</button>
+									</li>
+								</ul>
+							</div>
+
+							<button type="button" class="btnToggle" aria-expanded="false">
+								<span class="hidden">리스트 보기</span>
+							</button>
+						</div>
+
+						<div class="toggleCont">
+							<!-- 필수 제출 서류 리스트-->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
+									<div class="linkArea">
+										<button type="button" class="btnLink">제출 서류 제외하기</button>
+										<button type="button"><i class="icoOnly _qeInfo"></i></button>
+									</div>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _strokeGreen">개별 증명서 신청</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _strokeGreen">업로드</button>
+										</div>
+									</li>
+									<li class="noSubmit">
+										<div class="text">
+											<span class="badgeCom">일반</span>제출 서류명 제출 서류명
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _disabled" disabled>해당없음</button>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 필수 제출 서류 리스트-->
+
+							<!-- 선택 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="h5 bold">선택제출(택1)</p>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _strokeGreen">개별 증명서 신청</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _strokeGreen">업로드</button>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 선택 제출 서류 리스트 -->
+						</div>
+					</div>
+					<!-- // 제출대기 END -->
+
+					<!-- 제출서류 제외하기 모드 START -->
+					<div class="ssdListWrap">
+						<div class="listHeader">
+							<div class="state">제출대기 (제출서류 제외하기 모드 예시)</div>
+							<p class="desc">서류 제출에 필요한 전자 증명서와 일반 문서를 확인해주세요.</p>
+							<!-- <p class="desc">서류 제출을 위해 전자 증명서를 발급 받아 주세요.</p>
+							<p class="desc">서류 제출을 위해 일반 문서를 업로드해 주세요.</p> -->
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+
+								<div class="btnArea">
+									<button type="button" class="btnCon _stroke">내 문의 <strong class="prm01">99</strong>/5</button>
+									<button type="button" class="btnCon _stroke" onclick="openPopup('popupCmnt');"><i class="icoOnly sm _qeMsg"></i> 문의하기</button>
+								</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li><strong>금융빅데이터학부</strong></li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoOnly sm _call"></i> 070-1234-5678</li>
+								</ul>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li>
+										<div class="text">문서 발급 및 업로드</div>
+										<button type="button" class="btnCon _strokeGreen">전자 증명서 발급</button>
+									</li>
+									<li>
+										<div class="text">서류 제출</div>
+										<button type="button" class="btnCon _strokeGreen">서류 제출</button>
+									</li>
+									<li>
+										<div class="text">제출 완료</div>
+										<button type="button" class="btnCon _strokeGreen">확인증</button>
+									</li>
+								</ul>
+							</div>
+
+							<button type="button" class="btnToggle" aria-expanded="false">
+								<span class="hidden">리스트 보기</span>
+							</button>
+						</div>
+
+						<div class="toggleCont">
+							<!-- 필수 제출 서류 리스트-->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
+									<div class="btnArea">
+										<button type="button" class="btnCTA _cancel">취소</button>
+										<button type="button" class="btnCon _strokeGreen">변경</button>
+									</div>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+										</div>
+										<div class="cptToggle">
+											<input type="checkbox" id="chk11" checked>
+											<label for="chk11"></label>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+										</div>
+										<div class="cptToggle">
+											<input type="checkbox" id="chk12" checked>
+											<label for="chk12"></label>
+										</div>
+									</li>
+									<li class="noSubmit">
+										<div class="text">
+											<span class="badgeCom">일반</span>제출 서류명 제출 서류명
+										</div>
+										<div class="cptToggle">
+											<input type="checkbox" id="chk13">
+											<label for="chk13"></label>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 필수 제출 서류 리스트-->
+
+							<!-- 선택 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="h5 bold">선택제출(택1)</p>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+										</div>
+										<div class="cptToggle">
+											<input type="checkbox" id="chk21" checked>
+											<label for="chk21"></label>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+										</div>
+										<div class="cptToggle">
+											<input type="checkbox" id="chk22" checked>
+											<label for="chk22"></label>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 선택 제출 서류 리스트 -->
+						</div>
+					</div>
+					<!-- // 제출서류 제외하기 모드 END -->
+
+					<!-- 제출준비 START -->
+					<div class="ssdListWrap ready">
+						<div class="listHeader">
+							<div class="state">제출준비</div>
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+
+								<div class="btnArea">
+									<button type="button" class="btnCon _stroke">내 문의 <strong class="prm01">99</strong>/5</button>
+									<button type="button" class="btnCon _stroke" onclick="openPopup('popupCmnt');"><i class="icoOnly sm _qeMsg"></i> 문의하기</button>
+								</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li><strong>금융빅데이터학부</strong></li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoOnly sm _call"></i> 070-1234-5678</li>
+								</ul>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li>
+										<div class="text">문서 발급 및 업로드</div>
+										<button type="button" class="btnCon _strokeGreen">전자 증명서 발급</button>
+									</li>
+									<li>
+										<div class="text">서류 제출</div>
+										<button type="button" class="btnCon _strokeGreen">서류 제출</button>
+									</li>
+									<li>
+										<div class="text">제출 완료</div>
+										<button type="button" class="btnCon _strokeGreen">확인증</button>
+									</li>
+								</ul>
+							</div>
+
+							<button type="button" class="btnToggle" aria-expanded="false">
+								<span class="hidden">리스트 보기</span>
+							</button>
+						</div>
+
+						<div class="toggleCont">
+							<!-- 필수 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
+									<div class="linkArea">
+										<button type="button" class="btnLink">제출 서류 제외하기</button>
+										<button type="button"><i class="icoOnly _qeInfo"></i></button>
+									</div>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명.png</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+												<p class="info">보관기간 : 2026.01.30까지(90일)</p>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">발급완료</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명 파일명파일명 파일명 파일명 파일명.pdf</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">업로드완료</button>
+										</div>
+									</li>
+									<li class="noSubmit">
+										<div class="text">
+											<span class="badgeCom">일반</span>제출 서류명 제출 서류명
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _disabled" disabled>해당없음</button>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 필수 제출 서류 리스트 -->
+
+							<!-- 선택 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="h5 bold">선택제출(택1)</p>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+												<p class="info">보관기간 : 만료</p>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">발급완료</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">업로드완료</button>
+										</div>
+									</li>
+								</ul>
+							</div><!-- // 선택 제출 서류 리스트 -->
+						</div>
+					</div>
+					<!-- // 제출준비 END -->
+
+					<!-- 제출완료 START -->
+					<div class="ssdListWrap complete">
+						<div class="listHeader">
+							<div class="state">제출완료</div>
+						</div>
+
+						<div class="listCont">
+							<div class="nameArea">
+								<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+
+								<div class="btnArea">
+									<button type="button" class="btnCon _stroke">내 문의 <strong class="prm01">99</strong>/5</button>
+									<button type="button" class="btnCon _stroke" onclick="openPopup('popupCmnt');"><i class="icoOnly sm _qeMsg"></i> 문의하기</button>
+								</div>
+							</div>
+
+							<div class="infoArea">
+								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+								<ul>
+									<li><strong>금융빅데이터학부</strong></li>
+									<li>25.09.01~25.09.18(1차)</li>
+									<li><i class="icoOnly sm _call"></i> 070-1234-5678</li>
+								</ul>
+							</div>
+
+							<div class="stepArea">
+								<ul class="stepList">
+									<li>
+										<div class="text">문서 발급 및 업로드</div>
+										<button type="button" class="btnCon _strokeGreen">전자 증명서 발급</button>
+									</li>
+									<li>
+										<div class="text">서류 제출</div>
+										<button type="button" class="btnCon _strokeGreen">서류 제출</button>
+									</li>
+									<li>
+										<div class="text">제출 완료</div>
+										<button type="button" class="btnCon _strokeGreen">확인증</button>
+									</li>
+								</ul>
+							</div>
+
+							<button type="button" class="btnToggle" aria-expanded="false">
+								<span class="hidden">리스트 보기</span>
+							</button>
+						</div>
+
+						<div class="toggleCont">
+							<!-- 필수 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
+									<!-- 제출 완료일 경우 숨김 처리
+									<div class="linkArea">
+										<button type="button" class="btnLink">제출 서류 제외하기</button>
+										<button type="button"><i class="icoOnly _qeInfo"></i></button>
+									</div> -->
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명.png</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+												<p class="info">보관기간 : 2026.01.30까지(90일)</p>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">발급완료</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명 파일명파일명 파일명 파일명 파일명.pdf</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">업로드완료</button>
+										</div>
+									</li>
+									<li class="noSubmit">
+										<div class="text">
+											<span class="badgeCom">일반</span>제출 서류명 제출 서류명
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCon _disabled" disabled>해당없음</button>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!-- // 필수 제출 서류 리스트 -->
+
+							<!-- 선택 제출 서류 리스트 -->
+							<div class="subListWrap">
+								<div class="titleArea">
+									<p class="h5 bold">선택제출(택1)</p>
+								</div>
+								<ul class="docList">
+									<li>
+										<div class="text">
+											<span class="badgeGov">정부24</span>가족관계증명서
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+												<p class="info">보관기간 : 만료</p>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">발급완료</button>
+										</div>
+									</li>
+									<li>
+										<div class="text">
+											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
+											<div class="uploadArea">
+												<button type="button" class="uploadFile">
+													<span class="fileName">파일명 파일명</span>
+													<i class="ico _preview"><span class="hidden">파일 미리 보기</span></i>
+												</button>
+											</div>
+										</div>
+										<div class="btnArea">
+											<button type="button" class="btnCon _strokeGray">발급안내</button>
+											<button type="button" class="btnCTA _confirm">업로드완료</button>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!-- // 선택 제출 서류 리스트 -->
+						</div>
+					</div>
+					<!-- // 제출완료 END -->
+				</div>
+				<!-- // .rtCont -->
+
+			</div>
+		</div>
+		<!-- // 컨텐츠 영역 END -->
+
+		<!-- 팝업 영역 START -->
+		<!-- 서류제출 문의하기 -->
+		<div id="popupCmnt" class="modPopup scheduleMngeForm"> <!-- class - on : 팝업오픈 -->
+			<div class="popupDim"></div>
+			<div class="popupArea popup1Cont lgPop">
+				<div class="popupInMotion">
+					<div class="popupContainer">
+						<div class="popupContArea">
+							<div class="popTitleBox">
+								<h1 class="popTitle">서류제출 문의하기</h1>
+								<button type="button" class="popCloseBtn" onclick="closePopup('popupCmnt');">
+									<span class="hidden">닫기</span>
+								</button>
+							</div>
+
+							<div class="popCont">
+								<!-- [10/17] p.body1 안내 문구 수정 -->
+								<p class="body1 reg sclr01 mB25">※ 서비스 이용에 불편한 점이나 어려운 점이 있으신가요? 시스템 담당자의 도움이나 지원이 필요하시다면 문의 사항을 남겨주세요.</p>
+
+								<div class="cptTbBsc hType tdHasPd">
+									<table>
+										<caption>서류제출 문의하기</caption>
+										<colgroup>
+											<col style="width:150px;">
+											<col style="width:auto;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<th scope="row">대학명</th>
+												<td>
+													<div class="frmInput tableInput w320px">
+														<input type="text" value="남서울대학교" readonly>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">지원 정보</th>
+												<td>
+													<div class="frmInput tableInput">
+														<input type="text" value="정시/남서울대학교/농어촌전형/금융빅테이터학부" readonly>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">제목<span class="required">*</span></th>
+												<td>
+													<div class="frmInput tableInput">
+														<input type="text" placeholder="제목을 입력해 주세요.">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">내용<span class="required">*</span></th>
+												<td>
+													<div class="cptTextArea">
+														<textarea placeholder="내용을 20글자 이상 입력해 주세요."></textarea>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- //팝업 컨텐츠 영역 -->
+							</div>
+							<div class="popBtm">
+								<button type="button" class="btnCTA _cancel" onclick="closePopup('popupCmnt');">취소</button>
+								<button type="button" class="btnCTA _confirm">문의사항 등록</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 전자증명서 발급 신청 안내 -->
+		<div id="popupRecv" class="modPopup"> <!-- class - on : 팝업오픈 -->
+			<div class="popupDim"></div>
+			<div class="popupArea popup1Cont mdPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소 / stPop 상태메시지 600x455 -->
+				<div class="popupInMotion">
+					<div class="popupContainer">
+						<div class="popupContArea">
+							<div class="popTitleBox">
+								<h3 class="popTitle">전자증명서 발급 신청</h3>
+								<button class="popCloseBtn" onclick="closePopup('popupRecv');">
+									<span class="hidden">닫기</span>
+								</button>
+							</div>
+
+							<div class="popCont typeSsd">
+								<p class="mB15">정부24를 통해 지원한 모든 특별전형에 제출해야 할 전자문서를 일괄로 발급 받을 수 있습니다.<br>전자증명서는 행정안정부의 정부 전자문서지갑으로 발급됩니다.</p>
+
+								<div class="boxLineStyle typeScroll">
+									<div class="scroll">
+										<ul class="flexList">
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>가족관계증명서</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>주민등록 등본</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>차상위 본인부담경감대상자 증명서</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+											<li>
+												<span class="badgeGov">정부24</span>
+												<span>서류명</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="popBtm">
+								<button type="button" class="btnCTA _cancel" onclick="closePopup('popupRecv');"><span>취소</span></button>
+								<button class="btnCTA _confirm">발급받기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- // 팝업 영역 END -->
+
+		<div data-include="../layout/fltMenu.html #fltMenu"></div>
+		<div data-include="../layout/footer.html #footer"></div>
+	</div>
+	<!-- // .wrapper -->
+
+	<script>
+		$(function () {
+			const btnApply = $('.pointBanner button.btnApply');
+			btnApply.click(function() {
+				$('#popupRecv').addClass('on');
+			});
+		});
+	</script>
+</body>
+</html>

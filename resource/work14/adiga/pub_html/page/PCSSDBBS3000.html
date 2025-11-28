@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+
+<!-- Jquery -->
+<script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
+<script src="../../static/js/jquery/jquery-ui.min.js"></script>
+<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
+<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
+<script src="../../static/js/comm/swiper.js"></script>
+<script src="../../static/js/comm/common.js"></script>
+<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+</head>
+<body>
+
+	<div id="popupName" class="modPopup scheduleMngeForm on"> <!-- class - on : 팝업오픈 -->
+		<div class="popupDim"></div>
+		<div class="popupArea popup1Cont lgPop">
+			<div class="popupInMotion">
+				<div class="popupContainer">
+					<div class="popupContArea">
+						<div class="popTitleBox">
+							<h1 class="popTitle">서류제출 문의하기</h1>
+							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+								<span class="hidden">닫기</span>
+							</button>
+						</div>
+
+						<div class="popCont tit">
+							<!-- [10/17] p.body1 안내 문구 수정 -->
+							<p class="body1 reg sclr01">※ 서비스 이용에 불편한 점이나 어려운 점이 있으신가요? 시스템 담당자의 도움이나 지원이 필요하시다면 문의 사항을 남겨주세요.</p>
+							<p class="mB10 mT20 body4"><span class="required">*</span> 표시는 필수 입력 사항입니다.</p>
+
+							<div class="cptTbBsc hType tdHasPd">
+								<table>
+									<caption>서류제출 문의하기</caption>
+									<colgroup>
+										<col style="width:150px;">
+										<col style="width:auto;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="row">대학명</th>
+											<td>
+												<div class="frmInput tableInput w320px">
+													<input type="text" value="남서울대학교" readonly>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">지원 정보</th>
+											<td>
+												<div class="frmInput tableInput">
+													<input type="text" value="정시/남서울대학교/농어촌전형/금융빅테이터학부" readonly>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">제목<span class="required">*</span></th>
+											<td>
+												<div class="frmInput tableInput">
+													<input type="text" placeholder="제목을 입력해 주세요.">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">내용<span class="required">*</span></th>
+											<td>
+												<div class="cptTextArea" style="padding: 12px 16px;">
+													<textarea placeholder="내용을 20글자 이상 입력해 주세요."></textarea>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- //팝업 컨텐츠 영역 -->
+						</div>
+						<div class="popBtm">
+							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');">취소</button>
+							<button type="button" class="btnCTA _confirm">문의사항 등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

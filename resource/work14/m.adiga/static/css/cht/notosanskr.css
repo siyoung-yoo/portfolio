@@ -1,0 +1,59 @@
+/*
+ * Noto Sans KR LOCAL
+ */
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:100;
+	src:url(../../../static/webfont/NotoSansKR-Thin.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Thin.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Thin.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:300;
+	src:url(../../../static/webfont/NotoSansKR-Light.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Light.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Light.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:350;
+	src:url(../../../static/webfont/NotoSansKR-DemiLight.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-DemiLight.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-DemiLight.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:400;
+	src:url(../../../static/webfont/NotoSansKR-Regular.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Regular.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Regular.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:500;
+	src:url(../../../static/webfont/NotoSansKR-Medium.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Medium.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Medium.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:700;
+	src:url(../../../static/webfont/NotoSansKR-Bold.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Bold.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Bold.otf) format('opentype');
+}
+@font-face {
+	font-family:'Noto Sans KR';
+	font-style:normal;
+	font-weight:900;
+	src:url(../../../static/webfont/NotoSansKR-Black.woff2) format('woff2'),
+	url(../../../static/webfont/NotoSansKR-Black.woff) format('woff'),
+	url(../../../static/webfont/NotoSansKR-Black.otf) format('opentype');
+}
