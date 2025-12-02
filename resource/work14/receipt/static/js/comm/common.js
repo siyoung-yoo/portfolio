@@ -123,6 +123,8 @@ function initformText() {
 				dateVal = dateVal.slice(0, 4) + "-" + dateVal.slice(4, 6) + "-" + dateVal.slice(6, 8);
 			}
 
+			console.log("1111")
+
 			$(this).val(dateVal);
 		});
 }
