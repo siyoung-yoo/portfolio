@@ -23,7 +23,7 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="popupName" class="modPopup"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
 		<div class="popupArea popup1Cont mdPop">
 			<div class="popupInMotion">
@@ -31,7 +31,7 @@
 					<div class="popupContArea">
 						<div class="popTitleBox">
 							<h3 class="h3">제출 서류 제외하기</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+							<button type="button" class="popCloseBtn" onclick="fnOnEventToggle('#popup06');">
 								<span class="hidden">닫기</span>
 							</button>
 						</div>
@@ -42,7 +42,7 @@
 						</div>
 
 						<div class="popBtm lineTop">
-							<button type="button" class="btnCTA _confirm" onclick="closePopup('popupName');">확인</button>
+							<button type="button" class="btnCTA _confirm" onclick="fnOnEventToggle('#popup06');">확인</button>
 						</div>
 					</div>
 				</div>

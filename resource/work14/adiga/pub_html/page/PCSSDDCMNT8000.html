@@ -23,7 +23,7 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="popupName" class="modPopup"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
 		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
 			<div class="popupInMotion">
@@ -31,20 +31,19 @@
 					<div class="popupContArea">
 						<div class="popTitleBox">
 							<h3 class="popTitle">서류 제출</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+							<button type="button" class="popCloseBtn" onclick="fnOnEventToggle('#popup02')">
 								<span class="hidden">닫기</span>
 							</button>
 						</div>
 
 						<div class="popCont typeSsd">
 							<div class="scroll">
-								<!-- [10/27] 안내문구 p태그 div.scroll 안으로 위치 이동-->
 								<p class="mB15">전자 증명서 및 일반 문서를 제출 하시겠습니까?<br>제출된 모든 서류의 수취기관은 지원한 각 대학입니다.</p>
 
 								<div class="ssdListWrap typeItem">
 									<div class="listCont">
 										<div class="infoArea">
-											<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+											<div class="name"><span class="badgeCtgry sm">정시</span>한국대학교</div>
 											<ul>
 												<li><strong>금융빅데이터학부</strong></li>
 												<li>25.09.01~25.09.18(1차)</li>
@@ -53,12 +52,14 @@
 										</div>
 										<div class="stateArea">
 											<span class="state">제출대기</span>
+											<span class="state _ing hide">제출중</span>
+											<span class="state _done hide"><span class="hidden">완료</span></span>
 										</div>
 									</div>
 
 									<div class="listCont">
 										<div class="infoArea">
-											<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+											<div class="name"><span class="badgeCtgry sm">정시</span>한국대학교</div>
 											<ul>
 												<li><strong>금융빅데이터학부</strong></li>
 												<li>25.09.01~25.09.18(1차)</li>
@@ -66,13 +67,15 @@
 											<p class="pL5">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
 										</div>
 										<div class="stateArea">
-											<span class="state _ing">제출중</span>
+											<span class="state">제출대기</span>
+											<span class="state _ing hide">제출중</span>
+											<span class="state _done hide"><span class="hidden">완료</span></span>
 										</div>
 									</div>
 
 									<div class="listCont">
 										<div class="infoArea">
-											<div class="name"><span class="badgeCtgry sm">정시</span>ㅇㅇ대학교</div>
+											<div class="name"><span class="badgeCtgry sm">정시</span>한국대학교</div>
 											<ul>
 												<li><strong>금융빅데이터학부</strong></li>
 												<li>25.09.01~25.09.18(1차)</li>
@@ -80,7 +83,9 @@
 											<p class="pL5">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
 										</div>
 										<div class="stateArea">
-											<span class="state _done"><span class="hidden">완료</span></span>
+											<span class="state">제출대기</span>
+											<span class="state _ing hide">제출중</span>
+											<span class="state _done hide"><span class="hidden">완료</span></span>
 										</div>
 									</div>
 								</div>
@@ -88,9 +93,10 @@
 						</div>
 
 						<div class="popBtm">
-							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
-							<button class="btnCTA _confirm">제출하기</button>
-							<!-- <button class="btnCTA _confirm" disabled>확인</button> -->
+							<button type="button" class="btnCTA _cancel" onclick="fnOnEventToggle('#popup02')"><span>취소</span></button>
+							<button class="btnCTA _confirm" id="btn0201">제출하기</button>
+							<button class="btnCTA _confirm hide" id="btn0202" disabled>확인</button>
+							<button class="btnCTA _confirm hide" id="btn0203" onclick="fnOnEventToggle('#popup02')">확인</button>
 						</div>
 					</div>
 				</div>

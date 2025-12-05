@@ -5,22 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <!-- css -->
-<link rel="stylesheet" href="../../static/css/jquery-ui.min.css" />
-<link rel="stylesheet" href="../../static/css/swiper.css" />
 <link rel="stylesheet" href="../../static/css/default.css" />
 <link rel="stylesheet" href="../../static/css/common.css" />
-<link rel="stylesheet" href="../../static/css/guide/common2.css" />
 <link rel="stylesheet" href="../../static/css/sub.css" />
 <link rel="stylesheet" href="../../static/css/main.css" />
-<link rel="stylesheet" href="../../static/css/rMateChartH5.css" />
-<link rel="stylesheet" href="../../static/css/ai.css" />
 <link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
 <!-- Jquery -->
 <script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery.blockUI.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
-<script type="text/javascript" src="../../static/js/comm/swiper.js"></script>
 <script type="text/javascript" src="../../static/js/comm/common.js"></script>
 <script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
 
@@ -41,7 +32,7 @@
 	<div id="tempPopupId">
 
 		<!-- 팝업 START -->
-		<div class="wrapper _fullPopup onEventNeed _on"> <!-- class - on : 팝업오픈 -->
+		<div class="wrapper _fullPopup onEventNeed"> <!-- class - on : 팝업오픈 -->
 
 			<div class="header">
 				<div class="headerTitle">
@@ -59,7 +50,7 @@
 					<div class="section">
 
 						<div class="certifyWrap">
-							<div class="certifyTitle">ㅇㅇ대학교 서류제출 확인증</div>
+							<div class="certifyTitle">한국대학교 서류제출 확인증</div>
 
 							<div class="tableTitleArea">
 								<p class="h4 medium">인적사항</p>
@@ -81,8 +72,8 @@
 									<tr>
 										<th scope="row">지원전형</th>
 										<td>
-											<strong class="medium">(정시)고려대학교 - 금융빅데이터학부</strong>
-											<p class="fcSub _mt8">학생부종합(고른기회) > 국가공헌: 국가보훈 대상자 (1차)</p>
+											<strong class="medium">(정시) 한국대학교 - 금융빅데이터학부</strong>
+											<p class="fcSub _mt8">농어촌전형 / 기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
 										</td>
 									</tr>
 								</tbody>
@@ -107,11 +98,6 @@
 												<li>농어촌 학생전형 학교장 확인서(학교서식)</li>
 												<li>주민등록초본</li>
 												<li>중학교 학교생활 기록부</li>
-												<li>서류명01</li>
-												<li>서류명02</li>
-												<li>서류명03</li>
-												<li>서류명04</li>
-												<li>서류명05</li>
 											</ul>
 										</td>
 									</tr>
@@ -127,7 +113,7 @@
 
 					<!-- 하단 고정 푸터 -->
 					<div class="btnWrap _CTA">
-						<button type="button" class="btnConfirm"><span>확인</span></button>
+						<button type="button" onclick="fnOnEventToggle('#popup06')" class="btnConfirm"><span>확인</span></button>
 					</div>
 				</div>
 			</div>

@@ -23,7 +23,7 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="popupName" class="modPopup"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
 		<div class="popupArea popup1Cont mdPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소 / stPop 상태메시지 600x455 -->
 			<div class="popupInMotion">
@@ -31,7 +31,7 @@
 					<div class="popupContArea">
 						<div class="popTitleBox">
 							<h3 class="popTitle">전자증명서 발급 신청</h3>
-							<button class="popCloseBtn" onclick="closePopup('popupName');">
+							<button class="popCloseBtn" onclick="fnOnEventToggle('#popup05')">
 								<span class="hidden">닫기</span>
 							</button>
 						</div>
@@ -48,49 +48,11 @@
 										</li>
 										<li>
 											<span class="badgeGov">정부24</span>
-											<!-- [10/31] 재제출일 경우 .resubmit 추가, i태그 추가 -->
-											<span class="resubmit"><i class="ico _infoPointSvg"></i>주민등록 등본</span>
+											<span>주민등록 등본</span>
 										</li>
 										<li>
 											<span class="badgeGov">정부24</span>
 											<span>차상위 본인부담경감대상자 증명서</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<!-- [10/31] 재제출일 경우 .resubmit 추가, i태그 추가 -->
-											<span class="resubmit"><i class="ico _infoPointSvg"></i> 재제출 서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
-										</li>
-										<li>
-											<span class="badgeGov">정부24</span>
-											<span>서류명</span>
 										</li>
 									</ul>
 								</div>
@@ -98,8 +60,8 @@
 						</div>
 
 						<div class="popBtm">
-							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
-							<button class="btnCTA _confirm">발급받기</button>
+							<button type="button" class="btnCTA _cancel" onclick="fnOnEventToggle('#popup05')"><span>취소</span></button>
+							<button class="btnCTA _confirm" onclick="fnOnEventToggle('#popup05')">발급받기</button>
 						</div>
 					</div>
 				</div>

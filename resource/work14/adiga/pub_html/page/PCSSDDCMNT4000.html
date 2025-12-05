@@ -23,7 +23,7 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="popupName" class="modPopup"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
 		<div class="popupArea popup1Cont mdPop">
 			<div class="popupInMotion">
@@ -34,7 +34,7 @@
 								<img class="mR10 vam" src="../../static/img/logo_dpaper.png" alt="정부 전자문서지갑 로고">
 								정부 전자문서 지갑 안내
 							</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+							<button type="button" class="popCloseBtn" onclick="fnOnEventToggle('#popup01');">
 								<span class="hidden">닫기</span>
 							</button>
 						</div>
@@ -50,8 +50,8 @@
 						</div>
 
 						<div class="popBtm">
-							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
-							<button type="button" class="btnCTA _confirm">확인</button>
+							<button type="button" class="btnCTA _cancel" onclick="fnOnEventToggle('#popup01');"><span>취소</span></button>
+							<button onclick="location.href='PCSSDDCMNT2000.html'" type="button" class="btnCTA _confirm">확인</button>
 						</div>
 					</div>
 				</div>

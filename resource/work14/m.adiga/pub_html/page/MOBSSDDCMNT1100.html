@@ -5,24 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <!-- css -->
-<link rel="stylesheet" href="../../static/css/jquery-ui.min.css" />
-<link rel="stylesheet" href="../../static/css/swiper.css" />
 <link rel="stylesheet" href="../../static/css/default.css" />
 <link rel="stylesheet" href="../../static/css/common.css" />
-<link rel="stylesheet" href="../../static/css/guide/common2.css" />
 <link rel="stylesheet" href="../../static/css/sub.css" />
 <link rel="stylesheet" href="../../static/css/main.css" />
-<link rel="stylesheet" href="../../static/css/rMateChartH5.css" />
-<link rel="stylesheet" href="../../static/css/ai.css" />
 <link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
 <!-- Jquery -->
 <script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery.blockUI.min.js"></script>
-<script type="text/javascript" src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
-<script type="text/javascript" src="../../static/js/comm/swiper.js"></script>
 <script type="text/javascript" src="../../static/js/comm/common.js"></script>
 <script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+<script>
+	$(function() {
+		$("#btnSample").click(function() {
+			$(this).attr("disabled", "disabled");
+			$("#footerBtn01").addClass('hide');
+			$("#footerBtn02").removeClass('hide');
+			$('.cptTogChk').show();
+		})
+
+		$(".cptTogChk .switch").change(function() {
+			$(this).closest("li").find(".btnWrap.typeSsd").find(".btnDefault").toggleClass('hide');
+			$(this).closest("li").toggleClass("noSubmit")
+		})
+
+		$("#footerBtn02 button").click(function() {
+			$("#btnSample").removeAttr("disabled");
+			$("#footerBtn01").removeClass('hide');
+			$("#footerBtn02").addClass('hide');
+			$('.cptTogChk').hide();
+		})
+	})
+</script>
+<style>
+	.hide { display: none; }
+	.cptTogChk { display: none; }
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -40,7 +57,7 @@
 					<p class="redInfo fcTextBody"><span><strong class="fcMain bold">[제출 서류 제외하기]</strong> 버튼을 누르면 대상 문서를 제외할 수 있습니다.</span></p>
 
 					<div class="btnWrap typeSsd">
-						<button type="button" class="btnDefault02">제출 서류 제외하기</button>
+						<button type="button" class="btnDefault02" id="btnSample">제출 서류 제외하기</button>
 					</div>
 				</div>
 
@@ -57,11 +74,20 @@
 										<span class="badgeGov">정부24</span>
 										<div class="textCont">
 											<div class="text">가족관계증명서</div>
+
+											<div class="cptTogChk">
+												<label class="switch">
+													<input type="checkbox" checked/>
+													<div class="slider round"></div>
+												</label>
+											</div>
 										</div>
 									</div>
+
 									<div class="btnWrap typeSsd">
 										<button type="button" class="btnDefault02">발급 안내</button>
 										<button type="button" class="btnDefault">개별 증명서 신청</button>
+										<button type="button" class="btnDefault hide" disabled>해당없음</button>
 									</div>
 								</li>
 								<li>
@@ -69,23 +95,30 @@
 										<span class="badgeCom">일반</span>
 										<div class="textCont">
 											<div class="text">농어촌학생전형 학교장 확인서(학교서식)</div>
+
+											<div class="cptTogChk">
+												<label class="switch">
+													<input type="checkbox" checked/>
+													<div class="slider round"></div>
+												</label>
+											</div>
 										</div>
 									</div>
 									<div class="btnWrap typeSsd">
 										<button type="button" class="btnDefault02">발급 안내</button>
 										<button type="button" class="btnDefault">업로드</button>
+										<button type="button" class="btnDefault hide" disabled>해당없음</button>
 									</div>
 								</li>
 
-								<!-- 파일 업로드 됐을 경우 -->
 								<li>
 									<div class="topArea">
 										<span class="badgeGov">정부24</span>
 										<div class="textCont">
-											<div class="text">파일 업로드 됐을 경우</div>
+											<div class="text">가족관계증명서</div>
 
 											<div class="uploadArea">
-												<button type="button" class="uploadFile">발급 완료된 파일명</button>
+												<button type="button" class="uploadFile">가족관계증명서_20251001</button>
 											</div>
 											<p class="uploadInfo">보관기간 : 2026.01.30까지(90일)</p>
 										</div>
@@ -95,15 +128,14 @@
 										<button type="button" class="btnConfirm styleFixed" disabled>발급 완료</button>
 									</div>
 								</li>
-
 								<li>
 									<div class="topArea">
 										<span class="badgeCom">일반</span>
 										<div class="textCont">
-											<div class="text">파일 업로드 됐을 경우</div>
+											<div class="text">농어촌학생전형 학교장 확인서(학교서식)</div>
 
 											<div class="uploadArea">
-												<button type="button" class="uploadFile">업로드 된 파일명 파일명이 길 경우 파일명이 길 경우 파일명이 길 경우 파일명이 길 경우.png</button>
+												<button type="button" class="uploadFile">농어촌학생전형 학교장 확인서(학교서식).png</button>
 												<button type="button" class="btnTrash"><span class="hidden">파일 삭제</span></button>
 											</div>
 										</div>
@@ -114,39 +146,6 @@
 									</div>
 								</li>
 								<!-- // 파일 업로드 됐을 경우 -->
-
-								<!-- 제외된 제출서류일 경우 (li에 .noSubmit 추가) -->
-								<li class="noSubmit">
-									<div class="topArea">
-										<span class="badgeCom">일반</span>
-										<div class="textCont">
-											<div class="text">제외된 제출서류일 경우</div>
-										</div>
-									</div>
-									<div class="btnWrap typeSsd">
-										<button type="button" class="btnDefault02">발급 안내</button>
-										<button type="button" class="btnDefault" disabled>해당없음</button>
-									</div>
-								</li>
-								<!-- // 제외된 제출서류일 경우 -->
-
-								<!-- 재제출일 경우 -->
-								<li>
-									<div class="topArea">
-										<span class="badgeCom">일반</span>
-										<div class="textCont">
-											<div class="text">재제출 요청된 서류일 경우</div>
-										</div>
-									</div>
-									<div class="btnWrap typeSsd">
-										<button type="button" class="btnDefault02">발급 안내</button>
-										<button type="button" class="btnPoint">재제출</button>
-									</div>
-
-									<p class="redInfo typeTitle">재제출 사유</p>
-									<div class="bgGray">재제출 사유 내용이 노출됩니다. 재제출 사유 내용이 노출됩니다. 재제출 사유 내용이 노출됩니다. 재제출 사유 내용이 노출됩니다.</div>
-								</li>
-								<!-- // 재제출일 경우 -->
 							</ul>
 						</div>
 						<!-- // 필수 제출 서류 리스트-->
@@ -162,11 +161,19 @@
 										<span class="badgeCom">일반</span>
 										<div class="textCont">
 											<div class="text">농어촌학생전형 학교장 확인서(학교서식)</div>
+
+											<div class="cptTogChk">
+												<label class="switch">
+													<input type="checkbox" checked/>
+													<div class="slider round"></div>
+												</label>
+											</div>
 										</div>
 									</div>
 									<div class="btnWrap typeSsd">
 										<button type="button" class="btnDefault02">발급 안내</button>
 										<button type="button" class="btnDefault">업로드</button>
+										<button type="button" class="btnDefault hide" disabled>해당없음</button>
 									</div>
 								</li>
 							</ul>
@@ -174,15 +181,19 @@
 						<!-- // 선택 제출 서류 리스트 -->
 					</div>
 				</div>
+
+				<div class="btnWrap _CTA" id="footerBtn01">
+					<button type="button" onclick="location.href='MOBSSDDCMNT1000.html'" class="btnCancel"><span>취소</span></button>
+					<button type="button" onclick="location.href='MOBSSDDCMNT1102.html'" class="btnConfirm"><span>제출하기</span></button>
+				</div>
+
+				<div class="btnWrap _CTA hide" id="footerBtn02">
+					<button type="button" class="btnCancel"><span>취소</span></button>
+					<button type="button" class="btnConfirm"><span>저장</span></button>
+				</div>
 			</div>
 		</div>
 		<!-- // 컨텐츠 영역 END -->
-
-		<div data-include="../layout/footer.html #footer"></div>
-		<div data-include="../layout/appbar.html #appbar"></div>
-
-		<div data-include="../layout/menuPopup.html #menuPopup"></div>
-		<div data-include="../layout/menuSearchPopup.html .mainSearchPopup"></div>
 	</div>
 	<!-- // .wrapper -->
 </body>

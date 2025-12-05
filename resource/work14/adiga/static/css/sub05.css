@@ -14,6 +14,7 @@
 .fwReg  { font-weight: 400 !important; }
 .fwMed  { font-weight: 500 !important; }
 .fwBold { font-weight: 700 !important; }
+.hide { display: none !important; }
 
 /* 버튼 & 아이콘 */
 .btnCon.betweenIcon { display: flex; justify-content: space-between; height: 50px; padding: 0 20px; }

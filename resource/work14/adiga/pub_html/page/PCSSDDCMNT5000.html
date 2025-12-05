@@ -67,7 +67,7 @@
 
 </head>
 <body>
-	<div id="sbmsnIdntyForm" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="sbmsnIdntyForm" class="modPopup"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
 		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
 			<div class="popupInMotion">
@@ -75,17 +75,13 @@
 					<div class="popupContArea">
 						<div class="popTitleBox">
 							<h3 class="popTitle">확인증</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
+							<button type="button" class="popCloseBtn" onclick="fnOnEventToggle('#popup07')">
 								<span class="hidden">닫기</span>
 							</button>
 						</div>
 
 						<div class="popCont typeSsd">
 							<div class="right mB10">
-								<!--
-									확인증 영역만 인쇄를 위해 별도 script와 style 추가 필요합니다.
-									(header 태그 내 script, style 참고)
-								-->
 								<button type="button" class="btnSmall _stroke withIcon" onclick="printPopup()">
 									<i class="ico _print"></i>인쇄
 								</button>
@@ -115,7 +111,7 @@
 											<tr>
 												<th scope="row">지원전형</th>
 												<td>
-													<strong class="bclr fwMed wFull">(정시)고려대학교 - 금융빅데이터학부</strong>
+													<strong class="bclr fwMed wFull">(정시)한국대학교 - 금융빅데이터학부</strong>
 													<p>학생부종합(고른기회) > 국가공헌: 국가보훈 대상자 (1차)</p>
 												</td>
 											</tr>
@@ -141,11 +137,6 @@
 														<li>농어촌 학생전형 학교장 확인서(학교서식)</li>
 														<li>주민등록초본</li>
 														<li>중학교 학교생활 기록부</li>
-														<li>서류명01</li>
-														<li>서류명02</li>
-														<li>서류명03</li>
-														<li>서류명04</li>
-														<li>서류명05</li>
 													</ul>
 												</td>
 											</tr>
@@ -161,7 +152,7 @@
 						</div>
 
 						<div class="popBtm">
-							<button type="button" class="btnCTA _confirm" onclick="closePopup('popupName');">확인</button>
+							<button type="button" class="btnCTA _confirm" onclick="fnOnEventToggle('#popup07')">확인</button>
 						</div>
 					</div>
 				</div>

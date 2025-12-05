@@ -6,7 +6,7 @@
 	font-weight: 300;
 	src: url("../webfont/NotoSansKR-Light.otf") format('opentype');
 	src: url("../webfont/NotoSansKR-Light.eot"),
-	url("../webfont/NotoSansKR-Light.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Light.eot?#iefix") format("embedded-opentype"),
 			url("../webfont/NotoSansKR-Light.woff") format("woff");
 }
 /* Noto Sans KR Regular */
@@ -16,7 +16,7 @@
 	font-weight: 400;
 	src: url("../webfont/NotoSansKR-Regular.otf") format('opentype');
 	src: url("../webfont/NotoSansKR-Regular.eot"),
-	url("../webfont/NotoSansKR-Regular.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Regular.eot?#iefix") format("embedded-opentype"),
 			url("../webfont/NotoSansKR-Regular.woff") format("woff");
 }
 /* Noto Sans KR Medium */
@@ -24,9 +24,9 @@
 	font-family: "NotoSans";
 	font-style: normal;
 	font-weight: 500;
-	src: url("../webfont/NotoSansKR-Medium.otf") format('opentype');	
+	src: url("../webfont/NotoSansKR-Medium.otf") format('opentype');
 	src: url("../webfont/NotoSansKR-Medium.eot"),
-	url("../webfont/NotoSansKR-Medium.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Medium.eot?#iefix") format("embedded-opentype"),
 		url("../webfont/NotoSansKR-Medium.woff") format("woff");
 }
 /* Noto Sans KR Bold */
@@ -36,7 +36,7 @@
 	font-weight: 700;
 	src: url("../webfont/NotoSansKR-Bold.otf") format('opentype');
 	src: url("../webfont/NotoSansKR-Bold.eot"),
-	     url("../webfont/NotoSansKR-Bold.eot?#iefix") format("embedded-opentype"), 
+	     url("../webfont/NotoSansKR-Bold.eot?#iefix") format("embedded-opentype"),
 		 url("../webfont/NotoSansKR-Bold.woff") format("woff");
 }
 /* Noto Sans KR Black */
@@ -46,7 +46,7 @@
 	font-weight: 900;
 	src: url("../webfont/NotoSansKR-Black.otf") format('opentype');
 	src: url("../webfont/NotoSansKR-Black.eot"),
-	url("../webfont/NotoSansKR-Black.eot?#iefix") format("embedded-opentype"), 
+	url("../webfont/NotoSansKR-Black.eot?#iefix") format("embedded-opentype"),
 	url("../webfont/NotoSansKR-Black.woff") format("woff");
 }
 
@@ -117,7 +117,7 @@ abbr[title], dfn[title] {text-decoration:none;border-bottom:medium none;cursor:d
 hr {display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0;}
 legend, caption {display:none;clear:both;}
 button {vertical-align:middle;cursor:pointer;border:0 none;background-color:transparent;}
-button::-moz-focus-inner {padding:0;border:0;} 
+button::-moz-focus-inner {padding:0;border:0;}
 label {cursor:pointer;}
 input {font-family:"NotoSans", "roboto";vertical-align:middle;}
 input::-moz-focus-inner {padding:0;border:0;}
@@ -126,10 +126,10 @@ input[type="text"],input[type="password"],input[type="tel"],input[type="email"],
 	height:4.4rem;
 	padding:0 1.2rem;
 	font-size:1.4rem;
-	background:#fff;  
-	border: 1px solid #ccc;  
+	background:#fff;
+	border: 1px solid #ccc;
 	border-radius:0.8rem;
-	-webkit-appearance:none; 
+	-webkit-appearance:none;
 	appearance:none;
 }
 input[type="button"],input[type="reset"],input[type="submit"] {
@@ -137,7 +137,7 @@ input[type="button"],input[type="reset"],input[type="submit"] {
 	vertical-align:middle;
 	-webkit-border-radius:0;
 	border-radius:0;
-	-webkit-appearance:none; 
+	-webkit-appearance:none;
 	appearance:none;
 	cursor:pointer;
 }
@@ -150,14 +150,14 @@ input[type="radio"] {
 
 input::placeholder,
 textarea::placeholder {color:var(--text-sub2);}
-input::-webkit-input-placeholder, 
+input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {color:var(--text-sub2);}
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {color:var(--text-sub2);}
 
-input:not([type=radio]):active, 
+input:not([type=radio]):active,
 input:not([type=radio]):focus,
-input:not([type=checkbox]):active, 
+input:not([type=checkbox]):active,
 input:not([type=checkbox]):focus {border-color:#111;}
 input[type="text"]:read-only,
 input[type="password"]:read-only,
@@ -168,35 +168,35 @@ input[type="number"]:read-only {background-color:#f8f8f8;}
 input:disabled {color:#a6a6a6;border-color:#e5e5e5;background-color:#fbfbfb;}
 
 textarea {
-	width: 100%;  
-	margin:0;  
+	width: 100%;
+	margin:0;
 	height:21.2rem;
 	overflow-y: auto;
-	padding: 1.2rem;  
-	font: inherit;  
+	padding: 1.2rem;
+	font: inherit;
 	font-size:1.4rem;
-	color: inherit;  
-	border: 0.1rem solid #ccc;  
-	-webkit-border-radius:0.6rem;  
+	color: inherit;
+	border: 0.1rem solid #ccc;
+	-webkit-border-radius:0.6rem;
 	border-radius:0.6rem;
-	-webkit-appearance: none; 
-	appearance: none; 
-	resize: none;  
+	-webkit-appearance: none;
+	appearance: none;
+	resize: none;
 }
 textarea:active, textarea:focus {border-color:#111;}
 
 select {
-	margin: 0;  
-	font: inherit;  
+	margin: 0;
+	font: inherit;
 	font-size:1.4rem;
-	color: inherit;  
-	vertical-align: middle;  
+	color: inherit;
+	vertical-align: middle;
 	-webkit-border-radius:0.8rem;
 	border-radius:0.8rem;
-	border: 1px solid #ccc; 
+	border: 1px solid #ccc;
 	background: #fff;
-	-webkit-appearance: none; 
-	-moz-appearance:none; 
+	-webkit-appearance: none;
+	-moz-appearance:none;
 	appearance:none;
 }
 select::-ms-expand {display:none}
@@ -211,6 +211,10 @@ img {
 	transform:translateZ(0); /*20230403 이미지 정상 랜더링 전용 css 추가*/
 }
 
+::-webkit-scrollbar { width: 6px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #BEC7C8; border-radius: 10px; }
+
 /*
 ins {
   background-color: #ff9;  color: #000;  text-decoration: none;
@@ -224,7 +228,7 @@ del {
   text-decoration: line-through;
 }
 */
-/* 
+/*
 address, em {font-style:normal;}
 
 blind
@@ -232,7 +236,7 @@ blind
   overflow: hidden;  position: absolute;  top: 0;  left: 0;  width: 0;  height: 0;  font-size: 0;  line-height: 0;
 } */
 
-/* skipnavi 
+/* skipnavi
 #skipnavi {
   position: fixed;  left: 0;  top: 0;  width: 100%;  margin-left: 0;  z-index: 99999;
 }
@@ -244,7 +248,7 @@ blind
 }
 */
 
-/* html 설정 *//* 
+/* html 설정 *//*
 html {
   font-family: "NotoSans", "roboto" !important;  color: #333;
 }

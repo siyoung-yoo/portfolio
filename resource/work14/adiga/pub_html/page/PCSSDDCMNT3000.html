@@ -23,31 +23,70 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
+	<div id="popupAuth" class="modPopup scheduleMngeForm"> <!-- class - on : 팝업오픈 -->
 		<div class="popupDim"></div>
-		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
+		<div class="popupArea popup1Cont xlPop">
 			<div class="popupInMotion">
 				<div class="popupContainer">
 					<div class="popupContArea">
-						<div class="popTitleBox">
-							<h3 class="popTitle">발급 안내</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
-								<span class="hidden">닫기</span>
-							</button>
-						</div>
-
-						<div class="popCont typeSsd">
-							<div class="scroll">
-
-								<!-- p태그 삭제 후 사용해주세요 -->
-								<p style="text-align: center; padding: 200px 0; background: #f0f0f0;">발급 안내 영역 입니다.</p>
-
+						<form id="pfrm" name="pfrm" method="get">
+							<div class="popTitleBox">
+								<h1 class="popTitle">수험번호 인증</h1>
+								<button onclick="fnOnEventToggle('#popup03')" type="button" class="popCloseBtn">
+									<span class="hidden">닫기</span>
+								</button>
 							</div>
-						</div>
+							<!-- 팝업 컨텐츠 영역 -->
+							<div class="popCont">
+								<p class="body1 reg sclr01 mB15">지원하신 대학의 수험 번호를 입력하여 지원하신 모든 대학 및 전형 정보를 확인해 주세요.</p>
+								<ul class="modCsatArea">
 
-						<div class="popBtm">
-							<button type="button" class="btnCTA _confirm" onclick="closePopup('popupName');">확인</button>
-						</div>
+									<li class="castList">
+										<div class="univBox mB15 notNum">
+											<p class="univName">한국대학교 [본교]</p>
+											<div class="rtBox">
+												<div class="frmInput examNumArea on">
+													<input type="text" class="authInput" placeholder="수험 번호 입력" value="1234">
+													<button type="button" class="btnCon _black provBtn btn0301">인증</button>
+												</div>
+												<p class="depTmt">금융빅데이터학부</p>
+											</div>
+										</div>
+										<div class="descBox glbTooltip topLtArrow">
+											<p class="univAdm null"></p>
+											<p class="univAdm value hide">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+											<span class="tooltipCont hide">
+												<span class="tooltipTit body3">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</span>
+											</span>
+										</div>
+									</li>
+
+									<li class="castList">
+										<div class="univBox mB15 notNum">
+											<p class="univName">한국대학교 [제2캠퍼스]</p>
+											<div class="rtBox">
+												<div class="frmInput examNumArea on">
+													<input type="text" class="authInput" placeholder="수험 번호 입력">
+													<button type="button" class="btnCon _black provBtn btn0301">인증</button>
+												</div>
+												<p class="depTmt">금융빅데이터학부</p>
+											</div>
+										</div>
+										<div class="descBox glbTooltip topLtArrow">
+											<p class="univAdm null"></p>
+											<p class="univAdm value hide">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
+											<span class="tooltipCont hide">
+												<span class="tooltipTit body3">기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</span>
+											</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!-- //팝업 컨텐츠 영역 -->
+							<div class="popBtm">
+								<button onclick="fnOnEventToggle('#popup03')" type="button" class="btnCTA _confirm">확인</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

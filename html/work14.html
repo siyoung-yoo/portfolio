@@ -18,6 +18,15 @@
 <script type="text/javascript" src="../resource/js/ScrollTrigger.min.js"></script>
 <script type="text/javascript" src="../resource/js/splitType.js"></script>
 <script type="text/javascript" src="../resource/js/ui_common.js"></script>
+<script>
+    function fnMobileOpen(fileName) {
+        if (window.innerWidth > 768) {
+            window.open('../resource/work14/m.adiga/pub_html/page/'+ fileName +'.html', '_blank', 'width=450, height=900')
+        } else {
+            window.open('../resource/work14/m.adiga/pub_html/page/'+ fileName +'.html', '_blank')
+        }
+    }
+</script>
 </head>
 <body>
     <header id="header">
@@ -73,18 +82,20 @@
                     <dd>HTML, CSS, jQuery, thymeleaf, Eclipse, SVN, Figma</dd>
                 </dl>
             </div>
-            
+
             <div class="view-list">
                 <div class="title-area">
                     <p style="font-size: 1.3rem">
                         <span class="dt-title">View Demo</span>
-                        <small class="ml5">학생 서비스 - 적응형 웹 (모바일)</small>
+                        <small class="ml5">학생 서비스 - 적응형 웹</small>
                     </p>
                 </div>
                 <ul class="divide-group">
-                    <li><a class="btn-basic" target="_blank" href="../resource/work14/m.adiga/pub_html/page/MOBSSDDCMNT1000.html">메인 페이지</a></li>
-                    <li><a class="btn-basic" target="_blank" href="../resource/work14/receipt/pub_html/page/SsdDom0101.html">페이지 01</a></li>
-                    <li><a class="btn-basic" target="_blank" href="../resource/work14/receipt/pub_html/page/SsdDtm0101.html">페이지 02</a></li>
+                    <li><a class="btn-basic" href="javascript:fnMobileOpen('MOBSSDDCMNT1000')">메인 페이지 (모바일)</a></li>
+                    <li><a class="btn-basic" href="javascript:fnMobileOpen('MOBSSDDCMNT8100')">만족도 평가 (모바일)</a></li>
+                    <li><a class="btn-basic" target="_blank" href="../resource/work14/adiga/pub_html/page/PCSSDDCMNT1000.html">메인 페이지 (PC)</a></li>
+                    <li><a class="btn-basic" target="_blank" href="../resource/work14/adiga/pub_html/page/.html">페이지 01 (PC)</a></li>
+                    <li><a class="btn-basic" target="_blank" href="../resource/work14/adiga/pub_html/page/.html">페이지 02 (PC)</a></li>
                 </ul>
             </div>
 
