@@ -391,6 +391,10 @@ body.loading-ani {
         transform: translateX(100px) scale(1.1);
     }
 }
+@media (max-width: 400px) {
+    .work-title { width: 90%; }
+}
+
 @media (max-width: 768px) {
     .work-title { transform: none !important; }
 }

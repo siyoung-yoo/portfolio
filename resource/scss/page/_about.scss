@@ -1,17 +1,19 @@
 @mixin skill_icon ($size: 50px) {
   width: $size;
   height: $size;
-  background-size: auto $size*2;
+  background-size: auto $size*3;
 
   @for $i from 1 through 6 {
     &:nth-of-type(#{$i}) {
       background-position: (0 + (($i - 1) * -$size)) 0;
     }
-  }
 
-  @for $i from 1 through 6 {
     &:nth-of-type(#{$i + 6}) {
       background-position: (0 + (($i - 1) * -$size)) (-1 * $size);
+    }
+
+    &:nth-of-type(#{$i + 12}) {
+      background-position: (0 + (($i - 1) * -$size)) (-2 * $size);
     }
   }
 }
@@ -54,9 +56,9 @@
 
       li {
         margin: 5px;
-        background: url(../images/iconpack_skills.png) 0 0 / auto 150px no-repeat;
+        background: url(../images/iconpack_skills.png) 0 0 / auto no-repeat;
 
-        @include skill_icon(30px)
+        @include skill_icon()
       }
     }
 
@@ -169,7 +171,11 @@
     }
   }
 }
-
+@media (max-width: 768px) {
+  .skills li {
+    @include skill_icon(30px)
+  }
+}
 @media (min-width: 769px) {
   .type-about {
     padding-top: 150px;
