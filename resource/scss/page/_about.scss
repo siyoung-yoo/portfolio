@@ -172,8 +172,8 @@
   }
 }
 @media (max-width: 768px) {
-  .skills li {
-    @include skill_icon(30px)
+  .type-about [class*=about-] .skills li {
+    @include skill_icon($size: 30px);
   }
 }
 @media (min-width: 769px) {
