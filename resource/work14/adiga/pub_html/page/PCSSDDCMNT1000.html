@@ -8,12 +8,12 @@
 <link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
 <link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
 <link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
-<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
-
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" />
 <!-- Jquery -->
 <script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
 <script src="../../static/js/comm/common.js"></script>
-<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+<script src="../../static/js/comm/pub_ui.js"></script>
+
 <script>
 	$(document).on("click", ".btnToggle", function() {
 		const $toggleTarget = $(this).closest(".ssdListWrap").find(".toggleCont");
@@ -26,6 +26,31 @@
 			$toggleTarget.slideDown(150);
 			$(this).addClass("open").attr("aria-expanded", true);
 			$(this).find(".hidden").text("리스트 닫기")
+		}
+	})
+
+	$(document).on("click", ".btnNoSubmit", function() {
+		const $targetGroup = $(this).closest(".toggleCont");
+		const $btnArea = $targetGroup.find(".docList").find(".btnArea");
+		const $chkArea = $targetGroup.find(".docList").find(".cptToggle");
+
+		console.log($targetGroup)
+
+		$btnArea.toggleClass("hide");
+		$chkArea.toggleClass("hide");
+	})
+
+	$(document).on('change', '.cptToggle input', function() {
+		if ( $(this).prop("checked") == true ) {
+			$(this).closest(".cptToggle").prev(".btnArea").find("._strokeGreen").removeClass("hide");
+			$(this).closest(".cptToggle").prev(".btnArea").find("._confirm").removeClass("hide");
+			$(this).closest(".cptToggle").prev(".btnArea").find("._disabled").addClass("hide");
+			$(this).closest("li").removeClass("noSubmit");
+		} else {
+			$(this).closest(".cptToggle").prev(".btnArea").find("._strokeGreen").addClass("hide");
+			$(this).closest(".cptToggle").prev(".btnArea").find("._confirm").addClass("hide");
+			$(this).closest(".cptToggle").prev(".btnArea").find("._disabled").removeClass("hide");
+			$(this).closest("li").addClass("noSubmit");
 		}
 	})
 </script>
@@ -58,7 +83,7 @@
 		}
 		.printOnlyPopup #popup07 .scroll {
 			max-height: initial;
-			padding: 2cm; /* 인쇄 여백 */
+			padding: 2cm;
 		}
 	}
 </style>
@@ -89,7 +114,7 @@
 							</li>
 						</ul>
 
-						<div class="tabCon on"><!-- default: 알림 탭이 활성화 상태 / on 클래스 추가 -->
+						<div class="tabCon on">
 							<div class="cptActFil typeSsd">
 								<div class="titleArea">
 									<h4 class="h4 bold">알림</h4>
@@ -252,7 +277,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- // 수험번호 미인증 END --><!-- //251028 추가-->
+					<!-- // 수험번호 미인증 END -->
 
 					<!-- 제출대기 START -->
 					<div class="ssdListWrap">
@@ -308,7 +333,7 @@
 								<div class="titleArea">
 									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
 									<div class="linkArea">
-										<button type="button" class="btnLink">제출 서류 제외하기</button>
+										<button type="button" class="btnLink btnNoSubmit">제출 서류 제외하기</button>
 										<button onclick="fnOnEventToggle('#popup06')" type="button"><i class="icoOnly _qeInfo"></i></button>
 									</div>
 								</div>
@@ -320,6 +345,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCon _strokeGreen">개별 증명서 신청</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
+										</div>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk11" checked>
+											<label for="chk11"></label>
 										</div>
 									</li>
 									<li>
@@ -329,17 +359,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCon _strokeGreen">업로드</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
 										</div>
-									</li>
-
-									<!-- 제외된 제출서류일 경우 (li에 .noSubmit 추가) -->
-									<li class="noSubmit">
-										<div class="text">
-											<span class="badgeCom">일반</span> 제출 제외된 서류
-										</div>
-										<div class="btnArea">
-											<button type="button" class="btnCon _strokeGray">발급안내</button>
-											<button type="button" class="btnCon _disabled" disabled>해당없음</button>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk12" checked>
+											<label for="chk12"></label>
 										</div>
 									</li>
 								</ul>
@@ -358,6 +382,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCon _strokeGreen">개별 증명서 신청</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
+										</div>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk13" checked>
+											<label for="chk13"></label>
 										</div>
 									</li>
 									<li>
@@ -367,6 +396,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCon _strokeGreen">업로드</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
+										</div>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk14" checked>
+											<label for="chk14"></label>
 										</div>
 									</li>
 								</ul>
@@ -374,127 +408,6 @@
 						</div>
 					</div>
 					<!-- // 제출대기 END -->
-
-					<!-- 제출서류 제외하기 모드 START -->
-					<div class="ssdListWrap">
-						<div class="listHeader">
-							<div class="state">제출대기 (제출서류 제외하기 모드 예시)</div>
-							<p class="desc">서류 제출에 필요한 전자 증명서와 일반 문서를 확인해주세요.</p>
-						</div>
-
-						<div class="listCont">
-							<div class="nameArea">
-								<div class="name"><span class="badgeCtgry sm">정시</span>한국대학교</div>
-
-								<div class="btnArea">
-									<button type="button" class="btnCon _stroke">내 문의 <strong class="prm01">99</strong>/5</button>
-									<button onclick="fnOnEventToggle('#popup04')" type="button" class="btnCon _stroke"><i class="icoOnly sm _qeMsg"></i> 문의하기</button>
-								</div>
-							</div>
-
-							<div class="infoArea">
-								<p>기회균형과(교과) > 정원외 농어촌학생 특별전형(교과) > 6년간 농어촌지역 또는 도서벽지 지역 거주</p>
-								<ul>
-									<li><strong>금융빅데이터학부</strong></li>
-									<li>25.09.01~25.09.18(1차)</li>
-									<li><i class="icoOnly sm _call"></i> 070-1234-5678</li>
-								</ul>
-							</div>
-
-							<div class="stepArea">
-								<ul class="stepList">
-									<li>
-										<div class="text">문서 발급 및 업로드</div>
-										<button onclick="fnOnEventToggle('#popup05')" type="button" class="btnCon _strokeGreen">전자 증명서 발급</button>
-									</li>
-									<li>
-										<div class="text">서류 제출</div>
-										<button onclick="fnOnEventToggle('#popup02')" type="button" class="btnCon _strokeGreen">서류 제출</button>
-									</li>
-									<li>
-										<div class="text">제출 완료</div>
-										<button onclick="fnOnEventToggle('#popup07')" type="button" class="btnCon _strokeGreen">확인증</button>
-									</li>
-								</ul>
-							</div>
-
-							<button type="button" class="btnToggle" aria-expanded="false">
-								<span class="hidden">리스트 보기</span>
-							</button>
-						</div>
-
-						<div class="toggleCont">
-							<!-- 필수 제출 서류 리스트-->
-							<div class="subListWrap">
-								<div class="titleArea">
-									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
-									<div class="btnArea">
-										<button type="button" class="btnCTA _cancel">취소</button>
-										<button type="button" class="btnCon _strokeGreen">변경</button>
-									</div>
-								</div>
-								<ul class="docList">
-									<li>
-										<div class="text">
-											<span class="badgeGov">정부24</span>가족관계증명서
-										</div>
-										<div class="cptToggle">
-											<input type="checkbox" id="chk11" checked>
-											<label for="chk11"></label>
-										</div>
-									</li>
-									<li>
-										<div class="text">
-											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
-										</div>
-										<div class="cptToggle">
-											<input type="checkbox" id="chk12" checked>
-											<label for="chk12"></label>
-										</div>
-									</li>
-
-									<!-- 제외된 제출서류일 경우 (li에 .noSubmit 추가) -->
-									<li class="noSubmit">
-										<div class="text">
-											<span class="badgeCom">일반</span> 제출 제외된 서류
-										</div>
-										<div class="cptToggle">
-											<input type="checkbox" id="chk13">
-											<label for="chk13"></label>
-										</div>
-									</li>
-								</ul>
-							</div><!-- // 필수 제출 서류 리스트-->
-
-							<!-- 선택 제출 서류 리스트 -->
-							<div class="subListWrap">
-								<div class="titleArea">
-									<p class="body1">선택제출(택1)</p>
-								</div>
-								<ul class="docList">
-									<li>
-										<div class="text">
-											<span class="badgeGov">정부24</span>가족관계증명서
-										</div>
-										<div class="cptToggle">
-											<input type="checkbox" id="chk21" checked>
-											<label for="chk21"></label>
-										</div>
-									</li>
-									<li>
-										<div class="text">
-											<span class="badgeCom">일반</span>농어촌학생전형 학교장 확인서(학교서식)
-										</div>
-										<div class="cptToggle">
-											<input type="checkbox" id="chk22" checked>
-											<label for="chk22"></label>
-										</div>
-									</li>
-								</ul>
-							</div><!-- // 선택 제출 서류 리스트 -->
-						</div>
-					</div>
-					<!-- // 제출서류 제외하기 모드 END -->
 
 					<!-- 제출준비 START -->
 					<div class="ssdListWrap ready">
@@ -549,7 +462,7 @@
 								<div class="titleArea">
 									<p class="body1"><i class="icoOnly _checkPoint"></i> 제출상태</p>
 									<div class="linkArea">
-										<button type="button" class="btnLink">제출 서류 제외하기</button>
+										<button type="button" class="btnLink btnNoSubmit">제출 서류 제외하기</button>
 										<button onclick="fnOnEventToggle('#popup06')" type="button"><i class="icoOnly _qeInfo"></i></button>
 									</div>
 								</div>
@@ -567,6 +480,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCTA _confirm" disabled>발급 완료</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
+										</div>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk21" checked>
+											<label for="chk21"></label>
 										</div>
 									</li>
 									<li>
@@ -583,17 +501,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCTA _confirm" disabled>업로드완료</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
 										</div>
-									</li>
-
-									<!-- 제외된 제출서류일 경우 (li에 .noSubmit 추가) -->
-									<li class="noSubmit">
-										<div class="text">
-											<span class="badgeCom">일반</span> 제출 제외된 서류
-										</div>
-										<div class="btnArea">
-											<button type="button" class="btnCon _strokeGray">발급안내</button>
-											<button type="button" class="btnCon _disabled" disabled>해당없음</button>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk22" checked>
+											<label for="chk22"></label>
 										</div>
 									</li>
 								</ul>
@@ -619,6 +531,11 @@
 										<div class="btnArea">
 											<button type="button" class="btnCon _strokeGray">발급안내</button>
 											<button type="button" class="btnCTA _confirm" disabled>업로드완료</button>
+											<button type="button" class="btnCon _disabled hide" disabled>해당없음</button>
+										</div>
+										<div class="cptToggle hide">
+											<input type="checkbox" id="chk23" checked>
+											<label for="chk23"></label>
 										</div>
 									</li>
 								</ul>
@@ -716,7 +633,6 @@
 										</div>
 									</li>
 
-									<!-- 제외된 제출서류일 경우 (li에 .noSubmit 추가) -->
 									<li class="noSubmit">
 										<div class="text">
 											<span class="badgeCom">일반</span> 제출 제외된 서류

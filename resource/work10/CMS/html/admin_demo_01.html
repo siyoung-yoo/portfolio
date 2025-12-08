@@ -6,7 +6,11 @@
 <title>게시글등록팝업</title>
 <link rel="stylesheet" href="../resources/css/output.css">
 <script src="../resources/js/component/ui-script.js"></script>
-
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelector("#btnPopup").click();
+});
+</script>
 </head>
 <body>
 <div id="wrap">
@@ -17,14 +21,14 @@
     <!-- 컨테이너 영역 -->
     <div id="container">
         <div class="contents">
-            <button type="button" class="krds-btn medium primary open-modal" data-target="modal_list_pu">게시글등록팝업</button>
+            <button type="button" class="krds-btn medium primary open-modal" id="btnPopup" data-target="modal_list_pu">게시글등록팝업</button>
         </div>
     </div>
     <!-- //컨테이너 영역 -->
 </div>
 
 <!-- modal : 게시글등록-->
-<section id="modal_list_pu" class="krds-modal modal-detail fade shown in" role="dialog" aria-labelledby="tit_modal_list_pu">
+<section id="modal_list_pu" class="krds-modal modal-detail fade" role="dialog" aria-labelledby="tit_modal_list_pu">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <!-- modal title -->

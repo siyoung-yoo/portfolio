@@ -5,32 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <!-- css -->
-<link rel="stylesheet" type="text/css" href="../../static/css/jquery-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="../../static/css/swiper.css" />
 <link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
 <link rel="stylesheet" type="text/css" href="../../static/css/common.css" />
 <link rel="stylesheet" type="text/css" href="../../static/css/sub.css" />
-<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
-
+<link rel="stylesheet" type="text/css" href="../../static/css/sub05.css" />
 <!-- Jquery -->
 <script src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
-<script src="../../static/js/jquery/jquery-ui.min.js"></script>
-<script src="../../static/js/jquery/jquery.blockUI.min.js"></script>
-<script src="../../static/js/jquery/jquery.i18n.properties.min.js"></script>
-<script src="../../static/js/comm/swiper.js"></script>
 <script src="../../static/js/comm/common.js"></script>
-<script src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 -->
+<script src="../../static/js/comm/pub_ui.js"></script>
 
-<!-- 현재 페이지에만 사용하는 스크립트 -->
 <script>
 	$(function() {
 		$(".ratingCommet input").focusin(function() {
-			$(this).closest(".ratingCommet").addClass("active")
+			$(".ratingCommet").addClass("active")
 		})
 
 		$(".ratingCommet input").focusout(function() {
 			if ($(this).val() === '') {
-				$(this).closest(".ratingCommet").removeClass("active")
+				$(".ratingCommet").removeClass("active")
+			}
+		})
+
+		$(".ratingWrap input").change(function() {
+			if ($(this).val() === '100') {
+				$(".ratingCommet").removeClass("active")
+			} else {
+				$(".ratingCommet").addClass("active")
+				$(".ratingCommet input").focus();
+			}
+		})
+
+		$(".popBtm ._confirm").click(function() {
+			if ( $(".ratingCommet input").val().length !== 0 && $(".ratingCommet input").val().length < 10) {
+				alert("내용을 10글자 이상 입력해 주세요.")
+			} else {
+				alert("제출되었습니다.")
+				$(".ratingCommet input").val("")
+				$("input[name='rating'][value='100']").prop("checked", true);
+				$(".ratingCommet").removeClass("active");
 			}
 		})
 	})
@@ -38,61 +50,66 @@
 </head>
 <body>
 
-	<div id="popupName" class="modPopup on"> <!-- class - on : 팝업오픈 -->
-		<div class="popupDim"></div>
-		<div class="popupArea popup1Cont lgPop"><!-- 팝업 사이즈 컨트롤 : lgPop - 대 / mdPop - 중 / smPop - 소-->
-			<div class="popupInMotion">
-				<div class="popupContainer">
-					<div class="popupContArea">
-						<div class="popTitleBox">
-							<h3 class="popTitle">서류 제출</h3>
-							<button type="button" class="popCloseBtn" onclick="closePopup('popupName');">
-								<span class="hidden">닫기</span>
-							</button>
-						</div>
+	<div class="flex pt30vh">
+		<button class="btnCTA _confirm" onclick="fnOnEventToggle('#modPopup');">만족도 평가 팝업 보기</button>
+	</div>
 
-						<div class="popCont typeSsd">
-							<div class="scroll">
-								<div class="boxLineStyle starRating">
-									<img src="../../static/img/contents/img_star_rating.png" role="presentation">
-									<h4 class="title"><span class="prm01">특별전형 서류제출</span> 서비스를 이용해 주셔서 감사합니다.</h4>
-									<p class="sclr03">이 서비스가 유용하셨을까요? 의견을 남겨 주시면 더 나은 서비스가 되도록 개선하겠습니다.</p>
+	<div id="modPopup">
+		<div class="modPopup on">
+			<div class="popupDim"></div>
+			<div class="popupArea popup1Cont lgPop">
+				<div class="popupInMotion">
+					<div class="popupContainer">
+						<div class="popupContArea">
+							<div class="popTitleBox">
+								<h3 class="popTitle">만족도 평가</h3>
+								<button type="button" class="popCloseBtn" onclick="fnOnEventToggle('#modPopup');">
+									<span class="hidden">닫기</span>
+								</button>
+							</div>
 
-									<div class="ratingWrap">
-										<input type="radio" id="star10" name="rating" value="10">
-										<label for="star10"></label>
-										<input type="radio" id="star20" name="rating" value="20">
-										<label for="star20"></label>
-										<input type="radio" id="star30" name="rating" value="30">
-										<label for="star30"></label>
-										<input type="radio" id="star40" name="rating" value="40">
-										<label for="star40"></label>
-										<input type="radio" id="star50" name="rating" value="50">
-										<label for="star50"></label>
-										<input type="radio" id="star60" name="rating" value="60">
-										<label for="star60"></label>
-										<input type="radio" id="star70" name="rating" value="70">
-										<label for="star70"></label>
-										<input type="radio" id="star80" name="rating" value="80">
-										<label for="star80"></label>
-										<input type="radio" id="star90" name="rating" value="90">
-										<label for="star90"></label>
-										<input type="radio" id="star100" name="rating" value="100" checked>
-										<label for="star100"></label>
+							<div class="popCont typeSsd">
+								<div class="scroll">
+									<div class="boxLineStyle starRating">
+										<img src="../../static/img/contents/img_star_rating.png" role="presentation">
+										<h4 class="title"><span class="prm01">특별전형 서류제출</span> 서비스를 이용해 주셔서 감사합니다.</h4>
+										<p class="sclr03">이 서비스가 유용하셨을까요? 의견을 남겨 주시면 더 나은 서비스가 되도록 개선하겠습니다.</p>
+
+										<div class="ratingWrap">
+											<input type="radio" id="star10" name="rating" value="10">
+											<label for="star10"></label>
+											<input type="radio" id="star20" name="rating" value="20">
+											<label for="star20"></label>
+											<input type="radio" id="star30" name="rating" value="30">
+											<label for="star30"></label>
+											<input type="radio" id="star40" name="rating" value="40">
+											<label for="star40"></label>
+											<input type="radio" id="star50" name="rating" value="50">
+											<label for="star50"></label>
+											<input type="radio" id="star60" name="rating" value="60">
+											<label for="star60"></label>
+											<input type="radio" id="star70" name="rating" value="70">
+											<label for="star70"></label>
+											<input type="radio" id="star80" name="rating" value="80">
+											<label for="star80"></label>
+											<input type="radio" id="star90" name="rating" value="90">
+											<label for="star90"></label>
+											<input type="radio" id="star100" name="rating" value="100" checked>
+											<label for="star100"></label>
+										</div>
+									</div>
+
+									<div class="ratingCommet">
+										<p class="infoTxt"><i class="icoOnly sm _infoSvg"></i>불편 사항 또는 개선 사항에 대한 의견을 남겨 주세요.</p>
+										<input type="text" placeholder="내용을 10글자 이상 입력해 주세요.">
 									</div>
 								</div>
-
-								<!-- .ratingCommet input 포커스 관련 스크립트 추가 필요 -->
-								<div class="ratingCommet">
-									<p class="infoTxt"><i class="icoOnly sm _infoSvg"></i>불편 사항 또는 개선 사항에 대한 의견을 남겨 주세요.</p>
-									<input type="text" placeholder="내용을 20글자 이상 입력해 주세요.">
-								</div>
 							</div>
-						</div>
 
-						<div class="popBtm">
-							<button type="button" class="btnCTA _cancel" onclick="closePopup('popupName');"><span>취소</span></button>
-							<button class="btnCTA _confirm">제출완료</button>
+							<div class="popBtm">
+								<button type="button" class="btnCTA _cancel" onclick="fnOnEventToggle('#modPopup');"><span>취소</span></button>
+								<button class="btnCTA _confirm" onclick="fnOnEventToggle('#modPopup');">제출완료</button>
+							</div>
 						</div>
 					</div>
 				</div>

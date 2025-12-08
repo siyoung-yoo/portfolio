@@ -9,13 +9,13 @@
 <link rel="stylesheet" href="../../static/css/common.css" />
 <link rel="stylesheet" href="../../static/css/sub.css" />
 <link rel="stylesheet" href="../../static/css/main.css" />
-<link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+<link rel="stylesheet" href="../../static/css/sub05.css" />
 <!-- Jquery -->
 <script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
 <script type="text/javascript" src="../../static/js/comm/common.js"></script>
-<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script>
 <script>
-	$(document).on("click", "#popup02 .formArea button", function() {
+$(document).on("click", "#popup02 .formArea button", function() {
 		if( $(this).prev('input').val() === '1234' ) {
 			$(this).closest("li").addClass("complete")
 		} else {
@@ -83,7 +83,6 @@
 							<div class="state">수험번호 인증</div>
 						</div>
 
-						<!-- .cnAuth 클래스 추가 시, .listCont 영역 css로 display: none 처리함 -->
 						<div class="listCont">
 							<div class="nameArea">
 								<div class="btnArea">
@@ -277,8 +276,6 @@
 		<div data-include="../layout/menuSearchPopup.html .mainSearchPopup"></div>
 	</div>
 	<!-- // .wrapper -->
-
-	<div data-include="../layout/menuPopup.html #menuPopup"></div>
 
 
 	<!-- 전자증명서 발급 신청 -->

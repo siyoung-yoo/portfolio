@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-    <g data-name="타원 93" style="stroke:#16a1a9;stroke-width:2px;fill:none">
-        <circle cx="20" cy="20" r="20" style="stroke:none"/>
-        <circle cx="20" cy="20" r="19" style="fill:none"/>
-    </g>
-    <path data-name="선 222" transform="translate(19.833 10.984)" style="stroke-linecap:round;stroke:#16a1a9;stroke-width:2px;fill:none" d="M0 0v13.222"/>
-    <path data-name="선 223" transform="rotate(90 -2.114 27.236)" style="stroke-linecap:round;stroke:#16a1a9;stroke-width:2px;fill:none" d="M0 0v10.578"/>
-    <path data-name="패스 2224" d="m0 0 6.17 6.17L0 12.341" transform="rotate(90 3.732 22.272)" style="stroke-linejoin:round;stroke-linecap:round;stroke:#16a1a9;stroke-width:2px;fill:none"/>
-</svg>

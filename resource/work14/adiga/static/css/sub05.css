@@ -15,6 +15,8 @@
 .fwMed  { font-weight: 500 !important; }
 .fwBold { font-weight: 700 !important; }
 .hide { display: none !important; }
+.flex { display: flex; align-items: center; justify-content: center; }
+.pt30vh { padding-top: 30vh; }
 
 /* 버튼 & 아이콘 */
 .btnCon.betweenIcon { display: flex; justify-content: space-between; height: 50px; padding: 0 20px; }

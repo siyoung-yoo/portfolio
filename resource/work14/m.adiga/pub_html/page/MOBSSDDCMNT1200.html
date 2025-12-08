@@ -9,20 +9,17 @@
 <link rel="stylesheet" href="../../static/css/common.css" />
 <link rel="stylesheet" href="../../static/css/sub.css" />
 <link rel="stylesheet" href="../../static/css/main.css" />
-<link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+<link rel="stylesheet" href="../../static/css/sub05.css" />
 <!-- Jquery -->
 <script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
 <script type="text/javascript" src="../../static/js/comm/common.js"></script>
-<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script>
 
-<!-- 현재 페이지에만 사용하는 스크립트 -->
 <script>
-	// 팝업 show/hide 를 위한 퍼블 페이지 확인용 스크립트
 	$(document).on("click", "._fullPopup .btnWrap._CTA button, #btnPopupOpen", function() {
 		fnOnEventToggle('#tempPopupId')
 	})
 
-	// 말줄임 텍스트 토글
 	$(document).on("click", ".ellipsisToggle", function () {
 		$(this).toggleClass("show");
 	})
@@ -38,14 +35,13 @@
 
 
 		<!-- 팝업 START -->
-		<div class="wrapper _fullPopup onEventNeed"> <!-- class - on : 팝업오픈 -->
+		<div class="wrapper _fullPopup onEventNeed">
 
 			<div class="header">
 				<div class="headerTitle">
 					<h1>수험번호 인증</h1>
 				</div>
 				<div class="headerUtil">
-					<!-- <button type="button" class="btnHeaderFunc"><span class="hidden1">Function</span></button> Function Button -->
 					<button type="button" class="btnHeaderClose menuHeader"><span class="hidden">닫기</span></button>
 				</div>
 			</div>

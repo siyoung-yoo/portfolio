@@ -17,7 +17,7 @@
     --text-sub2:#888;/* 안내문구 *//* pc: --text-color-sub3 */
     --text-sub3:#888;/* 안내문구*//* pc: --text-color-sub2 */
     --text-point1:#003de5;/* 정상/허용 */
-    --text-point2:#e52800;/* 경고/오류 */ 
+    --text-point2:#e52800;/* 경고/오류 */
     /*라인컬러*/
     --line1:#ccc;/* pc: --line-color-ty1 */
     --line2:#ddd;/* pc: --line-color-ty2 */
@@ -255,7 +255,7 @@
 .searchView .recentSearch .rsList ul li {width:100%; margin-bottom:1.7rem; display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between;}
 .searchView .recentSearch .rsList ul li:last-of-type {margin-bottom:0;}
 .searchView .recentSearch .rsList ul li .lyt {display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start;}
-.searchView .recentSearch .rsList ul li .lyt .icon {display:inline-block; width:2.2rem; height:2.2rem; border-radius:50%; background: var(--line1) url(../img/common/search_wht.svg)50% 50% no-repeat;}
+.searchView .recentSearch .rsList ul li .lyt .icon {display:inline-block; width:2.2rem; height:2.2rem; border-radius:50%; background: var(--line1) url(../img/common/search_wht.svg) 50% 50% no-repeat;}
 .searchView .recentSearch .rsList ul li .lyt .sData {margin-left:.8rem; font-size:1.5rem; color: var(--text-title); font-weight:400; width: 21rem; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .searchView .recentSearch .rsList ul li button.listDelBtn {width:1.6rem; height:1.6rem; background: url(../img/common/list_del_btn.svg)100% 100% no-repeat;}
 .searchView .favoriteSearch {width:100%; margin-top:2.4rem; }
@@ -278,17 +278,19 @@
 .searchView .autoComplete .acList ul li {width:100%; margin-bottom:1.7rem; display:flex; flex-flow:row nowrap; align-items: center; justify-content: space-between;}
 .searchView .autoComplete .acList ul li:last-of-type {margin-bottom:0;}
 .searchView .autoComplete .acList ul li .lyt {display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start;}
-.searchView .autoComplete .acList ul li .lyt .icon {display:inline-block; width:2.2rem; height:2.2rem; border-radius:50%; background: var(--line1) url(../img/common/search_wht.svg)50% 50% no-repeat;}
+.searchView .autoComplete .acList ul li .lyt .icon {display:inline-block; width:2.2rem; height:2.2rem; border-radius:50%; background: var(--line1) url(../img/common/search_wht.svg) 50% 50% no-repeat;}
 .searchView .autoComplete .acList ul li .lyt .sData {margin-left:.8rem; font-size:1.5rem; color: var(--text-title); font-weight:400; width: 21rem; display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 .searchView .autoComplete .acList ul li .lyt .sData .hglt {color: var(--prime-main);}
 .searchView .autoComplete .acList ul li .ryt {font-size:1.4rem; color: var(--text-sub3); font-weight:400;}
+.searchView .autoSearch .autoList .sData { display: flex; margin-top: 1.3rem; }
+.searchView .autoSearch .autoList .sData .icon { border-radius: 50%; background: #ccc url(../img/common/search_wht.svg) 50% 50% no-repeat; display:inline-block; width:2.2rem; height: 2.2rem; margin-right:0.5rem; }
 
 /*검색결과(전체)*/
 .searchViewRst {padding:0;}
 .searchViewRst .section {margin:0;}
 
 .searchViewRst .entryBox .infoTxt {font-size:1.6rem; font-weight:400; color: var(--text-body); margin:2.4rem 0 1.2rem;}
-.searchViewRst .entryBox .infoTxt .hglt {font-size:1.6rem; color: var(--prime-main); font-weight:bold;} 
+.searchViewRst .entryBox .infoTxt .hglt {font-size:1.6rem; color: var(--prime-main); font-weight:bold;}
 .searchViewRst .entryBox .infoHash {width:100%; overflow-x:scroll; margin-bottom:2.4rem;}
 .searchViewRst .entryBox .infoHash::-webkit-scrollbar {display:none;}
 .searchViewRst .entryBox .infoHash .scrCov {width:max-content;}
@@ -330,7 +332,7 @@
 .searchViewRst .searchLocation .locSearchRst {width:100%; overflow-x:scroll; }
 .searchViewRst .searchLocation .locSearchRst::-webkit-scrollbar {display:none;}
 .searchViewRst .searchLocation .locSearchRst .lsrInner {width:max-content;display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start; gap:.6rem;}
-.searchViewRst .searchLocation .locSearchRst .lsrInner button {width:max-content !important; font-size:1.4rem; color: var(--text-body); font-weight:500; border:1px solid var(--text-body); padding: .7rem 2rem; border-radius:1.7rem;} 
+.searchViewRst .searchLocation .locSearchRst .lsrInner button {width:max-content !important; font-size:1.4rem; color: var(--text-body); font-weight:500; border:1px solid var(--text-body); padding: .7rem 2rem; border-radius:1.7rem;}
 
 .searchViewRst .tabContArea {padding:2.4rem 0 0 0 !important;}
 .searchViewRst .addPaddTemp {padding: 0 2rem;}
@@ -389,7 +391,7 @@
 .searchViewRst .recommendArea .recoBtns {width:100%; overflow-x:scroll; }
 .searchViewRst .recommendArea .recoBtns::-webkit-scrollbar {display:none;}
 .searchViewRst .recommendArea .recoBtns .rcbInner {width:max-content;display:flex; flex-flow:row nowrap; align-items: center; justify-content: flex-start; gap:.6rem;}
-.searchViewRst .recommendArea .recoBtns .rcbInner button {width:max-content !important; font-size:1.4rem; color: var(--text-body); font-weight:500; border:1px solid var(--text-body); padding: .7rem 2rem; border-radius:1.7rem;} 
+.searchViewRst .recommendArea .recoBtns .rcbInner button {width:max-content !important; font-size:1.4rem; color: var(--text-body); font-weight:500; border:1px solid var(--text-body); padding: .7rem 2rem; border-radius:1.7rem;}
 
 .schPgDtlSett .optCov {margin-top:1.2rem; }
 .schPgDtlSett .optCov + .optCov {margin-top:4rem;}
@@ -433,4 +435,4 @@
 	.searchViewRst .tabContArea {
 		padding:2.4rem 0 15rem 0 !important;
 	}
-}	
+}

@@ -6,10 +6,18 @@
 <title>modal</title>
 <link rel="stylesheet" href="../resources/css/output.css">
 <script src="../resources/js/component/ui-script.js"></script>
-
 <script>
-// 데이터 보기 팝업 인터렉션 관련 스크립트
 window.addEventListener("load", function() {
+
+    document.querySelectorAll(".select-list").forEach(list => {
+        list.addEventListener("click", e => {
+            const btn = e.target.closest("button");
+            if (!btn) return;
+
+            list.querySelectorAll("li.active").forEach(li => li.classList.remove("active"));
+            btn.closest("li").classList.add("active");
+        });
+    });
 
     // 데이터 리스트 클릭 이벤트
     const selectLists = document.querySelectorAll('.krds-structured-list .action');
@@ -25,7 +33,7 @@ window.addEventListener("load", function() {
                 });
                 // 선택한 리스트 active 스타일 추가
                 this.closest('.structured-item').classList.add('active');
-                
+
                 // 맵 영역 닫혀있을 경우 열기
                 var sectionWrap = this.closest('.data-list-detail');
                 if (!sectionWrap.classList.contains('active')) {
@@ -88,7 +96,7 @@ window.addEventListener("load", function() {
                     </div>
                     <!-- //페이지 타이틀 영역 -->
 
-                    <strong>퍼블 가이드</strong><br><br>
+                    <strong>기본 가이드</strong><br><br>
                     <div class="btn-group">
                         <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_01">default 팝업</button>
                         <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_02">success 팝업</button>
@@ -103,19 +111,10 @@ window.addEventListener("load", function() {
                     <strong>팝업 샘플</strong><br><br>
                     <div class="btn-group">
                         <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_11">기관조회</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_12">사용자 조회 - 검색</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_13">사용자 조회 - 이메일 인증 후</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_14">권한변경요청</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_15">정보시스템명 조회</button>
+                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_12">데이터 보기</button>
+                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_13">데이터 요약정보(side panel)</button>
+                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_14">컬럼분석 결과 - 예시: 숫자형데이터</button>
                     </div><br>
-
-                    <div class="btn-group">
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_21">데이터 보기</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_22">데이터 요약정보(side panel)</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_23">측정상세보기</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_24">작업이력 보기</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_25">컬럼분석 결과 - 예시: 숫자형데이터</button>
-                    </div><br><br>
                 </div>
             </div>
             <!-- //컨텐츠 영역 -->
@@ -124,1797 +123,1036 @@ window.addEventListener("load", function() {
     </div>
 
 
-<!-- 샘플 START -->
-<div>
-    <!-- default 팝업 -->
-    <section id="modal_sample_01" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_01">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_01" class="modal-title">모달 제목</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">기본 형태 팝업 입니다.</h4>
-                            <p class="text-sub">* 서브 텍스트 입니다.</p>
-                        </div>
+
+<!-- default 팝업 -->
+<section id="modal_sample_01" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_01">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_01" class="modal-title">모달 제목</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">기본 형태 팝업 입니다.</h4>
+                        <p class="text-sub">* 서브 텍스트 입니다.</p>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">아니요</button>
-                    <button type="button" class="krds-btn medium primary close-modal">예</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">아니요</button>
+                <button type="button" class="krds-btn medium primary close-modal">예</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //default 팝업 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //default 팝업 -->
 
-    <!-- success 팝업 -->
-    <section id="modal_sample_02" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_02">
-        <div class="modal-dialog type-success"><!--- type-success 클래스 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_02" class="modal-title">데이터 등록완료</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">데이터가 정상적으로 등록되었습니다.</h4>
-                        </div>
+<!-- success 팝업 -->
+<section id="modal_sample_02" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_02">
+    <div class="modal-dialog type-success"><!--- type-success 클래스 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_02" class="modal-title">데이터 등록완료</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">데이터가 정상적으로 등록되었습니다.</h4>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium primary close-modal">확인</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium primary close-modal">확인</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //success 팝업 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //success 팝업 -->
 
-    <!-- error 팝업 -->
-    <section id="modal_sample_03" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_03">
-        <div class="modal-dialog type-error"><!--- type-error 클래스 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_03" class="modal-title">데이터 등록취소</h2><!-- icon 필요 없을 경우 .no-icon 추가 -->
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">데이터가 정상적으로 등록되었습니다.</h4>
-                        </div>
+<!-- error 팝업 -->
+<section id="modal_sample_03" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_03">
+    <div class="modal-dialog type-error"><!--- type-error 클래스 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_03" class="modal-title">데이터 등록취소</h2><!-- icon 필요 없을 경우 .no-icon 추가 -->
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">데이터가 정상적으로 등록되었습니다.</h4>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">삭제</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">삭제</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //error 팝업 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //error 팝업 -->
 
-    <!-- 내용 입력 팝업 (default) -->
-    <section id="modal_sample_04" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_04">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_04" class="modal-title">팝업 타이틀</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">데이터 요청을 반려하시겠습니까?</h4>
-                        </div>
+<!-- 내용 입력 팝업 (default) -->
+<section id="modal_sample_04" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_04">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_04" class="modal-title">팝업 타이틀</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">데이터 요청을 반려하시겠습니까?</h4>
+                    </div>
 
-                        <div class="text-area">
-                            <h5 class="h-xxsm">반려사유</h5>
-                        </div>
-                        <div class="textarea-wrap">
-                            <textarea class="krds-input" placeholder="플레이스홀더"></textarea>
-                            <p class="textarea-count">
-                                <span>0</span><span class="count-total">/4000bytes</span>
-                            </p>
-                        </div>
+                    <div class="text-area">
+                        <h5 class="h-xxsm">반려사유</h5>
+                    </div>
+                    <div class="textarea-wrap">
+                        <textarea class="krds-input" placeholder="플레이스홀더"></textarea>
+                        <p class="textarea-count">
+                            <span>0</span><span class="count-total">/4000bytes</span>
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">적용</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">적용</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //내용 입력 팝업 (default) -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //내용 입력 팝업 (default) -->
 
-    <!-- 내용 입력 팝업 (error) -->
-    <section id="modal_sample_05" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_05">
-        <div class="modal-dialog type-error"><!-- type-error 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_05" class="modal-title no-icon">팝업 타이틀</h2><!-- icon 필요 없을 경우 .no-icon 추가 -->
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">삭제하시겠습니까?</h4>
-                        </div>
+<!-- 내용 입력 팝업 (error) -->
+<section id="modal_sample_05" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_05">
+    <div class="modal-dialog type-error"><!-- type-error 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_05" class="modal-title no-icon">팝업 타이틀</h2><!-- icon 필요 없을 경우 .no-icon 추가 -->
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">삭제하시겠습니까?</h4>
+                    </div>
 
-                        <div class="text-area">
-                            <h5 class="h-xxsm">반려사유</h5>
-                        </div>
-                        <div class="textarea-wrap">
-                            <textarea class="krds-input" placeholder="플레이스홀더"></textarea>
-                            <p class="textarea-count">
-                                <span>0</span><span class="count-total">/4000bytes</span>
-                            </p>
-                        </div>
+                    <div class="text-area">
+                        <h5 class="h-xxsm">반려사유</h5>
+                    </div>
+                    <div class="textarea-wrap">
+                        <textarea class="krds-input" placeholder="플레이스홀더"></textarea>
+                        <p class="textarea-count">
+                            <span>0</span><span class="count-total">/4000bytes</span>
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">삭제</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">삭제</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //내용 입력 팝업 (error) -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //내용 입력 팝업 (error) -->
 
-    <!-- 테이블 view 팝업 -->
-    <section id="modal_sample_06" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_06">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_06" class="modal-title">팝업타이틀</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm">내용을 입력하세요</h4>
-                        </div>
+<!-- 테이블 view 팝업 -->
+<section id="modal_sample_06" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_06">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_06" class="modal-title">팝업타이틀</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="top-text-area">
+                        <h4 class="h-sm">내용을 입력하세요</h4>
+                    </div>
 
-                        <div class="krds-table-wrap with-topline">
-                            <table class="tbl">
-                                <caption>표 내용 입력</caption>
-                                <colgroup>
-                                    <col style="width: 98px;">
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">데이터명 <strong class="color-red">*</strong></th>
-                                        <td class="text-left">
-                                            <div class="form-group">
-                                                <div class="form-conts is-information">
-                                                    <input type="text" id="consult_name23" class="krds-input small" placeholder="내용을 입력하세요">
-                                                </div>
-                                                <p class="form-hint-information">정보 메시지</p>
+                    <div class="krds-table-wrap with-topline">
+                        <table class="tbl">
+                            <caption>표 내용 입력</caption>
+                            <colgroup>
+                                <col style="width: 98px;">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">데이터명 <strong class="color-red">*</strong></th>
+                                    <td class="text-left">
+                                        <div class="form-group">
+                                            <div class="form-conts is-information">
+                                                <input type="text" id="consult_name23" class="krds-input small" placeholder="내용을 입력하세요">
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">선택가공</th>
-                                        <td>중복값처리,숫자처리 등 추가적으로 가공이 필요한 경우</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">비식별처리</th>
-                                        <td>일반라운딩,마스킹,범주화등의 가명,익명처리가 필요한 경우 </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <p class="form-hint-information">정보 메시지</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">선택가공</th>
+                                    <td>중복값처리,숫자처리 등 추가적으로 가공이 필요한 경우</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">비식별처리</th>
+                                    <td>일반라운딩,마스킹,범주화등의 가명,익명처리가 필요한 경우 </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">확인</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //테이블 view 팝업 -->
+
+<!-- 탭 view 팝업 -->
+<section id="modal_sample_07" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_07">
+    <div class="modal-dialog modal-lg"><!-- .modal-lg 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_07" class="modal-title">타이틀</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+
+                    <div class="krds-tab-area layer">
+                        <!-- tab list -->
+                        <div class="tab line full">
+                            <ul role="tablist">
+                                <li id="tab071" role="tab" aria-selected="true" aria-controls="tab071_panel" class="active">
+                                <button type="button" class="btn-tab">타이틀 1 <i class="sr-only created"> 선택됨</i></button>
+                                </li>
+                                <li id="tab072" role="tab" aria-selected="false" aria-controls="tab072_panel">
+                                <button type="button" class="btn-tab">타이틀 2</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //tab list -->
+
+                        <!-- tab contents -->
+                        <div class="tab-conts-wrap">
+                            <section id="tab071_panel" aria-labelledby="tab071" class="tab-conts active" data-quick-nav="false">
+                                <h3 class="sr-only">탭 영역 타이틀</h3>
+                                탭 1 영역
+                            </section>
+                            <section id="tab072_panel" aria-labelledby="tab072" class="tab-conts" data-quick-nav="false">
+                                <h3 class="sr-only">탭 영역 타이틀</h3>
+                                탭 2 영역
+                            </section>
+                        </div>
+                        <!-- //tab contents -->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium primary close-modal">확인</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //탭 view 팝업 -->
+
+<!-- 기관조회 (검색후) -->
+<section id="modal_sample_11" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_11">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_11" class="modal-title">기관조회</h2>
+            </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+
+                    <div class="search-box">
+                        <div class="form-group">
+                            <label class="label" for="sch_form12">기관명</label>
+                            <input type="text" id="sch_form12" class="krds-input medium" placeholder="기관명을 입력해주세요." value="행정안전부">
+                        </div>
+                        <button type="button" class="krds-btn medium secondary">조회</button>
+                    </div>
+
+                    <div class="title-wrap">
+                        <h4 class="h-xsm">
+                            <span class="color-primary">"행정안전부"</span> 검색 결과
+                            <span class="color-primary">22</span>개
+                        </h4>
+                    </div>
+
+                    <div class="search-result-wrap">
+                        <div class="result-wrap">
+                            <ul class="select-list">
+                                <li>
+                                    <button type="button">행정안전부 지방자치인재개발원</button>
+                                </li>
+                                <li class="active">
+                                    <button type="button">행정안전부 정부청사관리본부</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 지방자치인재개발원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 정부청사관리본부</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                                <li>
+                                    <button type="button">행정안전부 국립정보자원관리원</button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">확인</button>
-                </div>
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">적용</button>
             </div>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //테이블 view 팝업 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //기관조회 (검색후) -->
 
-    <!-- 탭 view 팝업 -->
-    <section id="modal_sample_07" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_07">
-        <div class="modal-dialog modal-lg"><!-- .modal-lg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_07" class="modal-title">타이틀</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="krds-tab-area layer">
-                            <!-- tab list -->
-                            <div class="tab line full">
-                                <ul role="tablist">
-                                    <li id="tab071" role="tab" aria-selected="true" aria-controls="tab071_panel" class="active">
-                                    <button type="button" class="btn-tab">타이틀 1 <i class="sr-only created"> 선택됨</i></button>
-                                    </li>
-                                    <li id="tab072" role="tab" aria-selected="false" aria-controls="tab072_panel">
-                                    <button type="button" class="btn-tab">타이틀 2</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- //tab list -->
-
-                            <!-- tab contents -->
-                            <div class="tab-conts-wrap">
-                                <section id="tab071_panel" aria-labelledby="tab071" class="tab-conts active" data-quick-nav="false">
-                                    <h3 class="sr-only">탭 영역 타이틀</h3>
-                                    탭 1 영역
-                                </section>
-                                <section id="tab072_panel" aria-labelledby="tab072" class="tab-conts" data-quick-nav="false">
-                                    <h3 class="sr-only">탭 영역 타이틀</h3>
-                                    탭 2 영역
-                                </section>
-                            </div>
-                            <!-- //tab contents -->
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium primary close-modal">확인</button>
-                </div>
+<!-- 데이터 보기 -->
+<section id="modal_sample_12" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_21">
+    <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_21" class="modal-title">데이터 보기</h2>
             </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //탭 view 팝업 -->
-</div>
-<!-- // 샘플 END -->
+            <div class="modal-conts">
+                <div class="conts-area">
 
-
-<!-- 공통 팝업 01 START -->
-<div>
-    <!-- 기관조회 (검색후) -->
-    <section id="modal_sample_11" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_11">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_11" class="modal-title">기관조회</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="search-box">
-                            <div class="form-group">
-                                <label class="label" for="sch_form12">기관명</label>
-                                <input type="text" id="sch_form12" class="krds-input medium" placeholder="기관명을 입력해주세요." value="행정안전부">
-                            </div>
-                            <button type="button" class="krds-btn medium secondary">조회</button>
+                    <div class="krds-tab-area layer">
+                        <!-- tab list -->
+                        <div class="tab line full">
+                            <ul role="tablist">
+                                <li id="tab11_01" role="tab" aria-selected="true" aria-controls="tab11_01_panel" class="active">
+                                    <button type="button" class="btn-tab">국가공유플랫폼(11,111건) <i class="sr-only created"> 선택됨</i></button>
+                                </li>
+                                <li id="tab11_02" role="tab" aria-selected="false" aria-controls="tab11_02_panel">
+                                    <button type="button" class="btn-tab">중앙메타데이터(222건)</button>
+                                </li>
+                                <li id="tab11_03" role="tab" aria-selected="false" aria-controls="tab11_03_panel">
+                                    <button type="button" class="btn-tab">One-윈도우(333건)</button>
+                                </li>
+                            </ul>
                         </div>
+                        <!-- //tab list -->
 
-                        <div class="title-wrap">
-                            <h4 class="h-xsm">
-                                <span class="color-primary">"행정안전부"</span> 검색 결과
-                                <span class="color-primary">22</span>개
-                            </h4>
-                        </div>
+                        <!-- tab contents -->
+                        <div class="tab-conts-wrap">
+                            <section id="tab11_01_panel" aria-labelledby="tab11_01" class="tab-conts active" data-quick-nav="false">
+                                <h3 class="sr-only">국가공유플랫폼</h3>
 
-                        <div class="search-result-wrap">
-                            <div class="result-wrap">
-                                <ul class="select-list">
-                                    <li>
-                                        <button type="button">행정안전부 지방자치인재개발원</button>
-                                    </li>
-                                    <li class="active">
-                                        <button type="button">행정안전부 정부청사관리본부</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 지방자치인재개발원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 정부청사관리본부</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                    <li>
-                                        <button type="button">행정안전부 국립정보자원관리원</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">적용</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //기관조회 (검색후) -->
-
-    <!-- 사용자 조회 - 검색 -->
-    <section id="modal_sample_12" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_12">
-        <div class="modal-dialog modal-lg"><!-- .modal-lg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_12" class="modal-title">사용자조회</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="search-box">
-                            <div class="form-group">
-                                <label class="label" for="sch_form131">기관명</label>
-                                <div class="krds-accordion type-search medium">
-                                    <div class="accordion-item">
-                                        <button type="button" class="btn-accordion">선택</button>
-                                        <!-- 값 선택 됐을 경우 btn-accordion 버튼에 active 클래스 추가해주세요
-                                        예시 : <button type="button" class="btn-accordion active">선택된 값</button> -->
-                                        <div class="accordion-collapse collapse">
-                                            <div class="accordion-body">
-                                                <div class="search-box">
-                                                    <div class="input-group">
-                                                        <input type="text" id="sch_form01" class="krds-input medium" placeholder="기관명을 입력해주세요.">
-                                                        <button type="button" class="krds-btn medium secondary">검색</button>
+                                <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
+                                    <div class="list-area">
+                                        <ul class="krds-structured-list xsm type-full with-toggle">
+                                            <li class="structured-item"><!-- active 클래스 추가시 리스트 활성화 -->
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                
-                                                <div class="result-wrap">
-                                                    <ul class="select-list">
-                                                        <li>
-                                                            <button type="button">옵션 1</button>
-                                                        </li>
-                                                        <li class="active">
-                                                            <button type="button" title="선택됨">옵션 2</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 3</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 4</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 5</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 6</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 7</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 8</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 9</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">옵션 10</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="label" for="sch_form132">부서명</label>
-                                <select id="sch_form132" class="krds-form-select medium" title="부서명 선택">
-                                    <option value="">선택</option>
-                                    <option value="">항목2</option>
-                                    <option value="">항목3</option>
-                                    <option value="">항목4</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="label" for="sch_form133">이름</label>
-                                <input type="text" id="sch_form133" class="krds-input medium" placeholder="이름을 입력하세요">
-                            </div>
-                            <button type="button" class="krds-btn medium secondary" disabled>조회</button>
-                        </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">경상남도 산청군_우편번호별 취약계층 현황</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleA01">
+                                                                    <span class="sr-only">열기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleA01" class="toggle-target">
+                                                                <p class="c-txt">제24회 산청한방약초축제 농특산물판매장터 입점자 현황 / 2024.09.30.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">농특산물, 산청한방약초축제, 입점자</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
 
-                        <div class="title-wrap">
-                            <h4 class="h-xsm">
-                                <span class="color-primary">"검색어"</span> 검색 결과
-                                <span class="color-primary">22</span>개
-                            </h4>
-                        </div>
+                                            <li class="structured-item"><!-- active 클래스 추가시 리스트 활성화 -->
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">타이틀 영역</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleA02">
+                                                                    <span class="sr-only">닫기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleA02" class="toggle-target">
+                                                                <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
 
-                        <div class="search-result-wrap">
-                            <div class="select-list-table">
-                                <ul class="select-list-header">
-                                    <li>기관</li>
-                                    <li>부서</li>
-                                    <li>담당자</li>
-                                    <li>이메일</li>
-                                    <li>직급</li>
-                                </ul>
-                                <ul class="select-list">
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>1급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>2급</span>
-                                        </button>
-                                    </li>
-                                    <li  class="active">
-                                        <button type="button" title="선택됨">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>3급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>4급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>5급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>6급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>7급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>8급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>9급</span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button">
-                                            <span>행정안전부</span>
-                                            <span>디지털혁신과</span>
-                                            <span>홍길동</span>
-                                            <span>T*******@korea.com</span>
-                                            <span>10급</span>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                            <li class="structured-item">
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">타이틀 영역</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleA03">
+                                                                    <span class="sr-only">열기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleA03" class="toggle-target">
+                                                                <p class="c-txt">간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">등록</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //사용자 조회 - 검색 -->
-
-    <!-- 사용자 조회 - 이메일 인증 후 -->
-    <section id="modal_sample_13" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_13">
-        <div class="modal-dialog modal-lg"><!-- .modal-lg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_13" class="modal-title">사용자조회</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="top-text-area">
-                            <h4 class="h-sm"><span>행정안전부</span> <span>디지털혁신과</span> <span>4급</span> <span>홍길동</span> 님</h4>
-                            <p class="text-sub">이메일로 본인 인증을 해주세요.</p>
-                        </div>
-
-                        <div class="user-certify">
-                            <div class="user-area">
-                                <p>A****@korea.com</p>
-                                <button type="button" class="krds-btn medium primary" disabled>이메일 인증</button>
-                                <button type="button" class="krds-btn small text">
-                                    <i class="svg-icon ico-refresh"></i> 다시선택
-                                </button>
-                            </div>
-                            <div class="certify-area">
-                                <div class="conts">
-                                    <div class="form-group">
-                                        <div class="form-tit">
-                                            <label for="tempValue01">인증번호</label>
-                                        </div>
-                                        <ul class="krds-info-list type-xsmall">
-                                            <li>메일로 전송된 인증번호를 입력해주세요.</li>
+                                            <li class="structured-item">
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">타이틀 영역</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleA04">
+                                                                    <span class="sr-only">열기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleA04" class="toggle-target">
+                                                                <p class="c-txt">간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
                                         </ul>
-                                        <div class="form-conts btn-ico-wrap" data-delete="true">
-                                            <input type="text" id="tempValue01" class="krds-input medium" value="000">
-                                            <button type="button" class="krds-btn medium icon pure btn-delete-input">
-                                                <span class="sr-only">내용 삭제</span>
-                                                <i class="svg-icon ico-delete-fill"></i>
-                                            </button>
+                                    </div>
+
+                                    <div class="map-area">
+                                        <div class="map-cont">
+                                            <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
                                         </div>
-                                        <p class="form-hint-information no-mark">5:00</p>
-                                    </div>
-                                    <button type="button" class="krds-btn medium primary">인증확인</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">등록</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //사용자 조회 - 이메일 인증 후 -->
-
-    <!-- 권한변경요청 -->
-    <section id="modal_sample_14" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_14">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_14" class="modal-title">권한변경요청</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="text-area bt-0">
-                            <h5 class="h-xxsm">이관사유</h5>
-                        </div>
-                        <div class="krds-check-area">
-                            <div class="krds-form-check medium">
-                                <input type="radio" name="radioA" id="radioA01">
-                                <label for="radioA01">기관총괄담당자</label>
-                            </div>
-                            <div class="krds-form-check medium">
-                                <input type="radio" name="radioA" id="radioA02">
-                                <label for="radioA02">기관업무담당자</label>
-                            </div>
-                        </div>
-
-                        <div class="text-area bt-0">
-                            <h5 class="h-xxsm">요청사유</h5>
-                        </div>
-                        <div class="textarea-wrap">
-                            <textarea class="krds-input" placeholder="권한변경 요청사유를 입력하세요"></textarea>
-                        </div>
-
-                        <div class="text-area bt-0">
-                            <h5 class="h-xxsm">공문첨부</h5>
-                        </div>
-                        <div class="file-wrap">
-                            <div class="file-upload-label">증빙자료등록</div>
-                            <div class="file-upload">
-                                <div class="file-upload-btn-wrap">
-                                    <input type="file" name="myFile" id="fileu-upload" hidden="">
-                                    <label for="fileu-upload">
-                                        <button type="button" class="krds-btn xsmall secondary">파일업로드</button>
-                                    </label>
-                                </div>
-                                <div class="file-upload-list">
-                                    <div class="chip-wrap krds-tag-wrap medium">
-                                        <span class="krds-btn-tag">
-                                            파일.csv
-                                            <button type="button" class="btn-delete"><span class="sr-only">삭제</span></button>
-                                        </span>
+                                        <div class="btn-wrap type-center">
+                                            <button type="button" class="krds-btn small tertiary close-map">닫기</button>
+                                            <button type="button" class="krds-btn small primary close-modal">상세보기</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="file-upload-info">
-                                <ul class="krds-info-list type-xsmall">
-                                    <li class="color-primary">* 기관총괄담당자는 기관 내 모든 데이터를 관리할 수 있는 권한으로, 국가공유데이터 플랫폼 운영 관리자가 공문 확인 후 권한을 승인하고  있습니다.아래의 샘플 양식을 참고하여 요청 공문(PDF)을 첨부해주시기 바랍니다.</li>
-                                    <li class="color-primary">* 문서 수신처 : 기관명 부서명</li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="btmline-area">
-                            <button type="button" class="krds-btn small text"><i class="svg-icon ico-file-down"></i> 공문샘플양식 다운로드</button>
-                        </div>
-                    </div>
-                </div>
+                            </section>
+                            <!-- // 국가공유플랫폼 -->
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">권한변경요청</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //권한변경요청 -->
+                            <section id="tab11_02_panel" aria-labelledby="tab11_02" class="tab-conts" data-quick-nav="false">
+                                <h3 class="sr-only">중앙메타데이터</h3>
 
-    <!-- 정보시스템명 조회 -->
-    <section id="modal_sample_15" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_15">
-        <div class="modal-dialog modal-lg"><!-- .modal-lg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_15" class="modal-title">정보시스템명 조회</h2>
-                </div>
-                <div class="modal-conts" style="height: 45rem">
-                    <div class="conts-area">
-
-                        <div class="search-box">
-                            <div class="form-group">
-                                <label class="label" for="form21_01">정보시스템명</label>
-                                <div class="krds-accordion type-search medium">
-                                    <div class="accordion-item">
-                                        <button type="button" class="btn-accordion">선택</button>
-                                        <!-- 값 선택 됐을 경우 btn-accordion 버튼에 active 클래스 추가해주세요
-                                        예시 : <button type="button" class="btn-accordion active">선택된 값</button> -->
-                                        <div class="accordion-collapse">
-                                            <div class="accordion-body">
-                                                <div class="search-box">
-                                                    <div class="input-group">
-                                                        <input type="text" id="form21_01" class="krds-input medium" placeholder="정보시스템명을 입력해주세요.">
-                                                        <button type="button" class="krds-btn medium secondary">검색</button>
+                                <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
+                                    <div class="list-area">
+                                        <ul class="krds-structured-list xsm type-full with-toggle">
+                                            <li class="structured-item">
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="result-wrap">
-                                                    <ul class="select-list">
-                                                        <li>
-                                                            <button type="button">정보시스템명 1</button>
-                                                        </li>
-                                                        <li class="active">
-                                                            <button type="button" title="선택됨">정보시스템명 2</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 3</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 4</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 5</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 6</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 7</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 8</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 9</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">정보시스템명 10</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">경상남도 산청군_우편번호별 취약계층 현황</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleB01">
+                                                                    <span class="sr-only">열기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleB01" class="toggle-target">
+                                                                <p class="c-txt">제24회 산청한방약초축제 농특산물판매장터 입점자 현황 / 2024.09.30.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">농특산물, 산청한방약초축제, 입점자</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                            <li class="structured-item">
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">타이틀 영역</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleB02">
+                                                                    <span class="sr-only">닫기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleB02" class="toggle-target">
+                                                                <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="map-area">
+                                        <div class="map-cont">
+                                            <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
+                                        </div>
+                                        <div class="btn-wrap type-center">
+                                            <button type="button" class="krds-btn small tertiary close-map">닫기</button>
+                                            <button type="button" class="krds-btn small primary close-modal">상세보기</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="label" for="form21_02">DB명(한글,영문)</label>
-                                <div class="krds-accordion type-search medium">
-                                    <div class="accordion-item">
-                                        <button type="button" class="btn-accordion">선택</button>
-                                        <!-- 값 선택 됐을 경우 btn-accordion 버튼에 active 클래스 추가해주세요 -->
-                                        <div class="accordion-collapse">
-                                            <div class="accordion-body">
-                                                <div class="search-box">
-                                                    <div class="input-group">
-                                                        <input type="text" id="form21_02" class="krds-input medium" placeholder="DB명(한글,영문)을 입력해주세요.">
-                                                        <button type="button" class="krds-btn medium secondary">검색</button>
+                            </section>
+                            <!-- // 중앙메타데이터 -->
+
+                            <section id="tab11_03_panel" aria-labelledby="tab11_03" class="tab-conts" data-quick-nav="false">
+                                <h3 class="sr-only">One-윈도우</h3>
+
+                                <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
+                                    <div class="list-area">
+                                        <ul class="krds-structured-list xsm type-full with-toggle">
+                                            <li class="structured-item">
+                                                <a href="#" class="action">
+                                                    <div class="card-top">
+                                                        <div class="krds-badge-wrap">
+                                                            <span class="krds-badge bg-light-primary">분야별</span>
+                                                            <span class="krds-badge bg-light-danger">제공유형</span>
+                                                            <span class="krds-badge bg-light-success">유형</span>
+                                                            <span class="krds-badge bg-light-secondary">개방</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="result-wrap">
-                                                    <ul class="select-list">
-                                                        <li>
-                                                            <button type="button">DB명(한글,영문) 1</button>
-                                                        </li>
-                                                        <li class="active">
-                                                            <button type="button" title="선택됨">DB명(한글,영문) 2</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">DB명(한글,영문) 3</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">DB명(한글,영문) 4</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">DB명(한글,영문) 5</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                                    <div class="card-body">
+                                                        <div class="c-text">
+                                                            <p class="c-tit">
+                                                                <span class="span">타이틀 영역</span>
+                                                                <button type="button" class="btn-toggle" aria-controls="toggleC01">
+                                                                    <span class="sr-only">닫기</span>
+                                                                </button>
+                                                            </p>
+                                                            <div id="toggleC01" class="toggle-target">
+                                                                <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
+                                                                <div class="info-txt-area">
+                                                                    <div class="info-txt">
+                                                                        <span class="key">수정일</span> <span class="value">2022.09.26</span>
+                                                                    </div>
+                                                                    <div class="info-txt">
+                                                                        <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="map-area">
+                                        <div class="map-cont">
+                                            <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
+                                        </div>
+                                        <div class="btn-wrap type-center">
+                                            <button type="button" class="krds-btn small tertiary close-map">닫기</button>
+                                            <button type="button" class="krds-btn small primary close-modal">상세보기</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="label" for="form21_03">테이블명(한글,영문)</label>
-                                <div class="krds-accordion type-search medium">
-                                    <div class="accordion-item">
-                                        <button type="button" class="btn-accordion">선택</button>
-                                        <!-- 값 선택 됐을 경우 btn-accordion 버튼에 active 클래스 추가해주세요 -->
-                                        <div class="accordion-collapse fix-right">
-                                            <div class="accordion-body">
-                                                <div class="search-box">
-                                                    <div class="input-group">
-                                                        <input type="text" id="form21_03" class="krds-input medium" placeholder="테이블명(한글,영문)을 입력해주세요.">
-                                                        <button type="button" class="krds-btn medium secondary">검색</button>
-                                                    </div>
-                                                </div>
-                                                <div class="result-wrap">
-                                                    <ul class="select-list">
-                                                        <li>
-                                                            <button type="button">테이블명(한글,영문) 1</button>
-                                                        </li>
-                                                        <li class="active">
-                                                            <button type="button" title="선택됨">테이블명(한글,영문) 2</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">테이블명(한글,영문) 3</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">테이블명(한글,영문) 4</button>
-                                                        </li>
-                                                        <li>
-                                                            <button type="button">테이블명(한글,영문) 5</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </section>
+                            <!-- // One-윈도우 -->
+                        </div>
+                        <!-- //tab contents -->
+                    </div>
+
+                </div>
+            </div>
+            <button type="button" class="krds-btn medium icon btn-close close-modal">
+                <span class="sr-only">닫기</span><i class="svg-icon ico-popup-close"></i>
+            </button>
+        </div>
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //데이터 보기 -->
+
+<!-- 데이터 요약정보 -->
+<section id="modal_sample_13" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_22">
+    <div class="modal-dialog side-panel"><!-- side-panel 클래스 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_22" class="modal-title">데이터 요약정보</h2>
+            </div>
+
+            <div class="modal-conts">
+                <div class="conts-area">
+                    <div class="page-detail">
+                        <div class="top-area">
+                            <div class="krds-badge-wrap">
+                                <span class="krds-badge bg-light-primary">분야별</span>
+                                <span class="krds-badge bg-light-danger">제공유형</span>
+                                <span class="krds-badge bg-light-success">유형</span>
+                                <span class="krds-badge bg-light-secondary">개방</span>
+                            </div>
+                            <p class="p-title">환경부_배출권거래제, 탄소중립으로 가는 길</p>
+                            <div class="p-cont">
+                                배출권거래제를 전 국민이 알기 쉽게 설명한 자료로
+                                목차는 기후변화와 인식변화, 배출권거래제란 무엇인가?, 배출권거래제는 어떻게 운영되나?, 배출권, 어떻게 거래되나?, 탄소중립으로 가는 길로 이루어져 있다.배출권거래제를 전 국민이 알기 쉽게 설명한 자료로
+                                목차는 기후변화와 인식변화, 탄소중립으로 가는 길로 이루어져 있다.
+                            </div>
+                            <div class="info-wrap">
+                                <div class="info-txt-area">
+                                    <div class="info-txt">
+                                        <span class="txt-name">등록일</span> <span class="txt-con">2024-11-27</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">적용</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //정보시스템명 조회 -->
-</div>
-<!-- // 공통 팝업 01 END -->
-
-<!-- 공통 팝업 02 START -->
-<div>
-    <!-- 데이터 보기 -->
-    <section id="modal_sample_21" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_21">
-        <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_21" class="modal-title">데이터 보기</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="krds-tab-area layer">
-                            <!-- tab list -->
-                            <div class="tab line full">
-                                <ul role="tablist">
-                                    <li id="tab11_01" role="tab" aria-selected="true" aria-controls="tab11_01_panel" class="active">
-                                        <button type="button" class="btn-tab">국가공유플랫폼(11,111건) <i class="sr-only created"> 선택됨</i></button>
-                                    </li>
-                                    <li id="tab11_02" role="tab" aria-selected="false" aria-controls="tab11_02_panel">
-                                        <button type="button" class="btn-tab">중앙메타데이터(222건)</button>
-                                    </li>
-                                    <li id="tab11_03" role="tab" aria-selected="false" aria-controls="tab11_03_panel">
-                                        <button type="button" class="btn-tab">One-윈도우(333건)</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- //tab list -->
-
-                            <!-- tab contents -->
-                            <div class="tab-conts-wrap">
-                                <section id="tab11_01_panel" aria-labelledby="tab11_01" class="tab-conts active" data-quick-nav="false">
-                                    <h3 class="sr-only">국가공유플랫폼</h3>
-
-                                    <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
-                                        <div class="list-area">
-                                            <ul class="krds-structured-list xsm type-full with-toggle">
-                                                <li class="structured-item"><!-- active 클래스 추가시 리스트 활성화 -->
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">경상남도 산청군_우편번호별 취약계층 현황</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleA01">
-                                                                        <span class="sr-only">열기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleA01" class="toggle-target">
-                                                                    <p class="c-txt">제24회 산청한방약초축제 농특산물판매장터 입점자 현황 / 2024.09.30.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">농특산물, 산청한방약초축제, 입점자</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li class="structured-item"><!-- active 클래스 추가시 리스트 활성화 -->
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">타이틀 영역</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleA02">
-                                                                        <span class="sr-only">닫기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleA02" class="toggle-target">
-                                                                    <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li class="structured-item">
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">타이틀 영역</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleA03">
-                                                                        <span class="sr-only">열기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleA03" class="toggle-target">
-                                                                    <p class="c-txt">간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li class="structured-item">
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">타이틀 영역</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleA04">
-                                                                        <span class="sr-only">열기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleA04" class="toggle-target">
-                                                                    <p class="c-txt">간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다. 간단한 설명이 들어가는 영역입니다.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="map-area">
-                                            <div class="map-cont">
-                                                <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
-                                            </div>
-                                            <div class="btn-wrap type-center">
-                                                <button type="button" class="krds-btn small tertiary close-map">닫기</button>
-                                                <button type="button" class="krds-btn small primary close-modal">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </section>
-                                <!-- // 국가공유플랫폼 -->
-
-                                <section id="tab11_02_panel" aria-labelledby="tab11_02" class="tab-conts" data-quick-nav="false">
-                                    <h3 class="sr-only">중앙메타데이터</h3>
-
-                                    <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
-                                        <div class="list-area">
-                                            <ul class="krds-structured-list xsm type-full with-toggle">
-                                                <li class="structured-item">
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">경상남도 산청군_우편번호별 취약계층 현황</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleB01">
-                                                                        <span class="sr-only">열기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleB01" class="toggle-target">
-                                                                    <p class="c-txt">제24회 산청한방약초축제 농특산물판매장터 입점자 현황 / 2024.09.30.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">농특산물, 산청한방약초축제, 입점자</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                <li class="structured-item">
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">타이틀 영역</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleB02">
-                                                                        <span class="sr-only">닫기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleB02" class="toggle-target">
-                                                                    <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="map-area">
-                                            <div class="map-cont">
-                                                <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
-                                            </div>
-                                            <div class="btn-wrap type-center">
-                                                <button type="button" class="krds-btn small tertiary close-map">닫기</button>
-                                                <button type="button" class="krds-btn small primary close-modal">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </section>
-                                <!-- // 중앙메타데이터 -->
-
-                                <section id="tab11_03_panel" aria-labelledby="tab11_03" class="tab-conts" data-quick-nav="false">
-                                    <h3 class="sr-only">One-윈도우</h3>
-
-                                    <div class="data-list-detail"><!-- active 클래스 추가시 map-area 영역 보임 -->
-                                        <div class="list-area">
-                                            <ul class="krds-structured-list xsm type-full with-toggle">
-                                                <li class="structured-item">
-                                                    <a href="#" class="action">
-                                                        <div class="card-top">
-                                                            <div class="krds-badge-wrap">
-                                                                <span class="krds-badge bg-light-primary">분야별</span>
-                                                                <span class="krds-badge bg-light-danger">제공유형</span>
-                                                                <span class="krds-badge bg-light-success">유형</span>
-                                                                <span class="krds-badge bg-light-secondary">개방</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="c-text">
-                                                                <p class="c-tit">
-                                                                    <span class="span">타이틀 영역</span>
-                                                                    <button type="button" class="btn-toggle" aria-controls="toggleC01">
-                                                                        <span class="sr-only">닫기</span>
-                                                                    </button>
-                                                                </p>
-                                                                <div id="toggleC01" class="toggle-target">
-                                                                    <p class="c-txt">간단한 설명이 들어가는 영역입니다.</p>
-                                                                    <div class="info-txt-area">
-                                                                        <div class="info-txt">
-                                                                            <span class="key">수정일</span> <span class="value">2022.09.26</span>
-                                                                        </div>
-                                                                        <div class="info-txt">
-                                                                            <span class="key">키워드</span> <span class="value">키워드1, 키워드2, 키워드3</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="map-area">
-                                            <div class="map-cont">
-                                                <img src="../resources/img/component/icon/sample_map.png" alt="샘플이미지">
-                                            </div>
-                                            <div class="btn-wrap type-center">
-                                                <button type="button" class="krds-btn small tertiary close-map">닫기</button>
-                                                <button type="button" class="krds-btn small primary close-modal">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </section>
-                                <!-- // One-윈도우 -->
-                            </div>
-                            <!-- //tab contents -->
-                        </div>
-
+                    <div class="title-wrap">
+                        <h4 class="h-xsm">기본정보</h4>
+                    </div>
+                    <div class="krds-table-wrap">
+                        <table class="tbl">
+                            <caption>데이터 요약정보</caption>
+                            <colgroup>
+                                <col style="width:20%"><col style="width:30%"><col style="width:20%"><col style="width:30%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">보유기관명</th>
+                                    <td>보유기관명</td>
+                                    <th scope="row">보유기관 부서</th>
+                                    <td>보유기관 부서</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">담당자</th>
+                                    <td>홍길동</td>
+                                    <th scope="row">분류체계</th>
+                                    <td>분류체계</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">키워드</th>
+                                    <td>키워드1,키워드2,키워드3</td>
+                                    <th scope="row">공유</th>
+                                    <td>개방</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">데이터등록유형</th>
+                                    <td>API</td>
+                                    <th scope="row">갱신주기</th>
+                                    <td>일</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <button type="button" class="krds-btn medium icon btn-close close-modal">
-                    <span class="sr-only">닫기</span><i class="svg-icon ico-popup-close"></i>
-                </button>
             </div>
+
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">닫기</button>
+                <button type="button" class="krds-btn medium primary close-modal">상세보기</button>
+            </div>
+            <button type="button" class="krds-btn medium icon btn-close close-modal">
+                <span class="sr-only">닫기</span><i class="svg-icon ico-popup-close"></i>
+            </button>
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //데이터 보기 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- // 데이터 요약정보-->
 
-    <!-- 데이터 요약정보 -->
-    <section id="modal_sample_22" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_22">
-        <div class="modal-dialog side-panel"><!-- side-panel 클래스 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_22" class="modal-title">데이터 요약정보</h2>
-                </div>
+<!-- 컬럼분석 결과 -->
+<section id="modal_sample_14" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_25">
+    <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal_sample_25" class="modal-title">컬럼분석 결과</h2>
+            </div>
 
-                <div class="modal-conts">
-                    <div class="conts-area">
-                        <div class="page-detail">
-                            <div class="top-area">
-                                <div class="krds-badge-wrap">
-                                    <span class="krds-badge bg-light-primary">분야별</span>
-                                    <span class="krds-badge bg-light-danger">제공유형</span>
-                                    <span class="krds-badge bg-light-success">유형</span>
-                                    <span class="krds-badge bg-light-secondary">개방</span>
-                                </div>
-                                <p class="p-title">환경부_배출권거래제, 탄소중립으로 가는 길</p>
-                                <div class="p-cont">
-                                    배출권거래제를 전 국민이 알기 쉽게 설명한 자료로
-                                    목차는 기후변화와 인식변화, 배출권거래제란 무엇인가?, 배출권거래제는 어떻게 운영되나?, 배출권, 어떻게 거래되나?, 탄소중립으로 가는 길로 이루어져 있다.배출권거래제를 전 국민이 알기 쉽게 설명한 자료로
-                                    목차는 기후변화와 인식변화, 탄소중립으로 가는 길로 이루어져 있다.
-                                </div>
-                                <div class="info-wrap">
-                                    <div class="info-txt-area">
-                                        <div class="info-txt">
-                                            <span class="txt-name">등록일</span> <span class="txt-con">2024-11-27</span>
-                                        </div>
+            <div class="modal-conts">
+                <div class="conts-area">
+
+                    <div class="krds-tab-area layer">
+                        <!-- tab list -->
+                        <div class="tab line full">
+                            <ul role="tablist" class="tempCheckTab"><!-- 퍼블 스크립트 확용용 임시 class (tempCheckTab) -->
+                                <li id="tab29_01" role="tab" aria-selected="true" aria-controls="tab29_01_panel" class="active">
+                                    <button type="button" class="btn-tab">컬럼분석 결과 <i class="sr-only created">선택됨</i></button>
+                                </li>
+                                <li id="tab29_02" role="tab" aria-selected="false" aria-controls="tab29_02_panel">
+                                    <button type="button" class="btn-tab">추가 가명정보처리</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //tab list -->
+
+                        <!-- tab contents -->
+                        <div class="tab-conts-wrap">
+                            <section id="tab29_01_panel" aria-labelledby="tab29_01" class="tab-conts active" data-quick-nav="false">
+                                <h3 class="sr-only">컬럼분석 결과</h3>
+
+                                <div class="flex-layout gap-9">
+                                    <div class="section-area type-bg flex-layout gap-5">
+                                        <strong class="h-xsm">데이터명</strong>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="title-wrap">
-                            <h4 class="h-xsm">기본정보</h4>
-                        </div>
-                        <div class="krds-table-wrap">
-                            <table class="tbl">
-                                <caption>데이터 요약정보</caption>
-                                <colgroup>
-                                    <col style="width:20%"><col style="width:30%"><col style="width:20%"><col style="width:30%">
-                                </colgroup>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">보유기관명</th>
-                                        <td>보유기관명</td>
-                                        <th scope="row">보유기관 부서</th>
-                                        <td>보유기관 부서</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">담당자</th>
-                                        <td>홍길동</td>
-                                        <th scope="row">분류체계</th>
-                                        <td>분류체계</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">키워드</th>
-                                        <td>키워드1,키워드2,키워드3</td>
-                                        <th scope="row">공유</th>
-                                        <td>개방</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">데이터등록유형</th>
-                                        <td>API</td>
-                                        <th scope="row">갱신주기</th>
-                                        <td>일</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">닫기</button>
-                    <button type="button" class="krds-btn medium primary close-modal">상세보기</button>
-                </div>
-                <button type="button" class="krds-btn medium icon btn-close close-modal">
-                    <span class="sr-only">닫기</span><i class="svg-icon ico-popup-close"></i>
-                </button>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- // 데이터 요약정보-->
-
-    <!-- 측정상세보기 -->
-    <section id="modal_sample_23" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_23">
-        <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_23" class="modal-title">측정상세보기</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="krds-table-wrap">
-                            <table class="tbl all-border">
-                                <caption>측정상세보기</caption>
-                                <colgroup>
-                                    <col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%">
-                                    <col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:10%">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th scope="colgroup" colspan="3">품질진단 기준</th>
-                                        <th scope="colgroup" colspan="5">측정결과</th>
-                                        <th scope="colgroup" colspan="2">가공이력</th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col">컬럼명</th>
-                                        <th scope="col">측정항목</th>
-                                        <th scope="col">메타정보</th>
-                                        <th scope="col">가공전(%)</th>
-                                        <th scope="col">오류데이터 수 (row)</th>
-                                        <th scope="col">오류처리 수(row)</th>
-                                        <th scope="col">가공후(%)</th>
-                                        <th scope="col">지표설정(%)</th>
-                                        <th scope="col">품질지표</th>
-                                        <th scope="col">가공 기능</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td rowspan="7" class="text-left">암호화 요양기호<br>(Encrypted care symbol)</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td class="td-success">td-success</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td class="td-error">td-error</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="2" class="text-left">group</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                        <td>text</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">확인</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //측정상세보기 -->
-
-    <!-- 작업이력 보기 -->
-    <section id="modal_sample_24" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_24">
-        <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_24" class="modal-title">작업이력 보기</h2>
-                </div>
-                <div class="modal-conts">
-                    <div class="conts-area gap-sm"><!-- .gap-sm 추가 -->
-
-                        <div class="krds-table-wrap">
-                            <table class="tbl all-border">
-                                <caption>작업이력 표</caption>
-                                <colgroup>
-                                    <col style="width:50px"><col><col><col><col><col>
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">NO</th>
-                                        <th scope="col">구분</th>
-                                        <th scope="col">컬럼</th>
-                                        <th scope="col">가공</th>
-                                        <th scope="col">규칙</th>
-                                        <th scope="col">작업시간</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="tr-disabled">
-                                        <td>1</td>
-                                        <td>기초가공</td>
-                                        <td>시군구명</td>
-                                        <td>중복값 제거</td>
-                                        <td>첫행부터 제거</td>
-                                        <td>2025-02-12 11:22</td>
-                                    </tr>
-                                    <tr class="tr-disabled">
-                                        <td>2</td>
-                                        <td>기초가공</td>
-                                        <td>시군구명</td>
-                                        <td>중복값 제거</td>
-                                        <td>첫행부터 제거</td>
-                                        <td>2025-02-12 11:22</td>
-                                    </tr>
-                                    <tr class="tr-disabled">
-                                        <td>3</td>
-                                        <td>기초가공</td>
-                                        <td>시군구명</td>
-                                        <td>중복값 제거</td>
-                                        <td>첫행부터 제거</td>
-                                        <td>2025-02-12 11:22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>선택가공</td>
-                                        <td>시군구명</td>
-                                        <td>결측치 삭제</td>
-                                        <td>결측치 삭제</td>
-                                        <td>2025-02-12 11:22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>선택가공</td>
-                                        <td>시군구명</td>
-                                        <td>결측치 삭제</td>
-                                        <td>결측치 삭제</td>
-                                        <td>2025-02-12 11:22</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>value6-1</td>
-                                        <td>value6-2</td>
-                                        <td>value6-3</td>
-                                        <td>value6-4</td>
-                                        <td>value6-5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>value7-1</td>
-                                        <td>value7-2</td>
-                                        <td>value7-3</td>
-                                        <td>value7-4</td>
-                                        <td>value7-5</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <strong class="h-xxsm color-primary">* 구분의 기초가공을 변경하고자 할 경우 초기화버튼을 클릭하여 변경가능합니다.</strong>
-                    </div>
-                </div>
-
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">닫기</button>
-                    <button type="button" class="krds-btn medium primary close-modal">초기화하기</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //작업이력 보기 -->
-
-    <!-- 컬럼분석 결과 -->
-    <section id="modal_sample_25" class="krds-modal fade" role="dialog" aria-labelledby="modal_sample_25">
-        <div class="modal-dialog modal-xlg"><!-- .modal-xlg 추가 -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal_sample_25" class="modal-title">컬럼분석 결과</h2>
-                </div>
-
-                <div class="modal-conts">
-                    <div class="conts-area">
-
-                        <div class="krds-tab-area layer">
-                            <!-- tab list -->
-                            <div class="tab line full">
-                                <ul role="tablist" class="tempCheckTab"><!-- 퍼블 스크립트 확용용 임시 class (tempCheckTab) -->
-                                    <li id="tab29_01" role="tab" aria-selected="true" aria-controls="tab29_01_panel" class="active">
-                                        <button type="button" class="btn-tab">컬럼분석 결과 <i class="sr-only created">선택됨</i></button>
-                                    </li>
-                                    <li id="tab29_02" role="tab" aria-selected="false" aria-controls="tab29_02_panel">
-                                        <button type="button" class="btn-tab">추가 가명정보처리</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- //tab list -->
-
-                            <!-- tab contents -->
-                            <div class="tab-conts-wrap">
-                                <section id="tab29_01_panel" aria-labelledby="tab29_01" class="tab-conts active" data-quick-nav="false">
-                                    <h3 class="sr-only">컬럼분석 결과</h3>
-                                    
-                                    <div class="flex-layout gap-9">
-                                        <div class="section-area type-bg flex-layout gap-5">
-                                            <strong class="h-xsm">데이터명</strong>
-                                        </div>
-                                        
-                                        <div class="data-chart-detail">
-                                            <div class="data-area">
-                                                <div class="flex-layout gap-5">
-                                                    <div class="krds-table-wrap">
-                                                        <table class="tbl all-border">
-                                                            <caption>데이터 컬럼분석 결과 표</caption>
-                                                            <colgroup>
-                                                                <col><col><col><col>
-                                                            </colgroup>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>준식별자(K-익명성)</td>
-                                                                    <td>클래스실행일정 ID</td>
-                                                                    <td>설정값 : 0</td>
-                                                                    <td>결과값 : 5</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <ul class="krds-info-list type-small color-dark">
-                                                        <li>* 설정한 값보다 결과값이 같거나 클 경우 적정으로 평가되며 작을경우 부적정으로 평가됩니다.</li>
-                                                        <li>* 설정 입력값에 의해 평가하므로 적정으로 평가되었다고 해서 반드시 적정한 것이 아니고, 부적정으로 평가되었다고 해서 부적정으로 평가할 수는 없습니다.</li>
-                                                        <li>* 값기준 분석,빈도분석,시그마분석,4분범위분석과 같은 다양한 통계 분석 결과를 종합적으로 판단하여 데이터를 확인할 수 있습니다.</li>
-                                                    </ul>
+                                    <div class="data-chart-detail">
+                                        <div class="data-area">
+                                            <div class="flex-layout gap-5">
+                                                <div class="krds-table-wrap">
+                                                    <table class="tbl all-border">
+                                                        <caption>데이터 컬럼분석 결과 표</caption>
+                                                        <colgroup>
+                                                            <col><col><col><col>
+                                                        </colgroup>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>준식별자(K-익명성)</td>
+                                                                <td>클래스실행일정 ID</td>
+                                                                <td>설정값 : 0</td>
+                                                                <td>결과값 : 5</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-    
-                                                <div class="flex-layout gap-5">
-                                                    <strong class="h-xsm">값기준 컬럼명</strong>
-                                                    <div class="krds-table-wrap">
-                                                        <table class="tbl list-type">
-                                                            <caption>데이터 컬럼분석 결과 표</caption>
-                                                            <colgroup>
-                                                                <col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%">
-                                                            </colgroup>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>분석 컬럼</th>
-                                                                    <th>최소</th>
-                                                                    <th>최대</th>
-                                                                    <th>평균</th>
-                                                                    <th>표준편차</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>클래스실행일정(a)</td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <p class="h-xxsm color-dark">* 컬럼의 기본통계 분석결과입니다.</p>
-                                                    <div class="section-area type-bg-line">
-                                                        <ul class="krds-info-list type-small color-sub">
-                                                            <li class="text-bold">[값 기준 확인 방법]</li>
-                                                            <li>* 최소값과 최대값은 데이터 내의 특이치 값이 될 수 있습니다. 특이치 값은 다른값보다 눈에 띄기 떄문에 이러한 값이 특정 개인 혹인 개체를 식별할 가능성 있다고 할 수 있습니다.</li>
-                                                            <li>* 평균값 개체는 개인은 식별한 위험은 적지만 특정 값이 평균과 크게 벗어나는 경우 그같은 특이치가 될 수 있습니다.</li>
-                                                            <li>* 표준편차는 평균으로부터 얼마나 값이 떨어졌는지를 나타냅니다. 평균에 비해 표준편차가 클 경우 특이치가 포함될 가능성이 있고 작을 경우 값들이 유사하기 때문에 식별 위험성은 낮으나 유사한 속성의 그룹으로 분류될 수도 있습니다.</li>
-                                                            <li>* 문자로 구성된 데이터는 NaN으로 표시되며 숫자 데이터에 한에 분석결과가 의미있습니다.</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="chart-area">
-                                                <div class="chart-cont">그래프 영역</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex-layout gap-5">
-                                            <strong class="h-xsm">빈도분석</strong>
-                                            <div class="krds-table-wrap">
-                                                <table class="tbl list-type">
-                                                    <caption>데이터 컬럼분석 결과 표</caption>
-                                                    <colgroup>
-                                                        <col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>분석 컬럼</th>
-                                                            <th>최소</th>
-                                                            <th>최대</th>
-                                                            <th>평균</th>
-                                                            <th>표준편차</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>클래스실행일정(a)</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <p class="h-xxsm color-dark">* 컬럼의 기본통계 분석결과입니다.</p>
-                                            <div class="section-area type-bg-line">
-                                                <ul class="krds-info-list type-small color-sub">
-                                                    <li class="text-bold">[값 기준 확인 방법]</li>
-                                                    <li>* 최소값과 최대값은 데이터 내의 특이치 값이 될 수 있습니다. 특이치 값은 다른값보다 눈에 띄기 떄문에 이러한 값이 특정 개인 혹인 개체를 식별할 가능성 있다고 할 수 있습니다.</li>
-                                                    <li>* 평균값 개체는 개인은 식별한 위험은 적지만 특정 값이 평균과 크게 벗어나는 경우 그같은 특이치가 될 수 있습니다.</li>
-                                                    <li>* 표준편차는 평균으로부터 얼마나 값이 떨어졌는지를 나타냅니다. 평균에 비해 표준편차가 클 경우 특이치가 포함될 가능성이 있고 작을 경우 값들이 유사하기 때문에 식별 위험성은 낮으나 유사한 속성의 그룹으로 분류될 수도 있습니다.</li>
-                                                    <li>* 문자로 구성된 데이터는 NaN으로 표시되며 숫자 데이터에 한에 분석결과가 의미있습니다.</li>
+                                                <ul class="krds-info-list type-small color-dark">
+                                                    <li>* 설정한 값보다 결과값이 같거나 클 경우 적정으로 평가되며 작을경우 부적정으로 평가됩니다.</li>
+                                                    <li>* 설정 입력값에 의해 평가하므로 적정으로 평가되었다고 해서 반드시 적정한 것이 아니고, 부적정으로 평가되었다고 해서 부적정으로 평가할 수는 없습니다.</li>
+                                                    <li>* 값기준 분석,빈도분석,시그마분석,4분범위분석과 같은 다양한 통계 분석 결과를 종합적으로 판단하여 데이터를 확인할 수 있습니다.</li>
                                                 </ul>
                                             </div>
+
+                                            <div class="flex-layout gap-5">
+                                                <strong class="h-xsm">값기준 컬럼명</strong>
+                                                <div class="krds-table-wrap">
+                                                    <table class="tbl list-type">
+                                                        <caption>데이터 컬럼분석 결과 표</caption>
+                                                        <colgroup>
+                                                            <col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%">
+                                                        </colgroup>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>분석 컬럼</th>
+                                                                <th>최소</th>
+                                                                <th>최대</th>
+                                                                <th>평균</th>
+                                                                <th>표준편차</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>클래스실행일정(a)</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <p class="h-xxsm color-dark">* 컬럼의 기본통계 분석결과입니다.</p>
+                                                <div class="section-area type-bg-line">
+                                                    <ul class="krds-info-list type-small color-sub">
+                                                        <li class="text-bold">[값 기준 확인 방법]</li>
+                                                        <li>* 최소값과 최대값은 데이터 내의 특이치 값이 될 수 있습니다. 특이치 값은 다른값보다 눈에 띄기 떄문에 이러한 값이 특정 개인 혹인 개체를 식별할 가능성 있다고 할 수 있습니다.</li>
+                                                        <li>* 평균값 개체는 개인은 식별한 위험은 적지만 특정 값이 평균과 크게 벗어나는 경우 그같은 특이치가 될 수 있습니다.</li>
+                                                        <li>* 표준편차는 평균으로부터 얼마나 값이 떨어졌는지를 나타냅니다. 평균에 비해 표준편차가 클 경우 특이치가 포함될 가능성이 있고 작을 경우 값들이 유사하기 때문에 식별 위험성은 낮으나 유사한 속성의 그룹으로 분류될 수도 있습니다.</li>
+                                                        <li>* 문자로 구성된 데이터는 NaN으로 표시되며 숫자 데이터에 한에 분석결과가 의미있습니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart-area">
+                                            <div class="chart-cont">그래프 영역</div>
                                         </div>
                                     </div>
-                                </section>
-                                <!-- //컬럼분석 결과 -->
 
-                                <section id="tab29_02_panel" aria-labelledby="tab29_02" class="tab-conts" data-quick-nav="false">
-                                    <h3 class="sr-only">추가 가명정보처리</h3>
-                                    
-                                    <div class="flex-layout gap-9">
-                                        <div class="section-area type-bg flex-layout gap-5">
-                                            <strong class="h-xsm">데이터명</strong>
+                                    <div class="flex-layout gap-5">
+                                        <strong class="h-xsm">빈도분석</strong>
+                                        <div class="krds-table-wrap">
+                                            <table class="tbl list-type">
+                                                <caption>데이터 컬럼분석 결과 표</caption>
+                                                <colgroup>
+                                                    <col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%"><col style="width:20%">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>분석 컬럼</th>
+                                                        <th>최소</th>
+                                                        <th>최대</th>
+                                                        <th>평균</th>
+                                                        <th>표준편차</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>클래스실행일정(a)</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                        <div class="flex-layout gap-5">
-                                            <div class="krds-table-wrap inner-table">
-                                                <table class="tbl">
-                                                    <caption>기법설정, 구분자, 조건식, 마스킹문자 입력 표</caption>
-                                                    <colgroup>
-                                                        <col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%">
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">기법설정</th>
-                                                            <th scope="col">구분자</th>
-                                                            <th scope="col">조건식 <strong class="color-red">*</strong></th>
-                                                            <th scope="col">마스킹문자 <strong class="color-red">*</strong></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="tr-vtop">
-                                                            <td>
-                                                                <select class="krds-form-select small" title="선택">
-                                                                    <option value="">선택해주세요</option>
-                                                                    <option value="">항목2</option>
-                                                                    <option value="">항목3</option>
-                                                                    <option value="">항목4</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <div class="form-group">
-                                                                    <div class="form-conts">
-                                                                        <input type="text" id="consult_name23" class="krds-input small">
-                                                                    </div>
-                                                                    <p class="form-hint-information align-top">구분자 입력시 구분자기준으로 적용되고 입력하지 않을 시 한글자씩 적용됩니다.</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="form-group">
-                                                                    <div class="form-conts">
-                                                                        <input type="text" id="consult_name23" class="krds-input small">
-                                                                    </div>
-                                                                    <p class="form-hint-information align-top">0과1의 조합으로 입력합니다.<br>0 : 삭제, 1:유지, -이후 전체삭제</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="form-group">
-                                                                    <div class="form-conts">
-                                                                        <input type="text" id="consult_name23" class="krds-input small">
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="btn-wrap type-center mgt0">
-                                                <button type="button" class="krds-btn medium secondary">적용</button>
-                                            </div>
-
-                                            <div class="krds-table-wrap">
-                                                <table class="tbl list-type">
-                                                    <caption>데이터 추가 가명정보처리 내용 표</caption>
-                                                    <colgroup>
-                                                        <col><col><col>
-                                                    </colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>컬럼명</th>
-                                                            <th>조치내용</th>
-                                                            <th>조치옵션</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>클래스실행일정(a)</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <p class="h-xxsm color-dark">* 컬럼의 기본통계 분석결과입니다.</p>
+                                        <div class="section-area type-bg-line">
+                                            <ul class="krds-info-list type-small color-sub">
+                                                <li class="text-bold">[값 기준 확인 방법]</li>
+                                                <li>* 최소값과 최대값은 데이터 내의 특이치 값이 될 수 있습니다. 특이치 값은 다른값보다 눈에 띄기 떄문에 이러한 값이 특정 개인 혹인 개체를 식별할 가능성 있다고 할 수 있습니다.</li>
+                                                <li>* 평균값 개체는 개인은 식별한 위험은 적지만 특정 값이 평균과 크게 벗어나는 경우 그같은 특이치가 될 수 있습니다.</li>
+                                                <li>* 표준편차는 평균으로부터 얼마나 값이 떨어졌는지를 나타냅니다. 평균에 비해 표준편차가 클 경우 특이치가 포함될 가능성이 있고 작을 경우 값들이 유사하기 때문에 식별 위험성은 낮으나 유사한 속성의 그룹으로 분류될 수도 있습니다.</li>
+                                                <li>* 문자로 구성된 데이터는 NaN으로 표시되며 숫자 데이터에 한에 분석결과가 의미있습니다.</li>
+                                            </ul>
                                         </div>
                                     </div>
-                                </section>
-                                <!-- //추가 가명정보처리 -->
-                            </div>
-                            <!-- //tab contents -->
+                                </div>
+                            </section>
+                            <!-- //컬럼분석 결과 -->
+
+                            <section id="tab29_02_panel" aria-labelledby="tab29_02" class="tab-conts" data-quick-nav="false">
+                                <h3 class="sr-only">추가 가명정보처리</h3>
+
+                                <div class="flex-layout gap-9">
+                                    <div class="section-area type-bg flex-layout gap-5">
+                                        <strong class="h-xsm">데이터명</strong>
+                                    </div>
+
+                                    <div class="flex-layout gap-5">
+                                        <div class="krds-table-wrap inner-table">
+                                            <table class="tbl">
+                                                <caption>기법설정, 구분자, 조건식, 마스킹문자 입력 표</caption>
+                                                <colgroup>
+                                                    <col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%">
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">기법설정</th>
+                                                        <th scope="col">구분자</th>
+                                                        <th scope="col">조건식 <strong class="color-red">*</strong></th>
+                                                        <th scope="col">마스킹문자 <strong class="color-red">*</strong></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="tr-vtop">
+                                                        <td>
+                                                            <select class="krds-form-select small" title="선택">
+                                                                <option value="">선택해주세요</option>
+                                                                <option value="">항목2</option>
+                                                                <option value="">항목3</option>
+                                                                <option value="">항목4</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="form-conts">
+                                                                    <input type="text" id="consult_name23" class="krds-input small">
+                                                                </div>
+                                                                <p class="form-hint-information align-top">구분자 입력시 구분자기준으로 적용되고 입력하지 않을 시 한글자씩 적용됩니다.</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="form-conts">
+                                                                    <input type="text" id="consult_name23" class="krds-input small">
+                                                                </div>
+                                                                <p class="form-hint-information align-top">0과1의 조합으로 입력합니다.<br>0 : 삭제, 1:유지, -이후 전체삭제</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <div class="form-conts">
+                                                                    <input type="text" id="consult_name23" class="krds-input small">
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="btn-wrap type-center mgt0">
+                                            <button type="button" class="krds-btn medium secondary">적용</button>
+                                        </div>
+
+                                        <div class="krds-table-wrap">
+                                            <table class="tbl list-type">
+                                                <caption>데이터 추가 가명정보처리 내용 표</caption>
+                                                <colgroup>
+                                                    <col><col><col>
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th>컬럼명</th>
+                                                        <th>조치내용</th>
+                                                        <th>조치옵션</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>클래스실행일정(a)</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- //추가 가명정보처리 -->
                         </div>
-
+                        <!-- //tab contents -->
                     </div>
-                </div>
 
-                <!-- 컬럼분석 결과 탭 하단 버튼 -->
-                <div class="modal-btn btn-wrap">
-                    <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
-                    <button type="button" class="krds-btn medium primary close-modal">
-                        <i class="svg-icon ico-csv"></i> 분석결과 다운로드
-                    </button>
-                    <button type="button" class="krds-btn medium primary close-modal">
-                        <i class="svg-icon ico-pdf"></i> 분석보고서 다운로드
-                    </button>
                 </div>
-                <!-- // 컬럼분석 결과 탭 하단 버튼 -->
-
-                <!-- 가공결과 탭 하단 버튼 -->
-                <div class="modal-btn btn-wrap w-hide">
-                    <button type="button" class="krds-btn medium primary close-modal">확인</button>
-                </div>
-                <!-- // 가공결과 탭 하단 버튼 -->
             </div>
+
+            <!-- 컬럼분석 결과 탭 하단 버튼 -->
+            <div class="modal-btn btn-wrap">
+                <button type="button" class="krds-btn medium tertiary close-modal">취소</button>
+                <button type="button" class="krds-btn medium primary close-modal">
+                    <i class="svg-icon ico-csv"></i> 분석결과 다운로드
+                </button>
+                <button type="button" class="krds-btn medium primary close-modal">
+                    <i class="svg-icon ico-pdf"></i> 분석보고서 다운로드
+                </button>
+            </div>
+            <!-- // 컬럼분석 결과 탭 하단 버튼 -->
+
+            <!-- 가공결과 탭 하단 버튼 -->
+            <div class="modal-btn btn-wrap w-hide">
+                <button type="button" class="krds-btn medium primary close-modal">확인</button>
+            </div>
+            <!-- // 가공결과 탭 하단 버튼 -->
         </div>
-        <div class="modal-back"></div>
-    </section>
-    <!-- //컬럼분석 결과 -->
+    </div>
+    <div class="modal-back"></div>
+</section>
+<!-- //컬럼분석 결과 -->
 </div>
- <!-- // 공통 팝업 02 END -->
 </body>
 </html>

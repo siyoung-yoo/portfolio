@@ -47,12 +47,12 @@ function fnMenuPopup() {
 * FullPopup 열고 닫는 이벤트 필요시 Toggle 함수
 */
 function fnOnEventToggle(selector){
-	if(!$(selector).children('.onEventNeed').hasClass("_on")){
+	if(!$(selector).children('._fullPopup').hasClass("_on")){
 		$("html").css("overflow", "hidden");
-		$(selector).children('.onEventNeed').addClass("_on");
+		$(selector).children('._fullPopup').addClass("_on");
 	} else {
 		$("html").css("overflow", "");
-		$(selector).children('.onEventNeed').removeClass("_on");
+		$(selector).children('._fullPopup').removeClass("_on");
 	}
 }
 

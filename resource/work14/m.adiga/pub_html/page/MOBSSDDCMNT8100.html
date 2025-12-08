@@ -9,13 +9,12 @@
 <link rel="stylesheet" href="../../static/css/common.css" />
 <link rel="stylesheet" href="../../static/css/sub.css" />
 <link rel="stylesheet" href="../../static/css/main.css" />
-<link rel="stylesheet" href="../../static/css/sub05.css" /><!-- [2025 서류제출 시스템 구축] sub05.css 신규 파일 추가 -->
+<link rel="stylesheet" href="../../static/css/sub05.css" />
 <!-- Jquery -->
 <script type="text/javascript" src="../../static/js/jquery/jquery-3.7.0.min.js"></script>
 <script type="text/javascript" src="../../static/js/comm/common.js"></script>
-<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script><!-- 퍼블 include 확인용 임시 스크립트 (개발 사용 X) -->
+<script type="text/javascript" src="../../static/js/comm/pub_ui.js"></script>
 
-<!-- 현재 페이지에만 사용하는 스크립트 -->
 <script>
 	$(function() {
 		$(".ratingCommet textarea").focusin(function() {
@@ -58,57 +57,54 @@
 
 		<!-- 컨텐츠 영역 START -->
 		<div class="container" id="bodyContent">
-			<form id="frm" name="frm" method="post">
+			<div class="contInner ssdSurveyWrap">
+				<div class="section _pb20">
+					<h2 class="h4">만족도 평가</h2>
 
-				<div class="contInner ssdSurveyWrap">
-					<div class="section _pb20">
-						<h2 class="h4">만족도 평가</h2>
+					<div class="surveyCont typeSsd">
+						<div class="starRating flexColCenter">
+							<img src="../../static/img/contents/ssd_star_rating.svg" role="presentation">
+							<h4 class="title h4 _pt30"><span class="fcMain h4">특별전형 서류제출</span> 서비스를<br>이용해 주셔서 감사합니다.</h4>
+							<p class="sclr03 _mt20 fs13">이 서비스가 유용하셨을까요?<br>의견을 남겨 주시면 더 나은 서비스가 되도록 개선하겠습니다.</p>
 
-						<div class="surveyCont typeSsd">
-							<div class="starRating flexColCenter">
-								<img src="../../static/img/contents/ssd_star_rating.svg" role="presentation">
-								<h4 class="title h4 _pt30"><span class="fcMain h4">특별전형 서류제출</span> 서비스를<br>이용해 주셔서 감사합니다.</h4>
-								<p class="sclr03 _mt20 fs13">이 서비스가 유용하셨을까요?<br>의견을 남겨 주시면 더 나은 서비스가 되도록 개선하겠습니다.</p>
-
-								<div class="ratingWrap">
-									<input type="radio" id="star10" name="rating" value="10">
-									<label for="star10"></label>
-									<input type="radio" id="star20" name="rating" value="20">
-									<label for="star20"></label>
-									<input type="radio" id="star30" name="rating" value="30">
-									<label for="star30"></label>
-									<input type="radio" id="star40" name="rating" value="40">
-									<label for="star40"></label>
-									<input type="radio" id="star50" name="rating" value="50">
-									<label for="star50"></label>
-									<input type="radio" id="star60" name="rating" value="60">
-									<label for="star60"></label>
-									<input type="radio" id="star70" name="rating" value="70">
-									<label for="star70"></label>
-									<input type="radio" id="star80" name="rating" value="80">
-									<label for="star80"></label>
-									<input type="radio" id="star90" name="rating" value="90">
-									<label for="star90"></label>
-									<input type="radio" id="star100" name="rating" value="100" checked>
-									<label for="star100"></label>
-								</div>
+							<div class="ratingWrap">
+								<input type="radio" id="star10" name="rating" value="10">
+								<label for="star10"></label>
+								<input type="radio" id="star20" name="rating" value="20">
+								<label for="star20"></label>
+								<input type="radio" id="star30" name="rating" value="30">
+								<label for="star30"></label>
+								<input type="radio" id="star40" name="rating" value="40">
+								<label for="star40"></label>
+								<input type="radio" id="star50" name="rating" value="50">
+								<label for="star50"></label>
+								<input type="radio" id="star60" name="rating" value="60">
+								<label for="star60"></label>
+								<input type="radio" id="star70" name="rating" value="70">
+								<label for="star70"></label>
+								<input type="radio" id="star80" name="rating" value="80">
+								<label for="star80"></label>
+								<input type="radio" id="star90" name="rating" value="90">
+								<label for="star90"></label>
+								<input type="radio" id="star100" name="rating" value="100" checked>
+								<label for="star100"></label>
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<div class="section ratingCommet">
-						<p class="infoTxt"><i class="icoOnly sm _infoSvg"></i>불편 사항 또는 개선 사항에 대한 의견을 남겨 주세요.</p>
-						<textarea placeholder="내용을 10글자 이상 입력해 주세요."></textarea>
-					</div>
+				<div class="section ratingCommet">
+					<p class="infoTxt"><i class="icoOnly sm _infoSvg"></i>불편 사항 또는 개선 사항에 대한 의견을 남겨 주세요.</p>
+					<textarea placeholder="내용을 10글자 이상 입력해 주세요."></textarea>
+				</div>
 
-					<div class="svBtnWrap _hasCTA">
-						<div class="btnWrap">
-							<button type="button" class="btnCancel"><span>취소</span></button>
-							<button type="button" class="btnConfirm"><span>제출완료</span></button>
-						</div>
+				<div class="svBtnWrap _hasCTA">
+					<div class="btnWrap">
+						<button type="button" class="btnCancel"><span>취소</span></button>
+						<button type="button" class="btnConfirm"><span>제출완료</span></button>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 		<!-- // 컨텐츠 영역 END -->
 
