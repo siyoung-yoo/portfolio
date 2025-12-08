@@ -8,7 +8,6 @@
 <script src="../resources/js/component/ui-script.js"></script>
 <script>
 window.addEventListener("load", function() {
-
     document.querySelectorAll(".select-list").forEach(list => {
         list.addEventListener("click", e => {
             const btn = e.target.closest("button");
@@ -19,28 +18,18 @@ window.addEventListener("load", function() {
         });
     });
 
-    // 데이터 리스트 클릭 이벤트
-    const selectLists = document.querySelectorAll('.krds-structured-list .action');
-    selectLists.forEach(function(list) {
+    document.querySelectorAll('.krds-structured-list .action').forEach(function(list) {
         list.addEventListener('click', function(e) {
-            // 리스트 클릭했을 경우 (토글 버튼 제외)
             if (!e.target.classList.contains('btn-toggle')) {
-
-                // 리스트 전체 active 스타일 삭제
                 var listWrap = this.closest('.krds-structured-list');
                 listWrap.querySelectorAll('.structured-item').forEach(function(item) {
                     item.classList.remove('active');
                 });
-                // 선택한 리스트 active 스타일 추가
                 this.closest('.structured-item').classList.add('active');
-
-                // 맵 영역 닫혀있을 경우 열기
                 var sectionWrap = this.closest('.data-list-detail');
                 if (!sectionWrap.classList.contains('active')) {
                     sectionWrap.classList.add('active');
                 }
-
-                // 선택한 리스트의 토글영역이 닫혀있을 경우 열기
                 var toggleButton = this.querySelector('.btn-toggle');
                 if (toggleButton && !toggleButton.classList.contains('active')) {
                     toggleButton.click();
@@ -49,78 +38,61 @@ window.addEventListener("load", function() {
         });
     });
 
-    // 맵 영역 내 닫기버튼 클릭 이벤트
-    const closeMapBtns = document.querySelectorAll('.close-map');
-    closeMapBtns.forEach(function(btn) {
+    document.querySelectorAll('.close-map').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var sectionWrap = this.closest('.data-list-detail');
-
-            // 맵 영역 닫기
             sectionWrap.classList.remove('active');
-
-            // 리스트의 active 스타일 삭제
             sectionWrap.querySelectorAll('.structured-item').forEach(function(item) {
                 item.classList.remove('active');
             });
         });
     });
 
-    // 컬럼분석 결과 팝업(#modal_sample_25) > 하단 버튼 확인용 퍼블 임시 스크립트
-    const tabs = document.querySelectorAll('.tempCheckTab li[role="tab"]');
-        console.log(tabs)
-        tabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                console.log(tab)
-                var tabIndex = Array.from(tab.parentElement.children).indexOf(tab);
-                var modalConts = this.closest('.modal-conts');
-                var modalBtns = Array.from(modalConts.parentElement.querySelectorAll('.modal-btn'));
+    document.querySelectorAll('.tempCheckTab li[role="tab"]').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            var tabIndex = Array.from(tab.parentElement.children).indexOf(tab);
+            var modalConts = this.closest('.modal-conts');
+            var modalBtns = Array.from(modalConts.parentElement.querySelectorAll('.modal-btn'));
 
-                modalBtns.forEach( btn => btn.classList.add('w-hide') )
-                if (modalBtns[tabIndex]) modalBtns[tabIndex].classList.remove('w-hide');
-            });
+            modalBtns.forEach( btn => btn.classList.add('w-hide') )
+            if (modalBtns[tabIndex]) modalBtns[tabIndex].classList.remove('w-hide');
         });
+    });
 })
 </script>
 </head>
 <body>
-    <div id="wrap">
-
-        <!-- 컨테이너 영역 -->
-        <div id="container">
-            <!-- 컨텐츠 영역 -->
-            <div class="inner">
-                <div class="conts-area">
-                    <!-- 페이지 타이틀 영역 -->
-                    <div class="page-title-wrap">
-                        <h1 class="page-title">modal 팝업 샘플</h1>
-                    </div>
-                    <!-- //페이지 타이틀 영역 -->
-
-                    <strong>기본 가이드</strong><br><br>
-                    <div class="btn-group">
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_01">default 팝업</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_02">success 팝업</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_03">error 팝업</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_04">내용 입력 팝업 (default)</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_05">내용 입력 팝업 (error)</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_06">테이블 view 팝업</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_07">탭 view 팝업</button>
-                    </div>
-                    <br><br>
-
-                    <strong>팝업 샘플</strong><br><br>
-                    <div class="btn-group">
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_11">기관조회</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_12">데이터 보기</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_13">데이터 요약정보(side panel)</button>
-                        <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_14">컬럼분석 결과 - 예시: 숫자형데이터</button>
-                    </div><br>
+<div id="wrap">
+    <div id="container">
+        <div class="inner">
+            <div class="conts-area">
+                <div class="page-title-wrap">
+                    <h1 class="page-title">modal 팝업 샘플</h1>
                 </div>
+
+                <strong>기본 가이드</strong><br><br>
+                <div class="btn-group">
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_01">default 팝업</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_02">success 팝업</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_03">error 팝업</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_04">내용 입력 팝업 (default)</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_05">내용 입력 팝업 (error)</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_06">테이블 view 팝업</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_07">탭 view 팝업</button>
+                </div>
+                <br><br>
+
+                <strong>팝업 샘플</strong><br><br>
+                <div class="btn-group">
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_11">기관조회</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_12">데이터 보기</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_13">데이터 요약정보(side panel)</button>
+                    <button type="button" class="krds-btn tertiary small open-modal" data-target="modal_sample_14">컬럼분석 결과 - 예시: 숫자형데이터</button>
+                </div><br>
             </div>
-            <!-- //컨텐츠 영역 -->
         </div>
-        <!-- //컨테이너 영역 -->
     </div>
+</div>
 
 
 

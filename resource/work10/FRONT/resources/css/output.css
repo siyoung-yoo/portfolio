@@ -6857,7 +6857,7 @@ caption {
 /* 콘텐츠 내 탐색 */
 .krds-in-page-navigation-type {
   --krds-in-page-navigation--gap: var(--krds-gap-9);
-  --krds-in-page-navigation--position-top: 25.6rem;
+  --krds-in-page-navigation--position-top: 18rem;
   --navigation--width: 18rem;
   --navigation--cont-width: 99.6rem;
   --navigation--position-left: calc( (100% - var(--navigation--cont-width))/2 - var(--navigation--width) - 12.2rem);

@@ -13,13 +13,11 @@
         <a href="#container">본문 바로가기</a>
     </div>
 
-    <!-- 헤더 영역 -->
     <header id="krds-header" >
         <div class="header-in">
             <div class="header-container">
                 <div class="top-area">
                     <div class="top-in">
-                        <!-- breadcrumb -->
                         <nav class="krds-breadcrumb-wrap" aria-label="현재 경로" id="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="home"><a href="#" class="txt">홈</a></li>
@@ -27,37 +25,45 @@
                                 <li><a href="#" class="txt">수집모니터링</a></li>
                             </ol>
                         </nav>
-                        <!-- breadcrumb -->
 
                         <div class="user-area">
                             <div class="krds-drop-wrap">
-                                <button type="button" class="krds-btn icon drop-btn alarm-on" aria-expanded="false"> <!-- 알림이 있을경우  class : alarm-on 추가 -->
+                                <button type="button" class="krds-btn icon drop-btn alarm-on" aria-expanded="false">
                                     <span class="sr-only">알림</span><i class="svg-icon ico-alarm"></i>
                                 </button>
-                                <div class="drop-menu" style="width: 360px">
+                                <div class="drop-menu alarm-wrap" style="width: 360px;">
                                     <div class="drop-in">
                                         <div class="drop-top">
                                             <strong>알림</strong>
-                                            <button type="button" class="krds-btn xsmall icon">
+                                            <button type="button" class="krds-btn small icon">
                                                 <span class="sr-only">닫기</span>
                                                 <i class="svg-icon ico-popup-close"></i>
                                             </button>
                                         </div>
-                                        <button type="button" class="krds-btn xsmall tertiary">
-                                            <i class="svg-icon ico-checkbox"></i>모두 읽음
-                                        </button>
-                                        <ul class="drop-list">
+                                        <div class="bt-chk-all">
+                                            <button type="button" class="krds-btn xsmall tertiary">
+                                                <i class="svg-icon ico-checkall"></i>모두 읽음
+                                            </button>
+                                        </div>
+                                        <ul class="drop-list alarm-list">
                                             <li>
-                                                <a href="#" class="item-link new">알림 내역이 표시영역</a>
-                                                <span>25-01-01</span>
+                                                <div class="tit-alarm">
+                                                    <a href="#" class="item-link">신규알림 표시</a>
+                                                    <span class="new">N</span>
+                                                </div>
+                                                <span class="date">25-01-01</span>
                                             </li>
                                             <li>
-                                                <a href="#" class="item-link">알림 내역이 표시영역</a>
-                                                <span>25-01-01</span>
+                                                <div class="tit-alarm">
+                                                    <a href="#" class="item-link">알림 내역이 표시영역</a>
+                                                </div>
+                                                <span class="date">25-01-01</span>
                                             </li>
                                             <li>
-                                                <a href="#" class="item-link no-read">알림 내역이 표시영역</a>
-                                                <span>25-01-01</span>
+                                                <div class="tit-alarm">
+                                                    <a href="#" class="item-link no-read">미확인 알림표시</a>
+                                                </div>
+                                                <span class="date">25-01-01</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -72,18 +78,13 @@
                             <h2 class="h-tit">메뉴 관리</h2>
                         </div>
                     </div>
-
                 </div>
-                <!-- //top-area -->
-
             </div>
         </div>
     </header>
     <!-- //헤더 영역 -->
 
-    <!-- 컨테이너 영역 -->
     <div id="container">
-        <!-- lnb 영역 -->
         <nav class="krds-side-navigation">
             <div class="lnb-top">
                 <div class="logo-area">
@@ -116,7 +117,6 @@
                 <p class="lnb-sub-tit">NATIONAL OPEN DATA<br>SHARE PLATFORM</p>
             </div>
 
-            <!-- lnb-list -->
             <ul class="lnb-list">
                 <li class="lnb-item">
                     <button type="button" class="lnb-btn"><i class="svg-icon lnb-01"></i>홈</button>
@@ -197,14 +197,11 @@
                     </div>
                 </li>
             </ul>
-            <!-- //lnb-list -->
             <p class="lnb-copy">© 2025 Ministry of the Interior and Safety.<br>All rights reserved.</p>
         </nav>
-        <!-- //lnb 영역 -->
+        <!-- // lnb 영역 (krds-side-navigation) -->
 
         <div class="contents">
-
-            <!-- tab -->
             <div class="krds-tab-area layer">
                 <div class="tab full with-btn">
                     <ul role="tablist">
@@ -215,13 +212,12 @@
                             <button type="button" class="btn-tab">운영관리</button>
                         </li>
                     </ul>
-
                     <div class="btn-wrap">
                         <button type="button" class="krds-btn small secondary">메뉴권한 관리</button>
                         <button type="button" class="krds-btn small">메뉴등록</button>
                     </div>
                 </div>
-                <!-- tab contents -->
+
                 <div class="tab-conts-wrap">
                     <section id="panel_login_11" aria-labelledby="tab_login_11" class="tab-conts active" data-quick-nav="false">
                         <h3 class="sr-only">포탈</h3>
@@ -229,20 +225,17 @@
                         <div class="divide-group menu-sort-wrap">
                             <div class="w-fix">
                                 <div class="menu-sort-list">
-                                    <!-- 메뉴관리 -->
                                     <div class="list-group nested-sortable">
                                         <div class="list-group-item nested-1">데이터 검색
                                             <div class="list-group nested-sortable">
-                                                <div class="list-group-item nested-2">데이터 검색목록</div><!-- 메뉴선택시 class : seleted추가 -->
+                                                <div class="list-group-item nested-2">데이터 검색목록</div>
                                                 <div class="list-group-item nested-2">공유데이터 요청
                                                     <div class="list-group nested-sortable">
                                                         <div class="list-group-item nested-3">Item 3.1
                                                             <div class="list-group nested-sortable">
                                                                 <div class="list-group-item nested-4">Item 4.1
                                                                     <div class="list-group nested-sortable">
-                                                                        <div class="list-group-item nested-5">Item 5.1
-
-                                                                        </div>
+                                                                        <div class="list-group-item nested-5">Item 5.1</div>
                                                                         <div class="list-group-item nested-5">Item 5.2</div>
                                                                         <div class="list-group-item nested-5">Item 5.3</div>
                                                                     </div>
@@ -260,106 +253,97 @@
 
                                         <div class="list-group-item nested-1">데이터 맵</div>
                                     </div>
-                                    <!-- //메뉴관리 -->
                                 </div>
                             </div>
+
                             <div class="w-auto">
                                 <div class="border-conts">
                                     <div class="tit-area h4">
                                         <h4 class="text-color-basic">메뉴 상세정보</h4>
                                     </div>
                                     <p class="text-right info-required"><span class="text-required">*</span> 는 필수 입력사항입니다.</p>
-                                    <!-- table -->
+
                                     <div class="krds-table-wrap">
                                         <table class="tbl type-row">
                                             <caption>게시글 등록유형, 제목, 내용, 첨부파일 등록테이블</caption>
-                                            <colgroup>
-                                                <col style="width: 174px;">
-                                                <col>
-                                            </colgroup>
+                                            <colgroup><col style="width: 174px;"><col></colgroup>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row"><label for="in_id">메뉴ID</label> <span class="text-required">*</span></th>
-                                                <td>
-                                                    <div class="form-conts">
-                                                    <input type="text" id="in_id" class="krds-input xsmall">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><label for="in_title">메뉴명</label> <span class="text-required">*</span></th>
-                                                <td>
-                                                    <div class="form-conts">
-                                                    <input type="text" id="in_title" class="krds-input xsmall">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><label for="in_info">메뉴설명</label> <span class="text-required">*</span></th>
-                                                <td>
-                                                    <div class="form-conts">
-                                                    <input type="text" id="in_info" class="krds-input xsmall">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><label for="in_posi">메뉴위치</label></th>
-                                                <td>
-                                                    <div class="form-group">
+                                                <tr>
+                                                    <th scope="row"><label for="in_id">메뉴ID</label> <span class="text-required">*</span></th>
+                                                    <td>
                                                         <div class="form-conts">
-                                                        <input type="text" id="in_posi" class="krds-input xsmall">
+                                                        <input type="text" id="in_id" class="krds-input xsmall">
                                                         </div>
-                                                        <p class="form-hint-information">좌측에서 메뉴위치를 드래그하여 지정해주세요.</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><label for="in_ckd">공개여뷰</label> <span class="text-required">*</span></th>
-                                                <td>
-                                                    <div class="krds-check-area">
-                                                        <div class="krds-form-check small">
-                                                            <input type="radio" name="rdo_1" id="rdo_1">
-                                                            <label for="rdo_1">공개</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><label for="in_title">메뉴명</label> <span class="text-required">*</span></th>
+                                                    <td>
+                                                        <div class="form-conts">
+                                                        <input type="text" id="in_title" class="krds-input xsmall">
                                                         </div>
-                                                        <div class="krds-form-check small">
-                                                            <input type="radio" name="rdo_1" id="rdo_2">
-                                                            <label for="rdo_2">비공개</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><label for="in_info">메뉴설명</label> <span class="text-required">*</span></th>
+                                                    <td>
+                                                        <div class="form-conts">
+                                                        <input type="text" id="in_info" class="krds-input xsmall">
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row"><label for="in_url">페이지URL</label> <span class="text-required">*</span></th>
-                                                <td>
-                                                    <div class="form-conts">
-                                                    <input type="text" id="in_url" class="krds-input xsmall">
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><label for="in_posi">메뉴위치</label></th>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <div class="form-conts">
+                                                            <input type="text" id="in_posi" class="krds-input xsmall">
+                                                            </div>
+                                                            <p class="form-hint-information">좌측에서 메뉴위치를 드래그하여 지정해주세요.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><label for="in_ckd">공개여뷰</label> <span class="text-required">*</span></th>
+                                                    <td>
+                                                        <div class="krds-check-area">
+                                                            <div class="krds-form-check small">
+                                                                <input type="radio" name="rdo_1" id="rdo_1">
+                                                                <label for="rdo_1">공개</label>
+                                                            </div>
+                                                            <div class="krds-form-check small">
+                                                                <input type="radio" name="rdo_1" id="rdo_2">
+                                                                <label for="rdo_2">비공개</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row"><label for="in_url">페이지URL</label> <span class="text-required">*</span></th>
+                                                    <td>
+                                                        <div class="form-conts">
+                                                        <input type="text" id="in_url" class="krds-input xsmall">
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!-- //table -->
-
                                     <div class="bot-bt-wrap">
                                         <div><button type="button" class="krds-btn medium tertiary">취소</button></div>
                                         <div><button type="button" class="krds-btn medium">저장</button></div>
                                     </div>
-
                                 </div>
-                                <!-- // -->
                             </div>
                         </div>
-
                     </section>
+
                     <section id="panel_login_12" aria-labelledby="tab_login_12" class="tab-conts" data-quick-nav="false">
                         <h3 class="sr-only">운영관리</h3>
                         운영관리 영역
                     </section>
                 </div>
-                <!-- //tab contents -->
             </div>
-            <!-- //tab -->
 
 
 
@@ -371,16 +355,15 @@
 <script src="../resources/js/component/Sortable.min.js"></script>
 <script>
     var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
-    // Loop through each nested sortable element
     for (var i = 0; i < nestedSortables.length; i++) {
-      new Sortable(nestedSortables[i], {
-        group: 'nested',
-        ghostClass: "sortable-ghost",
-        chosenClass: "sortable-chosen",
-        animation: 150,
-        fallbackOnBody: true,
-        swapThreshold: 0.65
-      });
+        new Sortable(nestedSortables[i], {
+            group: 'nested',
+            ghostClass: "sortable-ghost",
+            chosenClass: "sortable-chosen",
+            animation: 150,
+            fallbackOnBody: true,
+            swapThreshold: 0.65
+        });
     }
 </script>
 </body>
