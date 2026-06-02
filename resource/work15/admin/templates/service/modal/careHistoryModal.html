@@ -1,0 +1,131 @@
+<!-- Modal: 케어 히스토리 -->
+<div class="modal" id="careHistoryModal">
+  <div class="modal-dialog modal-lg modal-care-history">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">케어 히스토리</h3>
+          <p class="modal-description mt-2">케어 히스토리와 상세 정보를 확인할 수 있습니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table type-td-sm">
+          <colgroup>
+            <col style="width: 80px">
+            <col style="width: 100px">
+            <col>
+            <col style="width: 140px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>담당자</th>
+              <th>상세</th>
+              <th>처리시점</th>
+            </tr>
+          </thead>
+          <tbody id="careHistoryBody">
+            <tr><td colspan="4" class="text-center text-primary-300 py-3">불러오는 중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 진행상태 코드 → 히스토리 표시
+   - DB(TT_COMCD CDX_CD='OR4')의 공식 명칭과 별개로 퍼블 디자인에 맞춘 사용자 친화 라벨 사용
+   - DB 명칭 매핑:
+       OR4001 → 예정              (DB: 예정)
+       OR4002 → 리포트 작성        (DB: 리포트발행중)
+       OR4003 → 승인 요청          (DB: 리포트발행완료)
+       OR4004 → 승인 완료          (DB: 리포트본사승인)
+       OR4005 → 확인 완료          (DB: 고객확인)
+       OR4006 → 일정 등록          (DB: 일정등록) */
+const HISTORY_LABEL = {
+  OR4001: { name: '예정',          cls: 'badge-dark-gray', desc: '케어 예정' },
+  OR4002: { name: '리포트 작성',    cls: 'badge-orange',    desc: '케어 결과 임시저장' },
+  OR4003: { name: '승인 요청',      cls: 'badge-blue',      desc: '본사 승인 요청' },
+  OR4004: { name: '승인 완료',      cls: 'badge-blue',      desc: '본사 승인 완료' },
+  OR4005: { name: '확인 완료',      cls: 'badge-blue',      desc: '고객 확인 완료' },
+  OR4006: { name: '일정 등록',      cls: 'badge-orange',    desc: '케어 일정 등록/변경' },
+  OR4007: { name: '승인 반려',      cls: 'badge-destructive', desc: '본사 승인 반려' }
+};
+
+function loadCareHistory(req) {
+  const tbody = document.getElementById('careHistoryBody');
+  tbody.innerHTML = '<tr><td colspan="4" class="text-center text-primary-300 py-3">불러오는 중...</td></tr>';
+
+  // 본사(/service/care/hq...) 화면이면 본사 컨트롤러, 그 외(유통망)는 유통망 컨트롤러 호출
+  // — 공용 모달이라 메뉴 권한에 맞는 엔드포인트를 컨텍스트로 분기
+  const careHistoryUrl = window.location.pathname.includes('/care/hq')
+    ? '/careDistHq/getCareHistory'
+    : '/careDist/getCareHistory';
+
+  LoadingManager.inc();
+  $.ajax({
+    url: careHistoryUrl,
+    type: 'post',
+    data: req,
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      const rows = res.data || [];
+      tbody.innerHTML = '';
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-primary-300 py-3">히스토리가 없습니다.</td></tr>';
+        return;
+      }
+      // OR4006(일정 등록/변경) — 구분(badge) 라벨은 '일정 등록' 으로 통일,
+      // 상세(desc) 만 시간순으로 첫 번째는 '케어 일정 등록', 이후는 '케어 일정 변경 (기존 일정: yyyy-mm-dd)' 분기
+      let or4006Seen = false;
+      rows.forEach(h => {
+        let lab = HISTORY_LABEL[h.progressCd] || { name: h.progressNm || '-', cls: 'badge-default', desc: '-' };
+        let rowCls = '';
+        let descCls = '';
+        if (h.progressCd === 'OR4006') {
+          let desc = '케어 일정 등록';
+          if (or4006Seen) {
+            const prev = String(h.remark || '').replace(/[^0-9]/g, '');
+            const prevFmt = /^\d{8}$/.test(prev)
+              ? `${prev.slice(0,4)}-${prev.slice(4,6)}-${prev.slice(6,8)}`
+              : '';
+            desc = prevFmt
+              ? `케어 일정 변경 <span class="label">(기존 일정: ${prevFmt})</span>`
+              : '케어 일정 변경';
+          }
+          lab = { name: '일정 등록', cls: 'badge-orange', desc };
+          or4006Seen = true;
+        } else if (h.progressCd === 'OR4007') {
+          // 반려: 행 배경 + 반려 사유(remark) 표시. 사유 없으면 기본 desc 사용
+          rowCls = 'bg-destructive-foreground';
+          descCls = 'font-medium';
+          if (h.remark) lab = { ...lab, desc: escapeHtml(h.remark) };
+        }
+        const tr = document.createElement('tr');
+        if (rowCls) tr.className = rowCls;
+        tr.innerHTML = `
+          <td class="p-0 text-center"><span class="badge ${lab.cls}">${lab.name}</span></td>
+          <td class="text-center">${escapeHtml(h.regUsrName || h.regUsrCd) || '-'}</td>
+          <td${descCls ? ` class="${descCls}"` : ''}>${lab.desc}</td>
+          <td>${formatDateTime(h.regDt) || '-'}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+  });
+}
+
+function formatDateTime(s) {
+  if (!s) return '';
+  const str = String(s);
+  if (str.length >= 19) return str.slice(0, 19).replace('T', ' ');
+  if (str.length >= 10) return str.slice(0, 10);
+  return str;
+}
+</script>

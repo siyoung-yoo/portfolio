@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="navbar-menu">
+    <div class="navbar-brand-box">
+        <a  class="logo">
+            <span class="logo-lg">
+                <img th:src="${@optimizer.optimize(@sessionInfo.getLogoBig())}" alt="로고" height="24px">
+            </span>
+            <span class="logo-sm">
+                <img th:src="${@optimizer.optimize(@sessionInfo.getLogoSmall())}" alt="로고" height="24px">
+            </span>
+        </a>
+    </div>
+    <!-- iam Menu -->
+    <!--<div style="width: 100px;">
+      <select class="form-control" onchange="if(this.value!='')location.href=this.value;">
+        <option value="" >ERP ADMIN</option>
+        <option value="/shopAdmin">SHOP ADMIN</option> &lt;!&ndash;타임리프로 프로퍼티로 가져오기 (만약 도메인이 같다면...)&ndash;&gt;
+      </select>
+    </div>-->
+    <div id="nav-sidebar-wrap">
+        <div class="nav-sidebar-inner">
+            <ul class="nav-sidebar" data-nav-type="accordion">
+                <li class="nav-item nav-item-1st">
+                    <a href="#" class="nav-link">
+                        <i class="icon-bookmarks text-primary"></i>
+                        <span>즐겨찾기</span>
+                      <span th:text="${#httpServletRequest}"></span>
+                    </a>
+                    <ul class="nav-group-sub" id="markers">
+                        <li class="nav-item active" th:each="subMenuUser: ${subMenuUserList}">
+                            <a class="nav-link" th:href="${subMenuUser.get('SM_URL')}"><span th:text="${subMenuUser.get('SM_NAME')}"></span></a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-item-1st" th:each="menus: ${T(com.iamrental.component.MenuList).menus}" th:if="${menus.hasAuth(@sessionInfo.authIdx)}">
+                    <a href="javascript:;" class="nav-link" th:classappend="${menus.getActiveClass(currentUri)}">
+                        <i><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24"><g><path stroke="#000000" d="M22.9395 22.9395H1.0605V10.906L12 1.0605L22.9395 10.906V22.9395Z" stroke-width="1.5"></path></g></svg></i>
+                        <span th:text="${menus.menuName}">대메뉴</span>
+                    </a>
+                    <ul class="nav-group-sub" th:if="${menus.getSubMenuList().size() gt 0}">
+                        <li class="nav-item" th:each="submenu: ${menus.subMenuList}" th:if="${submenu.hasAuth(@sessionInfo.authIdx)}">
+                            <a class="nav-link" th:href="${submenu.smUrl}" th:classappend="${submenu.getActiveClass(currentFullUri)}">
+                                <span th:text="${submenu.smName}">중메뉴</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="vertical-overlay"></div>
+<script>
+    // 사이드네비바 메뉴 클릭 할때 화면 밖에 영역은 내부에서 스크롤 시작하도록
+    document.querySelectorAll('.nav-item-1st').forEach(function (navItem) {
+        navItem.addEventListener('click', function () {
+            setTimeout(function () {
+                const bounding = navItem.getBoundingClientRect();
+
+                if (bounding.bottom > window.innerHeight) {
+                    navItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 250);
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,301 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">도면 현황</h2>
+      <p class="page-description">공간별 레이아웃 도면 관리</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="drawing-layout">
+      <div class="drawing-panel">
+        <div class="header">공간 선택</div>
+        <ul class="space-list">
+          <li>
+            <button type="button" class="btn-toggle is-expanded" aria-controls="#sub01">
+              <span class="text">서울특별시 송파구 오금로 311</span>
+            </button>
+            <ul class="sub-list" id="sub01">
+              <li><button type="button" class="selected"><span class="ellipsis-line2">1층</span></button></li>
+              <li><button type="button"><span class="ellipsis-line2">2층</span></button></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button" class="btn-toggle" aria-controls="#sub02">
+              <span class="text">경기도 성남시 분당구 판교역로 235</span>
+            </button>
+            <ul class="sub-list" id="sub02">
+              <li><button type="button"><span class="ellipsis-line2">1층</span></button></li>
+              <li><button type="button"><span class="ellipsis-line2">2층</span></button></li>
+            </ul>
+          </li>
+          <li>
+            <button type="button" class="btn-toggle" aria-controls="#sub03">
+              <span class="text">주소명이 길 경우 주소명이 길 경우 주소명이 길 경우 주소명이 길 경우</span>
+            </button>
+            <ul class="sub-list" id="sub03">
+              <li><button type="button"><span class="ellipsis-line2">등록한 영역명이 길 경우 가나다라마바사아자차카타파하</span></button></li>
+              <li><button type="button"><span class="ellipsis-line2">2층</span></button></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="drawing-contents">
+        <div class="header">
+          <h3 class="group-title gap-3xs flex-wrap">서울특별시 송파구 오금로 311<span class="font-regular">1층</span></h3>
+        </div>
+
+        <!-- 도면 정보 -->
+        <div class="draw-info">
+          <div class="select-box bg-invert">
+            <button type="button" class="btn-select" title="도면 버전 선택">선택</button>
+            <div class="option-list type-draw-info">
+              <div class="scroll-y">
+                <button type="button" class="selected">
+                  <span class="text">Ver3.</span><span class="badge sm square bg-blue">최신</span>
+                </button>
+                <button type="button"><span class="text">Ver2.</span></button>
+                <button type="button"><span class="text">Ver1.</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="date">
+            <span>업로드일</span>
+            <strong class="spacing-lg">2026.01.01</strong>
+          </div>
+        </div>
+        <!-- // 도면 정보 -->
+
+        <!-- 도면 영역 -->
+        <div class="draw-cont-wrap">
+          <div class="draw-cont"><!-- 연결된 계약 클릭 시 .has-dim 토글 -->
+            <div class="center-box">
+              <div class="img-box">
+                <div class="convert-box">
+                  <canvas id="drawImg" data-img="/assets/img/page/temp_draw_02.pdf"></canvas>
+
+                  <div class="drawing-area" style="left: 260px; top: 156px; width: 110px; height: 130px;">
+                    <span class="area-label">회의실 1</span>
+                  </div>
+                  <div class="drawing-area" style="left: 658px; top: 160px; width: 258px; height: 120px;">
+                    <span class="area-label">회의실 2</span>
+                  </div>
+                  <div class="drawing-area" style="left: 260px; top: 488px; width: 138px; height: 166px;">
+                    <span class="area-label">탕비실 1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="btn-area scale-box">
+            <span class="scale-text">100%</span>
+            <button type="button" class="btn dark zoom-in"><i class="icon-plus"></i></button>
+            <button type="button" class="btn dark zoom-out"><i class="icon-minus"></i></button>
+          </div>
+        </div>
+        <!-- // 도면 영역 -->
+
+        <!-- 다운로드 파일 링크 -->
+        <div class="download-area btn-area">
+          <button type="button" class="btn line round"><i class="icon-download"></i>PDF</button>
+          <button type="button" class="btn line round"><i class="icon-download"></i>DWG</button>
+        </div>
+        <!-- // 다운로드 파일 링크 -->
+
+        <!-- 연결된 계약 리스트  -->
+        <div class="linked-list">
+          <div class="title-area flex-col">
+            <div class="flex-center-between w-full">
+              <h4 class="text-title">연결된 계약</h4>
+              <p class="font-sm">진행 계약 <strong>3</strong>건</p>
+            </div>
+            <p class="font-sm text-blue">*계약을 선택하면 도면에서 해당 영역이 표시됩니다.</p>
+          </div>
+
+          <div class="layout-column gap-2xs">
+            <div class="box-style">
+              <a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a>
+              <div class="flex-1">본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라본사 사옥 렌탈 계약서 블라블라 첫번째 계약건 블라블라</div>
+              <span class="spacing-lg">2026.01.01</span>
+            </div>
+            <div class="box-style">
+              <a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a>
+              <div class="flex-1">본사 사옥 렌탈 계약서</div>
+              <span class="spacing-lg">2026.01.01</span>
+            </div>
+          </div>
+        </div>
+        <!-- // 연결된 계약 리스트  -->
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script th:src="@{/assets/js/plugins/pdf.min.js}"></script>
+<script>
+//////////////////////////////////////////////////////////
+// 1. 도면 관련 부분
+//////////////////////////////////////////////////////////
+const drawCont = document.querySelector(".draw-cont");
+const imgBox = drawCont.querySelector(".img-box");
+const convertBox = drawCont.querySelector(".convert-box");
+const centerBox = drawCont.querySelector(".center-box");
+const canvas = drawCont.querySelector("#drawImg");
+const scaleText = document.querySelector(".scale-text");
+const zoomInBtn = document.querySelector('.zoom-in');
+const zoomOutBtn = document.querySelector('.zoom-out');
+
+// PDF 렌더링
+pdfjsLib.getDocument(canvas.dataset.img).promise.then(pdf => {
+  pdf.getPage(1).then(page => {
+    const viewport = page.getViewport({ scale: 1 });
+    const ctx = canvas.getContext("2d");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    const renderTask = page.render({
+      canvasContext: ctx,
+      viewport: viewport
+    });
+
+    renderTask.promise.then(() => {
+      fitCanvasSize();
+    });
+  });
+});
+
+// 도면 사이즈 맞추기
+let baseWidth = 0;
+let baseHeight = 0;
+let drawScale = 1;
+const step = 0.5;
+let isWidthLimited = false;
+
+function fitCanvasSize() {
+  const targetW = 862;
+  const targetH = 600;
+  const originalW = canvas.clientWidth;
+  const originalH = canvas.clientHeight;
+
+  const scaleX = targetW / originalW;
+  const scaleY = targetH / originalH;
+  const scale = Math.min(scaleX, scaleY);
+
+  isWidthLimited = scaleX < scaleY;
+
+  baseWidth = originalW * scale;
+  baseHeight = originalH * scale;
+
+  convertBox.style.width = originalW + "px";
+  convertBox.style.height = originalH + "px";
+  convertBox.style.transform = "scale(" + scale + ")";
+  imgBox.style.width = baseWidth + "px";
+  imgBox.style.height = baseHeight + "px";
+  drawCont.style.height = (baseHeight * drawScale + 2) + "px"
+
+  updateScale();
+}
+
+function updateScale() {
+  imgBox.style.transform = "scale(" + drawScale + ")";
+  scaleText.textContent = Math.round(drawScale * 100) + "%";
+  centerBox.style.width = (baseWidth * drawScale) + "px";
+  centerBox.style.height = (baseHeight * drawScale) + "px";
+
+  zoomInBtn.disabled = (drawScale >= 3);
+  zoomOutBtn.disabled = (drawScale <= 0.5);
+
+  // 축소 시: 무조건 가운데 정렬
+  if (drawScale < 1) {
+    drawCont.style.justifyContent = "center";
+    drawCont.style.alignItems = "center";
+  }
+  // 확대 혹은 원본 시: 도면 방향에 따른 정렬
+  else {
+    if (isWidthLimited) {
+      drawCont.style.justifyContent = "flex-start";
+      drawCont.style.alignItems = "center";
+    } else {
+      drawCont.style.justifyContent = "center";
+      drawCont.style.alignItems = "flex-start";
+    }
+  }
+}
+
+zoomInBtn.addEventListener("click", () => {
+  drawScale = Math.min(drawScale + step, 3);
+  updateScale();
+})
+
+zoomOutBtn.addEventListener("click", () => {
+  drawScale = Math.max(drawScale - step, 0.5);
+  updateScale();
+})
+
+// 도면 스크롤 drag
+let drawMode = false;
+let isDown = false, startMouseX, startMouseY, startScrollX, startScrollY;
+drawCont.addEventListener("mousedown",(e)=>{
+  if(drawMode) return;
+  if(e.target.closest(".drawing-area")) return;
+  isDown=true;
+  startMouseX = e.pageX;
+  startMouseY = e.pageY;
+  startScrollX = drawCont.scrollLeft;
+  startScrollY = drawCont.scrollTop;
+  drawCont.classList.add("dragging");
+});
+drawCont.addEventListener("mousemove",(e)=>{
+  if(!isDown) return;
+  drawCont.scrollLeft = startScrollX-(e.pageX-startMouseX);
+  drawCont.scrollTop = startScrollY-(e.pageY-startMouseY);
+});
+drawCont.addEventListener("mouseup",()=>{ isDown=false; drawCont.classList.remove("dragging"); });
+drawCont.addEventListener("mouseleave",()=>{ isDown=false; drawCont.classList.remove("dragging"); });
+
+
+//////////////////////////////////////////////////////////
+// 2. 공간 선택 리스트 클릭
+//////////////////////////////////////////////////////////
+document.querySelector(".space-list").addEventListener("click", (e) => {
+  const item = e.target.closest(".sub-list button");
+  if (!item) return;
+  document.querySelectorAll(".space-list .sub-list button").forEach(btn => {
+    btn.classList.remove("selected");
+  })
+  item.classList.add("selected");
+})
+
+//////////////////////////////////////////////////////////
+// 3. 연결된 계약 리스트 클릭
+//////////////////////////////////////////////////////////
+document.querySelector(".linked-list").addEventListener("click", (e) => {
+  const item = e.target.closest(".box-style");
+  if (!item) return;
+
+  if (item.classList.contains("selected")) {
+    item.classList.remove("selected");
+    drawCont.classList.remove("has-dim");
+    return;
+  }
+
+  document.querySelectorAll(".linked-list .box-style").forEach(list => {
+    list.classList.remove("selected");
+  });
+
+  item.classList.add("selected");
+  drawCont.classList.add("has-dim");
+});
+
+</script>
+</th:block>
+</body>
+</html>

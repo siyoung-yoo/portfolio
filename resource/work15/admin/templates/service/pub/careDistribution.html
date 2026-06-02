@@ -1,0 +1,904 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="panel-layout type-care-service">
+      <div class="list-panel-dim"></div>
+      <div class="list-panel-wrap">
+        <div class="panel-header">
+          <button type="button" class="btn btn-toggle" onclick="toggleSearchPanel(this)">
+            <span class="text-sm">상세검색</span>
+            <i class="icon-chevron"></i>
+          </button>
+
+          <button type="button" class="btn btn-icon btn-ghost" onclick="toggleListPanel()">
+            <i class="icon-arrow-left-to-line"></i>
+          </button>
+        </div>
+
+        <div class="panel-list-wrap">
+          <div class="panel-search">
+            <div class="flex items-center gap-1">
+              <form-select>
+                <select name="">
+                  <option value="1">계약명</option>
+                  <option value="2">계약번호</option>
+                  <option value="2">고객명</option>
+                </select>
+              </form-select>
+              <input type="text" class="input" placeholder="검색어 입력">
+            </div>
+            <input type="text" class="input datepicker-range" placeholder="계약 등록일 FROM ~ TO">
+            <button class="btn btn-primary">검색</button>
+          </div>
+
+          <ul class="tabs type-underline">
+            <li class="tab-item is-active" data-filter="all">전체</li>
+            <li class="tab-item" data-filter="unscheduled">
+              예정 <span class="ml-1 badge badge-dark-gray badge-rounded">2</span>
+            </li>
+            <li class="tab-item" data-filter="pending">
+              미진행 <span class="ml-1 badge badge-orange-fill badge-rounded">2</span>
+            </li>
+            <li class="tab-item" data-filter="overdue">
+              미결 <span class="ml-1 badge badge-destructive badge-rounded">1</span>
+            </li>
+          </ul>
+
+          <div class="panel-list">
+
+            <!-- .card [data-mapped] 상태 값 설명
+              * unscheduled  : 예정   (예정일정 미등록)
+              * pending      : 미진행 (예정일정 등록 ~ 본사 승인전까지)
+              * overdue      : 미결   (기한 초과 상태 → 고객 ‘미진행 일정’으로 노출)
+            -->
+            <div class="card-selected-wrap">
+              <div class="card" data-mapped="unscheduled pending overdue">
+                <div class="card-content">
+                  <ul class="text-list">
+                    <li>
+                      <span class="badge badge-outline">반기</span>
+                      <div class="flex gap-2">
+                        <span class="badge badge-dark-gray">예정 1건</span>
+                        <span class="badge badge-orange">미진행 1건</span>
+                        <span class="badge badge-destructive-outline">미결 1건</span>
+                        <span class="badge">종료 1건</span>
+                      </div>
+                    </li>
+
+                    <!-- [2026-05-15] 채권번호, 견적번호 2개 다 노출할 경우 -->
+                    <li class="-mb-1">
+                      <ul class="flex items-center gap-2">
+                        <li class="text-xs">R2026051400129</li>
+                        <li class="font-bold">·</li>
+                        <li class="text-xs">F20260514000100</li>
+                      </ul>
+                    </li>
+                    <!-- // [2026-05-15] 채권번호, 견적번호 2개 다 노출할 경우 -->
+
+                    <li><strong>동탄 신도시 사옥22</strong></li>
+                    <li>
+                      <span class="text-primary-300">고객사</span>
+                      <strong>카카오엔터</strong>
+                    </li>
+                    <li>
+                      <span class="text-primary-300">계약금액</span>
+                      <strong>100,000,000원</strong>
+                    </li>
+                  </ul>
+                  <ul class="text-list bottom">
+                    <li>
+                      <p>경기 이천시 마장면 덕평리 100 <span class="text-primary-300">외 3개</span></p>
+                    </li>
+                    <li>
+                      <span>케어 횟수: 총 48회</span>
+                      <span>최근 케어일: 2024-01-30</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card" data-mapped="pending">
+                <div class="card-content">
+                  <ul class="text-list">
+                    <li>
+                      <span class="badge badge-outline">분기</span>
+                      <div class="flex gap-2">
+                        <span class="badge badge-orange">미진행 1건</span>
+                      </div>
+                    </li>
+
+                    <!-- [2026-05-15] 채권번호, 견적번호 둘중 1개 노출할 경우 (.text-primary-300 삭제) -->
+                    <li class="text-xs">123-45-6789</li>
+
+                    <li><strong>동탄 신도시 사옥22</strong></li>
+                    <li>
+                      <span class="text-primary-300">고객사</span>
+                      <strong>카카오엔터</strong>
+                    </li>
+                    <li>
+                      <span class="text-primary-300">계약금액</span>
+                      <strong>100,000,000원</strong>
+                    </li>
+                  </ul>
+                  <ul class="text-list bottom">
+                    <li>
+                      <p>경기 이천시 마장면 덕평리 100 <span class="text-primary-300"></span></p>
+                    </li>
+                    <li>
+                      <span>케어 횟수: 총 n회</span>
+                      <span>최근 케어일: 2024-01-01</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card" data-mapped="unscheduled">
+                <div class="card-content">
+                  <ul class="text-list">
+                    <li>
+                      <span class="badge badge-outline">분기</span>
+                      <div class="flex gap-2">
+                        <span class="badge badge-dark-gray">예정 2건</span>
+                      </div>
+                    </li>
+
+                    <!-- [2026-05-15] 채권번호, 견적번호 둘중 1개 노출할 경우 (.text-primary-300 삭제) -->
+                    <li class="text-xs">123-45-6789</li>
+
+                    <li><strong>동탄 신도시 사옥33</strong></li>
+                    <li>
+                      <span class="text-primary-300">고객사</span>
+                      <strong>카카오엔터</strong>
+                    </li>
+                    <li>
+                      <span class="text-primary-300">계약금액</span>
+                      <strong>100,000,000원</strong>
+                    </li>
+                  </ul>
+                  <ul class="text-list bottom">
+                    <li>
+                      <p>경기 이천시 마장면 덕평리 100 <span class="text-primary-300">외 3개</span></p>
+                    </li>
+                    <li>
+                      <span>케어 횟수: 총 n회</span>
+                      <span>최근 케어일: -</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div><!-- // card-selected-wrap -->
+
+          </div>
+        </div>
+      </div>
+      <!-- // list-panel-wrap -->
+
+      <div class="content-panel-wrap">
+        <!-- div.alert, div.content-panel-cont 영역 show/hide는 hidden 클래스로 제어해주세요-->
+        <div class="alert alert-default" data-state="selectList">
+          <div class="alert-title">계약을 선택하세요</div>
+          <div class="alert-description mt-5">계약을 선택하여 상세 정보를 확인하세요</div>
+          <div class="alert-description">계약에 연결된 주소별 케어 히스토리를 확인할 수 있습니다</div>
+        </div>
+
+        <div class="content-panel-cont hidden" data-state="selectList">
+          <div class="panel-header">
+            <div class="flex flex-col">
+              <h3 class="title">동탄 신도시 사옥 계약명 계약명 계약명 <span class="text-sm">(총 4개)</span></h3>
+              <p class="text-xs text-primary-300">123-45-6789</p>
+            </div>
+            <button type="button" class="btn btn-toggle is-open" onclick="toggleAllSchedule(this)">
+              <span>전체 닫기</span><i class="icon-chevron"></i>
+            </button>
+          </div>
+
+          <div class="content-panel">
+
+            <!-- 디자인 확인용 -->
+            <!-- 예정 -->
+            <div class="schedule-box">
+              <div class="toggle-clickable">
+                <div class="title-area items-center">
+                  <span class="badge badge-dark-gray">예정</span>
+                  <h3 class="title flex-1">경기 이천시 마장면 덕평리 100</h3>
+                  <div class="info-area">
+                    <div>진행률 : 8<span class="mx-1">/</span>12회</div>
+                    <div>최근 케어일 : <span class="tracking-wider">2026-01-01</span></div>
+                  </div>
+                  <button type="button" class="btn btn-icon btn-toggle is-open">
+                    <i class="icon-chevron"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggle-cont is-open">
+                <div class="table-scroll custom-scrollbar">
+                  <table class="table">
+                    <colgroup>
+                      <col style="width: 40px"><!-- 회차 -->
+                      <col style="width: 90px"><!-- 마감 기간 -->
+                      <col style="width: 90px"><!-- 최종 케어일 -->
+                      <col style="width: 80px"><!-- 케어 상태 -->
+                      <col style="width: 104px"><!-- 예정 일정 -->
+                      <col style="width: 104px"><!-- 케어 리포트 -->
+                      <col style="width: 76px"><!-- 리포트 상태 -->
+                      <col style="width: 76px"><!-- 케어 담당자 -->
+                      <col style="width: 40px"><!-- 미결 -->
+                      <col style="width: 44px"><!-- 케어 히스토리 -->
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="p-0">회차</th>
+                        <th scope="col">마감 기간</th>
+                        <th scope="col">최종 케어일</th>
+                        <th scope="col">케어 상태</th>
+                        <th scope="col">예정 일정</th>
+                        <th scope="col">케어 리포트</th>
+                        <th scope="col">리포트 상태</th>
+                        <th scope="col">케어<br>담당자</th>
+                        <th scope="col" class="p-0">미결</th>
+                        <th scope="col">케어<br>히스토리</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="no">1회</td>
+                        <td>2024-06-30</td>
+                        <td>2024-02-01</td>
+                        <td>확인 완료</td>
+                        <td>2024-02-01</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-02-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">2회</td>
+                        <td>2024-12-31</td>
+                        <td>2024-11-30</td>
+                        <td>승인 완료</td>
+                        <td>2024-11-30</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-11-30</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">3회</td>
+                        <td>2025-06-30</td>
+                        <td>2025-07-01</td>
+                        <td>승인 완료</td>
+                        <td>2025-06-20</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2025-07-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0"><i class="icon-check"></i></td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">4회</td>
+                        <td>2025-12-31</td>
+                        <td>2025-12-02</td>
+                        <td>확인 완료</td>
+                        <td>2025-12-01</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2025-12-02</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr class="current">
+                        <td class="no">5회</td>
+                        <td>2026-06-30</td>
+                        <td>-</td>
+                        <td><span class="status gray">예정</span></td>
+                        <td><button type="button" class="btn" onclick="openModal('registScheduleModalPub')">+ 등록</button></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                      <tr>
+                        <td class="no">6회</td>
+                        <td>2026-12-31</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 미진행 -->
+            <div class="schedule-box">
+              <div class="toggle-clickable">
+                <div class="title-area items-center">
+                  <span class="badge badge-orange">미진행</span>
+                  <h3 class="title flex-1">경기 이천시 마장면 덕평리 100</h3>
+                  <div class="info-area">
+                    <div>진행률 : 8<span class="mx-1">/</span>12회</div>
+                    <div>최근 케어일 : <span class="tracking-wider">2026-01-01</span></div>
+                  </div>
+                  <button type="button" class="btn btn-icon btn-toggle is-open">
+                    <i class="icon-chevron"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggle-cont is-open">
+                <div class="table-scroll custom-scrollbar">
+                  <table class="table">
+                    <colgroup>
+                      <col style="width: 40px"><!-- 회차 -->
+                      <col style="width: 90px"><!-- 마감 기간 -->
+                      <col style="width: 90px"><!-- 최종 케어일 -->
+                      <col style="width: 80px"><!-- 케어 상태 -->
+                      <col style="width: 104px"><!-- 예정 일정 -->
+                      <col style="width: 104px"><!-- 케어 리포트 -->
+                      <col style="width: 76px"><!-- 리포트 상태 -->
+                      <col style="width: 76px"><!-- 케어 담당자 -->
+                      <col style="width: 40px"><!-- 미결 -->
+                      <col style="width: 44px"><!-- 케어 히스토리 -->
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="p-0">회차</th>
+                        <th scope="col">마감 기간</th>
+                        <th scope="col">최종 케어일</th>
+                        <th scope="col">케어 상태</th>
+                        <th scope="col">예정 일정</th>
+                        <th scope="col">케어 리포트</th>
+                        <th scope="col">리포트 상태</th>
+                        <th scope="col">케어<br>담당자</th>
+                        <th scope="col" class="p-0">미결</th>
+                        <th scope="col">케어<br>히스토리</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="no">1회</td>
+                        <td>2024-06-30</td>
+                        <td>2024-02-01</td>
+                        <td>확인 완료</td>
+                        <td>2024-02-01</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-02-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">2회</td>
+                        <td>2024-12-31</td>
+                        <td>2024-11-30</td>
+                        <td>승인 완료</td>
+                        <td>2024-11-30</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-11-30</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">3회</td>
+                        <td>2025-06-30</td>
+                        <td>2025-07-01</td>
+                        <td>승인 완료</td>
+                        <td>2025-06-20</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2025-07-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0"><i class="icon-check"></i></td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">4회</td>
+                        <td>2025-12-31</td>
+                        <td>2025-12-02</td>
+                        <td>확인 완료</td>
+                        <td>2025-12-01</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2025-12-02</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr class="current">
+                        <td class="no">5회</td>
+                        <td>2026-06-30</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td><button type="button" class="btn-link" onclick="openModal('registScheduleModalPub')">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><button type="button" class="btn" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">+ 등록</button></td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                      <tr>
+                        <td class="no">6회</td>
+                        <td>2026-12-31</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- 미결 -->
+            <div class="schedule-box">
+              <div class="toggle-clickable">
+                <div class="title-area items-center">
+                  <span class="badge badge-destructive-outline">미결</span>
+                  <h3 class="title flex-1">경기 이천시 마장면 덕평리 100</h3>
+                  <div class="info-area">
+                    <div>진행률 : 8<span class="mx-1">/</span>12회</div>
+                    <div>최근 케어일 : <span class="tracking-wider">2026-01-01</span></div>
+                  </div>
+                  <button type="button" class="btn btn-icon btn-toggle is-open">
+                    <i class="icon-chevron"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggle-cont is-open">
+                <div class="table-scroll custom-scrollbar">
+                  <table class="table">
+                    <colgroup>
+                      <col style="width: 40px"><!-- 회차 -->
+                      <col style="width: 90px"><!-- 마감 기간 -->
+                      <col style="width: 90px"><!-- 최종 케어일 -->
+                      <col style="width: 80px"><!-- 케어 상태 -->
+                      <col style="width: 104px"><!-- 예정 일정 -->
+                      <col style="width: 104px"><!-- 케어 리포트 -->
+                      <col style="width: 76px"><!-- 리포트 상태 -->
+                      <col style="width: 76px"><!-- 케어 담당자 -->
+                      <col style="width: 40px"><!-- 미결 -->
+                      <col style="width: 44px"><!-- 케어 히스토리 -->
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="p-0">회차</th>
+                        <th scope="col">마감 기간</th>
+                        <th scope="col">최종 케어일</th>
+                        <th scope="col">케어 상태</th>
+                        <th scope="col">예정 일정</th>
+                        <th scope="col">케어 리포트</th>
+                        <th scope="col">리포트 상태</th>
+                        <th scope="col">케어<br>담당자</th>
+                        <th scope="col" class="p-0">미결</th>
+                        <th scope="col">케어<br>히스토리</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="no">1회</td>
+                        <td>2024-06-30</td>
+                        <td>2024-02-01</td>
+                        <td>확인 완료</td>
+                        <td>2024-02-01</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-02-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">2회</td>
+                        <td>2024-12-31</td>
+                        <td>2024-11-30</td>
+                        <td>승인 완료</td>
+                        <td>2024-11-30</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-11-30</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">3회</td>
+                        <td>2025-06-30</td>
+                        <td>2025-07-01</td>
+                        <td>승인 완료</td>
+                        <td>2025-06-20</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2025-07-01</button></td>
+                        <td>승인 완료</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0"><i class="icon-check"></i></td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">4회</td>
+                        <td>2025-12-31</td>
+                        <td>-</td>
+                        <td><span class="status red">미결</span></td>
+                        <td>2024-12-28</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">2024-12-30 <i class="icon-edit"></i></button></td>
+                        <td><span class="status red">반려</span></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0"><i class="icon-check"></i></td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr class="current">
+                        <td class="no">5회</td>
+                        <td>2026-06-30</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td><button type="button" class="btn-link" onclick="openModal('registScheduleModalPub')">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><button type="button" class="btn" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">+ 등록</button></td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                      <tr>
+                        <td class="no">6회</td>
+                        <td>2026-12-31</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!-- // 디자인 확인용 -->
+
+
+            <!-- !! 타입 확인용 !!
+              1. title 영역의 badge 스타일 정리
+                <span class="badge badge-dark-gray">예정</span>
+                <span class="badge badge-orange">미진행</span>
+                <span class="badge badge-destructive-outline">미결</span>
+                <span class="badge badge-default">종료</span>
+
+              2. 테이블 내, 케어상태 / 리포트 상태 정리
+              * .status.blue   : 예정
+              * .status.orange : 미진행 / 승인 요청
+              * .status.red    : 미결 / 반려
+              * <strong>       : 완료(케어), 완료(고객) / 승인 완료
+              * <strong>       : 협의 완료
+            -->
+            <div class="schedule-box">
+              <div class="toggle-clickable">
+                <div class="title-area items-center">
+                  <span class="badge badge-default">종료</span>
+                  <h3 class="title flex-1">경기 이천시 마장면 덕평리 100</h3>
+                  <div class="info-area">
+                    <div>진행률 : 8<span class="mx-1">/</span>12회</div>
+                    <div>최근 케어일 : <span class="tracking-wider">2026-01-01</span></div>
+                  </div>
+                  <button type="button" class="btn btn-icon btn-toggle is-open">
+                    <i class="icon-chevron"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="toggle-cont is-open">
+                <div class="table-scroll custom-scrollbar">
+                  <table class="table">
+                    <colgroup>
+                      <col style="width: 40px"><!-- 회차 -->
+                      <col style="width: 90px"><!-- 마감 기간 -->
+                      <col style="width: 90px"><!-- 최종 케어일 -->
+                      <col style="width: 80px"><!-- 케어 상태 -->
+                      <col style="width: 104px"><!-- 예정 일정 -->
+                      <col style="width: 104px"><!-- 케어 리포트 -->
+                      <col style="width: 76px"><!-- 리포트 상태 -->
+                      <col style="width: 90px"><!-- 고객 협의 -->
+                      <col style="width: 76px"><!-- 케어 담당자 -->
+                      <col style="width: 40px"><!-- 미결 -->
+                      <col style="width: 44px"><!-- 케어 히스토리 -->
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="p-0">회차</th>
+                        <th scope="col">마감 기간</th>
+                        <th scope="col">최종 케어일</th>
+                        <th scope="col">케어 상태</th>
+                        <th scope="col">예정 일정</th>
+                        <th scope="col">케어 리포트</th>
+                        <th scope="col">리포트 상태</th>
+                        <th scope="col">고객 협의</th>
+                        <th scope="col">케어<br>담당자</th>
+                        <th scope="col" class="p-0">미결</th>
+                        <th scope="col">케어<br>히스토리</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="current"><!-- 진행 중인 회차에 .current 추가-->
+                        <td class="no">n회</td>
+                        <td>이번 진행회차</td>
+                        <td>-</td>
+                        <td><span class="status gray">예정</span></td>
+                        <td><button type="button" class="btn" onclick="openModal('registScheduleModalPub')">+ 등록</button></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><button type="button" class="btn">+ 협의</button></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0">-</td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>일정등록(고객노출)</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td><button type="button" class="btn-link" onclick="openModal('registScheduleModalPub')">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><button type="button" class="btn" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">+ 등록</button></td>
+                        <td>-</td>
+                        <td><button type="button" class="btn">+ 협의</button></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>리포트 > 임시저장</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td><button type="button" class="btn-link" onclick="openModal('registScheduleModalPub')">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td>-</td>
+                        <td><button type="button" class="btn">+ 협의</button></td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>> 승인요청</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td>2024-01-28</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><span class="status orange">승인 요청</span></td>
+                        <td>-</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>> 반려</td>
+                        <td>-</td>
+                        <td><span class="status orange">미진행</span></td>
+                        <td>2024-01-28</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/distribution/1'">2024-01-28 <i class="icon-edit"></i></button></td>
+                        <td><span class="status red">반려</span></td>
+                        <td>-</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>> 승인</td>
+                        <td>2024-01-28</td>
+                        <td>승인 완료</td>
+                        <td>2026-01-28</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-01-28</button></td>
+                        <td>승인 완료</td>
+                        <td>-</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>2026-01-31</td>
+                        <td>2024-01-28</td>
+                        <td>확인 완료</td>
+                        <td>2026-01-28</td>
+                        <td><button type="button" class="btn-link" onclick="javascript:window.location.href = '/service/service/care/headOffice/1'">2024-01-28</button></td>
+                        <td>승인 완료</td>
+                        <td>-</td>
+                        <td class="px-2">홍길동</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>2026-01-31</td>
+                        <td>-</td>
+                        <td><span class="status red">미결</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td class="px-2">-</td>
+                        <td class="p-0"><i class="icon-check"></i></td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+
+                      <!-- 협의일 경우 -->
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>협의 > 요청(철회가능)</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><button type="button" class="btn-link">협의 요청 <i class="icon-edit"></i></button></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>협의 > 본사승인</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><button type="button" class="btn-link">승인 완료</button></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <tr>
+                        <td class="no">n회</td>
+                        <td>협의 > 완료</td>
+                        <td>-</td>
+                        <td>협의 완료</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><button type="button" class="btn-link">협의 완료</button></td>
+                        <td class="px-2">-</td>
+                        <td class="p-0">-</td>
+                        <td class="p-0"><button type="button" class="btn btn-icon" onclick="openModal('careHistoryModalPub')"><i class="icon-history"></i></button></td>
+                      </tr>
+                      <!-- // 협의일 경우 -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // content-panel-wrap -->
+
+    </div>
+    <!-- // panel-layout -->
+  </div>
+
+<th:block th:replace="~{service/pub/modal/registScheduleModal}"/><!-- Modal: 예정일정 등록 -->
+<th:block th:replace="~{service/pub/modal/careHistoryModal}"/><!-- Modal: 케어히스토리 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+
+/* 상세검색 토글 */
+function toggleSearchPanel(e) {
+  document.querySelector(".panel-search").classList.toggle("is-open");
+  e.classList.toggle("is-open");
+}
+
+/* list-panel 토글 */
+function toggleListPanel() {
+  document.querySelector(".panel-layout").classList.toggle("close-panel");
+}
+
+/* 탭(전체, 예정, 미결) 클릭 */
+const tabs = document.querySelector(".tabs.type-underline");
+tabs.addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab-item");
+  if (!tab) return;
+
+  const filter = tab.dataset.filter;
+  const cards = document.querySelectorAll(".card-selected-wrap .card");
+
+  document.querySelectorAll(".tab-item").forEach(item => item.classList.remove("is-active") );
+  tab.classList.add("is-active");
+
+  cards.forEach(card => {
+    const status = card.dataset.mapped || "";
+    const isHidden = filter !== "all" && !status.includes(filter);
+    card.classList.toggle("hidden", isHidden);
+  });
+})
+
+/* 계약 목록 클릭 */
+const cardList = document.querySelector(".card-selected-wrap");
+const alertEl = document.querySelector('.alert[data-state="selectList"]');
+const panelEl = document.querySelector('.content-panel-cont[data-state="selectList"]');
+cardList.addEventListener("click", (e) => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+
+  const isSelected = card.classList.contains("selected");
+
+  cardList.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
+  if (!isSelected) card.classList.add("selected");
+
+  panelEl.classList.toggle("hidden", isSelected);
+  alertEl.classList.toggle("hidden", !isSelected);
+});
+
+/* 상세 화면 > box 영역 접기/펼치기 버튼 */
+const contents = document.querySelector('.content-panel')
+contents.addEventListener('click', (e) => {
+  const clickArea = e.target.closest('.toggle-clickable');
+  if (!clickArea) return;
+
+  clickArea.querySelector(".btn-toggle").classList.toggle("is-open")
+  clickArea.closest(".schedule-box").querySelector(".toggle-cont").classList.toggle("is-open");
+
+  syncAllToggleButton();
+})
+
+/* 상세 화면 > 전체 닫기/전체 열기 버튼 */
+function toggleAllSchedule(e) {
+  if (e.classList.contains('is-open')) {
+    e.classList.remove("is-open");
+    e.querySelector('span').innerText = '전체 열기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.remove("is-open"))
+    contents.querySelectorAll('.toggle-cont').forEach(el => el.classList.remove("is-open"))
+
+  } else {
+    e.classList.add("is-open");
+    e.querySelector('span').innerText = '전체 닫기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.add("is-open"))
+    contents.querySelectorAll('.toggle-cont').forEach(el => el.classList.add("is-open"))
+  }
+
+  syncAllToggleButton();
+}
+
+function syncAllToggleButton() {
+  const allItems = contents.querySelectorAll('.toggle-cont');
+  const openItems = contents.querySelectorAll('.toggle-cont.is-open');
+  const headerBtn = document.querySelector('.content-panel-cont .panel-header .btn-toggle');
+
+  if (!headerBtn) return;
+
+  // 전부 열림
+  if (allItems.length === openItems.length) {
+    headerBtn.classList.add('is-open');
+    headerBtn.querySelector('span').innerText = '전체 닫기';
+
+  // 전부 닫힘
+  } else if (openItems.length === 0) {
+    headerBtn.classList.remove('is-open');
+    headerBtn.querySelector('span').innerText = '전체 열기';
+  }
+}
+</script>
+</th:block>
+</body>
+</html>

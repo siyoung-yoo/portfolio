@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-mode="light" data-sidebar-size="lg" data-layout="vertical" data-topbar="light" data-sidebar="light" data-theme-colors="default">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no">
+  <title>컴포넌트</title>
+  <th:block th:replace="common/common_css.html"></th:block>
+  <style>
+    /* Demo Styles */
+    .demo-section {
+      margin-bottom: 48px;
+    }
+    .demo-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .demo-item {
+      padding: 16px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+<!-- <th:block th:insert="~{common/layout/fragments/components}"></th:block> -->
+<div class="hidden">
+  js에서 tailwind 클래스 적용 안됨 방지.
+  <div class="bg-muted bg-black border-primary-500 text-fursys-red bg-size-[20px] w-[20px] h-[20px] w-[55px] w-[70px] w-[80px] w-[100px] w-[150px] sm:w-1/3 lg:w-1/2 2xl:w-1/3 text-clip whitespace-normal"></div>
+</div>
+
+<div class="p-8 max-w-7xl mx-auto">
+  <header class="mb-12">
+    <h1 class="text-2xl font-bold mb-2">Custom Design System</h1>
+    <p class="text-muted-foreground">
+      Fursys 디자인 시스템 기반 컴포넌트 라이브러리
+    </p>
+  </header>
+
+  <!-- Buttons -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Buttons</h2>
+    <div
+      class="demo-grid"
+      style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
+    >
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Primary</h3>
+        <button class="btn btn-primary">Primary Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Secondary</h3>
+        <button class="btn btn-secondary">Secondary Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Destructive</h3>
+        <button class="btn btn-destructive">Delete</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Destructive-outline</h3>
+        <button class="btn btn-destructive-outline">Delete</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Outline</h3>
+        <button class="btn btn-outline">Outline Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Ghost</h3>
+        <button class="btn btn-ghost">Ghost Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Link</h3>
+        <button class="btn btn-link">Link Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">Rounded</h3>
+        <button class="btn btn-primary btn-rounded">Rounded Button</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">조회</h3>
+        <button class="btn btn-check">조회</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">등록</h3>
+        <button class="btn btn-regist">등록</button>
+      </div>
+      <div class="demo-item">
+        <h3 class="text-sm font-semibold mb-3">삭제</h3>
+        <button class="btn btn-delete"></button>
+      </div>
+    </div>
+
+    <h3 class="text-lg font-semibold mt-6 mb-3">Button Sizes</h3>
+    <div class="flex gap-3 flex-wrap">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+      <button class="btn btn-primary btn-icon">+</button>
+    </div>
+  </section>
+
+  <!-- Form Inputs -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Form Inputs</h2>
+    <div
+      class="demo-grid"
+      style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
+    >
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block required">required</span>
+          <input type="text" class="input" placeholder="필수입력" required />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">disabled</span>
+          <input type="text" class="input" value="disabled" disabled />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">readonly</span>
+          <input type="text" class="input" value="readonly" readonly />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Email</span>
+          <input type="email" class="input" placeholder="your@email.com" />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Password</span>
+          <input type="password" class="input" placeholder="••••••••" />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Select Option</span>
+          <select class="select">
+            <option>옵션 1</option>
+            <option>옵션 2</option>
+            <option>옵션 3</option>
+          </select>
+        </label>
+      </div>
+      <!--<div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Tom-select Single</span>
+          <select class="tom-select" autocomplete="off">
+            <option>옵션1</option>
+            <option>옵션2</option>
+            <option>옵션3</option>
+          </select>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">tom-select Multiple</span>
+          <select class="tom-select" placeholder="multiple" autocomplete="off" multiple>
+            <option>옵션1</option>
+            <option>옵션2</option>
+            <option>옵션3</option>
+            <option>옵션4</option>
+            <option>옵션5</option>
+          </select>
+        </label>
+      </div>-->
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Textarea</span>
+          <textarea class="textarea" placeholder="메시지를 입력하세요..."></textarea>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label class="label mb-2 inline-flex items-center gap-2">
+          <input type="checkbox" class="checkbox" checked disabled />
+          checkbox : disabled
+        </label>
+        <label class="label mb-2 inline-flex items-center gap-2">
+          <input type="checkbox" class="checkbox" />
+          checkbox : checked
+        </label>
+        <label class="label inline-flex items-center gap-2 mb-1">
+          <input type="radio" name="option" class="radio" checked />
+          radio 옵션 1
+        </label>
+        <label class="label inline-flex items-center gap-2">
+          <input type="radio" name="option" class="radio" />
+          radio 옵션 2
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Search</span>
+          <input type="search" class="search" placeholder="Search" />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Search button</span>
+          <div class="input">
+            <input type="text" class="w-full" placeholder="Search button" />
+            <button type="button">
+              <i class="icon-search"></i>
+            </button>
+          </div>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Search button disabled</span>
+          <div class="input">
+            <input type="text" class="w-full" placeholder="Search button" disabled/>
+            <button type="button">
+              <i class="icon-search"></i>
+            </button>
+          </div>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Search button readonly</span>
+          <div class="input">
+            <input type="text" class="w-full" placeholder="Search button" readonly/>
+            <button type="button">
+              <i class="icon-search"></i>
+            </button>
+          </div>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Color</span>
+          <input type="color" class="input" placeholder="Color" />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">File</span>
+          <input type="file" class="input" />
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Custom Select (단일 선택)</span>
+          <form-select>
+            <select name="custom-single">
+              <option value="">선택하세요</option>
+              <option value="1">옵션 1</option>
+              <option value="2">옵션 2</option>
+              <option value="3">옵션 3</option>
+              <option value="4">옵션 4</option>
+            </select>
+          </form-select>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Custom Select (단일 선택 + 검색)</span>
+          <form-select searchable>
+            <select name="custom-single-searchable">
+              <option value="">선택하세요</option>
+              <option value="apple">Apple</option>
+              <option value="banana">Banana</option>
+              <option value="cherry">Cherry</option>
+              <option value="durian">Durian</option>
+              <option value="elderberry">Elderberry</option>
+              <option value="fig">Fig</option>
+              <option value="grape">Grape</option>
+              <option value="honeydew">Honeydew</option>
+            </select>
+          </form-select>
+        </label>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Custom Select (다중 선택)</span>
+          <form-select multi>
+            <select name="custom-multi" multiple>
+              <option value="A">항목 A</option>
+              <option value="B">항목 B</option>
+              <option value="C">항목 C</option>
+              <option value="D">항목 D</option>
+              <option value="E">항목 E</option>
+              <option value="F">항목 F</option>
+              <option value="G">항목 G</option>
+            </select>
+          </form-select>
+        </label>
+      </div>
+
+      <div class="demo-item">
+        <span class="label mb-2 block">Custom Select (HTML 지원)</span>
+        <form-select allow-html>
+          <select name="">
+            <option value="" hidden>hidden 옵션은 리스트에 노출 X</option>
+            <option value="1">html 태그 지원</option>
+            <option value="3"><span class="badge badge-orange-fill">.badge-orange-fill</span></option>
+            <option value="4"><p class="font-bold">.font-bold</p></option>
+          </select>
+        </form-select>
+      </div>
+
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Custom Select with API (단일 선택)</span>
+          <form-select id="custom-select-api-1">
+            <select name="custom-api-single">
+              <option value="">선택하세요</option>
+              <option value="1">초기 옵션 1</option>
+              <option value="2">초기 옵션 2</option>
+            </select>
+          </form-select>
+        </label>
+        <div class="flex gap-2 flex-wrap mt-2">
+          <button type="button" class="btn btn-primary btn-sm" onclick="addSingleOption('custom-select-api-1')">옵션 추가</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addMultipleOptions('custom-select-api-1')">여러개 추가</button>
+          <button type="button" class="btn btn-destructive btn-sm" onclick="clearAllOptions('custom-select-api-1')">전체 삭제</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="replaceOptions('custom-select-api-1')">교체</button>
+        </div>
+      </div>
+      <div class="demo-item">
+        <label>
+          <span class="label mb-2 block">Custom Select with API (다중 선택)</span>
+          <form-select multi id="custom-select-api-2">
+            <select name="custom-api-multi" multiple>
+              <option value="A">초기 항목 A</option>
+              <option value="B">초기 항목 B</option>
+              <option value="C">초기 항목 C</option>
+            </select>
+          </form-select>
+        </label>
+        <div class="flex gap-2 flex-wrap mt-2">
+          <button type="button" class="btn btn-primary btn-sm" onclick="addSingleOption('custom-select-api-2')">옵션 추가</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addMultipleOptions('custom-select-api-2')">여러개 추가</button>
+          <button type="button" class="btn btn-destructive btn-sm" onclick="clearAllOptions('custom-select-api-2')">전체 삭제</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="replaceOptions('custom-select-api-2')">교체</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dropdown -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Dropdown</h2>
+    <div class="flex items-center gap-3">
+      <form-dropdown label="Dropdown">
+        <button type="button" class="dropdown-item">옵션 1</button>
+        <button type="button" class="dropdown-item">옵션 2</button>
+        <button type="button" class="dropdown-item">옵션 3</button>
+      </form-dropdown>
+
+      <form-dropdown label="Checkbox가 있는 경우">
+        <label class="flex items-center gap-2 dropdown-item">
+          <input type="checkbox" class="checkbox">전체
+        </label>
+        <label class="flex items-center gap-2 dropdown-item">
+          <input type="checkbox" class="checkbox">옵션1
+        </label>
+        <button type="button" class="dropdown-item">옵션 3</button>
+      </form-dropdown>
+
+      <div>
+        <span class="label">버튼이 이미지일 경우</span>
+        <div class="mt-2">
+          <form-dropdown icon="https://dummyimage.com/25x25/000/fff">
+            <button class="dropdown-item">옵션 1</button>
+            <button class="dropdown-item">옵션 2</button>
+          </form-dropdown>
+        </div>
+      </div>
+
+      <div>
+        <span class="label">버튼이 inline SVG 인 경우</span>
+        <div class="mt-2">
+          <form-dropdown>
+            <button slot="trigger" class="btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1"/>
+                <circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="12" r="1"/>
+              </svg>
+            </button>
+
+            <button type="button" class="dropdown-item">옵션 1</button>
+            <button type="button" class="dropdown-item">옵션2</button>
+          </form-dropdown>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Date Picker -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Date Picker</h2>
+    <div class="flex gap-3">
+      <div class="w-[250px]">
+        <input type="text" class="input datepicker-basic" placeholder="단일 날짜 선택"/>
+      </div>
+
+      <div class="w-[250px]">
+        <input type="text" class="input datepicker-today" placeholder="단일 날짜 선택(minDate: today)"/>
+      </div>
+
+      <div class="w-[250px]">
+        <input type="text" class="input datepicker-month" placeholder="월 선택"/>
+      </div>
+
+      <div class="w-[250px]">
+        <input type="text" class="input datepicker-yearMonth" placeholder="년/월 선택"/>
+      </div>
+    </div>
+    <div class="flex gap-3 mt-3">
+      <div class="w-[250px]">
+        <input type="text" class="input datepicker-range" placeholder="기간 선택"/>
+      </div>
+      <div class="datepicker-range-wrapper w-[250px]">
+        <input type="text" class="input datepicker-range2" placeholder="시작 날짜"/>
+        <input type="text" class="input datepicker-range2" placeholder="종료 날짜"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Data</h2>
+    <div>
+      <span class="label">라벨</span>
+      <p class="label-data-text">라벨에 해당하는 데이터들이 여기에 표시됩니다.</p>
+    </div>
+  </section>
+
+  <!-- Collapse -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Collapse</h2>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">카드 제목</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        카드 내용이 들어오는 자리입니다.
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Cards</h2>
+    <div
+      class="demo-grid"
+      style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))"
+    >
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">카드 제목</h3>
+          <p class="card-description">
+            카드 설명 텍스트가 여기에 표시됩니다.
+          </p>
+        </div>
+        <div class="card-content">
+          <p>
+            카드 본문 내용이 여기에 들어갑니다. 다양한 콘텐츠를 포함할 수
+            있습니다.
+          </p>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary">확인</button>
+          <button class="btn btn-outline ml-2">취소</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">통계 카드</h3>
+        </div>
+        <div class="card-content">
+          <div class="text-3xl font-bold">1,234</div>
+          <p class="text-sm text-muted-foreground mt-2">총 사용자 수</p>
+        </div>
+      </div>
+
+      <div class="card-selected-wrap">
+        <div class="card">
+          <div class="card-content">
+            <h3 class="card-title">선택 가능한 카드 디자인</h3>
+          </div>
+        </div>
+
+        <div class="card selected">
+          <div class="card-content">
+            <h3 class="card-title">선택 가능한 카드 디자인</h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3 class="card-title">선택 가능한 카드 디자인</h3>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <h3 class="card-title">선택 가능한 카드 디자인</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Badges -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Badges</h2>
+    <div class="flex gap-3 flex-wrap">
+      <span class="badge badge-default">Default</span>
+      <span class="badge badge-secondary">Secondary</span>
+      <span class="badge badge-destructive">Destructive</span>
+      <span class="badge badge-destructive-outline">Destructive Outline</span>
+      <span class="badge badge-destructive-light">Destructive Light</span>
+      <span class="badge badge-outline">Outline</span>
+      <span class="badge badge-outline-default">Outline Default</span>
+      <span class="badge badge-green">green</span>
+      <span class="badge badge-blue">blue</span>
+      <span class="badge badge-gray">gray</span>
+      <span class="badge badge-dark-gray">dark-gray</span>
+      <span class="badge badge-orange">orange</span>
+      <span class="badge badge-orange-fill">orange-fill</span>
+      <span class="badge badge-yellow">yellow</span>
+      <span class="badge badge-amber">amber</span>
+      <span class="badge badge-indigo">indigo</span>
+      <span class="badge badge-default badge-rounded">Rounded</span>
+    </div>
+  </section>
+
+  <!-- Alerts -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Alerts</h2>
+    <div class="demo-grid">
+      <div class="alert alert-default">
+        <div class="alert-title">알림</div>
+        <div class="alert-description">이것은 기본 알림 메시지입니다.</div>
+      </div>
+      <div class="alert alert-destructive">
+        <div class="alert-title">오류</div>
+        <div class="alert-description">
+          작업을 완료할 수 없습니다. 다시 시도해주세요.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alert Dialog-->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Alert Dialog</h2>
+    <button type="button" class="btn btn-primary"
+      onclick="document.querySelector('.dialog-overlay').style.display='block'">
+      Alert Dialog
+    </button>
+    <div class="dialog-overlay">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <div class="dialog-title">Alert Dialog</div>
+        </div>
+        <div class="dialog-description">내용</div>
+        <div class="dialog-footer">
+          <button type="button" class="btn btn-outline">취소</button>
+          <button type="button" class="btn btn-primary">계속</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modals -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Modals</h2>
+    <div class="flex gap-2 flex-wrap">
+      <button type="button" class="btn btn-primary" onclick="openModal('modal-sample')">
+        Standard Modal
+      </button>
+      <button type="button" class="btn btn-primary" style="background-color: #405189" onclick="openModal('modal-fullscreen')">
+        Fullscreen Modal
+      </button>
+      <button type="button" class="btn btn-primary" style="background-color: #299cdb" onclick="openModal('modal-xl')">
+        Extra large Modal
+      </button>
+      <button type="button" class="btn btn-primary" style="background-color: #0ab39c" onclick="openModal('modal-lg')">
+        Large Modal
+      </button>
+      <button type="button" class="btn btn-primary" style="background-color: #f06548" onclick="openModal('modal-sm')">
+        Small Modal
+      </button>
+    </div>
+
+    <div class="modal" id="modal-sample">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Title</h5>
+              <span class="modal-description">Modal 설명글</span>
+            </div>
+            <button type="button" class="icon-close modal-close"></button>
+          </div>
+          <div class="modal-body">
+            One morning, when Gregor Samsa woke from troubled dreams, he
+            found himself transformed in his bed into a horrible vermin. He
+            lay on his armour-like back, and if he lifted his head a little
+            he could see his brown belly, slightly domed and divided by
+            arches into stiff sections. The bedding was hardly able to cover
+            it and seemed ready to slide off any moment. His many legs,
+            pitifully thin compared with the size of the rest of him, waved
+            about helplessly as he looked. "What's happened to me?" he
+            thought. It wasn't a dream. His room, a proper human room
+            although a little too small, lay peacefully between its four
+            familiar walls.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline">버튼1</button>
+            <button type="button" class="btn btn-primary">버튼2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-fullscreen">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Extra large modal</h5>
+              <span class="modal-description">Modal 설명글</span>
+            </div>
+            <button type="button" class="icon-close modal-close"></button>
+          </div>
+          <div class="modal-body">
+            One morning, when Gregor Samsa woke from troubled dreams, he
+            found himself transformed in his bed into a horrible vermin. He
+            lay on his armour-like back, and if he lifted his head a little
+            he could see his brown belly, slightly domed and divided by
+            arches into stiff sections. The bedding was hardly able to cover
+            it and seemed ready to slide off any moment. His many legs,
+            pitifully thin compared with the size of the rest of him, waved
+            about helplessly as he looked. "What's happened to me?" he
+            thought. It wasn't a dream. His room, a proper human room
+            although a little too small, lay peacefully between its four
+            familiar walls.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline">버튼1</button>
+            <button type="button" class="btn btn-primary">버튼2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-xl">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Extra large modal</h5>
+              <span class="modal-description">Modal 설명글</span>
+            </div>
+            <button type="button" class="icon-close modal-close"></button>
+          </div>
+          <div class="modal-body">
+            One morning, when Gregor Samsa woke from troubled dreams, he
+            found himself transformed in his bed into a horrible vermin. He
+            lay on his armour-like back, and if he lifted his head a little
+            he could see his brown belly, slightly domed and divided by
+            arches into stiff sections. The bedding was hardly able to cover
+            it and seemed ready to slide off any moment. His many legs,
+            pitifully thin compared with the size of the rest of him, waved
+            about helplessly as he looked. "What's happened to me?" he
+            thought. It wasn't a dream. His room, a proper human room
+            although a little too small, lay peacefully between its four
+            familiar walls.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline">버튼1</button>
+            <button type="button" class="btn btn-primary">버튼2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-lg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Large modal</h5>
+              <span class="modal-description">Modal 설명글</span>
+            </div>
+            <button type="button" class="icon-close modal-close"></button>
+          </div>
+          <div class="modal-body">
+            One morning, when Gregor Samsa woke from troubled dreams, he
+            found himself transformed in his bed into a horrible vermin. He
+            lay on his armour-like back, and if he lifted his head a little
+            he could see his brown belly, slightly domed and divided by
+            arches into stiff sections. The bedding was hardly able to cover
+            it and seemed ready to slide off any moment. His many legs,
+            pitifully thin compared with the size of the rest of him, waved
+            about helplessly as he looked. "What's happened to me?" he
+            thought. It wasn't a dream. His room, a proper human room
+            although a little too small, lay peacefully between its four
+            familiar walls.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline">버튼1</button>
+            <button type="button" class="btn btn-primary">버튼2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-sm">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title">Small modal</h5>
+              <span class="modal-description">Modal 설명글</span>
+            </div>
+            <button type="button" class="icon-close modal-close"></button>
+          </div>
+          <div class="modal-body">
+            One morning, when Gregor Samsa woke from troubled dreams, he
+            found himself transformed in his bed into a horrible vermin. He
+            lay on his armour-like back, and if he lifted his head a little
+            he could see his brown belly, slightly domed and divided by
+            arches into stiff sections. The bedding was hardly able to cover
+            it and seemed ready to slide off any moment. His many legs,
+            pitifully thin compared with the size of the rest of him, waved
+            about helplessly as he looked. "What's happened to me?" he
+            thought. It wasn't a dream. His room, a proper human room
+            although a little too small, lay peacefully between its four
+            familiar walls.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline">버튼1</button>
+            <button type="button" class="btn btn-primary">버튼2</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Tap</h2>
+    <div class="card">
+      <div class="card-content">
+        <ul class="tabs mb-3" data-target="#tabContents1">
+          <li class="tab-item" data-tab="tab1">탭 메뉴 1</li>
+          <li class="tab-item is-active" data-tab="tab2">탭 메뉴 2</li>
+          <li class="tab-item" data-tab="tab3">탭 메뉴 3</li>
+        </ul>
+
+        <div class="tab-contents" id="tabContents1">
+          <div id="tab1" class="tab-content"><p>탭 메뉴 1 내용</p></div>
+          <div id="tab2" class="tab-content is-active">
+            <p>
+              * tabs의 data-target 속성과 tab-contets의 id값을 일치 시켜주세요.
+
+              탭 메뉴 2 내용이 여기에 들어갑니다.<br /><br />
+              * tab-item의 data-tab 속성값과 tab-content 의 id값을 일치
+              시켜주세요.
+            </p>
+          </div>
+          <div id="tab3" class="tab-content"><p>탭 메뉴 3 내용</p></div>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <ul class="tabs type-underline mb-3" data-target="#tabContents2">
+          <li class="tab-item" data-tab="tab11">탭 메뉴 1</li>
+          <li class="tab-item is-active" data-tab="tab12">탭 메뉴 2</li>
+          <li class="tab-item" data-tab="tab13">탭 메뉴 3</li>
+        </ul>
+
+        <div class="tab-contents" id="tabContents2">
+          <div id="tab11" class="tab-content"><p>탭 메뉴 1 내용</p></div>
+          <div id="tab12" class="tab-content is-active">
+            <p>
+              기존의 탭과 작동 방식은 동일하며,<br>
+              ul.tabs에 .type-underline 클래스를 추가한 디자인입니다.
+            </p>
+          </div>
+          <div id="tab13" class="tab-content"><p>탭 메뉴 3 내용</p></div>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <ul class="tabs type-block mb-3" data-target="#tabContents3">
+          <li class="tab-item" data-tab="tab11">탭 메뉴 1</li>
+          <li class="tab-item is-active" data-tab="tab12">탭 메뉴 2</li>
+          <li class="tab-item" data-tab="tab13">탭 메뉴 3</li>
+        </ul>
+
+        <div class="tab-contents" id="tabContents3">
+          <div id="tab11" class="tab-content"><p>탭 메뉴 1 내용</p></div>
+          <div id="tab12" class="tab-content is-active">
+            <p>
+              기존의 탭과 작동 방식은 동일하며,<br>
+              ul.tabs에 .type-block 클래스를 추가한 디자인입니다.
+            </p>
+          </div>
+          <div id="tab13" class="tab-content"><p>탭 메뉴 3 내용</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tootip -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Tootip</h2>
+    <div data-tooltip="도움말 설명입니다">마우스를 올려주세요.</div>
+  </section>
+
+  <!-- Table -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Table</h2>
+    <div class="card">
+      <table class="table">
+        <thead class="table-header">
+        <tr>
+          <th class="table-head">이름</th>
+          <th class="table-head">이메일</th>
+          <th class="table-head">역할</th>
+          <th class="table-head">상태</th>
+        </tr>
+        </thead>
+        <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell font-medium">홍길동</td>
+          <td class="table-cell">hong@example.com</td>
+          <td class="table-cell">관리자</td>
+          <td class="table-cell">
+            <span class="badge badge-default">활성</span>
+          </td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell font-medium">김철수</td>
+          <td class="table-cell">kim@example.com</td>
+          <td class="table-cell">사용자</td>
+          <td class="table-cell">
+            <span class="badge badge-secondary">대기</span>
+          </td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell font-medium">이영희</td>
+          <td class="table-cell">lee@example.com</td>
+          <td class="table-cell">사용자</td>
+          <td class="table-cell">
+            <span class="badge badge-destructive">비활성</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Avatar -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Avatar</h2>
+    <div class="flex gap-4 items-center">
+      <div class="avatar">
+        <div class="avatar-fallback">HG</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-fallback">KS</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-fallback">LY</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progress -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Progress</h2>
+    <div class="card">
+      <div class="card-content">
+        <div class="mb-4">
+          <div class="progress">
+            <div class="progress-indicator" style="width: 25%"></div>
+          </div>
+          <p class="text-sm text-muted-foreground mt-2">25% 완료</p>
+        </div>
+        <div class="mb-4">
+          <div class="progress">
+            <div class="progress-indicator" style="width: 60%"></div>
+          </div>
+          <p class="text-sm text-muted-foreground mt-2">60% 완료</p>
+        </div>
+        <div>
+          <div class="progress">
+            <div class="progress-indicator" style="width: 100%"></div>
+          </div>
+          <p class="text-sm text-muted-foreground mt-2">100% 완료</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skeleton -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Skeleton</h2>
+    <div class="card">
+      <div class="card-content">
+        <div class="skeleton h-4 w-3/4 mb-4"></div>
+        <div class="skeleton h-4 w-1/2 mb-4"></div>
+        <div class="skeleton h-24 w-full"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Separator -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Separator</h2>
+    <div class="demo-item">
+      <p>위쪽 콘텐츠</p>
+      <div class="separator-horizontal my-4"></div>
+      <p>아래쪽 콘텐츠</p>
+    </div>
+  </section>
+
+  <!-- Color Palette -->
+  <section class="demo-section">
+    <h2 class="text-xl font-bold mb-4">Color Palette</h2>
+    <div class="demo-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))">
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-50)"></div>
+        <p class="text-xs">Primary 50</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-100)"></div>
+        <p class="text-xs">Primary 100</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-200)"></div>
+        <p class="text-xs">Primary 200</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-300)"></div>
+        <p class="text-xs">Primary 300</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-400)"></div>
+        <p class="text-xs text-white">Primary 400</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--primary-500)"></div>
+        <p class="text-xs text-white">Primary 500</p>
+      </div>
+      <div class="demo-item text-center">
+        <div class="w-full h-20 rounded mb-2" style="background-color: var(--fursys-red)"></div>
+        <p class="text-xs text-white">Fursys Red</p>
+      </div>
+    </div>
+  </section>
+
+  <footer
+    class="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+    <p>Fursys Custom Design System v1.0</p>
+  </footer>
+</div>
+
+<!-- 공통 js -->
+
+<script>
+// Custom Select Box API 함수들
+let optionCounter = {
+  'custom-select-api-1': 3,
+  'custom-select-api-2': 4
+};
+
+// 단일 옵션 추가
+function addSingleOption(selectId) {
+  const formSelect = document.getElementById(selectId);
+
+  const optionValue = String(optionCounter[selectId]++);
+  const optionText = `새 옵션 ${optionValue}`;
+
+  // form-select 컴포넌트의 API 사용
+  formSelect.addOption(optionValue, optionText);
+
+  console.log(`[${selectId}] 옵션 추가됨:`, optionText);
+}
+
+// 여러 옵션 추가
+function addMultipleOptions(selectId) {
+  const formSelect = document.getElementById(selectId);
+
+  const count = 3; // 한 번에 추가할 옵션 개수
+  const newOptions = [];
+
+  for (let i = 0; i < count; i++) {
+    const optionValue = String(optionCounter[selectId]++);
+    newOptions.push({
+      value: optionValue,
+      text: `새 옵션 ${optionValue}`
+    });
+  }
+
+  // form-select 컴포넌트의 API 사용
+  formSelect.addOptions(newOptions);
+
+  console.log(`[${selectId}] ${count}개의 옵션이 추가되었습니다.`);
+}
+
+// 전체 옵션 삭제
+function clearAllOptions(selectId) {
+  const formSelect = document.getElementById(selectId);
+  const selectElement = formSelect.querySelector('select');
+  const isMultiple = selectElement.hasAttribute('multiple');
+
+  // form-select 컴포넌트의 API 사용
+  formSelect.clearOptions();
+
+  // 단일 선택의 경우 기본 옵션 추가
+  if (!isMultiple) {
+    formSelect.addOption('', '선택하세요');
+  }
+
+  console.log(`[${selectId}] 모든 옵션이 삭제되었습니다.`);
+}
+
+// 옵션 교체
+function replaceOptions(selectId) {
+  const formSelect = document.getElementById(selectId);
+  const selectElement = formSelect.querySelector('select');
+  const isMultiple = selectElement.hasAttribute('multiple');
+
+  let newOptions = [];
+
+  // 새로운 옵션으로 교체
+  if (isMultiple) {
+    newOptions = [
+      { value: 'X', text: '교체된 항목 X' },
+      { value: 'Y', text: '교체된 항목 Y' },
+      { value: 'Z', text: '교체된 항목 Z' }
+    ];
+  } else {
+    newOptions = [
+      { value: '', text: '선택하세요' },
+      { value: '10', text: '교체된 옵션 10' },
+      { value: '20', text: '교체된 옵션 20' },
+      { value: '30', text: '교체된 옵션 30' }
+    ];
+  }
+
+  // form-select 컴포넌트의 API 사용
+  formSelect.setOptions(newOptions);
+
+  console.log(`[${selectId}] 옵션이 교체되었습니다.`);
+}
+</script>
+</body>
+</html>

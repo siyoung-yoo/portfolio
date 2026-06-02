@@ -1,0 +1,659 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="panel-layout type-care-service">
+      <div class="list-panel-dim"></div>
+      <div class="list-panel-wrap">
+        <div class="panel-header">
+          <button type="button" class="btn btn-toggle is-open" onclick="toggleSearchPanel(this)">
+            <span class="text-sm">상세검색</span>
+            <i class="icon-chevron"></i>
+          </button>
+          <button type="button" class="btn btn-icon btn-ghost" onclick="toggleListPanel()">
+            <i class="icon-arrow-left-to-line"></i>
+          </button>
+        </div>
+
+        <div class="panel-list-wrap">
+          <div class="panel-search is-open">
+            <!-- 실적사업소 / 실적대리점 (도면현황 본사 동일 패턴 — agencyModal) -->
+            <div class="input w-full" style="background:#fff;cursor:pointer" onclick="openAgencyModal(this)">
+              <input type="text" id="agencySelectionInput" data-agency-display class="w-full overflow-hidden whitespace-nowrap text-ellipsis" placeholder="실적사업소 / 실적대리점 선택" readonly style="background:#fff;cursor:pointer;pointer-events:none" />
+              <input type="hidden" id="selectedBranchCds" data-agency-branch />
+              <input type="hidden" id="selectedDealerCds" data-agency-dealer />
+              <button type="button" tabindex="-1">
+                <i class="icon-search w-[18px] h-[18px] bg-size-[18px]"></i>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1">
+              <form-select>
+                <select id="searchTypeSelect">
+                  <option value="conTitle">계약명</option>
+                  <option value="conCd">계약번호</option>
+                  <option value="ctmNm">고객명</option>
+                </select>
+              </form-select>
+              <input id="searchKeyword" type="text" class="input" placeholder="검색어 입력">
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="fetchContractList()" disabled>검색</button>
+          </div>
+
+          <ul class="tabs type-underline" id="contractTabs" style="flex-shrink: 0;">
+            <li class="tab-item is-active" data-filter="all">전체</li>
+            <li class="tab-item" data-filter="unscheduled">
+              예정 <span id="cntScheduled" class="ml-1 badge badge-dark-gray badge-rounded">0</span>
+            </li>
+            <li class="tab-item" data-filter="pending">
+              미진행 <span id="cntPending" class="ml-1 badge badge-orange-fill badge-rounded">0</span>
+            </li>
+            <li class="tab-item" data-filter="overdue">
+              미결 <span id="cntOverdue" class="ml-1 badge badge-destructive badge-rounded">0</span>
+            </li>
+          </ul>
+
+          <div class="panel-list">
+            <div id="contractList" class="card-selected-wrap">
+              <!-- JS 렌더링 -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // list-panel-wrap -->
+
+      <div class="content-panel-wrap">
+        <div class="alert alert-default" data-state="selectList">
+          <div class="alert-title">계약을 선택하세요</div>
+          <div class="alert-description mt-5">계약을 선택하여 상세 정보를 확인하세요</div>
+          <div class="alert-description">계약에 연결된 주소별 케어 히스토리를 확인할 수 있습니다</div>
+        </div>
+
+        <div class="content-panel-cont hidden" data-state="selectList">
+          <div class="panel-header">
+            <div class="flex flex-col">
+              <h3 id="detailTitle" class="title"></h3>
+              <p id="detailSubTitle" class="text-xs text-primary-300"></p>
+            </div>
+            <button type="button" class="btn btn-toggle" onclick="toggleAllSchedule(this)">
+              <span>전체 열기</span><i class="icon-chevron"></i>
+            </button>
+          </div>
+
+          <div id="addressDetailPanel" class="content-panel">
+            <!-- JS 렌더링 -->
+          </div>
+        </div>
+      </div>
+      <!-- // content-panel-wrap -->
+    </div>
+    <!-- // panel-layout -->
+  </div>
+
+<th:block th:replace="~{service/modal/layoutRatingModal}"/><!-- Modal: 만족도조사 결과 -->
+<th:block th:replace="~{service/modal/careHistoryModal}"/><!-- Modal: 케어 히스토리 -->
+<th:block th:replace="~{modal/agencyModal}"/><!-- Modal: 실적사업소/실적대리점 (도면현황 본사 공용) -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+/* ============================================================
+ * 오피스케어 (본사) — 메인 화면 (전체 대리점, 읽기 전용 + 승인/반려)
+ * 좌측: 계약 카드 / 우측: 주소별 회차 테이블
+ * 유통망(careDistribution)과 동일한 매퍼/구조를 사용하되:
+ *   - 대리점 셀렉트(vndCd) 검색 조건
+ *   - 좌측 카드에 "담당 대리점" 표시
+ *   - 우측 회차 테이블: 일정/리포트 등록 버튼 X — 모두 view 링크
+ *   - 승인요청(OR4003) 회차: 케어 리포트 셀에 체크 아이콘(승인 액션 필요 표시)
+ *   - 반려(OR4007) 회차: 리포트 상태 "반려" 표시
+ * ============================================================ */
+
+let _contractList = [];
+let _selectedContract = null;
+
+const PROGRESS_LABEL = {
+  OR4001: { name: '예정',     cls: 'gray'   },
+  OR4002: { name: '미진행',    cls: 'orange' },
+  OR4003: { name: '승인 요청', cls: 'orange' },
+  OR4004: { name: '승인 완료', cls: 'strong' },
+  OR4005: { name: '확인 완료', cls: 'strong' },
+  OR4007: { name: '반려',      cls: 'red'    }
+};
+
+function toggleSearchPanel(e) {
+  document.querySelector(".panel-search").classList.toggle("is-open");
+  e.classList.toggle("is-open");
+}
+function toggleListPanel() {
+  document.querySelector(".panel-layout").classList.toggle("close-panel");
+}
+
+/* 실적사업소 + 실적대리점 둘 다 선택된 경우에만 검색 버튼 활성화 (도면현황 본사 동일) */
+function updateSearchBtnState() {
+  const branch = document.getElementById('selectedBranchCds')?.value || '';
+  const dealer = document.getElementById('selectedDealerCds')?.value || '';
+  const btn = document.querySelector('.panel-search button.btn-primary');
+  if (!btn) return;
+  btn.disabled = !(branch.trim() && dealer.trim());
+}
+
+/* agencyModal 선택값 변경 감지 — display input 의 value 변경을 감지해 버튼 상태 갱신 */
+(function bindAgencyChangeWatcher() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const displayInput = document.getElementById('agencySelectionInput');
+    if (!displayInput) return;
+    const obs = new MutationObserver(() => updateSearchBtnState());
+    obs.observe(displayInput, { attributes: true, attributeFilter: ['value'] });
+    let lastVal = displayInput.value;
+    setInterval(() => {
+      if (displayInput.value !== lastVal) {
+        lastVal = displayInput.value;
+        updateSearchBtnState();
+      }
+    }, 300);
+  });
+})();
+
+/* 본사 메인 검색/선택 상태를 sessionStorage 에 보관 (결과/결과등록 화면 이동 후 뒤로가기 시 복원) */
+const HQ_STATE_KEY = 'careHqMainState';
+function saveHqState(extra) {
+  const state = Object.assign({
+    branchCds:    document.getElementById('selectedBranchCds')?.value || '',
+    dealerCds:    document.getElementById('selectedDealerCds')?.value || '',
+    agencyDisp:   document.getElementById('agencySelectionInput')?.value || '',
+    searchType:   $('#searchTypeSelect').val() || 'conTitle',
+    searchKw:     $('#searchKeyword').val() || ''
+  }, extra || {});
+  try { sessionStorage.setItem(HQ_STATE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function loadHqState() {
+  try { return JSON.parse(sessionStorage.getItem(HQ_STATE_KEY) || 'null'); } catch (e) { return null; }
+}
+
+function fetchContractList() {
+  const branch = document.getElementById('selectedBranchCds')?.value || '';
+  const dealer = document.getElementById('selectedDealerCds')?.value || '';
+  if (!branch.trim() || !dealer.trim()) {
+    alert('실적사업소 / 실적대리점을 먼저 선택해주세요.');
+    return;
+  }
+  const reqParam = {
+    searchType:    $('#searchTypeSelect').val(),
+    searchKeyword: $('#searchKeyword').val(),
+    comMngest:     branch,   // 실적사업소 (콤마 구분, COM_MNGEST)
+    agtCd:         dealer    // 실적대리점 (콤마 구분, VND_CD)
+  };
+  saveHqState();
+
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/getContractList',
+    type: 'post',
+    data: reqParam,
+    success: function(res) {
+      _contractList = res.data || [];
+      renderContractList(_contractList);
+      // 뒤로가기 복원: 마지막 선택 계약 카드 재선택
+      const st = loadHqState();
+      if (st?.selectedConIdx && st?.selectedMIdx) {
+        const card = document.querySelector(`#contractList .card[data-con-idx="${st.selectedConIdx}"][data-m-idx="${st.selectedMIdx}"]`);
+        if (card) card.click();
+      }
+    },
+    complete: function() { LoadingManager.dec(); }
+  });
+}
+
+function renderContractList(list) {
+  const wrap = document.getElementById('contractList');
+  wrap.innerHTML = '';
+
+  let scheduledCnt = 0, pendingCnt = 0, overdueCnt = 0;
+  list.forEach(c => {
+    scheduledCnt += Number(c.scheduledCnt || 0);
+    pendingCnt   += Number(c.pendingCnt   || 0);
+    overdueCnt   += Number(c.overdueCnt   || 0);
+  });
+  setBadge('cntScheduled', scheduledCnt);
+  setBadge('cntPending',   pendingCnt);
+  setBadge('cntOverdue',   overdueCnt);
+
+  if (list.length === 0) return;
+
+  list.forEach(c => {
+    const mappedStates = [];
+    if (Number(c.scheduledCnt) > 0) mappedStates.push('unscheduled');
+    if (Number(c.pendingCnt)   > 0) mappedStates.push('pending');
+    if (Number(c.overdueCnt)   > 0) mappedStates.push('overdue');
+
+    const badges = [];
+    if (Number(c.overdueCnt)   > 0) badges.push(`<span class="badge badge-destructive-outline">미결 ${c.overdueCnt}건</span>`);
+    if (Number(c.pendingCnt)   > 0) badges.push(`<span class="badge badge-orange">미진행 ${c.pendingCnt}건</span>`);
+    if (Number(c.scheduledCnt) > 0) badges.push(`<span class="badge badge-dark-gray">예정 ${c.scheduledCnt}건</span>`);
+    if (Number(c.finishedCnt)  > 0) badges.push(`<span class="badge">종료 ${c.finishedCnt}건</span>`);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.mapped = mappedStates.join(' ');
+    card.dataset.conIdx = c.conIdx;
+    card.dataset.mIdx   = c.mIdx;
+    card.innerHTML = `
+      <div class="card-content">
+        <ul class="text-list">
+          <li>
+            <span class="badge badge-outline">${escapeHtml(c.careCycle || '-')}</span>
+            <div class="flex gap-2">${badges.join('')}</div>
+          </li>
+          ${(c.bondNo && c.estCode)
+            ? `<li class="-mb-1"><ul class="flex items-center gap-2">
+                 <li class="text-xs">${escapeHtml(c.bondNo)}</li>
+                 <li class="font-bold">·</li>
+                 <li class="text-xs">${escapeHtml(c.estCode)}</li>
+               </ul></li>`
+            : `<li class="text-xs">${escapeHtml(c.bondNo || c.estCode || '-')}</li>`}
+          <li><strong>${escapeHtml(c.conTitle || '-')}</strong></li>
+          <li>
+            <span class="text-primary-300">고객사</span>
+            <strong>${escapeHtml(c.ctmNm || '-')}</strong>
+          </li>
+          <li>
+            <span class="text-primary-300">담당 대리점</span>
+            <strong>${escapeHtml(c.vendorName || '-')}</strong>
+          </li>
+        </ul>
+        <ul class="text-list bottom">
+          <li>
+            <p>${escapeHtml(c.mainAddress || '-')} ${Number(c.extraAddressCnt) > 0 ? `<span class="text-primary-300">외 ${c.extraAddressCnt}개</span>` : ''}</p>
+          </li>
+          <li>
+            <span>케어 횟수: 총 ${c.careCount || 0}회</span>
+            <span>최근 케어일: ${formatDate(c.recentCareDt) || '-'}</span>
+          </li>
+        </ul>
+      </div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function setBadge(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val || 0;
+}
+
+/* 탭 필터 */
+document.getElementById('contractTabs').addEventListener('click', (e) => {
+  const tab = e.target.closest('.tab-item');
+  if (!tab) return;
+  const filter = tab.dataset.filter;
+  document.querySelectorAll('#contractTabs .tab-item').forEach(t => t.classList.remove('is-active'));
+  tab.classList.add('is-active');
+  document.querySelectorAll('#contractList .card').forEach(card => {
+    const status = card.dataset.mapped || '';
+    const isHidden = filter !== 'all' && !status.split(' ').includes(filter);
+    card.classList.toggle('hidden', isHidden);
+  });
+});
+
+/* 계약 카드 클릭 → 우측 상세 */
+document.getElementById('contractList').addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+
+  const isSelected = card.classList.contains('selected');
+  document.querySelectorAll('#contractList .card.selected').forEach(el => el.classList.remove('selected'));
+
+  const alertEl = document.querySelector('.alert[data-state="selectList"]');
+  const panelEl = document.querySelector('.content-panel-cont[data-state="selectList"]');
+
+  if (isSelected) {
+    panelEl.classList.add('hidden');
+    alertEl.classList.remove('hidden');
+    _selectedContract = null;
+    saveHqState({ selectedConIdx: '', selectedMIdx: '' });
+    return;
+  }
+  card.classList.add('selected');
+  alertEl.classList.add('hidden');
+  panelEl.classList.remove('hidden');
+
+  const conIdx = card.dataset.conIdx;
+  const mIdx   = card.dataset.mIdx;
+  _selectedContract = _contractList.find(c => String(c.conIdx) === conIdx && String(c.mIdx) === mIdx);
+  if (!_selectedContract) return;
+
+  document.getElementById('detailTitle').innerHTML =
+    `${escapeHtml(_selectedContract.conTitle || '-')} <span class="text-sm">(총 <span id="detailAddrCnt">0</span>개)</span>`;
+  document.getElementById('detailSubTitle').textContent = _selectedContract.bondNo || '';
+
+  // 선택된 계약 — 뒤로가기 복원용 저장
+  saveHqState({ selectedConIdx: conIdx, selectedMIdx: mIdx });
+
+  fetchAddressSummary(conIdx, mIdx);
+});
+
+function fetchAddressSummary(conIdx, mIdx) {
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/getAddressSummary',
+    type: 'post',
+    data: { conIdx, mIdx },
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      const list = res.data || [];
+      const addrCntEl = document.getElementById('detailAddrCnt');
+      if (addrCntEl) addrCntEl.textContent = list.length;
+
+      const panel = document.getElementById('addressDetailPanel');
+      panel.innerHTML = '';
+      if (list.length === 0) return;
+      list.forEach(addr => {
+        const box = renderAddressBox(addr);
+        panel.appendChild(box);
+        fetchAddressDetail(addr, box);
+      });
+    }
+  });
+}
+
+function renderAddressBox(addr) {
+  const total = Number(addr.totalSeqCnt) || 0;
+  const finished = Number(addr.finishedCnt) || 0;
+  const isFinished = total > 0 && finished === total;
+  let badge = '';
+  if (Number(addr.overdueCnt) > 0)        badge = '<span class="badge badge-destructive-outline">미결</span>';
+  else if (Number(addr.pendingCnt) > 0)   badge = '<span class="badge badge-orange">미진행</span>';
+  else if (Number(addr.scheduledCnt) > 0) badge = '<span class="badge badge-dark-gray">예정</span>';
+  else if (isFinished)                    badge = '<span class="badge">종료</span>';
+
+  const box = document.createElement('div');
+  box.className = 'schedule-box';
+  box.dataset.estaIdx  = addr.estaIdx;
+  box.dataset.estaAdr4 = addr.estaAdr4 || '';
+  box.innerHTML = `
+    <div class="toggle-clickable">
+      <div class="title-area items-center">
+        ${badge}
+        <h3 class="title flex-1">${escapeHtml(addr.addressText || '-')}</h3>
+        <div class="info-area">
+          <div>진행률 : ${addr.finishedCnt || 0}<span class="mx-1">/</span>${addr.totalSeqCnt || 0}회</div>
+          <div>최근 케어일 : <span class="tracking-wider">${formatDate(addr.recentCareDt) || '-'}</span></div>
+        </div>
+        <button type="button" class="btn btn-icon btn-toggle">
+          <i class="icon-chevron"></i>
+        </button>
+      </div>
+    </div>
+    <div class="toggle-cont">
+      <div class="table-scroll custom-scrollbar">
+        <table class="table">
+          <colgroup>
+            <col style="width: 40px"><col style="width: 90px"><col style="width: 90px">
+            <col style="width: 80px"><col style="width: 104px"><col style="width: 104px">
+            <col style="width: 76px"><col style="width: 76px"><col style="width: 40px"><col style="width: 44px"><col style="width: 44px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="p-0">회차</th><th>마감 기한</th><th>최종 케어일</th>
+              <th>케어 상태</th><th>예정 일정</th><th>케어 리포트</th>
+              <th>리포트 상태</th><th>케어<br>담당자</th>
+              <th class="p-0">미결</th><th scope="col">만족도<br>조사</th><th>케어<br>히스토리</th>
+            </tr>
+          </thead>
+          <tbody class="seq-tbody">
+            <tr><td colspan="11" class="text-center text-primary-300 py-3">불러오는 중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  return box;
+}
+
+function fetchAddressDetail(addr, box) {
+  const payload = {
+    conIdx:   addr.conIdx,
+    mIdx:     addr.mIdx,
+    estaIdx:  addr.estaIdx,
+    estaAdr4: addr.estaAdr4 || ''
+  };
+  console.log('[careHeadOffice] getAddressDetail request =', payload);
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/getAddressDetail',
+    type: 'post',
+    data: payload,
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      console.log('[careHeadOffice] getAddressDetail response =', res);
+      const rows = res.data || [];
+      if (!box) return;
+      const tbody = box.querySelector('.seq-tbody');
+      tbody.innerHTML = '';
+      if (rows.length === 0) return;
+
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+      const addOneDay = (yyyymmdd) => {
+        if (!/^\d{8}$/.test(yyyymmdd)) return null;
+        const d = new Date(Number(yyyymmdd.slice(0,4)), Number(yyyymmdd.slice(4,6))-1, Number(yyyymmdd.slice(6,8)));
+        d.setDate(d.getDate() + 1);
+        return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      };
+      const startDates = []; const endDates = [];
+      rows.forEach((r, i) => {
+        const due = String(r.dueDate || '').replace(/[^0-9]/g, '');
+        endDates[i] = /^\d{8}$/.test(due) ? due : null;
+        if (i === 0) {
+          const c = String(r.contractStartDate || '').replace(/[^0-9]/g, '');
+          startDates[i] = /^\d{8}$/.test(c) ? c : null;
+        } else {
+          startDates[i] = addOneDay(endDates[i - 1]);
+        }
+      });
+      // 현재 진행회차 = 첫 미완료 회차 (매퍼 scheduledCnt 정의와 일관성)
+      // 기간 기반은 보조 — 첫 미완료가 없을 때만 사용
+      let currentIdx = rows.findIndex(r => {
+        const p = r.progressCd || 'OR4001';
+        return p !== 'OR4004' && p !== 'OR4005';
+      });
+      if (currentIdx === -1) {
+        currentIdx = rows.findIndex((r, i) =>
+          startDates[i] && endDates[i] && startDates[i] <= todayStr && todayStr <= endDates[i]
+        );
+      }
+      rows.forEach((r, i) => {
+        r._periodStart = startDates[i];
+        r._periodEnd   = endDates[i];
+        tbody.appendChild(renderSeqRow(r, i, rows.length, currentIdx));
+      });
+    }
+  });
+}
+
+/* 본사 회차 행 렌더 — 유통망과 동일한 상태 판정 로직 + 편집 버튼 제거 */
+function renderSeqRow(r, idx, total, currentIdx) {
+  const tr = document.createElement('tr');
+  if (idx === currentIdx) tr.classList.add('current');
+  const seq = r.officecareSeq;
+  const progress = r.progressCd || 'OR4001';
+
+  const reqDt = (r.careRequestDate || '').replace(/-/g, '');
+  const todayDt = new Date();
+  const todayStr = `${todayDt.getFullYear()}${String(todayDt.getMonth()+1).padStart(2,'0')}${String(todayDt.getDate()).padStart(2,'0')}`;
+  const dueDt = String(r.dueDate || '').replace(/[^0-9]/g, '');
+  const inProgress = ['OR4001','OR4002','OR4003','OR4007'].includes(progress);
+  const isLastSeq = idx === total - 1;
+  const todayYm = todayStr.slice(0, 6);
+  const reqOver = /^\d{8}$/.test(reqDt) && (isLastSeq ? reqDt < todayStr : reqDt.slice(0,6) < todayYm);
+  const dueOver = /^\d{8}$/.test(dueDt) && (isLastSeq ? dueDt < todayStr : dueDt.slice(0,6) < todayYm);
+  const isOverdueByDate = inProgress && (reqOver || dueOver);
+  const isOverdue = r.miguelYn === 'Y' || isOverdueByDate;
+  const labelObj = PROGRESS_LABEL[progress] || { name: '-', cls: 'gray' };
+
+  // 케어 상태 — 가이드 기준: OR4001~4003, OR4007 모두 미진행(과거이면 미결)
+  let careStatusTd;
+  if (progress === 'OR4001' || progress === 'OR4002' || progress === 'OR4003' || progress === 'OR4007') {
+    if (isOverdue) {
+      careStatusTd = `<span class="status red">미결</span>`;
+    } else if (progress === 'OR4001' && !r.careRequestDate) {
+      if (idx === currentIdx)       careStatusTd = `<span class="status gray">예정</span>`;
+      else if (idx < currentIdx)    careStatusTd = `<span class="status red">미결</span>`;  // 이미 지난 회차 + 일정 미등록 = 미결
+      else                          careStatusTd = '-';
+    } else {
+      careStatusTd = `<span class="status orange">미진행</span>`;
+    }
+  } else {
+    careStatusTd = `<strong>${labelObj.name}</strong>`;
+  }
+
+  // 예정 일정 — 본사는 등록/수정 불가, 모든 상태에서 텍스트로 노출
+  const scheduleTd = formatDate(r.careRequestDate) || '-';
+
+  // 케어 리포트
+  //  - OR4002 (임시저장): 본사 미노출 — '-'
+  //  - OR4003 (승인 요청): 체크 아이콘 + 결과 view 링크 (승인 액션 필요)
+  //  - OR4004/OR4005 (승인/확인): 결과 view 링크
+  //  - OR4007 (반려): 결과 view 링크
+  //  - 그 외: '-'
+  let reportTd = '-';
+  if (progress === 'OR4003') {
+    reportTd = `<button type="button" class="btn-link" onclick="goReportView(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq})">
+                  <i class="icon-check-circle"></i> ${formatDate(r.reportInsertDt) || '-'}
+                </button>`;
+  } else if (progress === 'OR4004' || progress === 'OR4005' || progress === 'OR4007') {
+    reportTd = `<button type="button" class="btn-link" onclick="goReportView(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq})">${formatDate(r.reportInsertDt) || '-'}</button>`;
+  }
+
+  // 리포트 상태
+  let reportStatusTd = '-';
+  if (progress === 'OR4003')                                  reportStatusTd = `<span class="status orange">승인 요청</span>`;
+  else if (progress === 'OR4004' || progress === 'OR4005')    reportStatusTd = `<strong>승인 완료</strong>`;
+  else if (progress === 'OR4007')                             reportStatusTd = `<span class="status red">반려</span>`;
+
+  const overdueTd = isOverdue ? '<i class="icon-check"></i>' : '-';
+  const isScheduledOnly = progress === 'OR4001' && !r.careRequestDate;
+  const histTd = isScheduledOnly
+    ? '-'
+    : `<button type="button" class="btn btn-icon" onclick="openCareHistoryModal(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq})"><i class="icon-history"></i></button>`;
+
+  // 만족도 조사 여부 - satisfactionYn = 'Y' 인 경우만 돋보기 버튼 노출, 'N' (또는 그 외) 이면 '-'
+  //   - 버튼 클릭 시 satisfactionScore / suggestContents 를 모달로 전달
+  //   - data-* 속성을 통해 안전하게 전달 (XSS 방지)
+  const satisfactionScoreSafe   = (r.satisfactionScore !== undefined && r.satisfactionScore !== null) ? String(r.satisfactionScore) : '';
+  const suggestContentsSafe     = (r.suggestContents   !== undefined && r.suggestContents   !== null) ? String(r.suggestContents)   : '';
+  const satisfactionTd = r.satisfactionYn === 'Y'
+    ? `<button class="btn btn-outline btn-icon"
+               data-score="${escapeHtml(satisfactionScoreSafe)}"
+               data-suggest="${escapeHtml(suggestContentsSafe)}"
+               onclick="openLayoutRatingModal(this.dataset.score, this.dataset.suggest)">
+         <i class="icon-search w-[12px] h-[12px] bg-size-[12px]"></i>
+       </button>`
+    : '-';
+
+  tr.innerHTML = `
+    <td class="no">${seq}회</td>
+    <td>${formatDate(r.dueDate) || '-'}</td>
+    <td>${formatDate(r.careFinalDate) || '-'}</td>
+    <td>${careStatusTd}</td>
+    <td>${scheduleTd}</td>
+    <td>${reportTd}</td>
+    <td>${reportStatusTd}</td>
+    <td class="px-2">${escapeHtml(r.agentName) || '-'}</td>
+    <td class="p-0">${overdueTd}</td>
+    <td class="p-0">${satisfactionTd}</td>
+    <td class="p-0">${histTd}</td>`;
+  return tr;
+}
+
+/* schedule-box 토글 */
+document.addEventListener('click', (e) => {
+  const clickArea = e.target.closest('.toggle-clickable');
+  if (!clickArea) return;
+  if (!document.getElementById('addressDetailPanel').contains(clickArea)) return;
+  clickArea.querySelector('.btn-toggle').classList.toggle('is-open');
+  clickArea.closest('.schedule-box').querySelector('.toggle-cont').classList.toggle('is-open');
+  syncAllToggleButton();
+});
+
+function toggleAllSchedule(e) {
+  const contents = document.getElementById('addressDetailPanel');
+  const open = !e.classList.contains('is-open');
+  e.classList.toggle('is-open', open);
+  e.querySelector('span').innerText = open ? '전체 닫기' : '전체 열기';
+  contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.toggle('is-open', open));
+  contents.querySelectorAll('.toggle-cont').forEach(el => el.classList.toggle('is-open', open));
+}
+
+function syncAllToggleButton() {
+  const contents = document.getElementById('addressDetailPanel');
+  const allItems = contents.querySelectorAll('.toggle-cont');
+  const openItems = contents.querySelectorAll('.toggle-cont.is-open');
+  const headerBtn = document.querySelector('.content-panel-cont .panel-header .btn-toggle');
+  if (!headerBtn) return;
+  if (allItems.length === openItems.length) {
+    headerBtn.classList.add('is-open');
+    headerBtn.querySelector('span').innerText = '전체 닫기';
+  } else if (openItems.length === 0) {
+    headerBtn.classList.remove('is-open');
+    headerBtn.querySelector('span').innerText = '전체 열기';
+  }
+}
+
+function openCareHistoryModal(conIdx, mIdx, estaIdx, seq) {
+  if (typeof loadCareHistory === 'function') {
+    loadCareHistory({ conIdx, mIdx, estaIdx, officecareSeq: seq });
+  }
+  openModal('careHistoryModal');
+}
+
+function goReportView(conIdx, mIdx, estaIdx, seq) {
+  // 본사 결과 view — /service/care/hq/headOffice/{seq} 경로 (CareHqController) 로 진입
+  // 승인/반려 버튼은 결과 view 화면에서 경로(/care/hq/) 기반으로 자동 노출
+  window.location.href = `/service/care/hq/headOffice/${seq}?conIdx=${conIdx}&mIdx=${mIdx}&estaIdx=${estaIdx}`;
+}
+
+/* 유틸 */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function formatNumber(n) {
+  if (n == null || n === '') return '0';
+  return Number(n).toLocaleString();
+}
+function formatDate(s) {
+  if (!s) return '';
+  const str = String(s);
+  if (/^\d{8}$/.test(str)) return `${str.slice(0,4)}-${str.slice(4,6)}-${str.slice(6,8)}`;
+  if (str.length >= 10) return str.slice(0, 10);
+  return str;
+}
+
+$(function() {
+  $('#searchKeyword').keydown(e => { if (e.key === 'Enter') { e.preventDefault(); fetchContractList(); } });
+  $('#searchTypeSelect').on('change', () => $('#searchKeyword').val(''));
+
+  // 결과/결과등록 화면에서 뒤로가기로 진입한 경우 sessionStorage 의 검색 조건/선택 복원
+  const st = loadHqState();
+  if (st && st.branchCds && st.dealerCds) {
+    document.getElementById('selectedBranchCds').value = st.branchCds;
+    document.getElementById('selectedDealerCds').value = st.dealerCds;
+    const disp = document.getElementById('agencySelectionInput');
+    if (disp) disp.value = st.agencyDisp || '';
+    if (st.searchType) $('#searchTypeSelect').val(st.searchType).trigger('change');
+    if (st.searchKw)   $('#searchKeyword').val(st.searchKw);
+    updateSearchBtnState();
+    fetchContractList();   // 검색 결과 복원 (성공 후 fetchContractList 내부에서 selectedConIdx 카드 자동 클릭)
+  } else {
+    // 초기 진입 시 자동 조회 X — 실적사업소/실적대리점 선택 후 검색 버튼 클릭해야 조회됨 (도면현황 본사 동일)
+    updateSearchBtnState();
+  }
+});
+</script>
+</th:block>
+</body>
+</html>

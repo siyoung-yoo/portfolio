@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('오피스케어 결과등록', ~{::titleAddon}, ~{::action})}">
+    <th:block th:fragment="action">
+      <div class="estimate-breadcrumbs">
+        <div class="is-active"><span class="chapter">1</span>케어정보</div>
+        <div><span class="chapter">2</span>등록확인</div>
+        <div><span class="chapter">3</span>기타정보</div>
+      </div>
+    </th:block>
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <!-- S: 공통 정보 -->
+    <div class="card px-5 pt-4 pb-2 mb-4">
+      <ul class="dot-info">
+        <li class="w-[40%]"><span class="title">계약건</span>CNT-2024-001 수원 디지털시티</li>
+        <li><span class="title">회차/기간</span>17회차(반기)<span class="ml-1">2025-10-01 ~ 2025-12-31</span></li>
+      </ul>
+
+      <ul class="dot-info flex">
+        <li class="w-[40%]"><span class="title">주소</span>서울 강남구 대치동 890</li>
+        <li class="flex-1 pr-10"><span class="title">예정일</span> 2025-12-15
+        </li>
+        <li class="flex-1"><span class="title">완료일</span>
+          <input type="text" class="input datepicker-basic flex-1" placeholder="YYYY-MM-DD">
+        </li>
+      </ul>
+    </div>
+    <!-- E: 공통 정보 -->
+
+    <!-- S: 케어정보 -->
+    <div class="layout-care-service">
+      <div class="draw-panel-layout flex-col gap-0">
+        <ul class="tabs type-block" data-target="#tabCont">
+          <li class="tab-item is-active" data-tab="tab1">4F 공간<span class="badge badge-dark-gray">0/12</span></li>
+          <li class="tab-item" data-tab="tab2">5F 회의실<span class="badge badge-dark-gray">0/12</span></li>
+          <li class="tab-item" data-tab="tab3">6F<span class="badge badge-dark-gray">0/12</span></li>
+        </ul>
+
+        <div class="tab-contents" id="tabCont">
+          <div class="draw-cont-wrap">
+            <div class="draw-controls">
+              <div class="scale-box border">
+                <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+                  <i class="icon-minus"></i>
+                </button>
+                <span>100%</span>
+                <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+                  <i class="icon-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="drawCont" class="draw-cont draw-fixed has-dim">
+              <div class="img-box">
+                <canvas id="drawImg" data-img="/assets/img/page/temp_draw_01.pdf"></canvas>
+
+                <!-- 도면 내 지정된 영역 마크업 예시 drawing-area
+                  * 목록 리스트 해당 영역에 hover 됐을때 .hover 추가
+                  * 목록 리스트 해당 영역이 선택 됐을때 .selected 추가
+                  * 영역의 품목 상태가 전체 확인 됐을때 .checked 추가
+                -->
+                <div class="drawing-area hover" data-idx="A" data-contract="CNT-2024-112" style="left: 100px; top: 100px; width: 100px; height: 100px;">
+                  <span class="area-label">A hover</span>
+                </div>
+                <div class="drawing-area selected" data-idx="B" data-contract="CNT-2024-112" style="left: 300px; top: 100px; width: 200px; height: 200px;">
+                  <span class="area-label">B selected</span>
+                </div>
+                <div class="drawing-area checked" data-idx="C" data-contract="CNT-2024-112" style="left: 100px; top: 400px; width: 100px; height: 100px;">
+                  <span class="area-label">C checked</span>
+                </div>
+                <div class="drawing-area" data-idx="D" data-contract="CNT-2025-001" style="left: 600px; top: 100px; width: 100px; height: 100px;">
+                  <span class="area-label">A test21</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- // draw-cont-wrap -->
+
+          <div class="drawing-info-wrap">
+            <div class="header">
+              <h3 class="title">영역 목록 (n개)</h3>
+              <button type="button" class="btn gap-2 p-0 btn-checkbox" id="allItemsChk" onclick="allItemsStatusChk()">
+                <span class="text-sm">전체 품목 확인 완료</span>
+                <span class="checkbox"></span>
+              </button>
+            </div>
+
+            <div class="drawing-list-wrap">
+              <div class="drawing-area-group flex flex-col gap-2">
+
+                <div class="drawing-area-box hover" onclick="openModal('itemCheckStatusModalPub')"><!-- 도면 영역에 hover 됐을때 .hover 추가  -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <div class="area-name flex-1">
+                        <span class="flag">A</span>
+                        <span class="flex-1">hover 영역 이름1</span>
+                      </div>
+                      <span class="badge badge-dark-gray px-2">0/3</span>
+                    </div>
+                    <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                  </div>
+                </div>
+
+                <div class="drawing-area-box selected" onclick="openModal('itemCheckStatusModalPub')"><!-- 도면 영역이 선택 됐을때 .selected 추가  -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <div class="area-name flex-1">
+                        <span class="flag">B</span>
+                        <span class="flex-1">selected 영역 이름2</span>
+                      </div>
+                      <span class="badge badge-dark-gray px-2">0/3</span>
+                    </div>
+                    <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                  </div>
+                </div>
+                <div class="drawing-area-box checked" onclick="openModal('itemCheckStatusModalPub')"><!-- 영역의 품목 상태가 전체 확인 됐을때 .checked 추가 -->
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <div class="area-name flex-1">
+                        <span class="flag">C</span>
+                        <span class="flex-1">checked 영역 이름3</span>
+                      </div>
+                      <span class="badge badge-dark-gray px-2">0/3</span>
+                    </div>
+                    <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                  </div>
+                </div>
+
+                <div class="drawing-area-box" onclick="openModal('itemCheckStatusModalPub')">
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <div class="area-name flex-1">
+                        <span class="flag">D</span>
+                        <span class="flex-1">영역 이름4</span>
+                      </div>
+                      <span class="badge badge-dark-gray px-2">0/3</span>
+                    </div>
+                    <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="flex justify-between footer-btn-area">
+              <button type="button" class="btn btn-outline">취소</button>
+              <div class="flex gap-2">
+                <button type="button" class="btn btn-secondary">임시저장</button>
+                <button type="button" class="btn btn-primary" onclick="goPage(2)">다음 단계</button>
+              </div>
+            </div>
+          </div>
+          <!-- drawing-list-wrap -->
+        </div>
+      </div>
+    </div>
+    <!-- E: 케어정보 -->
+
+    <!-- S: 등록확인 -->
+    <div class="layout-care-service hidden">
+      <div class="card h-care-service custom-scrollbar">
+        <div class="card-header">
+          <div class="flex justify-between">
+            <div>
+              <div class="card-title">케어 결과 요약</div>
+              <p class="card-description mt-2">층별 케어 결과를 확인하고 이상이 없으면 다음 단계로 진행하세요.</p>
+            </div>
+
+            <button type="button" class="btn btn-toggle is-open" onclick="toggleAllCards(this)">
+              <span>전체 닫기</span><i class="icon-chevron"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-content" id="careInfo">
+
+          <!-- type: 전체 양호 -->
+          <div class="card card-care-service">
+            <div class="card-header">
+              <div class="flex items-center gap-4">
+                <span class="badge badge-blue">양호</span>
+                <div class="card-title">4F 공간</div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+            </div>
+
+            <div class="card-content collapse-content is-open">
+              <div class="alert alert-default">
+                <div class="alert-title">접수된 AS 또는 관리 품목이 없습니다.</div>
+                <div class="alert-description">모든 품목이 양호 상태로 확인되었습니다.</div>
+              </div>
+            </div>
+          </div>
+          <!-- // 전체 양호 -->
+
+
+          <!-- type: 확인 안한 품목이 있을 경우 -->
+          <div class="card card-care-service">
+            <div class="card-header">
+              <div class="flex items-center gap-4">
+                <span class="badge badge-destructive-outline">미확인</span>
+                <div class="card-title">5F 회의실</div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+            </div>
+
+            <div class="card-content collapse-content is-open">
+              <div class="alert alert-default bg-destructive-foreground">
+                <div class="alert-title">모든 품목이 확인되지 않았습니다.</div>
+                <div class="alert-description">이전 화면으로 돌아가 모든 품목의 상태를 확인해주세요.</div>
+              </div>
+            </div>
+          </div>
+          <!-- // 확인 안한 품목이 있을 경우 -->
+
+
+          <!-- type: 이상(관리 or A/S) 있을 경우 -->
+          <div class="card card-care-service">
+            <div class="card-header">
+              <div class="flex items-center gap-4">
+                <span class="badge badge-orange">이슈</span>
+                <div class="card-title">6F</div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+            </div>
+
+            <div class="card-content collapse-content is-open">
+              <div class="p-4">
+                <table class="table">
+                  <colgroup>
+                    <col style="width: 20%">
+                    <col style="width: 50px">
+                    <col>
+                  </colgroup>
+                  <tbody>
+                    <tr><td colspan="3">업무존A</td></tr>
+                    <tr>
+                      <td rowspan="4">
+                        <ul class="flex flex-col gap-2 font-semibold">
+                          <li>나노바나나</li>
+                          <li>품목명 데스크AAA 텍스트가 길경우 텍스트가 길경우</li>
+                          <li>MT0250320999</li>
+                          <li>WWOCY</li>
+                        </ul>
+                      </td>
+                      <td class="font-semibold text-center">관리</td>
+                      <td>이전 화면에서 입력된 관리 품목의 특이사항 텍스트</td>
+                    </tr>
+                    <tr>
+                      <td rowspan="2" class="font-semibold text-center">A/S</td>
+                      <td>
+                        <ul class="dot-info type-desc">
+                          <li><span class="title">S/N</span>시리얼넘버시리얼넘버시리얼넘버시리얼넘버시리얼넘버시리얼넘버</li>
+                          <li><span class="title">A/S 내용</span>제품에 문제가 있어요</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <ul class="dot-info type-desc">
+                          <li><span class="title">S/N</span>시리얼넘버</li>
+                          <li><span class="title">A/S 내용</span>제품에 문제가 있어요</li>
+                        </ul>
+                        <div class="thumb-img-wrap mt-4">
+                          <div class="thumb-image">
+                            <img src="/assets/img/icons/error.png">
+                          </div>
+                          <div class="thumb-image">
+                            <img src="/assets/img/icons/error.png">
+                          </div>
+                          <div class="thumb-image">
+                            <img src="/assets/img/icons/error.png">
+                          </div>
+                          <div class="thumb-image">
+                            <img src="/assets/img/icons/error.png">
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr><td colspan="3">업무존B</td></tr>
+                    <tr>
+                      <!-- [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                      <td rowspan="4">
+                        <ul class="flex flex-col gap-2 font-semibold">
+                          <li>시리즈명</li>
+                          <li>품목명 데스크BBB</li>
+                          <li>품목코드</li>
+                          <li>색상</li>
+                        </ul>
+                      </td>
+                      <!-- // [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                      <td class="font-semibold text-center">관리</td>
+                      <td>이전 화면에서 입력된 관리 품목의 특이사항 텍스트</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- // 이상(관리 or A/S) 있을 경우 -->
+
+        </div>
+      </div>
+
+      <div class="flex justify-between footer-btn-area">
+        <button type="button" class="btn btn-outline">취소</button>
+        <div class="flex gap-2">
+          <button type="button" class="btn btn-secondary" onclick="goPage(1)">이전 단계</button>
+          <button type="button" class="btn btn-secondary">임시저장</button>
+          <button type="button" class="btn btn-primary" onclick="goPage(3)">다음 단계</button>
+        </div>
+      </div>
+    </div>
+    <!-- E: 등록확인 -->
+
+    <!-- S: 기타정보 -->
+    <div class="layout-care-service hidden">
+      <div class="card h-care-service custom-scrollbar">
+        <div class="card-header pb-4">
+          <div class="flex justify-between">
+            <div class="card-title">기타 정보 입력</div>
+            <p class="card-description text-primary">(선택 입력 사항입니다)</p>
+          </div>
+        </div>
+        <div class="card-content border-t">
+          <div class="grid gap-10">
+            <div>
+              <p class="card-title text-sm mb-4">가구 특별 조치사항</p>
+              <textarea class="textarea h-[150px]" placeholder="이번 회차 오피스케어 진행 중 발견된 가구 특별 조치사항을 입력하세요."></textarea>
+            </div>
+            <div>
+              <p class="card-title text-sm mb-4">현장 개선사항</p>
+              <textarea class="textarea h-[150px]" placeholder="현장에서 확인된 시설/환경 개선사항을 입력하세요."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between footer-btn-area">
+        <button type="button" class="btn btn-outline">취소</button>
+        <div class="flex gap-2">
+          <button type="button" class="btn btn-secondary" onclick="goPage(2)">이전 단계</button>
+          <button type="button" class="btn btn-secondary">임시저장</button>
+          <button type="button" class="btn btn-primary">본사 승인 요청</button>
+        </div>
+      </div>
+    </div>
+    <!-- E: 기타정보 -->
+  </div>
+
+<th:block th:replace="~{service/pub/modal/itemCheckStatusModal}"/><!-- Modal: 품목 상태 확인 -->
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- drag & resize 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<!-- 도면 공통 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_canvas.js}"></script>
+<!-- 상세페이지 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_detail.js}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  updateScale();
+  loadAreas();
+})
+
+function allItemsStatusChk() {
+  const btnCheckbox = document.querySelector("#allItemsChk");
+  const isChecked = btnCheckbox.classList.contains("checked");
+
+  const message = isChecked
+    ? "0000 공간의 모든 품목 확인을 해제하시겠습니까?"
+    : "0000 공간의 모든 품목을 확인 처리하시겠습니까?";
+
+  if (!confirm(message)) return;
+
+  const drawingBoxes = document.querySelectorAll(".drawing-area-group .drawing-area-box");
+  drawingBoxes.forEach((box) => {
+    box.classList.toggle("checked", !isChecked);
+  });
+
+  btnCheckbox.classList.toggle("checked", !isChecked);
+  btnCheckbox.querySelector(".text-sm").innerText = isChecked
+    ? "전체 품목 확인 완료"
+    : "전체 품목 확인 취소";
+}
+
+function goPage(n) {
+  const stepList = document.querySelectorAll('.estimate-breadcrumbs > div');
+  const contList = document.querySelectorAll('.layout-care-service');
+
+  stepList.forEach((item, index) => {
+    item.classList.remove('is-active');
+    if (index === n-1) item.classList.add('is-active');
+  });
+
+  contList.forEach((item, index) => {
+    item.classList.add('hidden');
+    if (index === n-1) item.classList.remove('hidden');
+  });
+}
+
+
+/* 케어 결과 요약 > card 영역 토글 버튼 */
+const contents = document.querySelector("#careInfo");
+contents.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-toggle');
+  if (!btn) return;
+
+  btn.classList.toggle('is-open');
+  btn.closest('.card').querySelector('.collapse-content').classList.toggle('is-open')
+
+  syncAllToggleCard();
+})
+
+function toggleAllCards(e) {
+  if (e.classList.contains('is-open')) {
+    e.classList.remove("is-open");
+    e.querySelector('span').innerText = '전체 열기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.remove("is-open"))
+    contents.querySelectorAll('.collapse-content').forEach(el => el.classList.remove("is-open"))
+
+  } else {
+    e.classList.add("is-open");
+    e.querySelector('span').innerText = '전체 닫기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.add("is-open"))
+    contents.querySelectorAll('.collapse-content').forEach(el => el.classList.add("is-open"))
+  }
+
+  syncAllToggleCard();
+}
+
+function syncAllToggleCard() {
+  const allItems = contents.querySelectorAll('.collapse-content');
+  const openItems = contents.querySelectorAll('.collapse-content.is-open');
+  const btnAllToggle = document.querySelector('.card.h-care-service > .card-header .btn-toggle');
+
+  if (!btnAllToggle) return;
+
+  // 전부 열림
+  if (allItems.length === openItems.length) {
+    btnAllToggle.classList.add('is-open');
+    btnAllToggle.querySelector('span').innerText = '전체 닫기';
+
+  // 전부 닫힘
+  } else if (openItems.length === 0) {
+    btnAllToggle.classList.remove("is-open");
+    btnAllToggle.querySelector('span').innerText = '전체 열기';
+  }
+}
+</script>
+</th:block>
+</body>
+</html>

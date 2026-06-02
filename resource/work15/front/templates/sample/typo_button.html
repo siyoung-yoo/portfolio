@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+<th:block th:replace="~{common/layout/js.html}" />
+
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+  body { background: var(--fursys-white); }
+  .tempPage { padding: 50px; margin: 50px 0; background: #fff; }
+  .box, .box2 { display: flex; align-items: center; width: 250px; border: 1px solid #000; }
+  .box { flex-direction: column; align-items: flex-start; height: auto; padding: var(--space-lg); }
+  /* .box > * { flex: 1; } */
+  .box2 { height: 80px; justify-content: center; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="tempPage">
+    <h2 class="page-title">* TYPO</h2>
+    <ul class="list-column">
+      <li class="font-lg font-bold">* default font setting *</li>
+      <li>font-size: 14px / line-height: 1.5 / font-weight: 400 / letter-spacing: -0.02em / color: --fursys-black</li>
+      <li>font: var(--body-md-r); letter-spacing: var(--letter-spacing-base); color: var(--text-color-default);</li>
+    </ul>
+    <br>
+
+    <div class="title-area flex-col">
+      <h2 class="page-title">.page-title 32px / font: var(--title-m-xl); </h2>
+      <p class="page-description">.page-description 16px / font: var(--body-r-lg);</p>
+    </div>
+
+    <div class="title-area flex-col">
+      <h3 class="contents-title">.contents-title 24px / font: var(--title-lg-m)</h3>
+      <h4 class="section-title">.section-title 20px / font: var(--title-md-m)</h4>
+      <h5 class="group-title">.group-title 16px / font: var(--body-lg-m)</h5>
+      <h6 class="text-title">.text-title 14px / font: var(--body-md-m)</h6>
+    </div>
+
+    <br><br>
+
+    <div class="list-inline" style="align-items: stretch;">
+      <div class="box">
+        <p class="font-lg">.info-list</p><br><br>
+
+        <ul class="info-list">
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value
+              <p class="text-sub">text-sub</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <p class="font-lg">.info-list.col-2</p><br><br>
+
+        <ul class="info-list col-2">
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value
+              <p class="text-sub">text-sub</p>
+            </div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="box" style="width: 508px; height: auto;">
+        <p class="font-lg">.info-list.type-inline</p><br><br>
+
+        <ul class="info-list type-inline">
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+          <li>
+            <div class="title">title</div>
+            <div class="value">value</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="list-inline">
+      <div class="box2">
+        <p class="text-box">.text-box</p>
+      </div>
+      <div class="box2 flex-col">
+        <p><span class="required">required</span></p>
+        <p>required<span class="required"></span></p>
+      </div>
+      <p class="box2 font-sm">.font-sm<br>12px</p>
+      <p class="box2 font-md">.font-md<br>14px</p>
+      <p class="box2 font-lg">.font-lg<br>16px</p>
+      <p class="box2 font-sm font-bold">.font-sm.font-bold<br>12px</p>
+      <p class="box2 font-md font-bold">.font-md.font-bold<br>14px</p>
+      <p class="box2 font-lg font-bold">.font-lg.font-bold<br>16px</p>
+    </div>
+    <div class="list-inline mt-2xs">
+      <p class="box2 title-sm">.title-sm<br>16px</p>
+      <p class="box2 title-md">.title-md<br>20px</p>
+      <p class="box2 title-lg">.title-lg<br>24px</p>
+      <p class="box2 title-sm font-regular">.title-sm.font-regular<br>16px</p>
+      <p class="box2 title-md font-regular">.title-md.font-regular<br>20px</p>
+      <p class="box2 title-lg font-regular">.title-lg.font-regular<br>24px</p>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <h2 class="page-title">* BUTTON</h2>
+    <h3>default 높이: 34px / .md 높이: 40px / .lg 높이: 48px / .rounded (--radius-base) / .round (--radius-round-lg)</h3><br>
+
+    <div class="list-inline">
+      <button type="button" class="btn dark">.btn .dark</button>
+      <button type="button" class="btn light">.btn .light</button>
+      <button type="button" class="btn line">.btn .line</button>
+    </div>
+
+    <br>
+
+    <div class="list-inline">
+      <button type="button" class="btn dark rounded">.btn .rounded</button>
+      <button type="button" class="btn dark round">.btn .round</button>
+      <button type="button" class="btn dark">.btn<i class="icon-arrow-r"></i></button>
+      <button type="button" class="btn dark md">.btn .md</button>
+      <button type="button" class="btn dark lg">.btn .lg</button>
+    </div>
+
+    <br><br>
+
+    <h2>* ETC BUTTON</h2><br>
+    <div class="list-inline gap-lg">
+      <button type="button" class="btn">.btn </button>
+
+      <button type="button" class="btn link">.btn.link</button>
+
+      <button type="button" class="btn tag"><span class="dot"></span> .btn .tag</button>
+      <button type="button" class="btn tag is-active"><span class="dot"></span> .btn .tag .is-active</button>
+
+      <button type="button" class="btn-toggle bg-white"><span class="sr-only">열기</span></button>
+
+      <button type="button" class="btn-toggle bg-white is-expanded"><span class="sr-only">닫기</span></button>
+
+      <button type="button" class="btn-close bg-white"><span class="sr-only">삭제</span></button>
+
+      <button type="button" class="btn light md round">파일명 <i class="icon-download"></i></button>
+
+      <button type="button" class="btn light icon-only round">
+        <i class="icon-arrow-r"></i>
+      </button>
+      <span class="mr-24">.icon-only</span>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <h2 class="page-title">* icon</h2>
+    <h3>default color: var(--fursys-black)</h3><br>
+
+    <div class="list-inline">
+      <i class="icon-account"></i>
+      <i class="icon-arrow-b"></i>
+      <i class="icon-arrow-l"></i>
+      <i class="icon-arrow-r"></i>
+      <i class="icon-assignment"></i>
+      <i class="icon-attach"></i>
+      <i class="icon-bank"></i>
+      <i class="icon-calendar"></i>
+      <i class="icon-card"></i>
+      <i class="icon-card-check"></i>
+      <i class="icon-check"></i>
+      <i class="icon-close"></i>
+      <i class="icon-close_sm"></i>
+      <i class="icon-dashboard"></i>
+      <i class="icon-desk"></i>
+      <i class="icon-document"></i>
+      <i class="icon-download"></i>
+      <i class="icon-edit"></i>
+      <i class="icon-history"></i>
+      <i class="icon-location"></i>
+      <i class="icon-logout"></i>
+      <i class="icon-minus"></i>
+      <i class="icon-menu"></i>
+      <i class="icon-notice"></i>
+      <i class="icon-notification"></i>
+      <i class="icon-plus"></i>
+      <i class="icon-receipt"></i>
+      <i class="icon-refresh"></i>
+      <i class="icon-renew"></i>
+      <i class="icon-ruler"></i>
+      <i class="icon-search"></i>
+      <i class="icon-user"></i>
+      <i class="icon-upload"></i>
+    </div>
+
+    <br>
+    <h3>[size] default: 24px / .lg 36px</h3>
+    <h3>[variation] .pure / .bg-</h3><br>
+
+    <div class="list-inline">
+      <i class="icon-account"></i> i.icon-account
+      <i class="icon-account lg"></i> i.icon-account .lg
+      <i class="icon-user pure"></i>i.icon-user .pure
+    </div>
+    <div class="list-inline mt-4">
+      <i class="icon-account bg-red"></i> i.icon-account .bg-red
+      <i class="icon-account bg-orange"></i> i.icon-account .bg-orange
+      <i class="icon-account bg-yellow"></i> i.icon-account .bg-yellow
+      <i class="icon-account bg-olive"></i> i.icon-account .bg-olive
+      <i class="icon-account bg-green"></i> i.icon-account .bg-green
+    </div>
+  </div>
+
+
+  <div class="tempPage">
+    <h2 class="page-title">* badge</h2>
+    <h3>[size] default: 22px / .sm 20px / .xs 18px / .w-fix 넓이 48px 고정 / .w-fix-lg 넓이 60px 고정</h3>
+    <h3>[variation] .square / .bg- / .badge-line-</h3><br><br>
+
+    <div class="list-inline">
+      <span class="badge">.badge</span>
+      <span class="badge w-fix">.w-fix</span>
+      <span class="badge w-fix-lg">.w-fix-lg</span>
+      <span class="badge square">.badge .square</span>
+      <span class="badge sm">.badge .sm</span>
+      <span class="badge xs">.badge .xs</span>
+    </div>
+    <br>
+    <div class="list-inline">
+      <span class="badge bg-light-gray">.badge .bg-light-gray</span>
+      <span class="badge bg-blue">.badge .bg-blue</span>
+      <span class="badge-line">.badge-line</span>
+      <span class="badge-line-gray">.badge-line-gray</span>
+      <span class="badge-line-blue">.badge-line-blue</span>
+      <span class="badge-line-green">.badge-line-green</span>
+      <span class="badge-line-red">.badge-line-red</span>
+      <span class="badge-line-orange">.badge-line-orange</span>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <h2 class="page-title">* COLOR</h2>
+
+    <div class="list-inline">
+      <p class="box text-white bg-black">.text-white<br>var(--pure-white)</p>
+      <p class="box text-lighter bg-black">.text-lighter<br>var(--oj-light-gray)</p>
+      <p class="box text-light bg-black">.text-light<br>var(--fursys-white)</p>
+    </div>
+
+    <div class="list-inline mt-2xs">
+      <p class="box text-black">.text-black<br>var(--fursys-black)</p>
+      <p class="box text-dark">.text-dark<br>var(--oj-black)</p>
+      <p class="box text-dark-gray">.text-dark-gray<br>var(--dark-gray)</p>
+      <p class="box text-gray">.text-gray<br>var(--oj-gray)</p>
+      <p class="box text-medium-gray">.text-medium-gray<br>var(--medium-gray)</p>
+      <p class="box text-light-gray">.text-light-gray<br>var(--light-gray)</p>
+    </div>
+
+    <div class="list-inline mt-2xs">
+      <p class="box text-red">.text-red<br>var(--fursys-red)</p>
+      <p class="box text-orange">.text-orange<br>var(--orange)</p>
+      <p class="box text-yellow">.text-yellow<br>var(--yellow)</p>
+      <p class="box text-olive">.text-olive<br>var(--olive)</p>
+      <p class="box text-green">.text-green<br>var(--green)</p>
+      <p class="box text-slate">.text-slate<br>var(--slate)</p>
+      <p class="box text-mint">.text-mint<br>var(--mint)</p>
+      <p class="box text-sky">.text-sky<br>var(--sky)</p>
+      <p class="box text-blue">.text-blue<br>var(--blue)</p>
+      <p class="box text-lilac">.text-lilac<br>var(--lilac)</p>
+      <p class="box text-brown">.text-brown<br>var(--brown)</p>
+      <p class="box text-cornflower">.text-cornflower<br>var(--cornflower)</p>
+      <p class="box text-light-cornflower">.text-light-cornflower<br>var(--light-cornflower)</p>
+    </div>
+
+    <br><br>
+
+    <div class="list-inline">
+      <p class="box bg-none">.bg-none<br>transparent</p>
+      <p class="box bg-white">.bg-white<br>var(--pure-white)</p>
+      <p class="box bg-lighter">.bg-lighter<br>var(--oj-light-gray)</p>
+      <p class="box bg-light">.bg-light<br>var(--fursys-white)</p>
+    </div>
+
+    <div class="list-inline mt-2xs">
+      <p class="box bg-black text-white">.bg-black<br>var(--fursys-black)</p>
+      <p class="box bg-dark text-white">.bg-dark<br>var(--oj-black)</p>
+      <p class="box bg-dark-gray text-white">.bg-dark-gray<br>var(--dark-gray)</p>
+      <p class="box bg-gray text-white">.bg-gray<br>var(--oj-gray)</p>
+      <p class="box bg-medium-gray">.bg-medium-gray<br>var(--medium-gray)</p>
+      <p class="box bg-light-gray">.bg-light-gray<br>var(--light-gray)</p>
+    </div>
+
+    <div class="list-inline mt-2xs">
+      <p class="box bg-red">.bg-red<br>var(--fursys-red)</p>
+      <p class="box bg-orange">.bg-orange<br>var(--orange)</p>
+      <p class="box bg-yellow">.bg-yellow<br>var(--yellow)</p>
+      <p class="box bg-olive">.bg-olive<br>var(--olive)</p>
+      <p class="box bg-green">.bg-green<br>var(--green)</p>
+      <p class="box bg-slate">.bg-slate<br>var(--slate)</p>
+      <p class="box bg-mint">.bg-mint<br>var(--mint)</p>
+      <p class="box bg-sky">.bg-sky<br>var(--sky)</p>
+      <p class="box bg-blue">.bg-blue<br>var(--blue)</p>
+      <p class="box bg-lilac">.bg-lilac<br>var(--lilac)</p>
+      <p class="box bg-brown text-white">.bg-brown<br>var(--brown)</p>
+      <p class="box bg-cornflower">.bg-cornflower<br>var(--cornflower)</p>
+      <p class="box bg-light-cornflower">.bg-light-cornflower<br>var(--light-cornflower)</p>
+    </div>
+  </div>
+</body>
+</html>

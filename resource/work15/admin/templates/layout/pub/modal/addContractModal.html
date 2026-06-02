@@ -1,0 +1,65 @@
+<div class="modal" id="addContractModalPub">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">계약 추가</h5>
+          <p class="modal-description mt-2">현재 도면에 추가 매핑할 미매핑 계약건을 선택하세요.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="card mb-5">
+          <div class="card-content">
+            <div class="flex items-center">
+              <p class="label w-[45px] flex-shrink-0">주소</p>
+              <p class="label-data-text mt-0">서울 강남구 대치동 890</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between mb-2">
+          <span class="label">미매핑 계약 (3건)</span>
+          <p class="text-indent">* 계약 건을 선택한 후, 영역 지정 및 품목 매핑을 다시 진행해 주세요.</p>
+        </div>
+
+        <form-select allow-html>
+          <select name="">
+            <option value="" hidden>추가할 계약을 선택하세요</option>
+            <option value="1">
+              <div class="py-1">
+                <div class="flex items-start gap-2">
+                  <strong class="whitespace-normal">한빛소프트 본사한빛소프트 본사한빛소프트 본사한빛소프트 본사한빛소프트 본사한빛소프트 본사</strong>
+                  <!-- [2026-04-22] 미매핑 배지 삭제, 이전설치 배지만 노출-->
+                  <span class="badge badge-orange"><i class="icon-switch mr-1"></i>이전설치</span>
+                </div>
+                <p class="label mt-1">CNT-2024-112</p>
+              </div>
+            </option>
+            <option value="2">
+              <div class="py-1">
+                <div class="flex items-start gap-2">
+                  <strong class="whitespace-normal">한빛소프트 본사</strong>
+                </div>
+                <p class="label mt-1">CNT-2024-112</p>
+              </div>
+            </option>
+            <option value="3">
+              <div class="py-1">
+                <div class="flex items-start gap-2">
+                  <strong class="whitespace-normal">계약명</strong>
+                </div>
+                <p class="label mt-1">CNT-2024-112</p>
+              </div>
+            </option>
+          </select>
+        </form-select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">선택</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+<!-- 오피스저니 계정 검색 모달 -->
+<div class="modal" id="ojAccountSearchModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">오피스저니 계정 검색</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="grid sm:grid-cols-4 gap-2">
+          <div class="input-group">
+            <label>
+              <span class="label">아이디</span>
+              <input type="text" id="ojSearchId" class="input" placeholder="아이디">
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              <span class="label">이름</span>
+              <input type="text" id="ojSearchNm" class="input" placeholder="이름">
+            </label>
+          </div>
+          <div class="input-group">
+            <label>
+              <span class="label">고객사명</span>
+              <input type="text" id="ojSearchCompanyNm" class="input" placeholder="고객사명">
+            </label>
+          </div>
+          <div class="flex items-end">
+            <button type="button" class="btn btn-secondary" id="ojSearchBtn">검색</button>
+          </div>
+        </div>
+        <div class="mt-3">
+          <span class="label">계정 목록</span>
+          <div class="mt-2" id="ojAccountSearchGrid" style="height: 350px;"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary" id="ojSelectBtn">선택</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let ojSearchGridId = null;
+  let selectedOjAccount = null;
+
+  function openOjAccountSearchModal() {
+    selectedOjAccount = null;
+    document.getElementById('ojSearchId').value = '';
+    document.getElementById('ojSearchNm').value = '';
+    document.getElementById('ojSearchCompanyNm').value = '';
+    openModal('ojAccountSearchModal');
+    initOjSearchGrid();
+  }
+
+  function initOjSearchGrid() {
+    const columnLayout = [
+      { headerText: '아이디', dataField: 'OJ_ID', width: 150 },
+      { headerText: '이름', dataField: 'OJ_NM', width: 100 },
+      { headerText: '사업자명', dataField: 'COMPANY_NM', width: 200 },
+      { headerText: '연락처', dataField: 'USER_HP', width: 150 },
+      { headerText: '이메일', dataField: 'USER_EMAIL', width: 200 },
+    ];
+    const props = {
+      enableSorting: true,
+      selectionMode: 'singleRow',
+      showRowNumColumn: true,
+      fillColumnSizeMode: true,
+    };
+    const result = ensureGrid('#ojAccountSearchGrid', columnLayout, props, ojSearchGridId);
+    ojSearchGridId = result.gridId;
+
+    if (result.created) {
+      AUIGrid.bind(ojSearchGridId, 'cellClick', function (e) { selectedOjAccount = e.item; });
+      AUIGrid.bind(ojSearchGridId, 'cellDoubleClick', function (e) {
+        selectedOjAccount = e.item;
+        selectOjAccount();
+      });
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.id === 'ojSearchBtn') searchOjAccounts();
+    if (e.target.id === 'ojSelectBtn') selectOjAccount();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && (e.target.id === 'ojSearchId' || e.target.id === 'ojSearchNm' || e.target.id === 'ojSearchCompanyNm')) {
+      e.preventDefault();
+      searchOjAccounts();
+    }
+  });
+
+  async function searchOjAccounts() {
+    const ojId = document.getElementById('ojSearchId').value.trim();
+    const ojNm = document.getElementById('ojSearchNm').value.trim();
+    const companyNm = document.getElementById('ojSearchCompanyNm').value.trim();
+
+    if (!ojId && !ojNm && !companyNm) {
+      alert('아이디, 이름 또는 고객사명을 입력해주세요.');
+      return;
+    }
+
+    initOjSearchGrid();
+    AUIGrid.showAjaxLoader(ojSearchGridId);
+
+    try {
+      const data = await fetchJson('/layout/service/selectOjAccountList.dataTable', 'POST', { ojId, ojNm, companyNm });
+      AUIGrid.removeAjaxLoader(ojSearchGridId);
+      AUIGrid.setGridData(ojSearchGridId, data?.data || []);
+      selectedOjAccount = null;
+    } catch (error) {
+      AUIGrid.removeAjaxLoader(ojSearchGridId);
+      alert('조회 중 오류가 발생했습니다.');
+      console.error(error);
+    }
+  }
+
+  function selectOjAccount() {
+    if (!selectedOjAccount) {
+      alert('계정을 선택해주세요.');
+      return;
+    }
+    document.getElementById('regReqUserId').value = selectedOjAccount.OJ_ID || '';
+    document.getElementById('regReqUserNm').value = selectedOjAccount.OJ_NM || '';
+    document.getElementById('regReqUserTelNo').value = selectedOjAccount.USER_HP || '';
+    document.getElementById('regCorpCd').value = selectedOjAccount.COMPANY_CD || '';
+    document.getElementById('regCorpNm').value = selectedOjAccount.COMPANY_NM || '';
+    closeModal('ojAccountSearchModal');
+  }
+</script>

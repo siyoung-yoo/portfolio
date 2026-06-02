@@ -1,0 +1,117 @@
+<!-- 영역 상세 정보 모달 (조회 전용) -->
+<div class="modal" id="itemMappingInfoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="area-name font-semibold text-base" id="infoAreaName"></h5>
+          <p class="modal-description mt-2">매핑된 계약 및 품목 정보입니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 계약 정보 -->
+        <div class="card">
+          <div class="card-content">
+            <div class="grid grid-cols-4 gap-2">
+              <div>
+                <p class="label">고객사</p>
+                <p class="label-data-text" id="infoCtmLscno"></p>
+              </div>
+              <div>
+                <p class="label">계약번호</p>
+                <p class="label-data-text" id="infoConCd"></p>
+              </div>
+              <div class="col-span-2">
+                <p class="label">계약명</p>
+                <p class="label-data-text" id="infoConTitle"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 품목 테이블 — break-word: 긴 텍스트 줄바꿈 처리 -->
+        <table class="table break-word table-fixed mt-5 border">
+          <colgroup>
+            <col style="width: 25%;">
+            <col>
+            <col style="width: 18%">
+            <col style="width: 13%">
+            <col style="width: 10%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>시리즈명</th>
+              <th>품목명</th>
+              <th>품목코드</th>
+              <th>색상</th>
+              <th class="px-0">수량</th>
+            </tr>
+          </thead>
+          <tbody id="infoItemTbody">
+          </tbody>
+        </table>
+
+        <!-- 품목 없을 때 -->
+        <div id="infoNoItems" class="hidden mt-5 text-center text-primary-300 py-5">
+          매핑된 품목이 없습니다.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/**
+ * 영역 상세 정보 모달 열기
+ * @param {string} contractCode - 계약코드
+ * @param {string} areaIdx - 영역 idx (A, B, ...)
+ */
+function openItemMappingInfoModal(contractCode, areaIdx) {
+  // drawAreaData에서 영역 찾기
+  const group = drawAreaData.find(g => g.contractCode === contractCode);
+  if (!group) return;
+  const area = group.info.find(a => a.idx === areaIdx);
+  if (!area) return;
+
+  // 영역명
+  document.getElementById('infoAreaName').innerHTML =
+    `<span class="flag">${area.idx}</span>${area.name || ''}`;
+
+  // 계약 정보
+  document.getElementById('infoConCd').textContent = group.contractCode || '-';
+  document.getElementById('infoConTitle').textContent = group.contractName || '-';
+  document.getElementById('infoCtmLscno').textContent = _detailData?.ctmNm || '-';
+
+  // 품목 테이블
+  const tbody = document.getElementById('infoItemTbody');
+  const noItems = document.getElementById('infoNoItems');
+  tbody.innerHTML = '';
+
+  // null 품목 제외
+  const validItems = (area.items || []).filter(item => item.itemCode && item.itemCode !== 'null');
+
+  if (validItems.length > 0) {
+    noItems.classList.add('hidden');
+
+    validItems.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="px-3">${item.seriesNm || '-'}</td>
+        <td class="px-3">${item.itemName || '-'}</td>
+        <td class="px-3">${item.itemCode || '-'}</td>
+        <td class="px-3">${item.colCd || '-'}</td>
+        <td class="text-center px-0">${item.itemCout || 0}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } else {
+    noItems.classList.remove('hidden');
+  }
+
+  openModal('itemMappingInfoModal');
+}
+</script>

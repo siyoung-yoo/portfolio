@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('오피스케어 결과등록', ~{::titleAddon}, ~{::action})}">
+    <th:block th:fragment="action">
+      <div class="estimate-breadcrumbs">
+        <div class="is-active"><span class="chapter">1</span>케어정보</div>
+        <div><span class="chapter">2</span>등록확인</div>
+        <div><span class="chapter">3</span>기타정보</div>
+      </div>
+    </th:block>
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <!-- S: 공통 정보 -->
+    <div class="card px-5 pt-4 pb-2 mb-4">
+      <ul class="dot-info">
+        <li class="w-[40%]"><span class="title">채권정보</span><span id="hdrContract">-</span></li>
+        <li><span class="title">회차/기간</span><span id="hdrSeqCycle">-</span></li>
+      </ul>
+
+      <ul class="dot-info flex">
+        <li class="w-[40%]"><span class="title">주소</span><span id="hdrAddress">-</span></li>
+        <li class="flex-1 pr-10"><span class="title">예정일</span> <span id="hdrPlanDate">-</span></li>
+        <li class="flex-1"><span class="title">완료일</span>
+          <input id="careFinalDate" type="text" class="input datepicker-basic flex-1" placeholder="YYYY-MM-DD">
+        </li>
+      </ul>
+    </div>
+    <!-- E: 공통 정보 -->
+
+    <!-- S: 케어정보 -->
+    <div class="layout-care-service">
+      <div class="draw-panel-layout flex-col gap-0">
+        <ul class="tabs type-block" data-target="#tabCont" id="floorTabs">
+          <!-- JS 렌더링: 도면 버전별 영역 그룹 -->
+        </ul>
+
+        <div class="tab-contents" id="tabCont">
+          <div class="draw-cont-wrap" style="position: relative;">
+            <div class="draw-controls">
+              <div class="scale-box border">
+                <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+                  <i class="icon-minus"></i>
+                </button>
+                <span id="scaleLabel">100%</span>
+                <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+                  <i class="icon-plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="drawCont" class="draw-cont draw-fixed has-dim" style="overflow: auto;">
+              <div class="img-box">
+                <canvas id="drawImg"></canvas>
+                <!-- JS 렌더링: drawing-area 박스 -->
+              </div>
+            </div>
+
+          </div>
+          <!-- // draw-cont-wrap -->
+
+          <div class="drawing-info-wrap">
+            <div class="header">
+              <h3 class="title">영역 목록 (<span id="areaCount">0</span>개)</h3>
+              <button type="button" class="btn gap-2 p-0 btn-checkbox" id="allItemsChk" onclick="allItemsStatusChk()">
+                <span class="text-sm">전체 품목 확인 완료</span>
+                <span class="checkbox"></span>
+              </button>
+            </div>
+
+            <div class="drawing-list-wrap">
+              <div class="drawing-area-group flex flex-col gap-2" id="areaListWrap">
+                <!-- JS 렌더링: drawing-area-box -->
+              </div>
+            </div>
+
+            <div class="flex justify-between footer-btn-area">
+              <button type="button" class="btn btn-outline" onclick="cancelEdit()">취소</button>
+              <div class="flex gap-2">
+                <button type="button" class="btn btn-secondary" onclick="saveReport(false)">임시저장</button>
+                <button type="button" class="btn btn-primary" onclick="goPage(2)">다음 단계</button>
+              </div>
+            </div>
+          </div>
+          <!-- drawing-list-wrap -->
+        </div>
+      </div>
+    </div>
+    <!-- E: 케어정보 -->
+
+    <!-- S: 등록확인 -->
+    <div class="layout-care-service hidden">
+      <div class="card h-care-service custom-scrollbar">
+        <div class="card-header">
+          <div class="flex justify-between">
+            <div>
+              <div class="card-title">케어 결과 요약</div>
+              <p class="card-description mt-2">층별 케어 결과를 확인하고 이상이 없으면 다음 단계로 진행하세요.</p>
+            </div>
+            <button type="button" class="btn btn-toggle is-open" onclick="toggleAllCards(this)">
+              <span>전체 닫기</span><i class="icon-chevron"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-content" id="summaryWrap">
+          <!-- JS 렌더링: 층별 결과 요약 카드 -->
+        </div>
+      </div>
+
+      <div class="flex justify-between footer-btn-area">
+        <button type="button" class="btn btn-outline" onclick="cancelEdit()">취소</button>
+        <div class="flex gap-2">
+          <button type="button" class="btn btn-secondary" onclick="goPage(1)">이전 단계</button>
+          <button type="button" class="btn btn-secondary" onclick="saveReport(false)">임시저장</button>
+          <button type="button" class="btn btn-primary" onclick="goPage(3)">다음 단계</button>
+        </div>
+      </div>
+    </div>
+    <!-- E: 등록확인 -->
+
+    <!-- S: 기타정보 -->
+    <div class="layout-care-service hidden">
+      <div class="card h-care-service custom-scrollbar">
+        <div class="card-header pb-4">
+          <div class="flex justify-between">
+            <div class="card-title">기타 정보 입력</div>
+            <p class="card-description text-primary">(선택 입력 사항입니다)</p>
+          </div>
+        </div>
+        <div class="card-content border-t">
+          <div class="grid gap-10">
+            <div>
+              <p class="card-title text-sm mb-4">가구 특별 조치사항</p>
+              <textarea id="furnitureFix" class="textarea h-[150px]" placeholder="이번 회차 오피스케어 진행 중 발견된 가구 특별 조치사항을 입력하세요."></textarea>
+            </div>
+            <div>
+              <p class="card-title text-sm mb-4">현장 개선사항</p>
+              <textarea id="improvement" class="textarea h-[150px]" placeholder="현장에서 확인된 시설/환경 개선사항을 입력하세요."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-between footer-btn-area">
+        <button type="button" class="btn btn-outline" onclick="cancelEdit()">취소</button>
+        <div class="flex gap-2">
+          <button type="button" class="btn btn-secondary" onclick="goPage(2)">이전 단계</button>
+          <button type="button" class="btn btn-secondary" onclick="saveReport(false)">임시저장</button>
+          <button type="button" class="btn btn-primary" onclick="saveReport(true)">본사 승인 요청</button>
+        </div>
+      </div>
+    </div>
+    <!-- E: 기타정보 -->
+  </div>
+
+<th:block th:replace="~{service/modal/itemCheckStatusModal}"/><!-- Modal: 품목 상태 확인 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<!-- URL 에서 식별자 파싱
+     형식: /service/care/{officecareSeq}?conIdx=..&mIdx=..&estaIdx=.. -->
+<script>
+  (function(){
+    const params = new URLSearchParams(window.location.search);
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    window._careCtx = {
+      conIdx:        params.get('conIdx'),
+      mIdx:          params.get('mIdx'),
+      estaIdx:       params.get('estaIdx'),
+      officecareSeq: pathSegments[pathSegments.length - 1]   // 마지막 path segment
+    };
+  })();
+</script>
+
+<!-- pdf.js / interact.js (도면 영역 인터랙션) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+<script>
+/* ============================================================
+ * 오피스케어 결과 등록 화면 — 골격
+ *  - Step 1: 도면 + 영역 + 품목 상태 입력 (모달 itemCheckStatusModal)
+ *  - Step 2: 층별 결과 요약
+ *  - Step 3: 가구 특별조치/현장개선 입력
+ *
+ * Phase 3c~3e (다음 턴):
+ *  - 매퍼/서비스/REST API 작성
+ *  - 도면 PDF 렌더링 + 영역 좌표 표시
+ *  - 임시저장/최종저장 + S3 파일 업로드
+ * ============================================================ */
+
+let _careCtx = window._careCtx || {};   // 식별자
+let _reportData = null;                 // 서버 데이터 캐시
+let _scale = 100;
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 모달을 body 끝으로 이동 (컨테이너 스크롤/오버플로 영향 회피)
+  document.querySelectorAll('.container-h-full .modal').forEach(m => {
+    document.body.appendChild(m);
+  });
+  loadReportInitData();
+});
+
+/* ============================================================
+ * 진입 데이터 로드 (헤더 + 영역+품목 + 점검결과코드)
+ * ============================================================ */
+let _currentVersionId = null;   // 현재 선택된 도면 탭
+
+function loadReportInitData() {
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDist/getReportInitData',
+    type: 'post',
+    data: _careCtx,
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      _reportData = res.data || {};
+      renderHeader(_reportData.header);
+      // 임시저장된 데이터 있으면 _detailMap 복원 + textarea 채움
+      restoreSavedReport(_reportData.savedMaster, _reportData.savedDetails);
+      renderDrawingTabs(_reportData.drawings || []);
+      // 첫 번째 도면 선택
+      const firstDrw = (_reportData.drawings || [])[0];
+      if (firstDrw) {
+        selectDrawingTab(firstDrw.versionId);
+      } else {
+        renderAreaList(_reportData.header, []);
+      }
+    }
+  });
+}
+
+/* 임시저장 데이터 복원: 가구 특별조치/현장 개선 textarea + 영역×품목 _detailMap (DETAIL+ISSUE+ISSUE_FILE) */
+function restoreSavedReport(master, details) {
+  if (master) {
+    const fix = document.getElementById('furnitureFix');
+    const imp = document.getElementById('improvement');
+    if (fix) fix.value = master.furnitureFix || '';
+    if (imp) imp.value = master.improvement || '';
+  }
+  if (!details || details.length === 0) return;
+
+  // 1) DETAIL → _detailMap 기본 복원
+  details.forEach(d => {
+    if (d.areaItemId == null) return;
+    const item = (_reportData.areaItems || []).find(it =>
+      String(it.areaItemId) === String(d.areaItemId)
+    );
+    if (!item) return;
+    _detailMap[item.areaItemId] = {
+      areaItemId:  Number(item.areaItemId),
+      areaId:      item.areaId,
+      areaName:    item.areaName,
+      setYn:       item.setYn,
+      codeCd:      item.codeCd,
+      colCd:       item.colCd,
+      quantity:    item.quantity,
+      checkStatus: d.checkStatus,
+      checkBigo:   d.checkBigo,
+      confirmYn:   d.confirmYn || 'N',
+      issueCare:   'N',
+      issueAs:     'N',
+      careMemo:    '',
+      asList:      []
+    };
+  });
+
+  // 2) ISSUE → 관리/AS 복원 (areaItemId 기준)
+  const issues = _reportData.savedIssues || [];
+  const filesByIssue = {};
+  (_reportData.savedIssueFiles || []).forEach(f => {
+    const key = `${f.issueGubun}_${f.issueSeq}`;
+    if (!filesByIssue[key]) filesByIssue[key] = [];
+    filesByIssue[key].push(f);
+  });
+
+  console.log('[restore] savedDetails:', _reportData.savedDetails);
+  console.log('[restore] savedIssues:', issues);
+  console.log('[restore] _detailMap keys after DETAIL:', Object.keys(_detailMap));
+
+  issues.forEach(iss => {
+    if (iss.areaItemId == null) {
+      console.warn('[restore] ISSUE skipped (areaItemId null):', iss);
+      return;
+    }
+    const k = String(iss.areaItemId);
+    if (!_detailMap[k]) {
+      console.warn('[restore] ISSUE skipped (no _detailMap key):', k, iss);
+      return;
+    }
+    if (iss.issueGubun === '관리') {
+      _detailMap[k].issueCare = 'Y';
+      _detailMap[k].careMemo  = iss.checkBigo || '';
+      _detailMap[k].checkBigo = iss.checkBigo || _detailMap[k].checkBigo;
+    } else if (iss.issueGubun === 'AS') {
+      _detailMap[k].issueAs = 'Y';
+      const fkey = `${iss.issueGubun}_${iss.issueSeq}`;
+      _detailMap[k].asList.push({
+        serialNo:  iss.serialNo  || '',
+        asContent: iss.checkBigo || '',
+        files: (filesByIssue[fkey] || []).map(f => ({
+          file:     null,
+          filePath: f.filePath,
+          fileNm:   f.fileNm,
+          fileSeq:  f.fileSeq
+        }))
+      });
+    }
+  });
+}
+
+/* 도면 탭 렌더 (도면이 N건이면 탭 N개) */
+function renderDrawingTabs(drawings) {
+  const ul = document.getElementById('floorTabs');
+  if (!ul) return;
+  ul.innerHTML = '';
+  if (drawings.length === 0) return;
+
+  drawings.forEach((drw, idx) => {
+    const li = document.createElement('li');
+    li.className = 'tab-item' + (idx === 0 ? ' is-active' : '');
+    li.dataset.versionId = drw.versionId;
+    li.dataset.drawingId = drw.drawingId;
+    li.dataset.pdfPath   = drw.pdfPath || '';
+    li.onclick = () => selectDrawingTab(drw.versionId);
+    li.innerHTML = `
+      ${escapeHtmlD(drw.drawingName || `도면${idx + 1}`)}
+      <span class="badge badge-dark-gray">0/0</span>`;
+    ul.appendChild(li);
+  });
+
+  // 카운트는 _detailMap / quantity 기준으로 갱신
+  refreshDrawingTabCount();
+}
+
+/* 도면 탭의 N/M 카운트 갱신 — 영역 박스와 동일하게 quantity 합산 기준 */
+function refreshDrawingTabCount() {
+  document.querySelectorAll('#floorTabs .tab-item').forEach(tab => {
+    const vId = tab.dataset.versionId;
+    const items = (_reportData.areaItems || [])
+      .filter(it => String(it.versionId) === String(vId) && it.areaItemId);
+    const total   = items.reduce((s, it) => s + Number(it.quantity || 0), 0);
+    // 카운트 기준: confirmYn === 'Y' (확인 완료된 행)
+    const checked = items.reduce((s, it) => {
+      const d = _detailMap[it.areaItemId];
+      return s + ((d && d.confirmYn === 'Y') ? Number(it.quantity || 0) : 0);
+    }, 0);
+    const badge = tab.querySelector('.badge');
+    if (badge) badge.textContent = `${checked}/${total}`;
+  });
+}
+
+/* 탭 선택: 영역 목록 + PDF 갱신 */
+function selectDrawingTab(versionId) {
+  _currentVersionId = versionId;
+
+  // 탭 active 토글
+  document.querySelectorAll('#floorTabs .tab-item').forEach(t => {
+    t.classList.toggle('is-active', String(t.dataset.versionId) === String(versionId));
+  });
+
+  // 해당 도면의 영역 목록 렌더
+  renderAreaList(_reportData.header, _reportData.areaItems || []);
+  // 저장된 _detailMap 기준으로 영역 박스 카운트 갱신
+  refreshAreaBoxCount();
+
+  // 도면 PDF 로드
+  const activeTab = document.querySelector(`#floorTabs .tab-item[data-version-id="${versionId}"]`);
+  const pdfPath = activeTab?.dataset.pdfPath;
+  loadDrawingPdf(pdfPath);
+}
+
+/* 도면 PDF 로드 — 전체 페이지를 단일 canvas 에 세로로 합쳐 렌더 (도면관리 패턴) */
+function loadDrawingPdf(pdfPath) {
+  const canvas = document.getElementById('drawImg');
+  if (!canvas) return;
+  // 기존 캔버스 클리어
+  canvas.width = canvas.width;
+  if (!pdfPath) return;
+
+  // 공통 로딩 스피너 표시 (도면 전용 drawLoading 대신 LoadingManager)
+  LoadingManager.inc();
+
+  const proxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(pdfPath);
+  canvas.setAttribute('data-img', proxyUrl);
+
+  pdfjsLib.getDocument(proxyUrl).promise.then(async pdf => {
+    const totalPages = pdf.numPages;
+    const pageData = [];
+    let totalHeight = 0;
+    let maxWidth = 0;
+
+    // 각 페이지를 임시 canvas에 렌더링
+    for (let i = 1; i <= totalPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 1 });
+
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = viewport.width;
+      tempCanvas.height = viewport.height;
+      await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport: viewport }).promise;
+
+      pageData.push({ tempCanvas, width: viewport.width, height: viewport.height });
+      totalHeight += viewport.height;
+      maxWidth = Math.max(maxWidth, viewport.width);
+    }
+
+    // 메인 canvas 에 세로로 합치기
+    canvas.width  = maxWidth;
+    canvas.height = totalHeight;
+    const ctx = canvas.getContext('2d');
+    let yOffset = 0;
+    for (const { tempCanvas, height } of pageData) {
+      ctx.drawImage(tempCanvas, 0, yOffset);
+      yOffset += height;
+    }
+
+    // 영역 박스 표시 (좌표는 합쳐진 canvas 기준)
+    renderDrawingAreaBoxes();
+    // 현재 배율 적용 (img-box layout 크기 보정)
+    applyScale();
+  }).catch(err => {
+    console.error('PDF 로드 실패:', err);
+  }).finally(() => {
+    LoadingManager.dec();
+  });
+}
+
+/* 도면 위 영역 박스 표시 — 현재 versionId 의 영역들의 (x, y, width, height) */
+function renderDrawingAreaBoxes() {
+  const imgBox = document.querySelector('#drawCont .img-box');
+  if (!imgBox) return;
+  // 기존 영역 박스 제거
+  imgBox.querySelectorAll('.drawing-area').forEach(el => el.remove());
+
+  const items = (_reportData?.areaItems || []).filter(it =>
+    String(it.versionId) === String(_currentVersionId) && it.areaName
+  );
+  // 영역 ID 별 1번만
+  const seenAreas = new Set();
+  let alphaIdx = 0;
+  items.forEach(it => {
+    if (seenAreas.has(it.areaId)) return;
+    seenAreas.add(it.areaId);
+
+    const flag = String.fromCharCode(65 + alphaIdx++);
+    const box = document.createElement('div');
+    box.className = 'drawing-area';
+    box.dataset.areaId = it.areaId;
+    box.style.left   = (it.x || 0) + 'px';
+    box.style.top    = (it.y || 0) + 'px';
+    box.style.width  = (it.width || 0) + 'px';
+    box.style.height = (it.height || 0) + 'px';
+    box.innerHTML = `<span class="area-label">${flag} ${escapeHtmlD(it.areaName)}</span>`;
+    box.onclick = (e) => {
+      e.stopPropagation();
+      selectArea(it.areaId);
+      // 도면 위 박스 클릭 시 품목 상태 확인 모달 출력
+      const area = window._areaById?.[String(it.areaId)];
+      if (area) openItemCheckStatusModal(area);
+    };
+    imgBox.appendChild(box);
+  });
+}
+
+/* 영역 선택 — 도면 위 박스 + 우측 목록 동시 toggle */
+function selectArea(areaId) {
+  document.querySelectorAll('#drawCont .drawing-area').forEach(el => {
+    el.classList.toggle('selected', String(el.dataset.areaId) === String(areaId));
+  });
+  document.querySelectorAll('#areaListWrap .drawing-area-box').forEach(el => {
+    el.classList.toggle('selected', String(el.dataset.areaId) === String(areaId));
+  });
+}
+
+function renderHeader(h) {
+  if (!h) return;
+  // 계약건 — "채권번호 계약명" (계약번호 conCd 가 아닌 채권번호 bondNo 사용)
+  document.getElementById('hdrContract').textContent =
+    [h.bondNo, h.conTitle].filter(Boolean).join(' ') || '-';
+  // 회차/기간 — "R{N} / yyyy-mm-dd ~ yyyy-mm-dd"
+  // 기간: 1회차는 계약시작일 ~ 회차 dueDate, 그외는 (이전 dueDate + 1일) ~ 회차 dueDate
+  const baseStart = Number(h.officecareSeq) === 1
+    ? String(h.contractStartDate || '').replace(/[^0-9]/g, '')
+    : (function (prev) {
+        if (!/^\d{8}$/.test(prev)) return '';
+        const d = new Date(Number(prev.slice(0,4)), Number(prev.slice(4,6))-1, Number(prev.slice(6,8)));
+        d.setDate(d.getDate() + 1);
+        return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      })(String(h.prevDueDate || '').replace(/[^0-9]/g, ''));
+  const endRaw = String(h.dueDate || h.careFinalDate || '').replace(/[^0-9]/g, '');
+  const periodStr = (baseStart && endRaw)
+    ? `${formatDate(baseStart)} ~ ${formatDate(endRaw)}`
+    : '-';
+  const cycle = h.careCycle ? `(${h.careCycle})` : '';
+  document.getElementById('hdrSeqCycle').textContent =
+    `${h.officecareSeq || '?'}회차${cycle} / ${periodStr}`;
+  // 주소
+  document.getElementById('hdrAddress').textContent = h.addressText || '-';
+  // 예정일
+  document.getElementById('hdrPlanDate').textContent = formatDate(h.careRequestDate) || '-';
+  // 완료일
+  const careFinalEl = document.getElementById('careFinalDate');
+  if (careFinalEl) {
+    // 저장된 완료일 복원 — input value + datepicker selectedDates 동시 반영
+    const finalRaw = String(h.careFinalDate || '').replace(/[^0-9]/g, '');
+    if (/^\d{8}$/.test(finalRaw)) {
+      const finalDate = new Date(
+        Number(finalRaw.slice(0,4)),
+        Number(finalRaw.slice(4,6)) - 1,
+        Number(finalRaw.slice(6,8))
+      );
+      if (careFinalEl.datepicker?.selectDate) {
+        careFinalEl.datepicker.selectDate(finalDate);
+      } else {
+        careFinalEl.value = formatDate(h.careFinalDate);
+      }
+    }
+    // 예정일 이전 날짜는 선택 불가 — datepicker minDate 설정
+    const reqDt = String(h.careRequestDate || '').replace(/[^0-9]/g, '');
+    if (/^\d{8}$/.test(reqDt) && careFinalEl.datepicker?.update) {
+      const minDate = new Date(
+        Number(reqDt.slice(0,4)),
+        Number(reqDt.slice(4,6)) - 1,
+        Number(reqDt.slice(6,8))
+      );
+      careFinalEl.datepicker.update({ minDate });
+    }
+  }
+}
+
+function renderAreaList(header, items) {
+  // 현재 선택된 도면(versionId)의 영역만 필터
+  const filtered = _currentVersionId
+    ? items.filter(it => String(it.versionId) === String(_currentVersionId))
+    : items;
+
+  // 영역 ID 기준 그룹핑 (한 영역에 품목 N건)
+  const areaMap = new Map();
+  filtered.forEach(it => {
+    if (!it.areaId) return;
+    if (!areaMap.has(it.areaId)) {
+      areaMap.set(it.areaId, {
+        areaId: it.areaId,
+        areaName: it.areaName,
+        x: it.x, y: it.y, width: it.width, height: it.height,
+        items: []
+      });
+    }
+    if (it.codeCd) {  // 품목 정보가 있을 때만 추가
+      areaMap.get(it.areaId).items.push(it);
+    }
+  });
+  const areas = Array.from(areaMap.values());
+
+  // 도면 위 .drawing-area 박스에서 모달 호출 시 사용 (areaId → area 객체)
+  window._areaById = Object.fromEntries(areas.map(a => [String(a.areaId), a]));
+
+  // 영역 갯수 표시
+  document.getElementById('areaCount').textContent = areas.length;
+
+  // 영역 목록 렌더 (오른쪽 패널)
+  const wrap = document.getElementById('areaListWrap');
+  wrap.innerHTML = '';
+
+  if (areas.length === 0) {
+    const msg = !header || !header.versionId
+      ? '해당 주소에 등록된 도면이 없습니다.'
+      : '도면에 등록된 영역이 없습니다.';
+    wrap.innerHTML = `<div class="text-center text-primary-300 py-10">${msg}</div>`;
+    return;
+  }
+
+  areas.forEach((area, idx) => {
+    const flag = String.fromCharCode(65 + idx); // A, B, C...
+    const itemSummary = area.items.length === 0
+      ? '품목 없음'
+      : `${area.items.length}품목 ` +
+        area.items.map(i => `${i.codeCd}-${i.colCd || '?'} ${i.quantity || 0}개`).slice(0, 3).join(', ') +
+        (area.items.length > 3 ? '...' : '');
+    const totalQty = area.items.reduce((s, i) => s + Number(i.quantity || 0), 0);
+
+    const box = document.createElement('div');
+    box.className = 'drawing-area-box';
+    box.dataset.areaId = area.areaId;
+    box.onclick = () => { selectArea(area.areaId); openItemCheckStatusModal(area); };
+    box.innerHTML = `
+      <div class="flex-1">
+        <div class="flex items-center justify-between">
+          <div class="area-name flex-1">
+            <span class="flag">${flag}</span>
+            <span class="flex-1">${escapeHtmlD(area.areaName || '-')}</span>
+          </div>
+          <span class="badge badge-dark-gray px-2">0/${totalQty}</span>
+        </div>
+        <p class="item-info">${escapeHtmlD(itemSummary)}</p>
+      </div>`;
+    wrap.appendChild(box);
+  });
+}
+
+/* ============================================================
+ * 영역×품목 상태 메모리
+ *   _detailMap[areaItemId] = { areaId, areaName, setYn, codeCd, colCd, quantity, checkStatus, checkBigo }
+ *   checkStatus: '1' 양호 / '2' 이슈 (가이드: REPORT_DETAIL.CHECK_STATUS)
+ * ============================================================ */
+let _detailMap = {};
+
+function openItemCheckStatusModal(area) {
+  // 모달 itemTable 동적 렌더 (현재 영역의 품목들 + sub-tr 포함)
+  const tbody = document.querySelector('#itemTable tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  area.items.forEach((item) => {
+    const k = item.areaItemId;
+    const saved = _detailMap[k] || {};
+    const isGood  = saved.checkStatus === '1';
+    const isIssue = saved.checkStatus === '2';
+    // 확인 체크박스 = DB의 CONFIRM_YN 기준 (라디오와 독립)
+    const isChecked = saved.confirmYn === 'Y';
+    const issueCare = saved.issueCare === 'Y';
+    const issueAs   = saved.issueAs   === 'Y';
+
+    // 품목 행
+    const tr = document.createElement('tr');
+    tr.dataset.itemcode = k;
+    tr.dataset.areaItemId = k;
+    tr.innerHTML = `
+      <td class="cursor-pointer">
+        <label class="custom-chk dark sm">
+          <input type="checkbox" ${isChecked ? 'checked' : ''}>
+        </label>
+      </td>
+
+      <!-- [2026-05-19] 품목명 구분해서 보여줌 (시리즈명/품목명/품목코드/색상) -->
+      <td class="text-left">${escapeHtmlD(item.seriesNm || '-')}</td>
+      <td class="text-left">${escapeHtmlD(item.itemName || '-')}</td>
+      <td class="text-left">${escapeHtmlD(item.codeCd  || '-')}</td>
+      <td class="text-left">${escapeHtmlD(item.colCd   || '-')}</td>
+
+      <td>
+        <div class="flex justify-center gap-6">
+          <label class="custom-chk">
+            <input type="radio" name="status_${k}" data-type="good"  ${isGood  ? 'checked' : ''}/>
+            <span class="text">양호</span>
+          </label>
+          <label class="custom-chk">
+            <input type="radio" name="status_${k}" data-type="issue" ${isIssue ? 'checked' : ''}/>
+            <span class="text">이슈</span>
+          </label>
+        </div>
+      </td>
+      <td>${item.quantity || 0}</td>`;
+    tbody.appendChild(tr);
+
+    // 이슈 상세 sub-tr (관리/AS 체크박스 + 입력 영역)
+    const subTr = document.createElement('tr');
+    subTr.className = 'sub-tr' + (isIssue ? ' is-open' : '');
+    subTr.dataset.itemcode = k;
+    subTr.innerHTML = `
+      <td colspan="7" class="p-0">
+        <div class="bg-white p-4">
+          <div class="flex gap-10">
+            <label class="custom-chk">
+              <input type="checkbox" data-type="care" ${issueCare ? 'checked' : ''}/>
+              <span class="text pl-3">관리</span>
+            </label>
+            <label class="custom-chk">
+              <input type="checkbox" data-type="as"   ${issueAs   ? 'checked' : ''}/>
+              <span class="text pl-3">A/S</span>
+            </label>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="care-wrap py-6 px-4 ${issueCare ? '' : 'hidden'}">
+            <p class="card-title mb-4">관리 품목 특이사항</p>
+            <textarea class="textarea input" placeholder="특이사항 입력">${escapeHtmlD(saved.careMemo || '')}</textarea>
+          </div>
+          <div class="as-wrap py-6 px-4 ${issueAs ? '' : 'hidden'}">
+            <p class="card-title mb-4">A/S 정보 입력</p>
+            ${(saved.asList && saved.asList.length > 0 ? saved.asList : [{}]).map(as => `
+            <div class="as-box">
+              <div class="flex items-center gap-2">
+                <input type="text" class="input w-[140px]" placeholder="S/N" value="${escapeHtmlD(as.serialNo || '')}">
+                <input type="text" class="input" placeholder="A/S 내용 입력" value="${escapeHtmlD(as.asContent || '')}">
+                <button type="button" class="btn btn-outline h-[32px] btn-as-attach">
+                  <i class="icon-plus"></i><span class="label text-primary">이미지 첨부(선택)</span>
+                </button>
+                <input type="file" class="hidden as-file-input" accept="image/*" multiple>
+                <button class="btn btn-delete btn-ghost"><span class="sr-only">A/S 항목 삭제</span></button>
+              </div>
+              <div class="thumb-img-wrap mt-3">
+                ${(as.files || []).map(f => {
+                  const src = f.filePath
+                    ? `/hqDrawingMng/pdfProxy?pdfPath=${encodeURIComponent(f.filePath)}`
+                    : (f.file ? URL.createObjectURL(f.file) : '');
+                  if (!src) return '';
+                  return `
+                  <div class="thumb-image"
+                       data-file-seq="${f.fileSeq || ''}"
+                       data-file-path="${escapeHtmlD(f.filePath || '')}"
+                       data-file-nm="${escapeHtmlD(f.fileNm || '')}">
+                    <img src="${src}" alt="${escapeHtmlD(f.fileNm || '')}">
+                    <button type="button" class="btn btn-delete"><span class="sr-only">이미지 삭제</span></button>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>`).join('')}
+            <button type="button" class="btn btn-secondary bg-white border-dashed w-full h-[38px] mt-2 btn-as-add"><i class="icon-plus"></i> A/S 항목 추가</button>
+          </div>
+        </div>
+      </td>`;
+    tbody.appendChild(subTr);
+
+    // innerHTML 후 thumb-image 에 File 객체 재첨부 (DOM 재생성으로 사라진 _file 복원)
+    if (saved.asList && saved.asList.length > 0) {
+      const asBoxes = subTr.querySelectorAll('.as-box');
+      asBoxes.forEach((box, asIdx) => {
+        const as = saved.asList[asIdx];
+        if (!as || !Array.isArray(as.files)) return;
+        const thumbs = box.querySelectorAll('.thumb-image');
+        let thumbCursor = 0;
+        as.files.forEach(f => {
+          if (!f.filePath && !f.file) return;  // 빈 항목 스킵 (렌더링도 스킵됨)
+          const thumb = thumbs[thumbCursor++];
+          if (!thumb) return;
+          if (f.file) thumb._file = f.file;
+        });
+      });
+    }
+  });
+
+  // 영역 ID 모달에 저장 (저장 버튼 누를 때 어떤 영역인지)
+  const modal = document.getElementById('itemCheckStatusModal');
+  modal.dataset.currentAreaId   = area.areaId;
+  modal.dataset.currentAreaName = area.areaName || '';
+
+  // 전체 확인 체크박스 상태 동기화
+  const allChk = document.getElementById('itemsChk');
+  if (allChk) {
+    const all = tbody.querySelectorAll('tr[data-itemcode] input[type="checkbox"]:not([data-type])');
+    const allChecked = all.length > 0 && Array.from(all).every(c => c.checked);
+    allChk.checked = allChecked;
+  }
+
+  if (typeof openModal === 'function') openModal('itemCheckStatusModal');
+}
+
+/* 모달 저장 — 라디오 선택값 + 관리/AS 정보를 _detailMap 에 반영 */
+function saveItemCheckStatus() {
+  const tbody = document.querySelector('#itemTable tbody');
+  const trList = tbody.querySelectorAll('tr[data-area-item-id]');
+
+  // 사전 검증
+  //  - 이슈 선택 시: 관리/AS 중 하나 이상 체크 필수
+  //  - 관리 체크 시: 메모 필수
+  //  - AS 체크 시: 각 .as-box 의 S/N + AS 내용 모두 필수
+  for (const tr of trList) {
+    const k = tr.dataset.areaItemId;
+    const issueChecked = !!tr.querySelector('input[data-type="issue"]')?.checked;
+    if (!issueChecked) continue;
+    const subTr = tbody.querySelector(`tr.sub-tr[data-itemcode="${k}"]`);
+    if (!subTr) continue;
+
+    const issueCare = !!subTr.querySelector('input[data-type="care"]')?.checked;
+    const issueAs   = !!subTr.querySelector('input[data-type="as"]')?.checked;
+
+    // 이슈인데 관리/AS 둘 다 미체크
+    if (!issueCare && !issueAs) {
+      alert('이슈로 선택한 품목은 관리 또는 A/S 중 하나를 체크해주세요.');
+      subTr.querySelector('input[data-type="care"]')?.focus();
+      return;
+    }
+    // 관리 체크 → 메모 필수
+    if (issueCare) {
+      const memo = (subTr.querySelector('.care-wrap textarea')?.value || '').trim();
+      if (!memo) {
+        alert('관리 품목 특이사항을 입력해주세요.');
+        subTr.querySelector('.care-wrap textarea')?.focus();
+        return;
+      }
+    }
+    // AS 체크 → 각 .as-box 의 S/N + AS 내용 모두 필수
+    if (issueAs) {
+      for (const box of subTr.querySelectorAll('.as-box')) {
+        const inputs = box.querySelectorAll('input[type="text"]');
+        const serialNo  = (inputs[0]?.value || '').trim();
+        const asContent = (inputs[1]?.value || '').trim();
+        if (!serialNo || !asContent) {
+          alert('S/N과 A/S 내용을 모두 입력해주세요.');
+          (serialNo ? inputs[1] : inputs[0])?.focus();
+          return;
+        }
+      }
+    }
+  }
+
+  trList.forEach(tr => {
+    const k = tr.dataset.areaItemId;
+    const item = (_reportData.areaItems || []).find(it => String(it.areaItemId) === String(k));
+    if (!item) return;
+
+    const goodChecked  = tr.querySelector('input[data-type="good"]')?.checked;
+    const issueChecked = tr.querySelector('input[data-type="issue"]')?.checked;
+    const checkStatus  = goodChecked ? '1' : (issueChecked ? '2' : null);
+    // 확인 체크박스 상태 — 라디오와 독립 (DB 컬럼 CONFIRM_YN)
+    const confirmChecked = !!tr.querySelector('input[type="checkbox"]:not([data-type])')?.checked;
+    const confirmYn = confirmChecked ? 'Y' : 'N';
+
+    if (checkStatus) {
+      // sub-tr 의 관리/AS 정보
+      const subTr = tbody.querySelector(`tr.sub-tr[data-itemcode="${k}"]`);
+      const issueCare = !!subTr?.querySelector('input[data-type="care"]')?.checked;
+      const issueAs   = !!subTr?.querySelector('input[data-type="as"]')?.checked;
+      const careMemo  = subTr?.querySelector('.care-wrap textarea')?.value || '';
+
+      // AS 항목 N건 수집 (S/N + AS 내용 + 첨부 파일)
+      // files: [{ file, filePath, fileNm, fileSeq }, ...]
+      //  - 새로 첨부된 것: file=File, filePath=null  → 저장 시 업로드 후 path 채움
+      //  - 기존 저장된 것: file=null,  filePath=문자열
+      const asList = [];
+      if (issueAs && subTr) {
+        subTr.querySelectorAll('.as-box').forEach(box => {
+          const inputs = box.querySelectorAll('input[type="text"]');
+          const serialNo  = inputs[0]?.value || '';
+          const asContent = inputs[1]?.value || '';
+          const files = [];
+          box.querySelectorAll('.thumb-image').forEach(t => {
+            if (t._file) {
+              files.push({ file: t._file, filePath: null, fileNm: t._file.name, fileSeq: null });
+            } else if (t.dataset.filePath) {
+              files.push({
+                file: null,
+                filePath: t.dataset.filePath,
+                fileNm:   t.dataset.fileNm || '',
+                fileSeq:  t.dataset.fileSeq || null
+              });
+            }
+          });
+          if (serialNo || asContent || files.length > 0) {
+            asList.push({ serialNo, asContent, files });
+          }
+        });
+      }
+
+      _detailMap[k] = {
+        areaItemId:  Number(k),
+        areaId:      item.areaId,
+        areaName:    item.areaName,
+        setYn:       item.setYn,
+        codeCd:      item.codeCd,
+        colCd:       item.colCd,
+        quantity:    item.quantity,
+        checkStatus: checkStatus,
+        checkBigo:   issueCare ? careMemo : null,
+        confirmYn:   confirmYn,
+        issueCare:   issueCare ? 'Y' : 'N',
+        issueAs:     issueAs   ? 'Y' : 'N',
+        careMemo:    issueCare ? careMemo : '',
+        asList:      asList
+      };
+    } else {
+      delete _detailMap[k];
+    }
+  });
+
+  // 우측 영역 박스 카운트 갱신 (양호+이슈 / 전체)
+  refreshAreaBoxCount();
+
+  if (typeof closeModal === 'function') closeModal('itemCheckStatusModal');
+}
+
+/* 우측 영역 박스의 N/M 카운트 갱신 + 전체 확인 버튼 라벨 동기화
+   카운트 기준: confirmYn === 'Y' (확인 완료된 행) */
+function refreshAreaBoxCount() {
+  document.querySelectorAll('#areaListWrap .drawing-area-box').forEach(box => {
+    const areaId = box.dataset.areaId;
+    const items = (_reportData.areaItems || []).filter(it => String(it.areaId) === String(areaId));
+    const total = items.reduce((s, it) => s + Number(it.quantity || 0), 0);
+    const checkedCnt = items.reduce((s, it) => {
+      const saved = _detailMap[it.areaItemId];
+      return s + ((saved && saved.confirmYn === 'Y') ? Number(it.quantity || 0) : 0);
+    }, 0);
+    const badge = box.querySelector('.badge');
+    if (badge) badge.textContent = `${checkedCnt}/${total}`;
+    const allChecked = checkedCnt === total && total > 0;
+    box.classList.toggle('checked', allChecked);
+    // 도면 위 같은 areaId 의 .drawing-area 에도 동일하게 checked 토글
+    document.querySelectorAll(`#drawCont .drawing-area[data-area-id="${areaId}"]`).forEach(el => {
+      el.classList.toggle('checked', allChecked);
+    });
+  });
+  refreshDrawingTabCount();
+  syncAllItemsBtn();
+}
+
+/* '전체 품목 확인 완료' ↔ '전체 품목 확인 취소' 라벨 동기화
+ * 조건: 현재 도면의 모든 품목이 confirmYn='Y' 일 때 '취소' 라벨 */
+function syncAllItemsBtn() {
+  const btn = document.querySelector('#allItemsChk');
+  if (!btn) return;
+  const items = (_reportData.areaItems || []).filter(it =>
+    it.areaItemId && (!_currentVersionId || String(it.versionId) === String(_currentVersionId))
+  );
+  const allChecked = items.length > 0 && items.every(it => _detailMap[it.areaItemId]?.confirmYn === 'Y');
+  btn.classList.toggle('checked', allChecked);
+  const label = btn.querySelector('.text-sm');
+  if (label) label.innerText = allChecked ? '전체 품목 확인 취소' : '전체 품목 확인 완료';
+}
+
+function escapeHtmlD(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ============================================================
+ * 모달 이벤트 위임 — 이미지 첨부 / 미리보기 / 삭제
+ * ============================================================ */
+document.addEventListener('click', function(e) {
+  // 이미지 첨부 버튼 → 같은 .as-box 안의 file input 트리거
+  const attachBtn = e.target.closest('.btn-as-attach');
+  if (attachBtn) {
+    const asBox = attachBtn.closest('.as-box');
+    const fileInput = asBox?.querySelector('.as-file-input');
+    if (fileInput) fileInput.click();
+    return;
+  }
+
+  // 썸네일 삭제 버튼 — DOM 제거 + 기존 saved 데이터면 _detailMap 즉시 동기화
+  const delBtn = e.target.closest('.thumb-image .btn-delete');
+  if (delBtn) {
+    const thumb  = delBtn.closest('.thumb-image');
+    const asBox  = thumb?.closest('.as-box');
+    const subTr  = thumb?.closest('tr.sub-tr');
+    const k      = subTr?.dataset.itemcode;
+
+    if (k && asBox && _detailMap[k]?.asList) {
+      const thumbsInBox = Array.from(asBox.querySelectorAll('.thumb-image'));
+      const thumbIdx    = thumbsInBox.indexOf(thumb);
+      const asBoxes     = Array.from(asBox.parentElement.querySelectorAll('.as-box'));
+      const asIdx       = asBoxes.indexOf(asBox);
+      const asEntry     = _detailMap[k].asList[asIdx];
+      if (asEntry && Array.isArray(asEntry.files) && thumbIdx >= 0) {
+        asEntry.files.splice(thumbIdx, 1);
+      }
+    }
+    thumb?.remove();
+    return;
+  }
+
+  // A/S 항목 추가 — 기존 박스 복제, 없으면 새 마크업 생성
+  const addBtn = e.target.closest('.btn-as-add');
+  if (addBtn) {
+    const wrap = addBtn.parentElement;
+    // 해당 품목의 전체 수량(quantity) 초과 방지
+    const subTr = addBtn.closest('tr.sub-tr');
+    const k     = subTr?.dataset.itemcode;
+    const item  = (_reportData.areaItems || []).find(it => String(it.areaItemId) === String(k));
+    const qty   = Number(item?.quantity || 0);
+    const cur   = wrap.querySelectorAll('.as-box').length;
+    if (qty > 0 && cur >= qty) {
+      alert(`해당 품목의 전체 수량(${qty})을 초과하여 A/S 항목을 추가할 수 없습니다.`);
+      return;
+    }
+    const firstBox = wrap.querySelector('.as-box');
+    let newBox;
+    if (firstBox) {
+      newBox = firstBox.cloneNode(true);
+      newBox.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+      newBox.querySelectorAll('input[type="file"]').forEach(i => i.value = '');
+      newBox.querySelectorAll('.thumb-img-wrap').forEach(w => w.innerHTML = '');
+    } else {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = `
+        <div class="as-box">
+          <div class="flex items-center gap-2">
+            <input type="text" class="input w-[140px]" placeholder="S/N">
+            <input type="text" class="input" placeholder="A/S 내용 입력">
+            <button type="button" class="btn btn-outline h-[32px] btn-as-attach">
+              <i class="icon-plus"></i><span class="label text-primary">이미지 첨부(선택)</span>
+            </button>
+            <input type="file" class="hidden as-file-input" accept="image/*" multiple>
+            <button class="btn btn-delete btn-ghost"><span class="sr-only">A/S 항목 삭제</span></button>
+          </div>
+          <div class="thumb-img-wrap mt-3"></div>
+        </div>`;
+      newBox = tmp.firstElementChild;
+    }
+    wrap.insertBefore(newBox, addBtn);
+    return;
+  }
+
+  // A/S 항목 삭제 — as-box 한 줄 제거
+  const asDel = e.target.closest('.as-box .btn-delete.btn-ghost');
+  if (asDel) {
+    asDel.closest('.as-box')?.remove();
+    return;
+  }
+});
+
+document.addEventListener('change', function(e) {
+  // file input 변경 → 미리보기 추가
+  const input = e.target;
+  if (!input.matches('.as-file-input')) return;
+
+  const asBox = input.closest('.as-box');
+  const wrap  = asBox?.querySelector('.thumb-img-wrap');
+  if (!wrap) return;
+
+  // A/S 박스당 이미지 최대 5장 제한
+  const MAX_IMAGES = 5;
+  const curCnt = wrap.querySelectorAll('.thumb-image').length;
+  const newFiles = Array.from(input.files || []).filter(f => f.type.startsWith('image/'));
+  if (curCnt + newFiles.length > MAX_IMAGES) {
+    alert(`이미지는 최대 ${MAX_IMAGES}장까지 첨부할 수 있습니다.`);
+    input.value = '';
+    return;
+  }
+
+  newFiles.forEach(file => {
+    const url = URL.createObjectURL(file);
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb-image';
+    thumb.innerHTML = `
+      <img src="${url}" alt="${escapeHtmlD(file.name)}">
+      <button type="button" class="btn btn-delete"><span class="sr-only">이미지 삭제</span></button>`;
+    // file 객체를 dataset으로 보관 (저장 시 FormData 업로드용)
+    thumb._file = file;
+    wrap.appendChild(thumb);
+  });
+  // 같은 파일 재선택 가능하게 input 초기화
+  input.value = '';
+});
+
+function formatDate(s) {
+  if (!s) return '';
+  const str = String(s);
+  if (/^\d{8}$/.test(str)) return `${str.slice(0,4)}-${str.slice(4,6)}-${str.slice(6,8)}`;
+  if (str.length >= 10) return str.slice(0, 10);
+  return str;
+}
+
+/* ============================================================
+ * Step 이동 — 1/2/3 탭 전환
+ * ============================================================ */
+function goPage(n) {
+  const stepList = document.querySelectorAll('.estimate-breadcrumbs > div');
+  const contList = document.querySelectorAll('.layout-care-service');
+
+  stepList.forEach((item, i) => item.classList.toggle('is-active', i === n - 1));
+  contList.forEach((item, i) => item.classList.toggle('hidden',    i !== n - 1));
+
+  if (n === 2) renderSummary();
+}
+
+/* ============================================================
+ * 도면 스케일 + 마우스 드래그 스크롤
+ * ============================================================ */
+function scalePlus()  { _scale = Math.min(_scale + 10, 200); updateScaleLabel(); applyScale(); }
+function scaleMinus() { _scale = Math.max(_scale - 10, 50);  updateScaleLabel(); applyScale(); }
+function updateScaleLabel() {
+  const el = document.getElementById('scaleLabel');
+  if (el) el.textContent = _scale + '%';
+}
+function applyScale() {
+  const imgBox = document.querySelector('#drawCont .img-box');
+  const canvas = document.getElementById('drawImg');
+  if (!imgBox || !canvas) return;
+  const s = _scale / 100;
+  imgBox.style.transformOrigin = '0 0';
+  imgBox.style.transform = `scale(${s})`;
+  // transform 은 layout 박스를 늘리지 않으므로 imgBox 의 layout 크기도 같이 보정해야 스크롤 영역이 생김
+  imgBox.style.width  = (canvas.width  * s) + 'px';
+  imgBox.style.height = (canvas.height * s) + 'px';
+}
+
+/* 도면 드래그 스크롤 — drawCont 내부에서 빈 영역 또는 캔버스 드래그 시 스크롤 */
+(function bindDrawContDrag() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const drawCont = document.getElementById('drawCont');
+    if (!drawCont) return;
+    drawCont.style.cursor = 'grab';
+    let isDown = false, startX, startY, scrollLeft, scrollTop;
+    drawCont.addEventListener('mousedown', (e) => {
+      // 영역 박스 클릭은 모달 오픈 흐름이라 드래그 비활성
+      if (e.target.closest('.drawing-area')) return;
+      isDown = true;
+      drawCont.style.cursor = 'grabbing';
+      startX = e.pageX - drawCont.offsetLeft;
+      startY = e.pageY - drawCont.offsetTop;
+      scrollLeft = drawCont.scrollLeft;
+      scrollTop  = drawCont.scrollTop;
+    });
+    const stop = () => { isDown = false; drawCont.style.cursor = 'grab'; };
+    drawCont.addEventListener('mouseleave', stop);
+    drawCont.addEventListener('mouseup',    stop);
+    drawCont.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - drawCont.offsetLeft;
+      const y = e.pageY - drawCont.offsetTop;
+      drawCont.scrollLeft = scrollLeft - (x - startX);
+      drawCont.scrollTop  = scrollTop  - (y - startY);
+    });
+  });
+})();
+
+/* ============================================================
+ * 영역 전체 확인 토글
+ *  체크: 현재 도면의 미체크 품목을 양호('1')로 일괄 설정 (기존 양호/이슈는 유지)
+ *  해제: 양호('1') 항목만 해제 (이슈/관리/AS 입력값은 보존)
+ * ============================================================ */
+function allItemsStatusChk() {
+  const btnCheckbox = document.querySelector('#allItemsChk');
+  const isChecked = btnCheckbox.classList.contains('checked');
+
+  // 현재 도면 탭 이름을 메시지에 반영 (퍼블 원본의 "0000 공간" placeholder)
+  const drawingName = (_reportData?.drawings || [])
+    .find(d => String(d.versionId) === String(_currentVersionId))?.drawingName || '';
+  const spaceLabel  = drawingName ? `${drawingName} 공간` : '공간';
+
+  const message = isChecked
+    ? `${spaceLabel}의 모든 품목 확인을 해제하시겠습니까?`
+    : `${spaceLabel}의 모든 품목을 확인 처리하시겠습니까?`;
+  if (!confirm(message)) return;
+
+  // 현재 도면 탭의 영역×품목만 대상
+  const items = (_reportData.areaItems || []).filter(it =>
+    it.areaItemId && (!_currentVersionId || String(it.versionId) === String(_currentVersionId))
+  );
+
+  if (!isChecked) {
+    // 체크 시: 라디오 미선택 항목은 양호로 추가, 모두 confirmYn='Y' 로 설정
+    items.forEach(item => {
+      if (!_detailMap[item.areaItemId]) {
+        _detailMap[item.areaItemId] = {
+          areaItemId:  Number(item.areaItemId),
+          areaId:      item.areaId,
+          areaName:    item.areaName,
+          setYn:       item.setYn,
+          codeCd:      item.codeCd,
+          colCd:       item.colCd,
+          quantity:    item.quantity,
+          checkStatus: '1',  // 양호
+          checkBigo:   null,
+          confirmYn:   'Y',
+          issueCare:   'N',
+          issueAs:     'N',
+          careMemo:    '',
+          asList:      []
+        };
+      } else {
+        _detailMap[item.areaItemId].confirmYn = 'Y';
+      }
+    });
+  } else {
+    // 해제 시: 양호/이슈/관리/AS 상태는 모두 유지하고 confirmYn 만 'N' 으로
+    items.forEach(item => {
+      const d = _detailMap[item.areaItemId];
+      if (d) d.confirmYn = 'N';
+    });
+  }
+
+  // 영역 박스 카운트(N/M) + 버튼 라벨 자동 갱신
+  refreshAreaBoxCount();
+}
+
+/* ============================================================
+ * Step 2 — 결과 요약 렌더 (도면별 카드 + 양호/이슈 집계)
+ *  케이스 분기:
+ *   1) 미확인 품목 있음            → 빨간 alert ("모든 품목이 확인되지 않았습니다")
+ *   2) 모두 확인 + 이슈 0         → 일반 alert ("접수된 AS 또는 관리 품목이 없습니다")
+ *   3) 모두 확인 + 이슈 있음      → 영역별 표 (품목명, 관리/AS, 메모)
+ * ============================================================ */
+function renderSummary() {
+  const wrap = document.getElementById('summaryWrap');
+  if (!wrap) return;
+  const drawings = _reportData?.drawings || [];
+  if (drawings.length === 0) {
+    wrap.innerHTML = '<div class="text-center text-primary-300 py-10">표시할 도면이 없습니다.</div>';
+    return;
+  }
+
+  const html = drawings.map(drw => {
+    const items = (_reportData.areaItems || []).filter(it =>
+      String(it.versionId) === String(drw.versionId) && it.areaItemId
+    );
+    // 카운트는 quantity 합산 기준 (영역 박스 / 도면 탭과 일관성)
+    const totalQty = items.reduce((s, it) => s + Number(it.quantity || 0), 0);
+    const goodQty  = items.reduce((s, it) => s + ((_detailMap[it.areaItemId]?.checkStatus === '1') ? Number(it.quantity || 0) : 0), 0);
+    const issueQty = items.reduce((s, it) => s + ((_detailMap[it.areaItemId]?.checkStatus === '2') ? Number(it.quantity || 0) : 0), 0);
+    // 확인 = confirmYn === 'Y' 기준 (라디오 선택과 무관)
+    const checkedQty = items.reduce((s, it) => s + ((_detailMap[it.areaItemId]?.confirmYn === 'Y') ? Number(it.quantity || 0) : 0), 0);
+    const allConfirmed = totalQty > 0 && checkedQty === totalQty;
+    const allGood      = totalQty > 0 && goodQty === totalQty;
+    const hasIssue     = issueQty > 0;
+    const itemCnt      = items.length;
+
+    // 카드 본문 분기 (퍼블 원본 구조)
+    let body;
+    if (!allConfirmed) {
+      body = `
+        <div class="alert alert-default bg-destructive-foreground">
+          <div class="alert-title">모든 품목이 확인되지 않았습니다.</div>
+          <div class="alert-description">이전 화면으로 돌아가 모든 품목의 상태를 확인해주세요.</div>
+        </div>`;
+    } else if (allGood) {
+      body = `
+        <div class="alert alert-default">
+          <div class="alert-title">접수된 AS 또는 관리 품목이 없습니다.</div>
+          <div class="alert-description">모든 품목이 양호 상태로 확인되었습니다.</div>
+        </div>`;
+    } else {
+      // 이슈 있음 — 영역별 그룹: 영역명 colspan, 품목명 rowspan, 관리/AS 분리
+      const issueItems = items.filter(it => _detailMap[it.areaItemId]?.checkStatus === '2');
+      const areaMap = new Map();
+      issueItems.forEach(it => {
+        if (!areaMap.has(it.areaId)) areaMap.set(it.areaId, { areaName: it.areaName, items: [] });
+        areaMap.get(it.areaId).items.push(it);
+      });
+
+      const tbodies = [];
+      areaMap.forEach(area => {
+        const tbodyRows = [];
+        tbodyRows.push(`<tr><td colspan="3" class="bg-background font-semibold">${escapeHtmlD(area.areaName)}</td></tr>`);
+        area.items.forEach(it => {
+          const saved = _detailMap[it.areaItemId] || {};
+          const careRow = saved.issueCare === 'Y';
+          const asList  = Array.isArray(saved.asList) ? saved.asList : [];
+          const rowSpan = (careRow ? 1 : 0) + asList.length;
+          if (rowSpan === 0) return;
+
+          let isFirst = true;
+          const itemNameCell = `
+            <!-- [2026-05-19] 시리즈명/품목명/품목코드/색상 -->
+            <td rowspan="${rowSpan}">
+              <ul class="flex flex-col gap-2 font-semibold">
+                <li>${escapeHtmlD(it.seriesNm || '-')}</li>
+                <li>${escapeHtmlD(it.itemName || '-')}</li>
+                <li>${escapeHtmlD(it.codeCd   || '-')}</li>
+                <li>${escapeHtmlD(it.colCd    || '-')}</li>
+              </ul>
+            </td>`;
+
+          if (careRow) {
+            tbodyRows.push(`
+              <tr>
+                ${itemNameCell}
+                <td class="font-semibold text-center">관리</td>
+                <td>${escapeHtmlD(saved.careMemo || saved.checkBigo || '-')}</td>
+              </tr>`);
+            isFirst = false;
+          }
+
+          asList.forEach((as, idx) => {
+            const thumbs = (as.files || []).filter(f => f.filePath || f.file).map(f => {
+              const src = f.filePath
+                ? `/hqDrawingMng/pdfProxy?pdfPath=${encodeURIComponent(f.filePath)}`
+                : (f.file ? URL.createObjectURL(f.file) : '');
+              return src ? `<div class="thumb-image"><img src="${src}" alt="${escapeHtmlD(f.fileNm || '')}"></div>` : '';
+            }).join('');
+            const asLabel = idx === 0
+              ? `<td rowspan="${asList.length}" class="font-semibold text-center">A/S</td>`
+              : '';
+            const cells  = [
+              isFirst ? itemNameCell : '',
+              asLabel,
+              `<td>
+                <ul class="dot-info type-desc">
+                  <li><span class="title">S/N</span>${escapeHtmlD(as.serialNo || '-')}</li>
+                  <li><span class="title">A/S 내용</span>${escapeHtmlD(as.asContent || '-')}</li>
+                </ul>
+                ${thumbs ? `<div class="thumb-img-wrap mt-4">${thumbs}</div>` : ''}
+              </td>`
+            ];
+            // A/S 행: 두번째 행부터는 품목명 rowspan 안에 들어가므로 itemNameCell 생략
+            if (idx === 0) {
+              tbodyRows.push(`<tr>${cells[0]}${cells[1]}${cells[2]}</tr>`);
+            } else {
+              tbodyRows.push(`<tr>${cells[2]}</tr>`);
+            }
+            isFirst = false;
+          });
+        });
+        tbodies.push(`<tbody>${tbodyRows.join('')}</tbody>`);
+      });
+
+      body = `
+        <div class="p-4">
+          <table class="table">
+            <colgroup>
+              <col style="width: 20%">
+              <col style="width: 50px">
+              <col>
+            </colgroup>
+            ${tbodies.join('')}
+          </table>
+        </div>`;
+    }
+
+    // 배지 우선순위: 미확인 > 이슈 > 양호
+    let badgeCls, badgeTxt;
+    if (!allConfirmed) { badgeCls = 'badge-destructive-outline'; badgeTxt = '미확인'; }
+    else if (hasIssue) { badgeCls = 'badge-orange';              badgeTxt = '이슈';   }
+    else               { badgeCls = 'badge-blue';                badgeTxt = '양호';   }
+
+    return `
+      <div class="card card-care-service">
+        <div class="card-header">
+          <div class="flex items-center gap-4">
+            <span class="badge ${badgeCls}">${badgeTxt}</span>
+            <div class="card-title">${escapeHtmlD(drw.drawingName || '도면')}</div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+        </div>
+        <div class="card-content collapse-content is-open">${body}</div>
+      </div>`;
+  }).join('');
+
+  wrap.innerHTML = html;
+  bindSummaryToggles();
+}
+
+/* 결과 요약 카드 토글 이벤트 — 각 카드별 토글 + 전체 닫기/열기 동기화 */
+function bindSummaryToggles() {
+  const wrap = document.getElementById('summaryWrap');
+  if (!wrap || wrap._toggleBound) return;
+  wrap._toggleBound = true;
+  wrap.addEventListener('click', (e) => {
+    const btn = e.target.closest('.card-care-service .btn-toggle');
+    if (!btn) return;
+    btn.classList.toggle('is-open');
+    btn.closest('.card').querySelector('.collapse-content')?.classList.toggle('is-open');
+    syncAllToggleCard();
+  });
+}
+
+/* 전체 닫기/열기 버튼 */
+function toggleAllCards(btn) {
+  const wrap = document.getElementById('summaryWrap');
+  if (!wrap) return;
+  const open = btn.classList.contains('is-open');
+  if (open) {
+    btn.classList.remove('is-open');
+    btn.querySelector('span').innerText = '전체 열기';
+    wrap.querySelectorAll('.card-care-service .btn-toggle').forEach(b => b.classList.remove('is-open'));
+    wrap.querySelectorAll('.collapse-content').forEach(el => el.classList.remove('is-open'));
+  } else {
+    btn.classList.add('is-open');
+    btn.querySelector('span').innerText = '전체 닫기';
+    wrap.querySelectorAll('.card-care-service .btn-toggle').forEach(b => b.classList.add('is-open'));
+    wrap.querySelectorAll('.collapse-content').forEach(el => el.classList.add('is-open'));
+  }
+}
+
+function syncAllToggleCard() {
+  const wrap = document.getElementById('summaryWrap');
+  if (!wrap) return;
+  const all  = wrap.querySelectorAll('.collapse-content');
+  const open = wrap.querySelectorAll('.collapse-content.is-open');
+  const btnAll = document.querySelector('.card.h-care-service > .card-header .btn-toggle');
+  if (!btnAll) return;
+  if (all.length > 0 && all.length === open.length) {
+    btnAll.classList.add('is-open');
+    btnAll.querySelector('span').innerText = '전체 닫기';
+  } else if (open.length === 0) {
+    btnAll.classList.remove('is-open');
+    btnAll.querySelector('span').innerText = '전체 열기';
+  }
+}
+
+/* ============================================================
+ * 저장 / 취소
+ * ============================================================ */
+async function saveReport(isFinal) {
+  if (!_careCtx || !_reportData?.header) {
+    alert('데이터를 불러오는 중입니다.');
+    return;
+  }
+  const h = _reportData.header;
+
+  // 영역×품목 상태 수집 (_detailMap → details list)
+  const details = Object.values(_detailMap);
+
+  // 이슈(관리/AS) 평탄화 — REPORT_ISSUE INSERT 용
+  // ISSUE_GUBUN: '관리' / 'AS', ISSUE_SEQ: 같은 gubun 안의 1..N 순번
+  const issues = [];
+  const files = [];           // ISSUE_FILE INSERT 용 — AS 첨부만 (issueGubun='AS')
+  const pendingUploads = [];  // 새로 첨부된 File 업로드 대기 큐: { issueSeq, fileEntry }
+  let careSeq = 0, asSeq = 0;
+  details.forEach(d => {
+    if (d.checkStatus !== '2') return;  // 이슈 아닌 행은 스킵
+    if (d.issueCare === 'Y') {
+      careSeq++;
+      issues.push({
+        issueGubun: '관리',
+        issueSeq:   careSeq,
+        areaItemId: d.areaItemId,
+        serialNo:   null,
+        checkBigo:  d.careMemo || null
+      });
+    }
+    if (d.issueAs === 'Y' && Array.isArray(d.asList)) {
+      d.asList.forEach(as => {
+        asSeq++;
+        const seq = asSeq;
+        issues.push({
+          issueGubun: 'AS',
+          issueSeq:   seq,
+          areaItemId: d.areaItemId,
+          serialNo:   as.serialNo || null,
+          checkBigo:  as.asContent || null
+        });
+        // 첨부 파일을 ISSUE_FILE 로 평탄화
+        (as.files || []).forEach(f => {
+          if (f.filePath) {
+            // 이미 업로드된(또는 복원된) 경로 — 그대로 INSERT
+            files.push({ issueGubun: 'AS', issueSeq: seq, filePath: f.filePath, fileNm: f.fileNm || '' });
+          } else if (f.file) {
+            // 새 첨부 — 업로드 후 결과 path 로 INSERT
+            const entry = { issueGubun: 'AS', issueSeq: seq, filePath: null, fileNm: f.file.name };
+            files.push(entry);
+            pendingUploads.push({ entry, file: f.file });
+          }
+        });
+      });
+    }
+  });
+
+  // 완료일 — datepicker 가 'yyyy.MM.dd' / 'yyyy-mm-dd' 등으로 저장할 수 있어 숫자만 추출 (YYYYMMDD)
+  const careFinalDate = (document.getElementById('careFinalDate')?.value || '')
+    .replace(/[^0-9]/g, '').slice(0, 8) || null;
+
+  // 최종저장은 모든 품목이 확인된 상태 + 완료일 필수
+  if (isFinal) {
+    // 본사 승인 요청 조건: 모든 품목이 확인 체크(confirmYn='Y')되어 있어야 함
+    const allConfirmed = (_reportData.areaItems || [])
+      .filter(it => it.areaItemId)
+      .every(it => _detailMap[it.areaItemId]?.confirmYn === 'Y');
+    if (!allConfirmed) {
+      alert('확인되지 않은 품목이 있습니다.\n모든 품목의 확인 체크 후 진행해주세요.');
+      return;
+    }
+    if (!careFinalDate) {
+      alert('완료일을 입력해주세요.');
+      document.getElementById('careFinalDate')?.focus();
+      return;
+    }
+    if (!confirm('본사 승인 요청을 진행하시겠습니까?')) return;
+  } else {
+    if (!confirm('현재 입력값을 임시저장하시겠습니까?')) return;
+  }
+
+  // 새 첨부 이미지 S3 업로드 (병렬) — 응답으로 entry.filePath 채움
+  if (pendingUploads.length > 0) {
+    LoadingManager.inc();
+    try {
+      await Promise.all(pendingUploads.map(async ({ entry, file }) => {
+        const fd = new FormData();
+        fd.append('file', file);
+        const res = await fetch('/careDist/uploadCareImage', { method: 'POST', body: fd });
+        if (!res.ok) throw new Error('업로드 실패: ' + file.name);
+        const json = await res.json();
+        entry.filePath = json.filePath || json.data?.filePath;
+        entry.fileNm   = json.fileNm   || json.data?.fileNm   || file.name;
+      }));
+    } catch (e) {
+      alert('이미지 업로드 중 오류: ' + e.message);
+      LoadingManager.dec();
+      return;
+    }
+    LoadingManager.dec();
+  }
+
+  // 업로드 실패로 filePath 가 비어 있는 항목은 제외
+  const filesValid = files.filter(f => f.filePath);
+
+  const body = {
+    conIdx:        _careCtx.conIdx,
+    mIdx:          _careCtx.mIdx,
+    estaIdx:       _careCtx.estaIdx,
+    officecareSeq: _careCtx.officecareSeq,
+    isFinal:       isFinal,
+    versionId:     h.versionId,
+    drawingId:     h.drawingId,
+    addressId:     h.addressId,
+    furnitureFix:  document.getElementById('furnitureFix')?.value  || null,
+    improvement:   document.getElementById('improvement')?.value   || null,
+    careAgentId:   h.agentUIdx || null,
+    careFinalDate: careFinalDate,
+    details:       details,
+    issues:        issues,
+    files:         filesValid
+  };
+
+  console.log('[saveReport] details:', details);
+  console.log('[saveReport] issues:', issues);
+  console.log('[saveReport] files:', filesValid);
+
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDist/saveReport',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify(body),
+    complete: function() { LoadingManager.dec(); },
+    success: function() {
+      window.location.href = '/service/care';
+    },
+    error: function(xhr) {
+      alert('저장 실패: ' + (xhr.responseJSON?.message || xhr.statusText || '오류'));
+    }
+  });
+}
+
+function cancelEdit() {
+  if (confirm('작성중인 내용을 취소하시겠습니까?')) {
+    history.back();
+  }
+}
+</script>
+</th:block>
+</body>
+</html>

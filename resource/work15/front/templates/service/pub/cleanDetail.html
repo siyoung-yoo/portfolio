@@ -1,0 +1,197 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="contents-title">CT-2024-001</h2>
+      <p class="text-gray">서울특별시 강남구 테헤란로123 (역삼동)</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="cleaning-layout">
+      <div class="cleaning-contents">
+        <div class="box-style gap-md">
+          <div class="flex justify-between gap-xs">
+            <div class="text-title">품목 정보</div>
+            <p class="font-sm flex-none">총 수량: <strong>n개</strong></p>
+          </div>
+
+          <ul class="list-inline type-box-list bg-invert">
+            <li>CT-2024-001 300개</li>
+            <li>CT-2024-001 50개</li>
+            <li>CT-2024-001 50개</li>
+            <li>CT-2024-001 120개</li>
+            <li>CT-2024-001 300개</li>
+            <li>CT-2024-001 200개</li>
+            <li>CT-2024-001 2개</li>
+            <li>CT-2024-001 1개</li>
+            <li>CT-2024-001 2개</li>
+            <li>CT-2024-001 1개</li>
+          </ul>
+        </div>
+
+        <!-- 서비스 이력이 없을 경우 -->
+        <div class="box-style gap-sm">
+          <div class="flex items-center gap-2xs">
+            <div class="text-title leading-none">클리닝 서비스 이력</div>
+            <span class="badge bg-blue sm">잔여 0회</span>
+          </div>
+          <div class="text-nodata sm">클리닝 서비스 이력이 없습니다.</div>
+        </div>
+        <!-- // 서비스 이력이 없을 경우 -->
+
+        <!-- 서비스 이력이 있을 경우 -->
+        <div class="box-style gap-sm">
+          <div class="flex items-center gap-2xs">
+            <div class="text-title leading-none">클리닝 서비스 이력</div>
+            <span class="badge bg-blue sm">잔여 n회</span>
+          </div>
+
+          <table class="table-simple is-selectable">
+            <colgroup>
+              <col style="width: 120px">
+              <col>
+              <col style="width: 180px">
+              <col style="width: 170px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">회차</th>
+                <th scope="col">신청번호</th>
+                <th scope="col">신청일</th>
+                <th scope="col">리포트</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3회차</td>
+                <td class="spacing-lg">012121215156</td>
+                <td class="spacing-lg">2029.12.21</td>
+                <td>
+                  <div class="flex-center-between">
+                    <span class="badge bg-light-gray w-fix">미발행</span>
+                    <i class="icon-arrow-r"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr class="selected">
+                <td>2회차</td>
+                <td class="spacing-lg">012121215156</td>
+                <td class="spacing-lg">2029.12.21</td>
+                <td>
+                  <div class="flex-center-between">
+                    <span class="badge-line-blue w-fix">발행</span>
+                    <i class="icon-arrow-r"></i>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>1회차</td>
+                <td class="spacing-lg">012121215156</td>
+                <td class="spacing-lg">2029.12.21</td>
+                <td>
+                  <div class="flex-center-between">
+                    <span class="badge-line-blue w-fix">발행</span>
+                    <i class="icon-arrow-r"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- // 서비스 이력이 있을 경우 -->
+      </div>
+      <!-- // 왼쪽 영역(.cleaning-contents) -->
+
+      <div class="cleaning-panel">
+        <!-- 서비스 이력이 없을 경우 -->
+        <!-- <div class="header">
+          <h3 class="text-title">서비스 이용 안내</h3>
+        </div>
+        <div class="panel-cont flex-all-center gap-md">
+          <p class="text-center">의자 클리닝 페이지에서<br>클리닝 서비스를 신청하실 수 있습니다.</p>
+          <button type="button" class="btn dark px-2xl">의자 클리닝 페이지로 이동</button>
+        </div> -->
+        <!-- // 서비스 이력이 없을 경우 -->
+
+        <!-- 서비스 이력이 있을 경우 -->
+        <div class="header">
+          <h3 class="text-title">n회차 서비스</h3>
+          <ul class="flex gap-xs mt-2xs font-sm spacing-lg">
+            <li>012121215156</li>
+            <li>2029.12.21 신청</li>
+          </ul>
+        </div>
+        <div class="panel-cont">
+          <div class="group">
+            <h4 class="text-title">신청 정보</h4>
+            <ul class="info-list col-2">
+              <li>
+                <div class="title">현장 담당자</div>
+                <div class="value">박현장</div>
+              </li>
+              <li>
+                <div class="title">신청자</div>
+                <div class="value">홍길동</div>
+              </li>
+              <li>
+                <div class="title">연락처</div>
+                <div class="value">010-1234-4679</div>
+              </li>
+              <li>
+                <div class="title">이메일</div>
+                <div class="value">park@company.com</div>
+              </li>
+              <li class="span-2">
+                <div class="box-style p-sm gap-0">
+                  <div class="title">상세 요청 사항</div>
+                  <div class="value">4층 로비 의자 우선 클리닝 요청합니다. 오전 작업 희망합니다.</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <hr class="dash-line">
+          <div class="group">
+            <h4 class="text-title">서비스 담당(실행팀)</h4>
+            <ul class="info-list col-2">
+              <li>
+                <div class="title">담당자</div>
+                <div class="value">김나라</div>
+              </li>
+              <li>
+                <div class="title">연락처</div>
+                <div class="value">010-1234-4679</div>
+              </li>
+              <li class="span-2">
+                <div class="title text-black"><strong>클리닝 결과 리포트</strong></div>
+                <div class="value box-style py-lg">
+                  <p class="text-gray text-center">리포트 발행 준비 중입니다.</p>
+                </div>
+
+                <a href="#" download class="value btn attach-file">
+                  <i class="icon-document"></i>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-md list-inline mt-3xs">
+                      <strong class="ellipsis">000 클리닝 결과 리포트</strong>
+                    </div>
+                    <p class="font-sm spacing-lg mt-2xs">발행일: 2026.01.01</p>
+                  </div>
+                  <div class="icon-area">
+                    <i class="icon-download"></i>
+                  </div>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <!-- // 서비스 이력이 있을 경우 -->
+      </div>
+      <!-- // 오른쪽 영역(.cleaning-panel) -->
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

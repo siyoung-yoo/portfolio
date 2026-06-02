@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('도면 상세', null, null)}">
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <div class="draw-panel-layout">
+      <div class="draw-cont-wrap card" style="position: relative;">
+
+        <!-- 도면 정보 -->
+        <ul class="draw-info">
+          <li><span class="title">고객사</span> <span id="detailCtmNm"></span></li>
+          <li><span class="title">도면 공간(층수)</span> <span id="detailDrawingName"></span></li>
+          <li><span class="title">주소</span> <span id="detailAddress"></span></li>
+        </ul>
+
+        <div class="draw-controls">
+          <!-- 첨부파일 -->
+          <ul class="draw-info">
+            <li class="flex-wrap">
+              <span class="title" id="detailFileTitle">첨부파일</span>
+              <div id="detailFileLinks" class="flex-1 flex gap-2 flex-wrap"></div>
+            </li>
+          </ul>
+
+          <div class="flex gap-2">
+            <!-- 버전 선택 (form-dropdown 대신 직접 구현 — portal 이동 문제 방지) -->
+            <div id="versionSelectWrap" class="relative">
+              <button type="button" class="btn btn-outline pr-2 h-[30px]" id="versionTrigger" onclick="toggleVersionMenu()">
+                버전 <i class="icon-chevron"></i>
+              </button>
+              <div class="dropdown-menu" id="versionMenu" style="display:none; position:absolute; top:100%; left:0; z-index:100; min-width:250px; background:#fff; border:1px solid #e5e5e5; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:4px 0;">
+              </div>
+            </div>
+
+            <!-- 줌 -->
+            <div class="scale-box border">
+              <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+                <i class="icon-minus"></i>
+              </button>
+              <span>100%</span>
+              <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+                <i class="icon-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 버전 아카이브 안내 -->
+        <div class="version-info hidden">
+          <div class="flex-1">
+            <strong id="archiveVersionTitle"></strong>
+          </div>
+          <button type="button" class="btn btn-secondary" id="goCurrentVer">현재 버전으로</button>
+        </div>
+
+        <!-- 도면 뷰어 -->
+        <div id="drawCont" class="draw-cont draw-fixed has-dim">
+          <div class="img-box">
+            <canvas id="drawImg" data-img=""></canvas>
+          </div>
+        </div>
+
+        <!-- PDF 로딩 스피너 (공통 fragment) -->
+        <th:block th:replace="~{common/fragments/drawLoading :: drawLoading}"/>
+
+      </div>
+      <!-- // draw-cont-wrap -->
+
+      <!-- 우측 영역 목록 -->
+      <div class="drawing-info-wrap card">
+        <div class="header">
+          <h3 class="title" id="areaListTitle">영역 목록</h3>
+          <!-- 본사: 수정 버튼 없음 -->
+        </div>
+
+        <div class="drawing-list-wrap" id="drawingListWrap">
+          <!-- 본사: 계약 연결 알림 불필요 -->
+          <!-- JS에서 동적 렌더링 -->
+        </div>
+
+        <!-- 본사: 저장/취소 없음 -->
+
+      </div>
+      <!-- drawing-list-wrap -->
+    </div>
+  </div>
+
+<!-- 본사: 읽기전용 모달만 -->
+<th:block th:replace="~{layout/modal/itemMappingInfoModal.html}"/>
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf.js + interact.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<!-- 도면 공통 -->
+<script th:src="@{/assets/js/pages/layout/draw_canvas.js}"></script>
+<!-- 본사: draw_create.js 불필요 -->
+<!-- 상세페이지 기능 -->
+<script th:src="@{/assets/js/pages/layout/draw_detail.js}"></script>
+
+<script th:inline="javascript">
+const _drawingId = /*[[${drawingId}]]*/ null;
+let _detailData = {};
+
+$(function() {
+  if (!_drawingId) {
+    location.href = '/layout/hq/';
+    return;
+  }
+  loadDetailData();
+});
+
+/** 도면 상세 데이터 로드 */
+function loadDetailData() {
+  $.ajax({
+    url: '/hqDrawingMng/getDrawingCreateData',
+    type: 'post',
+    data: { drawingId: _drawingId },
+    success: function(res) {
+      _detailData = res.data;
+      renderDetailPage();
+    }
+  });
+}
+
+/** 상세 페이지 렌더링 */
+function renderDetailPage() {
+  const d = _detailData;
+
+  // 계약 없음 알림
+  const noContractAlert = document.getElementById('noContractAlert');
+  if (noContractAlert) {
+    const hasContracts = d.contracts && d.contracts.length > 0;
+    noContractAlert.classList.toggle('hidden', hasContracts);
+  }
+
+  // 상단 정보
+  $('#detailCtmNm').text(d.ctmNm || '');
+  $('#detailDrawingName').text(d.drawingName || '');
+  $('#detailAddress').text(d.adr4 || '');
+  d._originalDrawingName = d.drawingName || '';
+
+  // 첨부파일 링크
+  let fileHtml = '';
+  if (d.pdfPath) {
+    const pdfFileName = d.pdfFileNm || d.pdfPath.split('/').pop();
+    const pdfDownUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.pdfPath) + '&fileName=' + encodeURIComponent(pdfFileName);
+    fileHtml += `<a href="${pdfDownUrl}" class="btn btn-link mr-2" download="${pdfFileName}">
+      <i class="icon-download w-[12px] h-[12px] bg-size-[12px]"></i>${pdfFileName}
+    </a>`;
+  }
+  if (d.dwgPath) {
+    const dwgFileName = d.dwgFileNm || d.dwgPath.split('/').pop();
+    const dwgDownUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.dwgPath) + '&fileName=' + encodeURIComponent(dwgFileName);
+    fileHtml += `<a href="${dwgDownUrl}" class="btn btn-link mr-2" download="${dwgFileName}">
+      <i class="icon-download w-[12px] h-[12px] bg-size-[12px]"></i>${dwgFileName}
+    </a>`;
+  }
+  if (d.dxfPath) {
+    const dxfFileName = d.dxfFileNm || d.dxfPath.split('/').pop();
+    const dxfDownUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.dxfPath) + '&fileName=' + encodeURIComponent(dxfFileName);
+    fileHtml += `<a href="${dxfDownUrl}" class="btn btn-link mr-2" download="${dxfFileName}">
+      <i class="icon-download w-[12px] h-[12px] bg-size-[12px]"></i>${dxfFileName}
+    </a>`;
+  }
+  const fileCnt = (d.pdfPath ? 1 : 0) + (d.dwgPath ? 1 : 0) + (d.dxfPath ? 1 : 0);
+  $('#detailFileTitle').text('첨부파일(' + fileCnt + ')');
+  $('#detailFileLinks').html(fileHtml || '<span class="text-primary-300">없음</span>');
+
+  // 버전 드롭다운 렌더링
+  renderVersionSelect(d.versions || [], d.versionId);
+
+  // PDF 렌더링 — 전체 페이지를 단일 canvas에 렌더링 (영역 좌표 일관성 유지)
+  if (d.pdfPath) {
+    const pdfProxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.pdfPath);
+    canvas.dataset.img = pdfProxyUrl;
+
+    if (typeof showDrawLoading === 'function') showDrawLoading();
+    pdfjsLib.getDocument(pdfProxyUrl).promise.then(async pdf => {
+      const totalPages = pdf.numPages;
+      // 각 페이지를 임시 canvas에 렌더링 후 메인 canvas에 합침
+      const pageData = [];
+      let totalHeight = 0;
+      let maxWidth = 0;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1 });
+
+        // 임시 canvas에 페이지 렌더링
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = viewport.width;
+        tempCanvas.height = viewport.height;
+        await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport: viewport }).promise;
+
+        pageData.push({ tempCanvas, width: viewport.width, height: viewport.height });
+        totalHeight += viewport.height;
+        maxWidth = Math.max(maxWidth, viewport.width);
+      }
+
+      // 메인 canvas 크기 설정
+      canvas.width = maxWidth;
+      canvas.height = totalHeight;
+      const ctx = canvas.getContext('2d');
+
+      // 각 페이지 이미지를 메인 canvas에 drawImage
+      let yOffset = 0;
+      for (const { tempCanvas, height } of pageData) {
+        ctx.drawImage(tempCanvas, 0, yOffset);
+        yOffset += height;
+      }
+    }).catch(err => {
+      console.error('PDF 로드 실패:', err);
+    }).finally(() => {
+      if (typeof hideDrawLoading === 'function') hideDrawLoading();
+    });
+  }
+
+  // 영역 데이터를 draw_detail.js 형식으로 변환하여 로드
+  const areas = d.areas || [];
+  const areaItems = d.areaItems || [];
+
+  // drawAreaData 구성 — 계약 그룹 단위 (여러 계약 지원)
+  const contracts = d.contracts || [{ conIdx: d.conIdx, conCd: d.conCd, conTitle: d.conTitle }];
+  let areaLetterIdx = 0;
+
+  drawAreaData = contracts.map(con => {
+    // 해당 계약에 연결된 영역 (CON_IDX 매칭)
+    const conAreas = areas.filter(a => String(a.CON_IDX) === String(con.conIdx));
+
+    return {
+      contractCode: con.conCd || '',
+      contractName: con.conTitle || '',
+      conIdx: con.conIdx,
+      info: conAreas.map(area => {
+        const letter = getAlphaIndex(areaLetterIdx++);
+        const items = areaItems
+          .filter(ai => String(ai.AREA_ID) === String(area.AREA_ID))
+          .map(ai => ({
+            itemName: ai.ITM_DESC || '',
+            seriesNm: ai.SERIES_NM || '',
+            itemCode: ai.CODE_CD || '',
+            colCd: ai.COL_CD || '',
+            itemCout: ai.QUANTITY || 0
+          }));
+
+        return {
+          idx: letter,
+          areaId: area.AREA_ID,
+          name: area.AREA_NAME || '',
+          left: area.X || 0,
+          top: area.Y || 0,
+          width: area.WIDTH || 0,
+          height: area.HEIGHT || 0,
+          items: items
+        };
+      })
+    };
+  });
+
+  // draw_detail.js의 loadAreas() 호출
+  loadAreas();
+  updateScale();
+
+  // 수정 모드 중이면 백업 갱신 (계약 추가 등으로 데이터 변경 후 취소 시 최신 상태로 복원)
+  if (_isEditMode) {
+    _backupDrawAreaData = JSON.parse(JSON.stringify(drawAreaData));
+  }
+}
+
+/**
+ * 저장 버튼 (수정모드)
+ * drawAreaData에서 영역 좌표 + 품목 수집 → API 호출
+ */
+function btnSave() {
+  const areas = [];
+
+  drawAreaData.forEach(group => {
+    group.info.forEach(area => {
+      // 도면 위 영역 div에서 최신 좌표 가져오기 (conIdx로 정확히 매칭)
+      const el = document.querySelector(`#drawCont .drawing-area[data-conidx="${group.conIdx}"][data-idx="${area.idx}"]`)
+        || document.querySelector(`#drawCont .drawing-area[data-contract="${group.contractCode}"][data-idx="${area.idx}"]`);
+      let left = area.left, top = area.top, width = area.width, height = area.height;
+      if (el) {
+        const x = parseFloat(el.dataset.x) || 0;
+        const y = parseFloat(el.dataset.y) || 0;
+        left = parseFloat(el.style.left) + x;
+        top = parseFloat(el.style.top) + y;
+        width = el.offsetWidth;
+        height = el.offsetHeight;
+      }
+
+      areas.push({
+        areaName: area.name,
+        conIdx: group.conIdx || null,  // 각 영역이 속한 계약의 conIdx
+        x: Math.round(left),
+        y: Math.round(top),
+        width: Math.round(width),
+        height: Math.round(height),
+        items: (area.items || []).map(item => ({
+          setYn: 'N',
+          codeCd: item.itemCode || '',
+          colCd: item.colCd || '',
+          quantity: item.itemCout || 0
+        }))
+      });
+    });
+  });
+
+  const emptyGroup = drawAreaData.find(g => g.info.length === 0);
+  if (emptyGroup) { alert('영역이 없는 계약이 있습니다. 모든 계약에 영역을 추가해주세요.'); return; }
+
+  const emptyArea = areas.find(a => a.items.length === 0);
+  if (emptyArea) { alert('품목이 매핑되지 않은 영역이 있습니다. 모든 영역에 품목을 매핑해주세요.'); return; }
+
+  if (!confirm('변경사항을 저장하시겠습니까?')) return;
+
+  // 도면명 변경 시 DB 업데이트
+  const currentName = document.getElementById('detailDrawingName')?.textContent || '';
+  if (currentName && currentName !== _detailData._originalDrawingName) {
+    $.ajax({
+      url: '/hqDrawingMng/updateDrawingName',
+      type: 'post',
+      async: false,
+      data: { drawingId: _detailData.drawingId, drawingName: currentName }
+    });
+  }
+
+  // 삭제된 계약 DB 반영 (백업 대비 현재 drawAreaData에 없는 계약)
+  if (_backupDrawAreaData) {
+    const currentConIdxSet = new Set(drawAreaData.map(g => String(g.conIdx)));
+    _backupDrawAreaData.forEach(g => {
+      if (g.conIdx && !currentConIdxSet.has(String(g.conIdx))) {
+        $.ajax({
+          url: '/hqDrawingMng/deleteDrawingContract',
+          type: 'post',
+          async: false,
+          data: { drawingId: _detailData.drawingId, conIdx: g.conIdx }
+        });
+      }
+    });
+  }
+
+  // 계약이 0건이면 고객 미노출 처리
+  if (drawAreaData.length === 0) {
+    $.ajax({
+      url: '/hqDrawingMng/updateDrawingUseYn',
+      type: 'post',
+      async: false,
+      data: { drawingId: _detailData.drawingId, useYn: 'N' }
+    });
+  }
+
+  $.ajax({
+    url: '/hqDrawingMng/saveDrawingAreas',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      drawingId: _detailData.drawingId,
+      versionId: _detailData.versionId,
+      areas: areas
+    }),
+    success: function(res) {
+      if (!res.message) {
+        alert('저장되었습니다.');
+        _backupDrawAreaData = null;
+        _isEditMode = false;
+
+        // UI 명시적 리셋
+        document.querySelectorAll('[data-state="areaEdit"]').forEach(el => el.classList.add('hidden'));
+        document.getElementById('btnEditWrap')?.classList.remove('hidden');
+        document.getElementById('versionSelectWrap')?.classList.remove('hidden');
+        document.querySelector('.draw-panel-layout')?.classList.remove('edit-mode');
+        if (drawCont) { drawCont.classList.add('draw-fixed'); disableAllInteract(); }
+
+        // 서버에서 최신 데이터 재로드
+        loadDetailData();
+      } else {
+        alert(res.message);
+      }
+    },
+    error: function() {
+      alert('저장 중 오류가 발생했습니다.');
+    }
+  });
+}
+
+/** 버전 드롭다운 토글 */
+function toggleVersionMenu() {
+  const menu = document.getElementById('versionMenu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+// 외부 클릭 시 드롭다운 닫기
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#versionSelectWrap')) {
+    const menu = document.getElementById('versionMenu');
+    if (menu) menu.style.display = 'none';
+  }
+});
+
+/** 버전 드롭다운 렌더링 */
+function renderVersionSelect(versions, currentVersionId) {
+  if (!versions || versions.length === 0) return;
+
+  const latestVersion = versions[0]; // 최신순 정렬이므로 첫번째가 최신
+  const isCurrentLatest = String(currentVersionId) === String(latestVersion.VERSION_ID);
+
+  // v1 → ver 1 변환
+  const formatVerNo = (vno) => vno ? vno.replace(/^v(\d+)$/, 'ver $1') : '';
+
+  // 트리거 버튼 텍스트
+  const currentVer = versions.find(v => String(v.VERSION_ID) === String(currentVersionId));
+  const currentVerNo = currentVer ? currentVer.VERSION_NO : latestVersion.VERSION_NO;
+  const triggerText = isCurrentLatest
+    ? `${formatVerNo(currentVerNo)} (현재)`
+    : formatVerNo(currentVerNo);
+  $('#versionTrigger').html(`${triggerText} <i class="icon-chevron"></i>`);
+
+  // 드롭다운 메뉴 렌더링
+  let menuHtml = '';
+  versions.forEach((v, i) => {
+    const isLatest = i === 0;
+    const isSelected = String(v.VERSION_ID) === String(currentVersionId);
+    menuHtml += `
+      <button type="button" data-version-id="${v.VERSION_ID}" data-version-no="${v.VERSION_NO}"
+              class="dropdown-item ${isSelected ? 'selected' : ''}">
+        <strong>${formatVerNo(v.VERSION_NO)}${isLatest ? ' - 현재 버전' : ''}</strong>
+        <p class="text-sm">${v.REG_DATE || ''} · ${v.FST_USR_NM || v.FST_USR_CD || ''}</p>
+      </button>
+    `;
+  });
+  document.getElementById('versionMenu').innerHTML = menuHtml;
+
+  // 아카이브 안내 표시/숨김
+  const versionInfo = document.querySelector('.version-info');
+  const btnEditWrap = document.getElementById('btnEditWrap');
+  if (versionInfo) {
+    if (isCurrentLatest) {
+      versionInfo.classList.add('hidden');
+      if (btnEditWrap) btnEditWrap.classList.remove('hidden');
+    } else {
+      versionInfo.classList.remove('hidden');
+      document.getElementById('archiveVersionTitle').textContent =
+        `${currentVerNo} 아카이브 조회 중`;
+      if (btnEditWrap) btnEditWrap.classList.add('hidden'); // 이전 버전은 수정 불가
+    }
+  }
+}
+
+/** 버전 드롭다운 항목 클릭 — 해당 버전으로 전환 */
+document.addEventListener('click', function(e) {
+  const item = e.target.closest('#versionMenu .dropdown-item');
+  if (!item) return;
+
+  const versionId = item.dataset.versionId;
+
+  // 드롭다운 닫기
+  document.getElementById('versionMenu').style.display = 'none';
+
+  // 해당 버전 데이터 로드
+  loadVersionData(versionId);
+});
+
+/** 특정 버전의 도면 데이터 로드 */
+function loadVersionData(versionId) {
+  $.ajax({
+    url: '/hqDrawingMng/getDrawingCreateData',
+    type: 'post',
+    data: { drawingId: _drawingId, versionId: versionId },
+    success: function(res) {
+      _detailData = res.data;
+      renderDetailPage();
+    }
+  });
+}
+
+/** "현재 버전으로" 버튼 */
+document.getElementById('goCurrentVer')?.addEventListener('click', function() {
+  loadDetailData();
+});
+
+// ============================================================
+// 영역지정 팝업 (drawAreaModal) — layoutDetail에서도 사용
+// ============================================================
+
+let _drawAreaModalDrawingData = {};
+let _drawAreaIsNewDrawing = false;
+let _drawAreaDrawingId = null;
+let _drawAreaConIdx = null;  // 특정 계약 지정 (계약추가 시)
+
+function openDrawAreaModal(drawingId, isNew, conIdx) {
+  _drawAreaIsNewDrawing = isNew === true;
+  _drawAreaDrawingId = drawingId;
+  _drawAreaConIdx = conIdx || null;
+
+  const modal = document.getElementById('drawAreaModal');
+
+  // 타이틀 변경 — 계약추가 모드 vs 도면등록 모드
+  if (_drawAreaConIdx) {
+    modal.querySelector('#drawAreaModalTitle').textContent = '계약 매핑 추가 — 영역 지정 및 품목 매핑';
+    modal.querySelector('#drawAreaModalDesc').textContent = '도면에 영역을 지정하고 품목을 매핑하세요.';
+    modal.querySelector('#drawAreaModalDesc').style.display = '';
+    modal.querySelector('#drawAreaSaveBtn').textContent = '저장';
+  } else {
+    modal.querySelector('#drawAreaModalTitle').textContent = '도면 등록';
+    modal.querySelector('#drawAreaModalDesc').style.display = 'none';
+    modal.querySelector('#drawAreaSaveBtn').textContent = '저장';
+  }
+
+  const imgBox = modal.querySelector('.img-box');
+  imgBox.innerHTML = '<canvas id="drawImg" data-img=""></canvas>';
+
+  modal.querySelectorAll('.drawing-area').forEach(el => el.remove());
+  modal.querySelector('#contractItemList').innerHTML = '';
+  modal.querySelector('.dropdown-menu').innerHTML = '';
+  modal.querySelector('.selected-area-panel').innerHTML = '';
+  const mw = modal.querySelector('.mapping-list-wrap');
+  if (mw) mw.querySelectorAll('.mapping-list.type-item').forEach(el => el.remove());
+
+  modal.querySelector('.alert[data-state="makeArea"]')?.classList.remove('hidden');
+  modal.querySelector('.regist-cont-wrap[data-state="makeArea"]')?.classList.add('hidden');
+
+  openModal('drawAreaModal');
+  reinitDrawCanvasForModal();
+  loadDrawAreaData(drawingId);
+}
+
+function reinitDrawCanvasForModal() {
+  drawCont = document.querySelector('#drawAreaModal #drawCont');
+  canvasCont = drawCont ? drawCont.querySelector('.img-box') : null;
+  canvas = document.querySelector('#drawAreaModal #drawImg');
+  scaleText = document.querySelector('#drawAreaModal .scale-box span');
+
+  selectedAreaPanel = document.querySelector('#drawAreaModal .selected-area-panel');
+  mappingWrap = document.querySelector('#drawAreaModal .mapping-list-wrap');
+  contractList = document.querySelector('#drawAreaModal .mapping-list.type-contract');
+  contractCount = document.querySelector('#drawAreaModal #contractCount');
+  mappingCount = document.querySelector('#drawAreaModal #mappingCount');
+
+  drawAreaData = [];
+  areaIdx = 0;
+  activeArea = null;
+  drawMode = false;
+  drawScale = 1;
+
+  document.querySelectorAll('#drawAreaModal .makeAreaForm').forEach(form => {
+    const input = form.querySelector('input');
+    const btn = form.querySelector('button');
+    const newInput = input.cloneNode(true);
+    const newBtn = btn.cloneNode(true);
+    input.parentNode.replaceChild(newInput, input);
+    btn.parentNode.replaceChild(newBtn, btn);
+    newInput.addEventListener('input', () => { newBtn.disabled = !newInput.value.trim(); });
+    newInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); if (!newBtn.disabled) newBtn.click(); }
+    });
+    newBtn.addEventListener('click', () => {
+      drawMode = true;
+      currentAreaName = newInput.value.trim();
+      newInput.value = '';
+      newBtn.disabled = true;
+      drawCont.style.cursor = 'crosshair';
+    });
+  });
+}
+
+function closeDrawAreaModal() {
+  const afterClose = function() {
+    closeModal('drawAreaModal');
+    // drawCont 등 전역 변수를 페이지 원래 요소로 복원
+    restorePageDrawContext();
+    loadDetailData();
+  };
+
+  if (_drawAreaIsNewDrawing && _drawAreaDrawingId) {
+    $.ajax({
+      url: '/hqDrawingMng/deleteDrawing',
+      type: 'post',
+      data: { drawingId: _drawAreaDrawingId },
+      complete: function() {
+        _drawAreaIsNewDrawing = false;
+        _drawAreaDrawingId = null;
+        afterClose();
+      }
+    });
+  } else {
+    _drawAreaConIdx = null;
+    afterClose();
+  }
+}
+
+/** 모달 닫은 후 페이지 원래 DOM으로 전역 변수 복원 */
+function restorePageDrawContext() {
+  // layoutDetail 페이지의 #drawCont (모달 밖)
+  const pageCont = document.querySelector('.draw-panel-layout > .draw-cont-wrap #drawCont');
+  if (pageCont) {
+    drawCont = pageCont;
+    canvasCont = pageCont.querySelector('.img-box');
+    canvas = pageCont.querySelector('#drawImg');
+  }
+  scaleText = document.querySelector('.draw-cont-wrap:not(#drawAreaModal *) .scale-box span');
+
+  selectedAreaPanel = document.querySelector('.drawing-info-wrap .selected-area-panel');
+  mappingWrap = null;  // 페이지에서는 draw_detail.js가 사용
+  contractList = null;
+  contractCount = null;
+  mappingCount = null;
+}
+
+function loadDrawAreaData(drawingId) {
+  const reqData = { drawingId: drawingId };
+  // 특정 계약 지정 시 해당 계약의 품목만 조회
+  if (_drawAreaConIdx) {
+    reqData.conIdx = _drawAreaConIdx;
+  }
+  $.ajax({
+    url: '/hqDrawingMng/getDrawingCreateData',
+    type: 'post',
+    data: reqData,
+    success: function(res) {
+      _drawAreaModalDrawingData = res.data;
+      // 특정 계약 지정 시 conIdx 덮어쓰기 (저장 시 사용)
+      if (_drawAreaConIdx) {
+        _drawAreaModalDrawingData.conIdx = _drawAreaConIdx;
+      }
+      renderDrawAreaPage();
+    }
+  });
+}
+
+function renderDrawAreaPage() {
+  const d = _drawAreaModalDrawingData;
+  const modal = document.getElementById('drawAreaModal');
+
+  modal.querySelector('#infoContract').textContent = (d.conCd || '') + ' ' + (d.conTitle || '');
+  modal.querySelector('#infoDrawingName').textContent = d.drawingName || '';
+  modal.querySelector('#infoPdfName').textContent = d.pdfFileNm || (d.pdfPath ? d.pdfPath.split('/').pop() : '');
+
+  if (d.pdfPath) {
+    const pdfProxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.pdfPath);
+    const cv = modal.querySelector('#drawImg');
+    cv.dataset.img = pdfProxyUrl;
+    if (typeof showDrawLoading === 'function') showDrawLoading('#drawAreaModal');
+    pdfjsLib.getDocument(pdfProxyUrl).promise.then(async pdf => {
+      const pageData = [];
+      let totalHeight = 0, maxWidth = 0;
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1 });
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = viewport.width;
+        tempCanvas.height = viewport.height;
+        await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
+        pageData.push({ tempCanvas, height: viewport.height });
+        totalHeight += viewport.height;
+        maxWidth = Math.max(maxWidth, viewport.width);
+      }
+      cv.width = maxWidth;
+      cv.height = totalHeight;
+      const ctx = cv.getContext('2d');
+      let yOffset = 0;
+      for (const { tempCanvas, height } of pageData) {
+        ctx.drawImage(tempCanvas, 0, yOffset);
+        yOffset += height;
+      }
+    }).catch(err => console.error('PDF 로드 실패:', err)).finally(() => {
+      if (typeof hideDrawLoading === 'function') hideDrawLoading('#drawAreaModal');
+    });
+  }
+
+  renderContractItemsForModal(d.contractItems || []);
+
+  // 신규 계약 추가 시 기존 영역을 불러오지 않음 (새로운 영역지정만)
+  if (!_drawAreaConIdx) {
+    restoreAreasForModal(d.areas || [], d.areaItems || []);
+  }
+}
+
+function renderContractItemsForModal(items) {
+  const ul = document.getElementById('contractItemList');
+  ul.innerHTML = '';
+  if (!items || items.length === 0) {
+    ul.innerHTML = '<div class="alert alert-default"><p class="alert-title text-sm">계약 품목이 없습니다</p></div>';
+    document.getElementById('contractCount').textContent = '0';
+    return;
+  }
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.dataset.itemcode = item.ITEM_CD || '';
+    li.dataset.colcode = item.COL_CD || '';
+    li.dataset.setyn = item.SET_YN || 'N';
+    const seriesNm = item.SERIES_NM || item.ITM_DESC || '';
+    li.innerHTML = `
+      <div class="item-info">
+        <p class="text-basic">${item.ITEM_CD || ''}
+          <span class="text-sub">${item.COL_CD || ''}</span></p>
+        <p class="text-sub">${seriesNm}</p>
+      </div>
+      <div class="item-qty-check">
+        <p class="text-basic"><span class="qty-count">0</span>/<span class="qty-total">${item.QTY || 0}</span></p>
+        <i class="icon-box"></i>
+      </div>`;
+    ul.appendChild(li);
+  });
+  document.getElementById('contractCount').textContent = items.length;
+  bindContractItemEventsForModal();
+}
+
+function bindContractItemEventsForModal() {
+  document.querySelectorAll('#drawAreaModal .mapping-list.type-contract li').forEach(li => {
+    li.addEventListener('click', function() {
+      if (!activeArea) return;
+      const key = getItemKey(li);
+      const currentList = document.querySelector(`.mapping-list.type-item[data-idx="${activeArea.idx}"]`);
+      if (!currentList) return;
+      const max = getMaxQty(key);
+      const total = getTotalQty(key);
+      if (total >= max) return;
+      let target = null;
+      currentList.querySelectorAll('li').forEach(el => { if (getItemKey(el) === key) target = el; });
+      if (target) { updateLeftQty(key); toggleAlertMappingItem(); return; }
+      const itemInfo = li.querySelector('.item-info').outerHTML;
+      const newLi = document.createElement('li');
+      newLi.dataset.itemcode = li.dataset.itemcode;
+      newLi.dataset.colcode = li.dataset.colcode || '';
+      newLi.dataset.setyn = li.dataset.setyn || 'N';
+      newLi.innerHTML = `${itemInfo}
+        <div class="item-actions"><div class="item-counter">
+          <button type="button" class="btn btn-ghost minus"><i class="icon-chevron rotate-90"></i></button>
+          <input type="text" class="input text-center qty" value="1">
+          <button type="button" class="btn btn-ghost plus"><i class="icon-chevron rotate-270"></i></button>
+        </div><button type="button" class="btn btn-delete btn-ghost"></button></div>`;
+      currentList.appendChild(newLi);
+      updateLeftQty(key);
+      toggleAlertMappingItem();
+      syncContractCopyState();
+    });
+  });
+}
+
+function restoreAreasForModal(areas, areaItems) {
+  if (!areas || areas.length === 0) return;
+  areas.forEach((area, i) => {
+    const letter = getAlphaIndex(i);
+    const el = document.createElement('div');
+    el.className = 'drawing-area';
+    el.style.left = area.X + 'px'; el.style.top = area.Y + 'px';
+    el.style.width = area.WIDTH + 'px'; el.style.height = area.HEIGHT + 'px';
+    el.dataset.idx = letter; el.dataset.areaId = area.AREA_ID;
+    el.innerHTML = `<span class="area-label">${letter} ${area.AREA_NAME || ''}</span>`;
+    canvasCont.appendChild(el);
+    enableInteract(el);
+    const data = { idx: letter, areaId: area.AREA_ID, name: area.AREA_NAME || '',
+      left: area.X, top: area.Y, width: area.WIDTH, height: area.HEIGHT, items: [] };
+    drawAreaData.push(data);
+    areaIdx++;
+    if (typeof onSaveAreaData === 'function') onSaveAreaData(data);
+    const mappedItems = areaItems.filter(ai => String(ai.AREA_ID) === String(area.AREA_ID));
+    if (mappedItems.length > 0) {
+      activeDrawArea(letter);
+      const cl = document.querySelector(`.mapping-list.type-item[data-idx="${letter}"]`);
+      if (cl) {
+        mappedItems.forEach(mi => {
+          const miKey = (mi.CODE_CD || '') + '__' + (mi.COL_CD || '');
+          let contractLi = null;
+          document.querySelectorAll('#drawAreaModal .type-contract li').forEach(el => { if (getItemKey(el) === miKey) contractLi = el; });
+          if (!contractLi) return;
+          const itemInfo = contractLi.querySelector('.item-info').outerHTML;
+          const newLi = document.createElement('li');
+          newLi.dataset.itemcode = mi.CODE_CD || ''; newLi.dataset.colcode = mi.COL_CD || ''; newLi.dataset.setyn = mi.SET_YN || 'N';
+          newLi.innerHTML = `${itemInfo}<div class="item-actions"><div class="item-counter">
+            <button type="button" class="btn btn-ghost minus"><i class="icon-chevron rotate-90"></i></button>
+            <input type="text" class="input text-center qty" value="${mi.QUANTITY || 1}">
+            <button type="button" class="btn btn-ghost plus"><i class="icon-chevron rotate-270"></i></button>
+          </div><button type="button" class="btn btn-delete btn-ghost"></button></div>`;
+          cl.appendChild(newLi);
+          updateLeftQty(miKey);
+        });
+      }
+    }
+  });
+  activeArea = null;
+  document.querySelectorAll('.drawing-area').forEach(v => v.classList.remove('selected'));
+}
+
+function drawInfoSave() {
+  const areas = drawAreaData.map(area => {
+    const list = document.querySelector(`.mapping-list.type-item[data-idx="${area.idx}"]`);
+    const items = [];
+    if (list) {
+      list.querySelectorAll('li').forEach(li => {
+        items.push({ setYn: li.dataset.setyn || 'N', codeCd: li.dataset.itemcode || '',
+          colCd: li.dataset.colcode || '', quantity: parseInt(li.querySelector('.qty')?.value, 10) || 0 });
+      });
+    }
+    return { areaName: area.name, x: Math.round(area.left), y: Math.round(area.top),
+      width: Math.round(area.width), height: Math.round(area.height), items: items };
+  });
+  if (areas.length === 0) { alert('영역이 없습니다. 영역을 추가해주세요.'); return; }
+
+  const emptyArea = areas.find(a => a.items.length === 0);
+  if (emptyArea) { alert('품목이 매핑되지 않은 영역이 있습니다. 모든 영역에 품목을 매핑해주세요.'); return; }
+
+  if (!confirm('영역과 품목을 저장하시겠습니까?')) return;
+
+  // 계약추가 모드: 계약매핑 먼저 INSERT 후 영역/품목 저장
+  const doSave = function() {
+    $.ajax({
+      url: '/hqDrawingMng/saveDrawingAreas',
+      type: 'post', contentType: 'application/json',
+      data: JSON.stringify({
+        drawingId: _drawAreaModalDrawingData.drawingId, versionId: _drawAreaModalDrawingData.versionId,
+        conIdx: _drawAreaModalDrawingData.conIdx, addressId: _drawAreaModalDrawingData.addressId, areas: areas
+      }),
+      success: function(res) {
+        if (!res.message) {
+          alert('저장되었습니다.');
+          _drawAreaIsNewDrawing = false;
+          _drawAreaConIdx = null;
+          closeDrawAreaModal();
+        } else { alert(res.message); }
+      },
+      error: function() { alert('저장 중 오류가 발생했습니다.'); }
+    });
+  };
+
+  if (_drawAreaConIdx) {
+    // 계약추가 모드 → 먼저 계약매핑 INSERT
+    $.ajax({
+      url: '/hqDrawingMng/addContractToDrawing',
+      type: 'post',
+      data: { drawingId: _drawAreaModalDrawingData.drawingId, conIdx: _drawAreaConIdx },
+      success: function(res) {
+        if (!res.message) {
+          doSave();
+        } else { alert(res.message); }
+      }
+    });
+  } else {
+    doSave();
+  }
+}
+
+function saveChangeAreaName() {
+  if (!activeArea) return;
+  const input = document.querySelector('#editAreaNameInput');
+  const newName = input.value.trim();
+  if (!newName) return;
+  activeArea.name = newName;
+  const areaEl = document.querySelector(`.drawing-area[data-idx="${activeArea.idx}"] .area-label`);
+  if (areaEl) areaEl.textContent = `${activeArea.idx} ${newName}`;
+  renderSelectedArea();
+  closeModal('editAreaNameModal');
+}
+</script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+<th:block th:replace="~{common/layout/js.html}" />
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+  body { background: var(--fursys-white); }
+  .tempPage { padding: 50px; margin: 50px 0; }
+</style>
+</head>
+<body>
+  <div class="tempPage">
+    <h2 class="page-title">* TABLE</h2><br>
+
+    <h3 class="title-lg">.table-wrap > table</h3><br><br>
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 15%">
+          <col>
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td class="row-title">value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+            <td><button type="button" class="btn link">상세 버튼</button></td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td class="row-title">.row-title</td>
+            <td>value</td>
+            <td class="text-center">.text-center</td>
+            <td class="text-right">.text-right</td>
+            <td><span class="badge w-fix">badge</span> <span class="badge w-fix-lg">badge</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br><br><br>
+
+    <h3 class="title-lg">.table-wrap > table.is-selectable</h3><br>
+
+    <div class="table-utils">
+      <p class="table-info">전체 21건</p>
+    </div>
+
+    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
+
+    <div class="table-wrap">
+      <table class="is-selectable">
+        <colgroup>
+          <col style="width: 15%">
+          <col>
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td class="row-title">value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td class="row-title">.row-title</td>
+            <td>value</td>
+            <td>value</td>
+            <td class="text-center">.text-center</td>
+            <td class="text-right">.text-right</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:replace="~{common/fragments/pagination :: pagination}"></div>
+  </div>
+
+
+
+  <div class="tempPage bg-white">
+    <h3 class="title-lg">.table-toggle > .btn-toggle + .table-wrap</h3><br><br>
+
+    <div class="layout-column gap-xs">
+      <div class="table-toggle">
+        <button type="button" class="btn-toggle is-expanded" aria-controls="#toggleTableA">
+          .btn-toggle.is-expanded
+        </button>
+        <div class="table-wrap"  id="toggleTableA">
+          <table>
+            <colgroup>
+              <col style="width: 15%">
+              <col>
+              <col style="width: 15%">
+              <col style="width: 15%">
+              <col style="width: 15%">
+              <col style="width: 15%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="table-toggle">
+        <button type="button" class="btn-toggle" aria-controls="#toggleTableB">
+          .btn-toggle
+        </button>
+        <div class="table-wrap"  id="toggleTableB">
+          <table>
+            <colgroup>
+              <col style="width: 15%">
+              <col>
+              <col style="width: 15%">
+              <col style="width: 15%">
+              <col style="width: 15%">
+              <col style="width: 15%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+                <th scope="col">title</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+              <tr>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+                <td>value</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="tempPage bg-white">
+    <h3 class="title-lg">table.table-simple</h3><br><br>
+
+    <table class="table-simple">
+      <colgroup>
+        <col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br><br>
+
+  <div class="tempPage bg-white">
+    <h3 class="title-lg">table.table-simple.is-selectable</h3><br><br>
+
+    <table class="table-simple is-selectable">
+      <colgroup>
+        <col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr class="selected">
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br><br>
+
+  <div class="tempPage bg-white">
+    <h3 class="title-lg">table.table-simple-reverse</h3><br><br>
+
+    <table class="table-simple-reverse">
+      <colgroup>
+        <col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+          <th scope="col">title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>value</td>
+          <td>value</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tempPage bg-white">
+    <h2 class="page-title">TAB</h2><br>
+
+    <ul class="tab-list">
+      <li><button type="button" data-target="#tabCont1" class="tab is-active">탭 1</button></li>
+      <li><button type="button" data-target="#tabCont2" class="tab">탭 2</button></li>
+    </ul>
+
+    <div class="tab-contents">
+      <div id="tabCont1" class="tab-cont is-active">
+          <p>탭1 내용</p>
+      </div>
+      <div id="tabCont2" class="tab-cont">
+          <p>탭2 내용</p>
+
+          <ul class="tab-list">
+            <li><button type="button" data-target="#tabCont3" class="tab is-active">탭 3</button></li>
+            <li><button type="button" data-target="#tabCont4" class="tab">탭 4</button></li>
+          </ul>
+
+          <div class="tab-contents">
+            <div id="tabCont3" class="tab-cont is-active">탭 3</div>
+            <div id="tabCont4" class="tab-cont">탭 4</div>
+          </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="tab-list type-sliding">
+      <div class="tab-indicator"></div>
+      <button type="button" data-target="#tabCont11" class="tab is-active">탭 11</button>
+      <button type="button" data-target="#tabCont12" class="tab">탭 12</button>
+    </div>
+
+    <div class="tab-contents">
+      <div id="tabCont11" class="tab-cont is-active">
+          <p>탭11 내용</p>
+      </div>
+      <div id="tabCont12" class="tab-cont">
+          <p>탭12 내용</p>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

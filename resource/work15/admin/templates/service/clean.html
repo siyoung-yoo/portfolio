@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{common/layout/vanilla_default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <!-- 검색 영역 (탭 포함) -->
+    <div class="card">
+      <div class="card-content">
+        <ul class="tabs mb-3" id="mainTabs">
+          <li class="tab-item is-active" data-tab="contractTab">계약건별 현황 조회</li>
+          <li class="tab-item" data-tab="listTab">신청 현황 조회</li>
+        </ul>
+
+        <!-- 계약건별 검색 -->
+        <form id="contractSearchForm" class="main-tab-content is-active" data-tab="contractTab">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-9 gap-2">
+            <div class="input-group lg:col-span-2 xl:col-span-2">
+              <label>
+                <span class="label">계약기간</span>
+                <div class="flex gap-2">
+                  <input id="contractDateRange" type="text" class="input datepicker-range" placeholder="FROM ~ TO">
+                  <input type="hidden" name="fromDt" id="contractFromDt">
+                  <input type="hidden" name="endDt" id="contractEndDt">
+                </div>
+              </label>
+            </div>
+
+            <div class="input-group lg:col-span-2 xl:col-span-3">
+              <label>
+                <span class="label">검색</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="searchType" id="contractSearchType">
+                      <option value="corpNm">고객명</option>
+                      <option value="contNo">계약번호</option>
+                      <option value="contNm">계약명</option>
+                    </select>
+                  </form-select>
+                  <input type="text" id="contractSearchKeyword" name="searchKeyword" class="input w-2/3" placeholder="검색어를 입력하세요">
+                </div>
+              </label>
+            </div>
+
+            <div class="flex justify-end items-end lg:col-span-3 xl:col-span-4">
+              <button type="button" class="btn btn-check" onclick="searchContract()">조회</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- 리스트 검색 -->
+        <form id="listSearchForm" class="main-tab-content" data-tab="listTab" style="display:none;">
+          <input type="hidden" name="status" id="listSearchStatus">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-9 gap-2">
+            <div class="input-group lg:col-span-2 xl:col-span-3">
+              <label>
+                <span class="label">기간</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="radioBtnVal" id="listRadioBtnVal">
+                      <option value="requestDt">신청일</option>
+                      <option value="uploadDt">최종변경일</option>
+                    </select>
+                  </form-select>
+                  <input id="listDateRange" type="text" class="input datepicker-range w-2/3" placeholder="FROM ~ TO">
+                  <input type="hidden" name="fromDt" id="listFromDt">
+                  <input type="hidden" name="endDt" id="listEndDt">
+                </div>
+              </label>
+            </div>
+
+            <div class="input-group lg:col-span-2 xl:col-span-3">
+              <label>
+                <span class="label">검색</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="searchType" id="listSearchType">
+                      <option value="corpNm">고객명</option>
+                      <option value="contNo">계약번호</option>
+                      <option value="contNm">계약명</option>
+                      <option value="addr">주소</option>
+                    </select>
+                  </form-select>
+                  <input type="text" id="listSearchKeyword" name="searchKeyword" class="input w-2/3" placeholder="검색어를 입력하세요">
+                </div>
+              </label>
+            </div>
+
+            <div class="flex justify-end items-end lg:col-span-3 xl:col-span-3">
+              <button type="button" class="btn btn-check" onclick="searchList()">조회</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 계약건별 그리드 -->
+    <div id="contractGridCard" class="card mt-3 card-h-full main-tab-content is-active" data-tab="contractTab">
+      <div class="card-header">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <h3 class="card-title">계약건별 조회</h3>
+          <div class="flex gap-1">
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="w-full h-full" id="contractGrid"></div>
+      </div>
+    </div>
+
+    <!-- 리스트 그리드 -->
+    <div id="listGridCard" class="card mt-3 card-h-full main-tab-content" data-tab="listTab" style="display:none;">
+      <div class="card-header">
+        <h3 class="card-title">신청 현황 조회</h3>
+      </div>
+      <div class="card-content flex flex-col overflow-hidden">
+        <ul class="tabs mb-3 flex-shrink-0" id="listStatusTabs">
+          <li class="tab-item is-active" data-status="">전체 <span id="listCntAll">0</span></li>
+          <li class="tab-item" data-status="REQ">신청 <span id="listCntReq">0</span></li>
+          <li class="tab-item" data-status="REC">접수 <span id="listCntRec">0</span></li>
+          <li class="tab-item" data-status="COMP">완료 <span id="listCntComp">0</span></li>
+          <li class="tab-item" data-status="RPT">리포트 <span id="listCntRpt">0</span></li>
+        </ul>
+        <div class="flex-1 overflow-hidden">
+          <div class="w-full h-full" id="listGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal -->
+  <th:block th:replace="~{service/modal/contractDetailModal}"/>
+  <!--// modal -->
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+      const renderer = { type: "TemplateRenderer" };
+      const filter = { showIcon: true };
+
+      // 진행상태 렌더러
+      const statusRenderer = {
+        renderer: { type: "TemplateRenderer" },
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === '미신청') {
+            return '<span class="badge badge-rounded badge-default">' + value + '</span>';
+          } else if (value === '진행') {
+            return '<span class="badge badge-rounded badge-primary">' + value + '</span>';
+          } else if (value === '완료') {
+            return '<span class="badge badge-rounded badge-outline">' + value + '</span>';
+          }
+          return value || '';
+        }
+      };
+
+      // ===== 계약건별 컬럼 =====
+      const contractColumnLayout = [
+        { headerText: '계약번호', dataField: 'CONTRACT_NO', filter: filter, width: 140, style: 'text-center' },
+        { headerText: '계약명', dataField: 'CONTRACT_NM', filter: filter },
+        { headerText: '고객명', dataField: 'CTM_NM', filter: filter, width: 150 },
+        { headerText: '계약기간', dataField: 'CONTRACT_PERIOD', filter: filter, width: 150, style: 'text-center' },
+        { headerText: '개시일', dataField: 'START_DT', filter: filter, width: 120, style: 'text-center' },
+        { headerText: '완료일', dataField: 'END_DT', filter: filter, width: 120, style: 'text-center' },
+        { headerText: '주소', dataField: 'ADDR', filter: filter, width: 100, style: 'text-center' },
+        { headerText: '지급횟수', dataField: 'PAY_CNT', filter: filter, width: 100, style: 'text-center' },
+        Object.assign({ headerText: '진행상태', dataField: 'STATUS', filter: filter, width: 100, style: 'text-center' }, statusRenderer),
+        { headerText: '최종변경일', dataField: 'UPD_SYS_DT', filter: filter, width: 120, style: 'text-center' },
+        { headerText: '상세', dataField: 'DETAIL_BTN', width: 70, style: 'text-center', renderer: renderer,
+          labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+            return '<button type="button" class="btn btn-outline btn-sm" onclick="openContractDetail(\'' + (item.CONTRACT_NO || '') + '\')">상세</button>';
+          }
+        },
+      ];
+
+      // 신청 현황 진행상태 렌더러
+      const listStatusRenderer = {
+        renderer: { type: "TemplateRenderer" },
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === '신청') {
+            return '<span class="badge badge-rounded badge-default">' + value + '</span>';
+          } else if (value === '접수') {
+            return '<span class="badge badge-rounded badge-primary">' + value + '</span>';
+          } else if (value === '완료') {
+            return '<span class="badge badge-rounded badge-primary">' + value + '</span>';
+          } else if (value === '리포트') {
+            return '<span class="badge badge-rounded badge-secondary">' + value + '</span>';
+          }
+          return value || '';
+        }
+      };
+
+      // ===== 리스트 컬럼 =====
+      const listColumnLayout = [
+        { headerText: '신청일', dataField: 'REQ_DATE', filter: filter, width: 120, style: 'text-center' },
+        { headerText: '신청번호', dataField: 'REQ_NO', filter: filter, width: 150, style: 'text-center', renderer: renderer,
+          labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+            if (value) {
+              return '<a href="javascript:void(0);" class="btn-link" onclick="goCleanDetail(\'' + value + '\')">' + value + '</a>';
+            }
+            return '-';
+          }
+        },
+        { headerText: '신청명', dataField: 'REQ_NM', filter: filter, style: 'aui-left' },
+        { headerText: '계약번호', dataField: 'CONTRACT_NO', filter: filter, width: 140, style: 'text-center' },
+        { headerText: '계약명', dataField: 'CONTRACT_NM', filter: filter, width: 200 },
+        { headerText: '고객명', dataField: 'CTM_NM', filter: filter, width: 150 },
+        { headerText: '주소', dataField: 'ADDR', filter: filter, width: 250, style: 'aui-left' },
+        Object.assign({ headerText: '진행상태', dataField: 'STATUS', filter: filter, width: 100, style: 'text-center' }, listStatusRenderer),
+        { headerText: '최종변경일', dataField: 'UPD_SYS_DT', filter: filter, width: 120, style: 'text-center' },
+      ];
+
+      const gridProps = {
+        isRowAllCheckCurrentView: true,
+        enableSorting: true,
+        enableFilter: true,
+        hoverMode: 'singleRow',
+        selectionMode: 'singleRow',
+        showRowNumColumn: true,
+        showRowCheckColumn: false,
+        defaultColumnWidth: 100,
+        softRemoveRowMode: false,
+        enableMovingColumn: true,
+        usePaging: true,
+        pageRowCount: 20,
+        pagingPanelHeight: 40,
+        height: '100%',
+      };
+
+      let contractGridId = null;
+      let listGridId = null;
+      let activeMainTab = 'contractTab';
+      let activeListStatus = '';
+
+      // 서브탭 상태 매핑
+      const listStatusMap = { '': '', 'REQ': '신청', 'REC': '접수', 'COMP': '완료', 'RPT': '리포트' };
+      const listCountElMap = { '': 'listCntAll', 'REQ': 'listCntReq', 'REC': 'listCntRec', 'COMP': 'listCntComp', 'RPT': 'listCntRpt' };
+
+      // ===== 탭 전환 =====
+      function initMainTabs() {
+        document.querySelectorAll('#mainTabs .tab-item').forEach(tab => {
+          tab.addEventListener('click', function () {
+            const targetTab = this.dataset.tab;
+            if (targetTab === activeMainTab) return;
+
+            // 탭 활성화
+            document.querySelectorAll('#mainTabs .tab-item').forEach(t => t.classList.remove('is-active'));
+            this.classList.add('is-active');
+
+            // 모든 탭 컨텐츠 숨기기/보이기
+            document.querySelectorAll('.main-tab-content').forEach(c => {
+              if (c.dataset.tab === targetTab) {
+                c.classList.add('is-active');
+                c.style.display = '';
+              } else {
+                c.classList.remove('is-active');
+                c.style.display = 'none';
+              }
+            });
+
+            activeMainTab = targetTab;
+
+            // 그리드 리사이즈
+            if (targetTab === 'contractTab' && contractGridId) AUIGrid.resize(contractGridId);
+            if (targetTab === 'listTab' && listGridId) AUIGrid.resize(listGridId);
+          });
+        });
+      }
+
+      // ===== 날짜 초기화 =====
+      function initDateRange(dateRangeId, fromDtId, endDtId) {
+        const today = new Date();
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+        const formatDate = (d) => {
+          const yyyy = d.getFullYear();
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          return yyyy + '-' + mm + '-' + dd;
+        };
+
+        const fromStr = formatDate(oneMonthAgo);
+        const toStr = formatDate(today);
+
+        document.getElementById(fromDtId).value = fromStr.replace(/-/g, '');
+        document.getElementById(endDtId).value = toStr.replace(/-/g, '');
+        document.getElementById(dateRangeId).value = fromStr + ' ~ ' + toStr;
+      }
+
+      // ===== 샘플 데이터 =====
+      const contractSampleData = [
+        { CONTRACT_NO: 'CT-2026-0001', CONTRACT_NM: '퍼시스 본사 클리닝 계약', CTM_NM: '(주)퍼시스', CONTRACT_PERIOD: '60개월', START_DT: '2026-01-01', END_DT: '2026-12-31', ADDR: '3', PAY_CNT: '2', STATUS: '완료', UPD_SYS_DT: '2026-03-10' },
+        { CONTRACT_NO: 'CT-2026-0002', CONTRACT_NM: '삼성전자 사옥 의자 클리닝', CTM_NM: '삼성전자(주)', CONTRACT_PERIOD: '48개월', START_DT: '2026-02-01', END_DT: '2026-07-31', ADDR: '1', PAY_CNT: '2', STATUS: '진행', UPD_SYS_DT: '2026-03-12' },
+        { CONTRACT_NO: 'CT-2025-0015', CONTRACT_NM: 'LG CNS 정기 클리닝', CTM_NM: 'LG CNS(주)', CONTRACT_PERIOD: '48개월', START_DT: '2025-06-01', END_DT: '2026-05-31', ADDR: '2', PAY_CNT: '3', STATUS: '진행', UPD_SYS_DT: '2026-03-05' },
+        { CONTRACT_NO: 'CT-2025-0010', CONTRACT_NM: '현대건설 본사 계약', CTM_NM: '현대건설(주)', CONTRACT_PERIOD: '48개월', START_DT: '2025-03-01', END_DT: '2026-02-28', ADDR: '2', PAY_CNT: '2', STATUS: '완료', UPD_SYS_DT: '2026-02-28' },
+        { CONTRACT_NO: 'CT-2026-0003', CONTRACT_NM: 'SK하이닉스 이천 클리닝', CTM_NM: 'SK하이닉스(주)', CONTRACT_PERIOD: '60개월', START_DT: '2026-03-01', END_DT: '2027-02-28', ADDR: '1', PAY_CNT: '2', STATUS: '미신청', UPD_SYS_DT: '2026-03-15' },
+      ];
+
+      const listSampleData = [
+        { REQ_DATE: '2026-03-15', REQ_NO: 'RQ-2026-0001', REQ_NM: '퍼시스 본사 5F 의자 클리닝', CONTRACT_NO: 'CT-2026-0001', CONTRACT_NM: '퍼시스 본사 클리닝 계약', CTM_NM: '(주)퍼시스', ADDR: '서울특별시 강남구 테헤란로 123', STATUS: '완료', UPD_SYS_DT: '2026-03-15' },
+        { REQ_DATE: '2026-03-12', REQ_NO: 'RQ-2026-0002', REQ_NM: '삼성전자 사옥 3F 클리닝', CONTRACT_NO: 'CT-2026-0002', CONTRACT_NM: '삼성전자 사옥 의자 클리닝', CTM_NM: '삼성전자(주)', ADDR: '경기도 수원시 영통구 삼성로 129', STATUS: '접수', UPD_SYS_DT: '2026-03-13' },
+        { REQ_DATE: '2026-03-10', REQ_NO: 'RQ-2026-0003', REQ_NM: 'LG CNS 마포 본사 클리닝', CONTRACT_NO: 'CT-2025-0015', CONTRACT_NM: 'LG CNS 정기 클리닝', CTM_NM: 'LG CNS(주)', ADDR: '서울특별시 마포구 마포대로 75', STATUS: '리포트', UPD_SYS_DT: '2026-03-14' },
+        { REQ_DATE: '2026-02-20', REQ_NO: 'RQ-2026-0004', REQ_NM: '현대건설 본사 클리닝', CONTRACT_NO: 'CT-2025-0010', CONTRACT_NM: '현대건설 본사 계약', CTM_NM: '현대건설(주)', ADDR: '서울특별시 종로구 율곡로 75', STATUS: '완료', UPD_SYS_DT: '2026-02-28' },
+        { REQ_DATE: '2026-03-16', REQ_NO: 'RQ-2026-0005', REQ_NM: 'SK하이닉스 이천 클리닝 신청', CONTRACT_NO: 'CT-2026-0003', CONTRACT_NM: 'SK하이닉스 이천 클리닝', CTM_NM: 'SK하이닉스(주)', ADDR: '경기도 이천시 부발읍 경충대로 2091', STATUS: '신청', UPD_SYS_DT: '2026-03-16' },
+      ];
+
+      // ===== 그리드 초기 생성 =====
+      function initGrids() {
+        var r1 = ensureGrid('#contractGrid', contractColumnLayout, gridProps, contractGridId);
+        contractGridId = r1.gridId;
+        AUIGrid.setGridData(contractGridId, contractSampleData);
+
+        var r2 = ensureGrid('#listGrid', listColumnLayout, gridProps, listGridId);
+        listGridId = r2.gridId;
+        AUIGrid.setGridData(listGridId, listSampleData);
+        updateListCounts(listSampleData);
+      }
+
+      // ===== 리스트 서브탭 초기화 =====
+      function initListStatusTabs() {
+        document.querySelectorAll('#listStatusTabs .tab-item').forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            var status = this.dataset.status;
+            if (status === activeListStatus) return;
+
+            document.querySelectorAll('#listStatusTabs .tab-item').forEach(function(t) { t.classList.remove('is-active'); });
+            this.classList.add('is-active');
+            activeListStatus = status;
+            searchList();
+          });
+        });
+      }
+
+      // ===== 리스트 카운트 업데이트 =====
+      function updateListCounts(dataList) {
+        var counts = { '': 0, 'REQ': 0, 'REC': 0, 'COMP': 0, 'RPT': 0 };
+        var statusCodeMap = { '신청': 'REQ', '접수': 'REC', '완료': 'COMP', '리포트': 'RPT' };
+        dataList.forEach(function(row) {
+          counts['']++;
+          var code = statusCodeMap[row.STATUS];
+          if (code) counts[code]++;
+        });
+        Object.keys(listCountElMap).forEach(function(key) {
+          document.getElementById(listCountElMap[key]).textContent = counts[key] || 0;
+        });
+      }
+
+      // ===== 계약건별 조회 =====
+      async function searchContract() {
+        var result = ensureGrid('#contractGrid', contractColumnLayout, gridProps, contractGridId);
+        contractGridId = result.gridId;
+
+        /* TODO: API 연결 후 주석 해제
+        await loadGridDataSearchForm(
+          contractGridId,
+          '/service/clean/selectContractList.dataTable',
+          null,
+          'contractSearchForm'
+        );
+        */
+        AUIGrid.setGridData(contractGridId, contractSampleData);
+      }
+
+      // ===== 리스트 조회 =====
+      function searchList() {
+        var result = ensureGrid('#listGrid', listColumnLayout, gridProps, listGridId);
+        listGridId = result.gridId;
+
+        /* TODO: API 연결 후 주석 해제
+        document.getElementById('listSearchStatus').value = activeListStatus;
+        await loadGridDataSearchForm(
+          listGridId,
+          '/service/clean/selectCleaningList.dataTable',
+          function(data) { updateListCounts(data || []); },
+          'listSearchForm'
+        );
+        */
+
+        // 샘플 데이터 필터링
+        var statusLabel = listStatusMap[activeListStatus];
+        var filtered = statusLabel ? listSampleData.filter(function(r) { return r.STATUS === statusLabel; }) : listSampleData;
+        AUIGrid.setGridData(listGridId, filtered);
+        updateListCounts(listSampleData);
+      }
+
+      // ===== 서비스 상세 (새탭) =====
+      function goCleanDetail(reqNo) {
+        if (!reqNo) return;
+        window.open('/service/cleanDetail/' + reqNo, '_blank');
+      }
+
+      // ===== 계약 상세 모달 =====
+      function openContractDetail(contractNo) {
+        if (!contractNo) { alert('계약번호가 없습니다.'); return; }
+        cdInitModal(contractNo);
+        openModal('contractDetailModal');
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initDateRange('contractDateRange', 'contractFromDt', 'contractEndDt');
+        initDateRange('listDateRange', 'listFromDt', 'listEndDt');
+        initMainTabs();
+        initListStatusTabs();
+        initGrids();
+      });
+
+      window.addEventListener('resize', () => {
+        if (contractGridId) AUIGrid.resize(contractGridId);
+        if (listGridId) AUIGrid.resize(listGridId);
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
+          event.preventDefault();
+          if (activeMainTab === 'contractTab') searchContract();
+          else searchList();
+        }
+      });
+    </script>
+</th:block>
+</body>
+</html>

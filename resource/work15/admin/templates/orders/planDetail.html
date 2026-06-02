@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ko" xmlnS:th="http://www.thymeleaf.org"
+      xmlnS:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header_2 :: header-back('title', null, null)}" />
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <!-- S: 기본 정보 -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">기본 정보</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div>
+            <span class="text-xs text-muted-foreground">사업자명</span>
+            <p class="text-sm">중동증권(주)</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">고객명</span>
+            <p class="text-sm">대우건설</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">확정납기</span>
+            <p class="text-sm">2026-01-01</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">납품요청시간</span>
+            <p class="text-sm">14:00</p>
+          </div>
+
+          <div>
+            <span class="text-xs text-muted-foreground">수주번호</span>
+            <p class="text-sm">F20250110000101</p>
+          </div>
+          <div class="lg:col-span-2">
+            <span class="text-xs text-muted-foreground">수주건명</span>
+            <p class="text-sm">퍼시스 강남 오피스 가구 납품</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">시공유무</span>
+            <p class="text-sm">유</p>
+          </div>
+
+          <div class="lg:col-span-2">
+            <span class="text-xs text-muted-foreground">납품처명</span>
+            <p class="text-sm">중동증권(주)</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">전화번호</span>
+            <p class="text-sm">02-2188-4133</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">휴대폰 번호</span>
+            <p class="text-sm">010-1234-1234</p>
+          </div>
+
+          <div class="lg:col-span-2">
+            <span class="text-xs text-muted-foreground">납품처 주소</span>
+            <p class="text-sm">(04515) 서울 중구 서소문로 112(충정로 1가) 3층</p>
+          </div>
+          <div class="lg:col-span-2">
+            <span class="text-xs text-muted-foreground">납품처 특기사항</span>
+            <p class="text-sm">납품 시 사전 연락 필수, 주차 불가</p>
+          </div>
+
+          <div>
+            <span class="text-xs text-muted-foreground">본사 영업담당</span>
+            <p class="text-sm">김본사</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">대리점 영업담당</span>
+            <p class="text-sm">김본사</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">부서명</span>
+            <p class="text-sm">경영지원팀</p>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">납품처 담당</span>
+            <p class="text-sm">김철수</p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <span class="text-xs text-muted-foreground">사다리차 필요</span>
+              <p class="text-sm">무</p>
+            </div>
+            <div>
+              <span class="text-xs text-muted-foreground">엘리베이터</span>
+              <p class="text-sm">무</p>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <span class="text-xs text-muted-foreground">하차지 상태</span>
+              <p class="text-sm">지상</p>
+            </div>
+            <div>
+              <span class="text-xs text-muted-foreground">차량진입 여부</span>
+              <p class="text-sm">1톤</p>
+            </div>
+          </div>
+          <div>
+            <span class="text-xs text-muted-foreground">인테리어</span>
+            <p class="text-sm">진행중</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 기본 정보 -->
+
+    <!-- S: 품목 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">품목</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="border">
+          <div id="grid1" class="w-full h-full targetGrid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 품목 -->
+
+    <!-- S: 추가시공 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">추가시공</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="border">
+          <div id="grid2" class="w-full h-full targetGrid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 추가시공 -->
+
+    <!-- S: 시공정보 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">시공정보</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-3">
+          <div class="input-group">
+            <label>
+              <span class="label">시공 예약일자</span>
+              <input type="text" id="" class="input datepicker-range" placeholder="FROM ~ TO">
+            </label>
+          </div>
+
+          <div class="input-group">
+            <label>
+              <span class="label">시공팀</span>
+              <form-select>
+                <select name="" id="">
+                  <option value="">선택</option>
+                  <option value="">시공팀1</option>
+                  <option value="">시공팀2</option>
+                </select>
+              </form-select>
+            </label>
+          </div>
+        </div>
+
+        <div class="border">
+          <div id="grid3" class="w-full h-full targetGrid"></div>
+        </div>
+
+        <div class="card bg-secondary mt-3">
+          <div class="card-content py-4">
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2">
+              <div class="input-group">
+                <label>
+                  <div class="label">시공 예약일자</div>
+                  <input type="text" id="" class="input datepicker-range" placeholder="FROM ~ TO">
+                </label>
+              </div>
+              <div class="input-group">
+                <label>
+                  <span class="label">시공팀</span>
+                  <form-select>
+                    <select name="" id="">
+                      <option value="">시공팀1</option>
+                      <option value="">시공팀2</option>
+                    </select>
+                  </form-select>
+                </label>
+              </div>
+              <div class="input-group sm:col-span-2">
+                <label>
+                  <span class="label">납품요청시간</span>
+                  <div class="flex gap-3">
+                    <form-select class="w-1/2 flex-shrink-0">
+                      <select name="" id="">
+                        <option value="">10:00</option>
+                        <option value="">10:30</option>
+                      </select>
+                    </form-select>
+
+                    <label class="radio-box">
+                      <input type="checkbox" class="checkbox" />
+                      <span class="text-base">시간엄수</span>
+                    </label>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 mt-2">
+              <div class="input-group sm:col-span-4">
+                <label>
+                  <span class="label">특기사항</span>
+                  <input type="text" id="" class="input" placeholder="특기사항 입력">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 시공정보 -->
+
+    <!-- S: 수주변경이력 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">수주변경이력</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="border">
+          <div id="grid4" class="w-full h-full targetGrid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 수주변경이력 -->
+
+    <!-- S: A/S 정보 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">A/S 정보</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="border">
+          <div id="grid5" class="w-full h-full targetGrid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: A/S 정보 -->
+
+    <!-- S: 반품정보 -->
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">반품정보</h3>
+        <i class="icon-chevron" data-action="collapse"></i>
+      </div>
+      <div class="card-content collapse-content is-open">
+        <div class="border">
+          <div id="grid6" class="w-full h-full targetGrid"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 반품정보 -->
+  </div>
+</th:block>
+
+
+<th:block layout:fragment="script">
+  <script>
+    // 드롭다운 아이콘 클릭 시, 그리드 넓이 재설정
+    document.querySelectorAll('.icon-chevron').forEach(icon => {
+      icon.addEventListener("click", () => {
+        if (icon.closest(".card").querySelector(".targetGrid")) {
+          const gridId = icon.closest(".card").querySelector(".targetGrid").getAttribute('id');
+          if (!icon.classList.contains('is-rotated')) AUIGrid.resize("#"+gridId);
+        }
+      })
+    })
+
+    // 수주정보 상세페이지 전용으로 그리드 공통 속성 재정의
+    AUIGrid.defaultProps = {
+      rowNumHeaderText: '번호',
+      headerHeight: 36,
+      rowHeight: 36,
+      footerHeight: 36,
+      height: 230,
+      showFooter: true,
+
+      isRowAllCheckCurrentView: true,
+      enableSorting: true,
+      enableFilter: true,
+      useContextMenu: true,
+      hoverMode: "singleRow",
+      selectionMode: "singleRow",
+      showRowNumColumn: true,
+			showRowCheckColumn: false,
+      defaultColumnWidth: 100,
+      softRemoveRowMode: false,
+      enableMovingColumn: true,
+    }
+
+    const gridPropsAutoHeight = { autoGridHeight: true }
+    const gridPropsNoFooter = { showFooter: false }
+
+    let myGridId1, myGridId2, myGridId3, myGridId4, myGridId5, myGridId6;
+    const renderer = { type: "TemplateRenderer" };
+    const filter = { showIcon: true };
+
+
+    // 품목
+    const columnLayout1 = [
+      { headerText: "좌수", dataField: "TEMP_DATA01", filter: filter, width: 75, style: 'text-center', },
+      { headerText: "순번", dataField: "TEMP_DATA02", filter: filter, width: 75, style: 'text-center', },
+      { headerText: "분류", dataField: "TEMP_DATA03", filter: filter, width: 150,},
+      { headerText: "그룹", dataField: "TEMP_DATA04", filter: filter, width: 150,},
+      { headerText: "세트코드", dataField: "TEMP_DATA05", filter: filter, width: 100, style: 'text-center', },
+      { headerText: "세트색상", dataField: "TEMP_DATA06", filter: filter, width: 100,},
+      { headerText: "시리즈", dataField: "TEMP_DATA07", filter: filter, width: 120, style: 'text-center', },
+      { headerText: "품목명", dataField: "TEMP_DATA08", filter: filter, width: 250,},
+      { headerText: "단품코드", dataField: "TEMP_DATA09", filter: filter, width: 120, style: 'text-center', },
+      { headerText: "단품색상", dataField: "TEMP_DATA10", filter: filter, width: 100, style: 'text-center', },
+      { headerText: "규격", dataField: "TEMP_DATA11", filter: filter, width: 200, style: 'text-center', },
+      { headerText: "견적단가", dataField: "TEMP_DATA12", filter: filter, width: 120, dataType:"numeric", style: 'text-right', },
+      { headerText: "수량", dataField: "TEMP_DATA13", filter: filter, width: 75, style: 'text-center', },
+      { headerText: "견적총액", dataField: "TEMP_DATA14", filter: filter, width: 120, dataType:"numeric", style: 'text-right', },
+      { headerText: "물류입고일", dataField: "TEMP_DATA15", filter: filter, width: 120, style: 'text-center', },
+      { headerText: "물류출고일", dataField: "TEMP_DATA16", filter: filter, width: 120, style: 'text-center', },
+      { headerText: "제품구분", dataField: "TEMP_DATA17", filter: filter, width: 100, style: 'text-center', },
+      { headerText: "담당자", dataField: "TEMP_DATA18", filter: filter, width: 100, style: 'text-center', },
+      { headerText: "연락처", dataField: "TEMP_DATA19", filter: filter, width: 120, style: 'text-center', },
+    ];
+
+    const tempData1 = [
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "001", "TEMP_DATA03": "의자", "TEMP_DATA04": "임원용", "TEMP_DATA05": "SET-001", "TEMP_DATA06": "블랙", "TEMP_DATA07": "C시리즈", "TEMP_DATA08": "임원용 의자", "TEMP_DATA09": "CHR-001", "TEMP_DATA10": "블랙", "TEMP_DATA11": "W650*D650*H1200", "TEMP_DATA12": "1200000", "TEMP_DATA13": "5", "TEMP_DATA14": "6000000", "TEMP_DATA15": "2024-01-15", "TEMP_DATA16": "2024-01-20", "TEMP_DATA17": "렌탈", "TEMP_DATA18": "김철수", "TEMP_DATA19": "010-1234-5678", },
+    ]
+
+    const footerLayout1 = [
+      { labelText: "합계", positionField: "#base", },
+      { dataField: "TEMP_DATA13", positionField: "TEMP_DATA13", operation: "SUM", formatString: "#,##0", style: "text-right", },
+      { dataField: "TEMP_DATA14", positionField: "TEMP_DATA14", operation: "SUM", formatString: "#,##0", style: "text-right", },
+    ];
+
+    myGridId1 = AUIGrid.create("#grid1", columnLayout1, gridPropsAutoHeight);
+    AUIGrid.setFooter(myGridId1, footerLayout1);
+    AUIGrid.setGridData(myGridId1, tempData1);
+
+    // 품목 row 수가 적을 경우 그리드 높이 고정을 위해 gridProps 변경하여 재생성
+    document.addEventListener("DOMContentLoaded", function() {
+      const rowCount = AUIGrid.getRowCount(myGridId1);
+      if (rowCount < 6) {
+        AUIGrid.destroy(myGridId1);
+
+        myGridId1 = AUIGrid.create("#grid1", columnLayout1, gridPropsShowFooter);
+        AUIGrid.setFooter(myGridId1, footerLayout1);
+        AUIGrid.setGridData(myGridId1, tempData1);
+      }
+    })
+
+
+    // 추가시공
+    const columnLayout2 = [
+      { headerText: "이전구분", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "설치품목/명", dataField: "TEMP_DATA02", filter: filter, width: "35%", },
+      { headerText: "비용단가", dataField: "TEMP_DATA03", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "수량", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', },
+      { headerText: "예상비용", dataField: "TEMP_DATA05", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "확정비용", dataField: "TEMP_DATA06", filter: filter, dataType:"numeric", style: 'text-right', },
+    ];
+
+    const tempData2 = [
+      { "TEMP_DATA01": "구분", "TEMP_DATA02": "품목 text text/명 text text", "TEMP_DATA03": 50000, "TEMP_DATA04": 10, "TEMP_DATA05": 50000, "TEMP_DATA06": 50000, },
+    ]
+
+    const footerLayout2 = [
+      { labelText: "합계", positionField: "#base", },
+      { dataField: "TEMP_DATA03", positionField: "TEMP_DATA03", operation: "SUM", formatString: "#,##0", style: "text-right", },
+      { dataField: "TEMP_DATA04", positionField: "TEMP_DATA04", operation: "SUM", formatString: "#", style: "text-center", },
+      { dataField: "TEMP_DATA05", positionField: "TEMP_DATA05", operation: "SUM", formatString: "#,##0", style: "text-right", },
+      { dataField: "TEMP_DATA06", positionField: "TEMP_DATA06", operation: "SUM", formatString: "#,##0", style: "text-right", },
+    ];
+
+    myGridId2 = AUIGrid.create("#grid2", columnLayout2);
+    AUIGrid.setFooter(myGridId2, footerLayout2);
+    AUIGrid.setGridData(myGridId2, tempData2);
+
+
+    // 시공정보
+    const columnLayout3 = [
+      { headerText: "예정시간", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "시공금액", dataField: "TEMP_DATA02", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "예정소요시간", dataField: "TEMP_DATA03", filter: filter, style: 'text-center', },
+      { headerText: "시간엄수 구분", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "회사구분", dataField: "TEMP_DATA05", filter: filter, style: 'text-center', },
+      { headerText: "시공지역", dataField: "TEMP_DATA06", filter: filter, style: 'text-center', },
+      { headerText: "추가요청건", dataField: "TEMP_DATA07", filter: filter, width: '30%' },
+    ];
+
+    const tempData3 = [
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+    ]
+
+    myGridId3 = AUIGrid.create("#grid3", columnLayout3, gridPropsNoFooter);
+    AUIGrid.setGridData(myGridId3, tempData3);
+
+
+    // 수주변경이력
+    const columnLayout4 = [
+      { headerText: "접수일자", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "접수시간", dataField: "TEMP_DATA02", filter: filter, style: 'text-center', },
+      { headerText: "요청유형", dataField: "TEMP_DATA03", filter: filter, style: 'text-center', },
+      { headerText: "진행상태", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', },
+    ];
+
+    const tempData4 = [
+      { "TEMP_DATA01": "2026-01-01", "TEMP_DATA02": "10:00", "TEMP_DATA03": "-", "TEMP_DATA04": "-", },
+    ]
+
+    myGridId4 = AUIGrid.create("#grid4", columnLayout4, gridPropsNoFooter);
+    AUIGrid.setGridData(myGridId4, tempData4);
+
+
+    // A/S 정보
+    const columnLayout5 = [
+      { headerText: "접수순번", dataField: "TEMP_DATA01", filter: filter, width: 80, style: 'text-center' },
+      { headerText: "접수번호", dataField: "TEMP_DATA02", filter: filter, style: 'text-center' },
+      { headerText: "품목코드", dataField: "TEMP_DATA03", filter: filter, width: "8%", style: 'text-center' },
+      { headerText: "색상", dataField: "TEMP_DATA04", filter: filter, width: "6%", style: 'text-center' },
+      { headerText: "품목명", dataField: "TEMP_DATA05", filter: filter, width: "20%", },
+      { headerText: "옵션", dataField: "TEMP_DATA06", filter: filter, },
+      { headerText: "입고확정일", dataField: "TEMP_DATA07", filter: filter, style: 'text-center' },
+      { headerText: "출고예정일", dataField: "TEMP_DATA08", filter: filter, style: 'text-center' },
+      { headerText: "수량", dataField: "TEMP_DATA09", filter: filter, width: 90, dataType:"numeric", style: 'text-center', },
+      { headerText: "단가", dataField: "TEMP_DATA10", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "금액", dataField: "TEMP_DATA11", filter: filter, dataType:"numeric", style: 'text-right', },
+    ];
+
+    const tempData5 = [
+      { "TEMP_DATA01": "1", "TEMP_DATA02": "F202601120073", "TEMP_DATA03": "LF5112", "TEMP_DATA04": "WW", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "-", "TEMP_DATA07": "2026-01-01", "TEMP_DATA08": "2026-01-01", "TEMP_DATA09": 10, "TEMP_DATA10": 50000, "TEMP_DATA11": 50000, },
+      { "TEMP_DATA01": "1", "TEMP_DATA02": "F202601120073", "TEMP_DATA03": "LF5112", "TEMP_DATA04": "WW", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "-", "TEMP_DATA07": "2026-01-01", "TEMP_DATA08": "2026-01-01", "TEMP_DATA09": 10, "TEMP_DATA10": 50000, "TEMP_DATA11": 50000, },
+    ]
+
+    const footerLayout5 = [
+      { labelText: "합계", positionField: "#base", },
+      { dataField: "TEMP_DATA09", positionField: "TEMP_DATA09", operation: "SUM", formatString: "#", style: "text-center", },
+      { dataField: "TEMP_DATA10", positionField: "TEMP_DATA10", operation: "SUM", formatString: "#,##0", style: "text-right", },
+      { dataField: "TEMP_DATA11", positionField: "TEMP_DATA11", operation: "SUM", formatString: "#,##0", style: "text-right", },
+    ];
+
+    myGridId5 = AUIGrid.create("#grid5", columnLayout5);
+    AUIGrid.setFooter(myGridId5, footerLayout5);
+    AUIGrid.setGridData(myGridId5, tempData5);
+
+
+    // 반품 정보
+    const columnLayout6 = [
+      { headerText: "좌수", dataField: "TEMP_DATA01", filter: filter, width: 80, style: 'text-center' },
+      { headerText: "순번", dataField: "TEMP_DATA02", filter: filter, width: 80, style: 'text-center' },
+      { headerText: "세트코드", dataField: "TEMP_DATA03", filter: filter, width: 120, style: 'text-center' },
+      { headerText: "세트칼라", dataField: "TEMP_DATA04", filter: filter, width: 120, style: 'text-center' },
+      { headerText: "단품코드", dataField: "TEMP_DATA05", filter: filter, width: 120, style: 'text-center' },
+      { headerText: "단품칼라", dataField: "TEMP_DATA06", filter: filter, width: 120, style: 'text-center' },
+      { headerText: "의뢰수량", dataField: "TEMP_DATA07", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "입고수량", dataField: "TEMP_DATA08", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "검사수량", dataField: "TEMP_DATA09", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "검사결과", dataField: "TEMP_DATA10", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "완료구분", dataField: "TEMP_DATA11", filter: filter, width: 100, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "입고금액", dataField: "TEMP_DATA12", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+      { headerText: "매출일자", dataField: "TEMP_DATA13", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "검사상태", dataField: "TEMP_DATA14", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "반품매출여부", dataField: "TEMP_DATA15", filter: filter, width: 100, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "입고창고", dataField: "TEMP_DATA16", filter: filter, width: 150, },
+      { headerText: "반품매출금액", dataField: "TEMP_DATA17", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+      { headerText: "반품담당자", dataField: "TEMP_DATA18", filter: filter, width: 120, style: 'text-center' },
+    ];
+
+    const tempData6 = [
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "01", "TEMP_DATA03": "CAC082DN", "TEMP_DATA04": "WWWW", "TEMP_DATA05": "CAC0082SN", "TEMP_DATA06": "LD", "TEMP_DATA07": 1, "TEMP_DATA08": 1, "TEMP_DATA09": 1, "TEMP_DATA10": "결과", "TEMP_DATA11": "Y", "TEMP_DATA12": 50000, "TEMP_DATA13": "2026-01-01", "TEMP_DATA14": "상태", "TEMP_DATA15": "Y", "TEMP_DATA16": "-", "TEMP_DATA17": 50000, "TEMP_DATA18": "홍길동", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "01", "TEMP_DATA03": "CAC082DN", "TEMP_DATA04": "WWWW", "TEMP_DATA05": "CAC0082SN", "TEMP_DATA06": "LD", "TEMP_DATA07": 1, "TEMP_DATA08": 1, "TEMP_DATA09": 1, "TEMP_DATA10": "결과", "TEMP_DATA11": "Y", "TEMP_DATA12": 50000, "TEMP_DATA13": "2026-01-01", "TEMP_DATA14": "상태", "TEMP_DATA15": "Y", "TEMP_DATA16": "-", "TEMP_DATA17": 50000, "TEMP_DATA18": "홍길동", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "01", "TEMP_DATA03": "CAC082DN", "TEMP_DATA04": "WWWW", "TEMP_DATA05": "CAC0082SN", "TEMP_DATA06": "LD", "TEMP_DATA07": 1, "TEMP_DATA08": 1, "TEMP_DATA09": 1, "TEMP_DATA10": "결과", "TEMP_DATA11": "Y", "TEMP_DATA12": 50000, "TEMP_DATA13": "2026-01-01", "TEMP_DATA14": "상태", "TEMP_DATA15": "Y", "TEMP_DATA16": "-", "TEMP_DATA17": 50000, "TEMP_DATA18": "홍길동", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "01", "TEMP_DATA03": "CAC082DN", "TEMP_DATA04": "WWWW", "TEMP_DATA05": "CAC0082SN", "TEMP_DATA06": "LD", "TEMP_DATA07": 1, "TEMP_DATA08": 1, "TEMP_DATA09": 1, "TEMP_DATA10": "결과", "TEMP_DATA11": "Y", "TEMP_DATA12": 50000, "TEMP_DATA13": "2026-01-01", "TEMP_DATA14": "상태", "TEMP_DATA15": "Y", "TEMP_DATA16": "-", "TEMP_DATA17": 50000, "TEMP_DATA18": "홍길동", },
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "01", "TEMP_DATA03": "CAC082DN", "TEMP_DATA04": "WWWW", "TEMP_DATA05": "CAC0082SN", "TEMP_DATA06": "LD", "TEMP_DATA07": 1, "TEMP_DATA08": 1, "TEMP_DATA09": 1, "TEMP_DATA10": "결과", "TEMP_DATA11": "Y", "TEMP_DATA12": 50000, "TEMP_DATA13": "2026-01-01", "TEMP_DATA14": "상태", "TEMP_DATA15": "Y", "TEMP_DATA16": "-", "TEMP_DATA17": 50000, "TEMP_DATA18": "홍길동", },
+    ]
+
+    const footerLayout6 = [
+      { labelText: "합계", positionField: "#base", },
+      { dataField: "TEMP_DATA07", positionField: "TEMP_DATA07", operation: "SUM", formatString: "#", style: "text-center", },
+      { dataField: "TEMP_DATA08", positionField: "TEMP_DATA08", operation: "SUM", formatString: "#", style: "text-center", },
+      { dataField: "TEMP_DATA09", positionField: "TEMP_DATA09", operation: "SUM", formatString: "#", style: "text-center", },
+      { dataField: "TEMP_DATA12", positionField: "TEMP_DATA12", operation: "SUM", formatString: "#,##0", style: "text-right", },
+      { dataField: "TEMP_DATA17", positionField: "TEMP_DATA17", operation: "SUM", formatString: "#,##0", style: "text-right", },
+    ];
+
+    myGridId6 = AUIGrid.create("#grid6", columnLayout6);
+    AUIGrid.setFooter(myGridId6, footerLayout6);
+    AUIGrid.setGridData(myGridId6, tempData6);
+  </script>
+</th:block>
+</body>
+</html>

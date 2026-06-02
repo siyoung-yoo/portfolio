@@ -1,0 +1,507 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <div class="card">
+      <div class="card-content">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-3 gap-2">
+            <div class="input-group lg:col-span-2 xl:col-span-1">
+              <label>
+                <span class="label">기간</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="" id="">
+                      <option value="">수주일</option>
+                      <option value="">납기일</option>
+                    </select>
+                  </form-select>
+                  <input id="keyword" type="text" class="input datepicker-range w-2/3" placeholder="FROM ~ TO">
+                </div>
+              </label>
+            </div>
+
+            <div class="input-group lg:col-span-2 xl:col-span-1">
+              <label>
+                <span class="label">검색</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="">
+                      <option value="">수주건명</option>
+                      <option value="">수주번호</option>
+                    </select>
+                  </form-select>
+                  <input type="text" class="input w-2/3" placeholder="검색어를 입력하세요">
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-9 gap-2 mt-2">
+            <div class="input-group">
+              <label>
+                <span class="label">수주구분</span>
+                <form-select>
+                  <select name="" id="">
+                    <option value="">전체</option>
+                    <option value="">일반</option>
+                    <option value="">추가시공</option>
+                    <option value="">반품요청</option>
+                  </select>
+                </form-select>
+              </label>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <span class="label">수주상태</span>
+                <form-select>
+                  <select name="" id="">
+                    <option value="">전체</option>
+                    <option value="">Project</option>
+                    <option value="">수주</option>
+                    <option value="">취소</option>
+                  </select>
+                </form-select>
+              </label>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <span class="label">영업담당자</span>
+                <form-select>
+                  <select name="" id="">
+                    <option value="">전체</option>
+                    <option value="">value1</option>
+                    <option value="">value2</option>
+                  </select>
+                </form-select>
+              </label>
+            </div>
+
+            <div class="flex justify-end items-end xl:col-span-6">
+              <button id="btnSearch" type="button" class="btn btn-check">조회</button>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="card mt-3 card-h-full">
+      <div class="card-header">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <h3 class="card-title">수주정보</h3>
+          <div class="flex gap-1">
+            <button class="btn btn-outline" onclick="openModal('returnRequestModal')">반품요청</button>
+            <button class="btn btn-outline" onclick="openModal('orderChgRequestModal')">수주변경요청</button>
+            <button class="btn btn-outline" onclick="openModal('extraConstRequestModal')">추가시공</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div id="grid1" class="w-full h-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- modal -->
+  <!-- 시공예약 -->
+  <th:block th:replace="orders/modal/constReserveModal.html"/>
+  <!-- 반품요청 -->
+  <th:block th:replace="orders/modal/returnRequestModal.html"/>
+  <!-- 수주변경 요청 -->
+  <th:block th:replace="orders/modal/orderChgRequestModal.html"/>
+  <!-- 수주변경 > 수주취소 -->
+  <th:block th:replace="orders/modal/orderChgCancelModal.html"/>
+  <!-- 수주변경 > 납기변경 -->
+  <th:block th:replace="orders/modal/orderChgDateModal.html"/>
+  <!-- 수주변경 > 납기분할 -->
+  <th:block th:replace="orders/modal/orderChgQtyModal.html"/>
+  <!-- 수주변경 > 부가정보 변경 -->
+  <th:block th:replace="orders/modal/orderChgInfoModal.html"/>
+  <!-- 수주변경 > 시공예약시간 변경 -->
+  <th:block th:replace="orders/modal/orderChgTimeModal.html"/>
+  <!-- 추가시공 -->
+  <th:block th:replace="orders/modal/extraConstRequestModal.html"/>
+  <!--// modal -->
+</th:block>
+
+<th:block layout:fragment="script">
+  <script>
+
+    let myGridId1;
+    const renderer = { type: "TemplateRenderer" };
+    const filter = { showIcon: true };
+
+    const columnLayout1 = [
+      {
+        headerText: "수주구분",
+        dataField: "TEMP_DATA01",
+        filter: filter,
+        width: 100,
+        style: "text-center",
+      },
+      {
+        headerText: "계약일자",
+        dataField: "TEMP_DATA02",
+        filter: filter,
+        width: 100,
+        style: "text-center",
+      },
+      {
+        headerText: "계약번호",
+        dataField: "TEMP_DATA03",
+        filter: filter,
+        width: 150,
+        renderer: renderer,
+        labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+          return `<button type="button" class="btn btn-link">` + value + `</button>`;
+        }
+      },
+      {
+        headerText: "계약건명",
+        dataField: "TEMP_DATA04",
+        filter: filter,
+        width: 250,
+      },
+      {
+        headerText: "수주일자",
+        dataField: "TEMP_DATA05",
+        filter: filter,
+        width: 100,
+      },
+      {
+        headerText: "수주번호",
+        dataField: "TEMP_DATA06",
+        filter: filter,
+        width: 160,
+      },
+      {
+        headerText: "수주건명",
+        dataField: "TEMP_DATA07",
+        filter: filter,
+        width: 250,
+      },
+      {
+        headerText: "고객구분",
+        dataField: "TEMP_DATA08",
+        filter: filter,
+        width: 100,
+        style: "text-center"
+      },
+      {
+        headerText: "고객명",
+        dataField: "TEMP_DATA09",
+        filter: filter,
+        width: 180,
+      },
+      {
+        headerText: "예약상태",
+        dataField: "TEMP_DATA10",
+        filter: filter,
+        width: 110,
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "출고가능") {
+            return `출고가능 <button class="btn btn-outline btn-icon ml-1 align-middle" onclick="openModal('constReserveModal')">
+                      <i class="icon-search w-[12px] h-[12px] bg-size-[12px]"></i>
+                    </button>`
+          } else {
+            return `시공예약`;
+          }
+        }
+      },
+      {
+        headerText: "예정납기일",
+        dataField: "TEMP_DATA11",
+        filter: filter,
+        width: 110,
+        style: 'text-center',
+      },
+      {
+        headerText: "시공완료일",
+        dataField: "TEMP_DATA12",
+        filter: filter,
+        width: 110,
+        style: 'text-center',
+      },
+      {
+        headerText: "수주금액",
+        dataField: "TEMP_DATA13",
+        filter: filter,
+        width: 130,
+        dataType:"numeric",
+        style: 'text-right',
+      },
+      {
+        headerText: "반품금액",
+        dataField: "TEMP_DATA14",
+        filter: filter,
+        width: 130,
+        dataType:"numeric",
+        style: 'text-right',
+      },
+      {
+        headerText: "매출금액",
+        dataField: "TEMP_DATA15",
+        filter: filter,
+        width: 130,
+        dataType:"numeric",
+        style: 'text-right',
+      },
+      {
+        headerText: "예상수수료(최대)",
+        dataField: "TEMP_DATA16",
+        filter: filter,
+        width: 130,
+        dataType:"numeric",
+        style: 'text-right',
+      },
+      {
+        headerText: "프로젝트",
+        dataField: "TEMP_DATA17",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "수주변경",
+        dataField: "TEMP_DATA18",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "시공",
+        dataField: "TEMP_DATA19",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "운송",
+        dataField: "TEMP_DATA20",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "매출",
+        dataField: "TEMP_DATA21",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "반품",
+        dataField: "TEMP_DATA22",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "도면",
+        dataField: "TEMP_DATA23",
+        filter: filter,
+        width: 100,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      {
+        headerText: "수주상태",
+        dataField: "TEMP_DATA24",
+        filter: filter,
+        width: 100,
+        style: "text-center",
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value == "수주") {
+            return `<span class="badge badge-rounded badge-outline">수주</span>`
+          } else if (value == "Project") {
+            return `<span class="badge badge-rounded badge-default">Project</span>`
+          } else if (value == "취소") {
+            return `<span class="badge badge-rounded badge-outline">취소</span>`
+          }
+        }
+      },
+      {
+        headerText: '<span class="inline-flex">대리점<br/>영업담당자</span>',
+        dataField: "TEMP_DATA25",
+        // filter: filter,
+        width: 100,
+        style: 'text-center',
+      },
+      {
+        headerText: "견적번호",
+        dataField: "TEMP_DATA26",
+        filter: filter,
+        width: 130,
+        renderer: renderer,
+        labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+          return `<button type="button" class="btn btn-link" onclick="">` + value + `</button>`;
+        }
+      },
+      {
+        headerText: "영업건정보",
+        dataField: "TEMP_DATA27",
+        filter: filter,
+        width: 130,
+        renderer: renderer,
+        labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+          return `<button type="button" class="btn btn-link" onclick="">` + value + `</button>`;
+        }
+      },
+      {
+        headerText: "채권원장 번호",
+        dataField: "TEMP_DATA28",
+        filter: filter,
+        width: 130,
+        renderer: renderer,
+        labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+          return `<button type="button" class="btn btn-link" onclick="">` + value + `</button>`;
+        }
+      },
+    ];
+
+    const auiGridProps1 = {
+      isRowAllCheckCurrentView: true,
+      enableSorting: true,
+      enableFilter: true,
+      useContextMenu: true,
+      hoverMode: "singleRow",
+      selectionMode: "singleRow",
+      showRowNumColumn: true,
+			showRowCheckColumn: false,
+      defaultColumnWidth: 100,
+      softRemoveRowMode: false,
+      enableMovingColumn: true,
+      usePaging: true,
+    };
+
+    const tempData1 = [
+      {
+        "TEMP_DATA01": "일반",
+        "TEMP_DATA02": "2025-01-05",
+        "TEMP_DATA03": "C20250105-001",
+        "TEMP_DATA04": "대우건설 본사 가구 계약",
+        "TEMP_DATA05": "2025-01-10",
+        "TEMP_DATA06": "F20250110-0001-01",
+        "TEMP_DATA07": "퍼시스 강남 오피스 가구 납품",
+        "TEMP_DATA08": "사업자",
+        "TEMP_DATA09": "대우건설",
+        "TEMP_DATA10": "출고가능",
+        "TEMP_DATA11": "2025-02-15",
+        "TEMP_DATA12": "2025-02-20",
+        "TEMP_DATA13": "450000000",
+        "TEMP_DATA14": "0",
+        "TEMP_DATA15": "450000000",
+        "TEMP_DATA16": "13500000",
+        "TEMP_DATA17": "Y",
+        "TEMP_DATA18": "Y",
+        "TEMP_DATA19": "Y",
+        "TEMP_DATA20": "N",
+        "TEMP_DATA21": "N",
+        "TEMP_DATA22": "N",
+        "TEMP_DATA23": "N",
+        "TEMP_DATA24": "수주",
+        "TEMP_DATA25": "안동하",
+        "TEMP_DATA26": "Q2025010001",
+        "TEMP_DATA27": "영업건 정보 1",
+        "TEMP_DATA28": "RL2025010001",
+      },
+      {
+        "TEMP_DATA01": "추가시공",
+        "TEMP_DATA02": "2025-01-05",
+        "TEMP_DATA03": "C20250105-001",
+        "TEMP_DATA04": "대우건설 본사 가구 계약",
+        "TEMP_DATA05": "2025-01-10",
+        "TEMP_DATA06": "F20250110-0001-01",
+        "TEMP_DATA07": "퍼시스 강남 오피스 가구 납품",
+        "TEMP_DATA08": "사업자",
+        "TEMP_DATA09": "대우건설",
+        "TEMP_DATA10": "시공예약",
+        "TEMP_DATA11": "2025-02-15",
+        "TEMP_DATA12": "2025-02-20",
+        "TEMP_DATA13": "450000000",
+        "TEMP_DATA14": "0",
+        "TEMP_DATA15": "450000000",
+        "TEMP_DATA16": "13500000",
+        "TEMP_DATA17": "N",
+        "TEMP_DATA18": "N",
+        "TEMP_DATA19": "N",
+        "TEMP_DATA20": "Y",
+        "TEMP_DATA21": "Y",
+        "TEMP_DATA22": "Y",
+        "TEMP_DATA23": "Y",
+        "TEMP_DATA24": "Project",
+        "TEMP_DATA25": "안동하",
+        "TEMP_DATA26": "Q2025010001",
+        "TEMP_DATA27": "영업건 정보 1",
+        "TEMP_DATA28": "RL2025010001",
+      },
+      {
+        "TEMP_DATA01": "반품요청",
+        "TEMP_DATA02": "2025-01-05",
+        "TEMP_DATA03": "C20250105-001",
+        "TEMP_DATA04": "대우건설 본사 가구 계약",
+        "TEMP_DATA05": "2025-01-10",
+        "TEMP_DATA06": "F20250110-0001-01",
+        "TEMP_DATA07": "퍼시스 강남 오피스 가구 납품",
+        "TEMP_DATA08": "사업자",
+        "TEMP_DATA09": "대우건설",
+        "TEMP_DATA10": "출고가능",
+        "TEMP_DATA11": "2025-02-15",
+        "TEMP_DATA12": "2025-02-20",
+        "TEMP_DATA13": "450000000",
+        "TEMP_DATA14": "0",
+        "TEMP_DATA15": "450000000",
+        "TEMP_DATA16": "13500000",
+        "TEMP_DATA17": "N",
+        "TEMP_DATA18": "N",
+        "TEMP_DATA19": "N",
+        "TEMP_DATA20": "Y",
+        "TEMP_DATA21": "Y",
+        "TEMP_DATA22": "Y",
+        "TEMP_DATA23": "Y",
+        "TEMP_DATA24": "취소",
+        "TEMP_DATA25": "안동하",
+        "TEMP_DATA26": "Q2025010001",
+        "TEMP_DATA27": "영업건 정보 1",
+        "TEMP_DATA28": "RL2025010001",
+      },
+    ]
+
+    myGridId1 = AUIGrid.create("#grid1", columnLayout1, auiGridProps1);
+    AUIGrid.setGridData(myGridId1, tempData1);
+  </script>
+</th:block>
+</body>
+</html>

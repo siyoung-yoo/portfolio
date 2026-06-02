@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('도면 등록', null, null)}">
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <div class="draw-panel-layout">
+      <div class="draw-cont-wrap card">
+
+        <ul class="draw-info">
+          <li><span class="title">고객사</span>한빛소프트</li>
+          <li>
+            <span class="title">도면 공간(층수)</span>
+            <button type="button" disabled onclick="openModal('editSpaceNameModalPub')"
+            class="btn btn-link">2F 회의실<i class="icon-edit ml-1"></i></button>
+          </li>
+
+          <li><span class="title">주소</span>서울 강남구 대치동 890</li>
+        </ul>
+
+        <div class="draw-controls">
+          <ul class="draw-info">
+            <li class="flex-wrap">
+              <span class="title">첨부파일(2)</span>
+              <div class="flex-1 flex gap-2 flex-wrap">
+                <a href="#0" class="btn btn-link mr-2" download>
+                  <i class="icon-download w-[12px] h-[12px] bg-size-[12px]"></i>
+                  한빛소프트_본사_6F.pdf
+                </a>
+                <a href="#0" class="btn btn-link mr-2" download>
+                  <i class="icon-download w-[12px] h-[12px] bg-size-[12px]"></i>
+                  한빛소프트_본사_6F.dwg
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <div class="flex gap-2">
+            <div data-state="areaEdit">
+              <form-dropdown id="versionSelect">
+                <button slot="trigger" class="btn btn-outline pr-2 h-[30px]">
+                  ver 3 (현재) <i class="icon-chevron"></i>
+                </button>
+                <button type="button" data-version="3" class="dropdown-item selected" style="width: 250px">
+                  <strong>ver 3 - 현재 버전</strong>
+                  <p class="text-sm">2025-01-01 · 홍길동</p>
+                </button>
+                <button type="button" data-version="2" class="dropdown-item" style="width: 250px">
+                  <strong>ver 2</strong>
+                  <p class="text-sm">2025-01-01 · 홍길동</p>
+                </button>
+                <button type="button" data-version="1" class="dropdown-item" style="width: 250px">
+                  <strong>ver 1</strong>
+                  <p class="text-sm">2025-01-01 · 홍길동</p>
+                </button>
+              </form-dropdown>
+            </div>
+
+            <div class="scale-box border">
+              <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+                <i class="icon-minus"></i>
+              </button>
+              <span>100%</span>
+              <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+                <i class="icon-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="version-info hidden">
+          <div class="flex-1">
+            <strong>ver2 아카이브 조회 중</strong>
+            <p class="text-sm">2025-01-01 · 추가 계약 영역 매핑 및 영역 재배치 · 변경자: 홍길동</p>
+          </div>
+          <button type="button" class="btn btn-secondary" id="goCurrentVer">현재 버전으로</button>
+        </div>
+
+        <div id="drawCont" class="draw-cont draw-fixed has-dim">
+          <div class="img-box">
+            <canvas id="drawImg" data-img="/assets/img/page/temp_draw_01.pdf"></canvas>
+
+            <!-- 도면 내 지정된 영역 마크업 예시
+            <div class="drawing-area" style="left: 100px; top: 100px; width: 100px; height: 100px;">
+              <span class="area-label">A 영역 이름</span>
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+      <!-- // draw-cont-wrap -->
+
+      <div class="drawing-info-wrap card">
+        <div class="header">
+          <h3 class="title">영역 목록 (n개)</h3>
+          <div class="flex" data-state="areaEdit">
+            <button type="button" onclick="editModeToggle()" id="btnEdit" class="btn btn-outline"><i class="icon-edit"></i>수정</button>
+          </div>
+          <div class="flex gap-4 hidden" data-state="areaEdit">
+            <button type="button" onclick="openModal('changeDrawModalPub')" class="btn btn-outline">도면변경</button>
+            <button type="button" onclick="openModal('addContractModalPub')" class="btn btn-outline gap-1 px-2"><i class="icon-plus"></i>계약 추가</button>
+          </div>
+        </div>
+
+        <div class="drawing-list-wrap">
+
+          <!-- 연결된 계약이 없을 시 비활성화 알림 문구 노출(hidden 클래스 삭제) -->
+          <div class="alert alert-default no-contract hidden">
+            <div class="alert-title">계약을 연결하세요.</div>
+            <div class="alert-description mt-5">연결된 계약이 없어 해당 도면은 비활성(계약 없음) 상태로 표시됩니다.</div>
+            <div class="alert-description">비활성 상태의 도면은 고객 화면에 노출되지 않습니다.</div>
+          </div>
+
+          <!-- 기존 계약일 경우 -->
+          <div class="drawing-area-group">
+            <div class="title-area">
+              <button type="button" class="btn btn-delete-group hidden" data-state="areaEdit"></button>
+              <p class="flex-1"><strong>CNT-2024-000</strong> 계약명 1</p>
+              <span>n개</span>
+            </div>
+
+            <div class="drawing-area-list">
+              <div class="drawing-area-box">
+                <div class="flex-1">
+                  <div class="area-name">
+                    <span class="flag">A</span>
+                    <span class="flex-1">영역 이름1</span>
+                  </div>
+                  <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                </div>
+                <div class="flex gap-2 hidden" data-state="areaEdit">
+                  <button type="button" class="btn btn-outline" onclick="openModal('editItemMappingInfoModalPub')"><i class="icon-edit"></i></button>
+                  <button type="button" class="btn btn-delete btn-outline"></button>
+                </div>
+              </div>
+              <div class="drawing-area-box">
+                <div class="flex-1">
+                  <div class="area-name">
+                    <span class="flag">B</span>
+                    <span class="flex-1">신규 생성된 영역</span>
+                  </div>
+                  <p class="item-info">품목을 매핑해주세요</p>
+                </div>
+                <span class="badge badge-orange-fill">미매핑</span>
+                <div class="flex gap-2 hidden" data-state="areaEdit">
+                  <button type="button" class="btn btn-outline" onclick="openModal('editItemMappingInfoModalPub')"><i class="icon-edit"></i></button>
+                  <button type="button" class="btn btn-delete btn-outline"></button>
+                </div>
+              </div>
+
+              <div class="drawing-area-box type-add hidden">
+                <div class="input-group add-box gap-2 makeAreaForm">
+                  <input type="text" class="input flex-1" placeholder="영역 명을 입력해 주세요 (예: 업무존 A, 회의실)">
+                  <button type="button" draggable="true" disabled="" class="btn btn-icon btn-outline"><i class="icon-selection"></i></button>
+                </div>
+                <button type="button" class="btn btn-delete"></button>
+              </div>
+
+              <div class="drawing-area-box type-edit hidden" data-state="areaEdit">
+                <p class="area-name">영역 추가</p>
+                <p class="item-info">영역을 추가하려면 클릭하세요</p>
+              </div>
+            </div>
+          </div>
+          <!-- // 기존 계약일 경우 -->
+
+          <!-- 신규 추가된 계약일 경우 -->
+          <div class="drawing-area-group no-mapped">
+            <div class="title-area">
+              <button type="button" class="btn btn-delete-group hidden" data-state="areaEdit"></button>
+              <p class="flex-1"><strong>CNT-2024-new</strong> 신규 추가된 계약</p>
+              <span>0개</span>
+            </div>
+
+            <div class="drawing-area-list">
+              <div class="alert alert-default pl-6" data-state="areaEdit">
+                <div class="alert-description font-medium">영역 지정 및 품목을 매핑해주세요.</div>
+              </div>
+
+              <div class="drawing-area-box type-add hidden">
+                <div class="input-group add-box gap-2 makeAreaForm">
+                  <input type="text" class="input flex-1" placeholder="영역 명을 입력해 주세요 (예: 업무존 A, 회의실)">
+                  <button type="button" draggable="true" disabled="" class="btn btn-icon btn-outline"><i class="icon-selection"></i></button>
+                </div>
+                <button type="button" class="btn btn-delete"></button>
+              </div>
+
+              <div class="drawing-area-box type-edit hidden" data-state="areaEdit">
+                <p class="area-name">영역 추가</p>
+                <p class="item-info">영역을 추가하려면 클릭하세요</p>
+              </div>
+            </div>
+          </div>
+          <!-- // 신규 추가된 계약일 경우 -->
+        </div>
+
+        <div class="bottom-btn-area gap-2 hidden" data-state="areaEdit">
+          <button type="button" class="btn btn-outline" onclick="editModeToggle()">취소</button>
+          <button type="button" class="btn btn-primary" onclick="btnSave()">저장</button>
+        </div>
+
+      </div>
+      <!-- drawing-list-wrap -->
+    </div>
+  </div>
+
+<th:block th:replace="~{layout/pub/modal/editSpaceNameModal.html}"/><!-- Modal: 도면공간 이름 변경 -->
+<th:block th:replace="~{layout/pub/modal/addContractModal.html}"/><!-- Modal: 계약 추가 -->
+<th:block th:replace="~{layout/pub/modal/itemMappingInfoModal.html}"/><!-- Modal: 영역 상세정보 -->
+<th:block th:replace="~{layout/pub/modal/editItemMappingInfoModal.html}"/><!-- Modal: 영역 상세정보 수정 -->
+<th:block th:replace="~{layout/pub/modal/changeDrawModal.html}"/><!-- Modal: 도면 변경 -->
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- drag & resize 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<!-- 도면 공통 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_canvas.js}"></script>
+<!-- 상세페이지 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_detail.js}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  updateScale();
+  loadAreas();
+})
+
+drawAreaData = [
+  { contractCode: "CNT-2024-112", contractName: "한빛소프트 본사",
+    info: [
+      {
+        idx: "A", name: "test11", left: 100, top: 100, width: 100, height: 100,
+        items: [
+          {itemName: '의자1', itemCode: 'CH-100', itemCout: 10},
+          {itemName: '의자2', itemCode: 'CH-100', itemCout: 20},
+          {itemName: '의자3', itemCode: 'CH-100', itemCout: 30},
+        ]
+      },
+      {
+        idx: "B", name: "test12", left: 300, top: 100, width: 200, height: 200,
+        items: [
+          {itemName: '의자1', itemCode: 'CH-100', itemCout: 10},
+          {itemName: '의자2', itemCode: 'CH-100', itemCout: 20},
+        ]
+      },
+      {
+        idx: "C", name: "신규 영역", left: 600, top: 100, width: 100, height: 100,
+        items: []
+      }
+    ]
+  },
+  { contractCode: "CNT-2025-001", contractName: "계약명 계약명",
+    info: [
+      {
+        idx: "A", name: "test21", left: 100, top: 400, width: 100, height: 100,
+        items: [
+          {itemName: '의자1', itemCode: 'CH-100', itemCout: 10},
+          {itemName: '의자2', itemCode: 'CH-100', itemCout: 20},
+        ]
+      },
+    ]
+  },
+]
+
+</script>
+</th:block>
+</body>
+</html>

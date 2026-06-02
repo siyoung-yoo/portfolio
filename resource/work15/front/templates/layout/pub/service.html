@@ -1,0 +1,171 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">레이아웃 서비스</h2>
+      <p class="page-description">서비스 신청 현황 조회</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="btn-area justify-end">
+      <button type="button" class="btn dark lg">서비스 신청하기</button>
+    </div>
+    <!-- // .btn-area -->
+
+    <div class="search-area">
+      <div class="row">
+        <div class="form-group">
+          <label for="form01" class="text-label">검색</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="form01" autocomplete="off" placeholder="신청번호, 신청명, 신청자" title="신청번호, 신청명, 신청자 입력">
+          </div>
+        </div>
+
+        <!-- <div class="form-group w-md">
+          <label for="form02" class="text-label">진행 대리점</label>
+          <div class="form-box">
+            <input type="text" id="form02" autocomplete="off" placeholder="진행 대리점" title="진행 대리점 입력">
+          </div>
+        </div> -->
+        <!-- [2026-05-20] input > select 로 변경 -->
+        <div class="form-group w-md">
+          <label for="form02" class="text-label">진행 대리점</label>
+          <div class="select-box">
+            <button type="button" id="form02" class="btn-select" title="진행 대리점 선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button" class="selected">전체</button>
+                <button type="button">option 01</button>
+                <button type="button">option 02</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- // [2026-05-20] input > selectbox로 변경 -->
+
+        <div class="form-group w-sm">
+          <label for="form03" class="text-label">진행 상태</label>
+          <div class="select-box">
+            <button type="button" id="form03" class="btn-select" title="진행 상태 선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button" class="selected">전체</button>
+                <button type="button">option 01</button>
+                <button type="button">option 02</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group w-lg">
+          <label for="form21_1" class="text-label">신청일자</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="form21_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="신청일자 시작 날짜 선택">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form21_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="신청일자 종료 날짜 선택">
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="button" class="btn dark">검색</button>
+          <button type="button" class="btn line"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+    <!-- // search-area -->
+
+    <div class="table-utils">
+      <p class="table-info">전체 n건</p>
+    </div>
+
+    <!-- 조회 조건이 없을 경우 -->
+    <!-- <div class="text-nodata">검색 내역이 존재하지 않습니다.</div> -->
+
+    <!-- 조회 조건이 있을 경우 -->
+    <div class="table-wrap">
+      <table class="is-selectable">
+        <colgroup>
+          <col style="width: 170px">
+          <col>
+          <col style="width: 160px">
+          <col style="width: 120px">
+          <col style="width: 90px">
+          <col style="width: 120px">
+          <col style="width: 120px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">신청번호</th>
+            <th scope="col">신청명</th>
+            <th scope="col">진행 대리점</th>
+            <th scope="col">신청자</th>
+            <th scope="col" class="text-center">진행 상태</th>
+            <th scope="col" class="text-center">신청일자</th>
+            <th scope="col" class="text-center">최종 업로드일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">본사 사옥 렌탈</td>
+            <td>퍼시스 강남</td>
+            <td>김가나</td>
+            <td class="text-center">
+              <span class="badge-line-orange w-fix">신청</span>
+            </td>
+            <td class="text-center">2026.01.01</td>
+            <td class="text-center">2026.01.01</td>
+          </tr>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">본사 사옥 렌탈</td>
+            <td>퍼시스 강남</td>
+            <td>김가나</td>
+            <td class="text-center">
+              <span class="badge-line-green w-fix">접수</span>
+            </td>
+            <td class="text-center">2026.01.01</td>
+            <td class="text-center">2026.01.01</td>
+          </tr>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">본사 사옥 렌탈</td>
+            <td>퍼시스 강남</td>
+            <td>김가나</td>
+            <td class="text-center">
+              <span class="badge-line-blue w-fix">진행</span>
+            </td>
+            <td class="text-center">2026.01.01</td>
+            <td class="text-center">2026.01.01</td>
+          </tr>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">본사 사옥 렌탈</td>
+            <td>퍼시스 강남</td>
+            <td>김가나</td>
+            <td class="text-center">
+              <span class="badge bg-light-gray w-fix">완료</span>
+            </td>
+            <td class="text-center">2026.01.01</td>
+            <td class="text-center">2026.01.01</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <th:block th:replace="~{common/fragments/pagination :: pagination}"></th:block>
+    <!-- // 조회 조건이 있을 경우 -->
+
+  </div>
+</th:block>
+</body>
+</html>

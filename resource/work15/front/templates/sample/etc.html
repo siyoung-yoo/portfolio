@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+<th:block th:replace="~{common/layout/js.html}" />
+
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+  body { background: var(--fursys-white); }
+  .tempPage { padding: 50px; margin: 50px 0; background: #fff; }
+  .box, .box2 { display: flex; align-items: center; justify-content: center; width: 160px; height: 80px; text-align: center; border: 1px solid #000; }
+  .box2 { width: 250px }
+</style>
+</head>
+<body>
+  <div class="tempPage">
+    <div class="title-area">
+      <h2 class="page-title">* ETC</h2>
+    </div>
+
+    <h3 class="section-title mb-2xs">.box-style</h3>
+    <div class="layout-grid">
+      <div class="box-style">
+        <p>.box-style (기본형)</p>
+        <p>[default] flex-direction: column; / bg-color: var(--fursys-white)</p>
+      </div>
+
+      <div class="box-line-style">
+        <p>.box-line-style (기본형)</p>
+        <p>[default] flex-direction: column; / bg-color: none / border-color: var(--border-color-default)</p>
+      </div>
+
+      <div>
+        <p class="mb-xs">.box-style (header 있음)</p>
+        <div class="box-style">
+          <div class="header">.header 영역</div>
+          <div class="header">
+            <div class="text-title"><i class="icon-attach"></i>
+              .header > [class*=-title] 아이콘이랑 같이 있을경우 line-height: 1;
+            </div>
+          </div>
+          <div class="cont">.cont 영역</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-xs">.box-line-style (header 있음)</p>
+        <div class="box-line-style">
+          <div class="header">.header 영역</div>
+          <div class="header">
+            <div class="text-title"><i class="icon-attach"></i>
+              .header > [class*=-title] 아이콘이랑 같이 있을경우 line-height: 1;
+            </div>
+          </div>
+          <div class="cont">.cont 영역</div>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-xs">.box-toggle > .btn-toggle + .box-style</p>
+
+        <div class="box-toggle">
+          <button type="button" class="btn-toggle" aria-controls="#toggleBox01">
+            .btn-toggle
+          </button>
+          <div class="box-style" id="toggleBox01">
+            toggle되는 box-style 영역
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-xs">.box-toggle > .btn-toggle.is-expanded + .box-style</p>
+
+        <div class="box-toggle">
+          <button type="button" class="btn-toggle is-expanded" aria-controls="#toggleBox02">
+            .btn-toggle.is-expanded
+          </button>
+          <div class="box-style" id="toggleBox02">
+            toggle되는 box-style 영역
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tempPage">
+    <div class="title-area flex-col">
+      <h3 class="section-title">.divider-dash</h3>
+      <p>div.divider-dash의 background 색상 지정 필수</p>
+      <p>색상 없을 경우 default : 투명</p>
+    </div>
+    <div class="layout-grid col-3">
+      <div class="divider-dash">
+        <hr class="line">
+      </div>
+
+      <div class="divider-dash bg-dark-gray">
+        <hr class="line">
+      </div>
+
+      <div class="divider-dash bg-black">
+        <hr class="line">
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="layout-grid col-3">
+      <div>
+        <p class="mb-xs">.dash-line (border-style: dashed)</p>
+        <hr class="dash-line">
+        <br><br>
+        <p class="mb-xs">색상 바꾸고 싶으면 .text~ 클래스 사용</p>
+        <hr class="dash-line text-red">
+      </div>
+
+      <div>
+        <p class="mb-xs">.solid-line (border-style: solid)</p>
+        <hr class="solid-line">
+
+        <br><br>
+        <p class="mb-xs">.solid-line.text-blue</p>
+        <hr class="solid-line text-blue">
+      </div>
+
+      <div>
+        <p class="mb-xs">.divider-dash.only-line (여백 조정 필요할 경우)</p>
+        <div class="divider-dash only-line">
+          <hr class="dash-line">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <div class="layout-grid col-3">
+      <div>
+        <div class="title-area">
+          <h3 class="section-title">.rating-wrap</h3>
+        </div>
+        <div class="rating-wrap">
+          <input type="radio" id="star1" name="rating" value="1">
+          <label for="star1"></label>
+          <input type="radio" id="star2" name="rating" value="2">
+          <label for="star2"></label>
+          <input type="radio" id="star3" name="rating" value="3">
+          <label for="star3"></label>
+          <input type="radio" id="star4" name="rating" value="4">
+          <label for="star4"></label>
+          <input type="radio" id="star5" name="rating" value="5">
+          <label for="star5"></label>
+        </div>
+      </div>
+
+      <div>
+        <div class="title-area">
+          <h3 class="section-title">.thumb-img-list (6개씩 줄바꿈)</h3>
+        </div>
+
+        <div class="thumb-img-list">
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+          </button>
+          <button type="button" class="thumb-img">
+            <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

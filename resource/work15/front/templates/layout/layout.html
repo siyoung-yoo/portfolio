@@ -1,0 +1,107 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">도면 현황</h2>
+      <p class="page-description">공간별 레이아웃 도면 관리</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="drawing-layout">
+      <div class="drawing-panel">
+        <div class="header">공간 선택</div>
+        <ul class="space-list" id="spaceList">
+          <!-- JS 로 렌더링 -->
+        </ul>
+      </div>
+
+      <div class="drawing-contents" id="drawingContents" style="display:none;">
+        <div class="header">
+          <h3 class="group-title gap-3xs flex-wrap">
+            <span id="drawAddress"></span><span class="font-regular" id="drawName"></span>
+          </h3>
+        </div>
+
+        <!-- 도면 정보 -->
+        <div class="draw-info">
+          <div class="select-box bg-invert" id="versionSelectBox">
+            <button type="button" class="btn-select" title="도면 버전 선택">선택</button>
+            <div class="option-list type-draw-info">
+              <div class="scroll-y" id="versionList">
+                <!-- JS 로 렌더링 -->
+              </div>
+            </div>
+          </div>
+          <div class="date">
+            <span>업로드일</span>
+            <strong class="spacing-lg" id="uploadDate">-</strong>
+          </div>
+        </div>
+        <!-- // 도면 정보 -->
+
+        <!-- 도면 영역 -->
+        <div class="draw-cont-wrap">
+          <div class="draw-cont" style="justify-content: center; align-items: center;"><!-- 연결된 계약 클릭 시 .has-dim 토글. 초기 중앙정렬로 PDF 로드 전 좌측정렬 깜빡임 방지 -->
+            <div class="center-box">
+              <div class="img-box">
+                <div class="convert-box">
+                  <!-- 페이지별 canvas 와 영역은 JS 가 동적으로 생성 -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-area scale-box">
+            <span class="scale-text">100%</span>
+            <button type="button" class="btn dark zoom-in"><i class="icon-plus"></i></button>
+            <button type="button" class="btn dark zoom-out"><i class="icon-minus"></i></button>
+          </div>
+        </div>
+        <!-- // 도면 영역 -->
+
+        <!-- 다운로드 파일 링크 -->
+        <div class="download-area btn-area" id="downloadArea">
+          <!-- JS 로 렌더링 -->
+        </div>
+        <!-- // 다운로드 파일 링크 -->
+
+        <!-- 연결된 계약 리스트  -->
+        <div class="linked-list">
+          <div class="title-area flex-col">
+            <div class="flex-center-between w-full">
+              <h4 class="text-title">연결된 계약</h4>
+              <p class="font-sm">진행 계약 <strong id="contractCount">0</strong>건</p>
+            </div>
+            <p class="font-sm text-blue">*계약을 선택하면 도면에서 해당 영역이 표시됩니다.</p>
+          </div>
+
+          <div class="layout-column gap-2xs" id="linkedContractList">
+            <!-- JS 로 렌더링 -->
+          </div>
+        </div>
+        <!-- // 연결된 계약 리스트  -->
+      </div>
+
+      <!-- 도면이 없을 때 -->
+      <div class="drawing-contents" id="drawingEmpty">
+        <div class="header">
+          <h3 class="group-title">도면 현황</h3>
+        </div>
+        <div class="draw-cont-wrap" style="display:flex; align-items:center; justify-content:center; height:600px;">
+          <p class="font-md text-medium-gray">표시할 도면이 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script th:src="@{/assets/js/plugins/pdf.min.js}"></script>
+<script th:src="@{/assets/js/pages/layout/layout.js}"></script>
+</th:block>
+</body>
+</html>

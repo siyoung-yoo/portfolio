@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <th:block th:replace="~{common/layout/fragments/config.html}" />
+  <th:block layout:fragment="page-style" />
+</head>
+
+<body>
+  <div class="popup-wrapper">
+    <header class="popup-header">
+      <th:block layout:fragment="header" />
+    </header>
+
+    <div class="popup-content">
+      <th:block layout:fragment="main" />
+    </div>
+
+    <div class="popup-footer">
+      <th:block layout:fragment="footer" />
+    </div>
+  </div>
+
+  <th:block th:replace="~{common/vanilla_js.html}" />
+  <th:block th:replace="~{common/vanilla_grid.html}" />
+  <th:block layout:fragment="modal" />
+  <th:block layout:fragment="script" />
+</body>
+</html>

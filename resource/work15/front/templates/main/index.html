@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+</head>
+<body class="scroll-responsive">
+  <div class="full-page login-page">
+    <h1 class="main-logo"><strong>OFFICE JOURNEY<br>PROGRAM</strong></h1>
+
+    <div class="login-visual">
+      <div class="content">
+        <div class="title-area">
+          <h2 class="page-title">퍼시스 렌탈 서비스</h2>
+          <div>
+            <p class="text-sub">오피스 가구도 소유에서 이용으로,</p>
+            <p class="text-sub">퍼시스가 그 변화를 시작합니다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-content">
+
+    <form id="loginForm">
+      <div class="login-box layout-column gap-2xl">
+        <div class="title-area">
+          <h2 class="page-title">로그인</h2>
+          <p class="page-description">부여받은 계정 정보로 로그인해 주세요.</p>
+        </div>
+
+        <div class="layout-column gap-sm">
+          <div class="form-group">
+            <label for="username" class="text-label">아이디</label>
+            <div id="usernameBox" class="form-box">
+              <input type="text" id="username" name="username" autocomplete="off" placeholder="아이디 입력" autofocus value="sa_test">
+            </div>
+            <p id="usernameError" class="text-error hidden">아이디를 입력해 주세요.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="text-label">비밀번호</label>
+            <div id="passwordBox" class="form-box">
+              <input type="password" id="password" name="password" autocomplete="off" placeholder="비밀번호 입력" value="dkdpavktjqmf24@">
+            </div>
+            <p id="passwordError" class="text-error hidden">비밀번호를 입력해 주세요.</p>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="submit" class="btn dark lg">로그인</button>
+        </div>
+
+        <div class="text-center">
+          <p class="text-light-gray">아이디 또는 비밀번호를 잊으셨나요?</p>
+          <p class="mt-2xs"><strong>02-3400-6911 (계정 문의)</strong></p>
+        </div>
+
+        <div class="logo-area">
+          <div class="mark-logo"><span class="sr-only">FURSYS</span></div>
+        </div>
+      </div>
+    </form>
+
+    </div>
+  </div>
+
+
+  <th:block th:replace="~{common/layout/js.html}" />
+
+  <script src="/js/common/api.js"></script>
+  <script src="/js/common/auth.js"></script>
+  <script src="/js/pages/login.js"></script>
+</body>
+</html>

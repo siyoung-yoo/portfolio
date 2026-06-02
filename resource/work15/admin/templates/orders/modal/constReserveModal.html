@@ -1,0 +1,140 @@
+<div class="modal" id="constReserveModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">시공 예약</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-3">
+          <div class="input-group">
+            <label>
+              <span class="label">시공 예약일자</span>
+              <form-select>
+                <select name="" id="">
+                  <option value="">2026.01.01</option>
+                  <option value="">2026.01.11</option>
+                </select>
+              </form-select>
+            </label>
+          </div>
+
+          <div class="input-group">
+            <label>
+              <span class="label">시공팀</span>
+              <form-select>
+                <select name="" id="">
+                  <option value="">시공팀1</option>
+                  <option value="">시공팀2</option>
+                </select>
+              </form-select>
+            </label>
+          </div>
+        </div>
+
+        <div class="border">
+          <div id="cnstRsvGrid1" class="w-full h-full"></div>
+        </div>
+
+        <div class="card bg-secondary mt-3">
+          <div class="card-content py-4">
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2">
+              <div class="input-group">
+                <span class="label">시공 예약일자</span>
+                <p class="text-sm h-[30px] pt-1">-</p>
+              </div>
+              <div class="input-group">
+                <span class="label">시공팀</span>
+                <p class="text-sm h-[30px] pt-1">-</p>
+              </div>
+              <div class="input-group sm:col-span-2">
+                <label>
+                  <span class="label">납품요청시간</span>
+                  <div class="flex gap-3">
+                    <form-select class="w-1/2 flex-shrink-0">
+                      <select name="" id="">
+                        <option value="">10:00</option>
+                        <option value="">10:30</option>
+                      </select>
+                    </form-select>
+
+                    <label class="radio-box">
+                      <input type="checkbox" class="checkbox" />
+                      <span class="text-sm">시간엄수</span>
+                    </label>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 mt-2">
+              <div class="input-group sm:col-span-3 xl:col-span-6">
+                <label>
+                  <span class="label">특기사항</span>
+                  <input type="text" id="" class="input" placeholder="특기사항 입력">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 시공정보 -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let cnstRsvGrid1;
+
+  const cnstRsvGridProps = {
+    isRowAllCheckCurrentView: true,
+    enableSorting: true,
+    enableFilter: true,
+    useContextMenu: true,
+    hoverMode: "singleRow",
+    selectionMode: "none",
+    showRowNumColumn: true,
+    showRowCheckColumn: false,
+    defaultColumnWidth: 100,
+    softRemoveRowMode: false,
+    enableMovingColumn: true,
+    height: 254,
+  }
+
+  // 시공정보
+  function create_cnstRsvGrid1() {
+    const columnLayout = [
+      { headerText: "예정시간", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "시공금액", dataField: "TEMP_DATA02", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "예정소요시간", dataField: "TEMP_DATA03", filter: filter, style: 'text-center', },
+      { headerText: "시간엄수 구분", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "회사구분", dataField: "TEMP_DATA05", filter: filter, style: 'text-center', },
+      { headerText: "시공지역", dataField: "TEMP_DATA06", filter: filter, style: 'text-center', },
+      { headerText: "추가요청건", dataField: "TEMP_DATA07", filter: filter, width: '30%' },
+    ];
+
+    const tempData = [
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+    ]
+
+    cnstRsvGrid1 = AUIGrid.create("#cnstRsvGrid1", columnLayout, cnstRsvGridProps);
+    AUIGrid.setGridData(cnstRsvGrid1, tempData);
+  }
+
+  // 모달 열릴 때 그리드 초기화
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'constReserveModal') {
+      create_cnstRsvGrid1();
+    }
+  });
+</script>

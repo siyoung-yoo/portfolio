@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('도면 등록', null, null)}" />
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <div class="draw-panel-layout">
+      <div class="draw-cont-wrap card" style="position: relative;">
+
+        <ul class="draw-info">
+          <li class="inline-flex items-center gap-2"><span class="title">계약건</span>
+            <span id="infoContract"></span>
+          </li>
+          <li>
+            <span class="title">도면 공간(층수)</span>
+            <button type="button" onclick="openEditSpaceName()" class="btn btn-link"><span id="infoDrawingName"></span><i class="icon-edit ml-1"></i></button>
+          </li>
+          <li><span class="title">PDF 도면</span> <span id="infoPdfName"></span></li>
+        </ul>
+
+        <div class="draw-controls">
+          <div class="input-group makeAreaForm">
+            <input type="text" class="input flex-1" placeholder="영역 명을 입력해 주세요 (예: 업무존 A, 회의실)">
+            <button type="button" draggable="true" disabled class="btn btn-icon btn-outline"><i class="icon-selection"></i></button>
+          </div>
+
+          <div class="scale-box border">
+            <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+              <i class="icon-minus"></i>
+            </button>
+            <span>100%</span>
+            <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+              <i class="icon-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="drawCont" class="draw-cont">
+          <div class="img-box">
+            <canvas id="drawImg" data-img=""></canvas>
+          </div>
+        </div>
+
+        <th:block th:replace="~{common/fragments/drawLoading :: drawLoading}"/>
+
+      </div>
+      <!-- // draw-cont-wrap -->
+
+      <div class="regist-panel-wrap card">
+        <div class="alert alert-default" data-state="makeArea">
+          <div class="alert-title">영역을 선택하세요</div>
+          <div class="alert-description mt-5">좌측에서 영역 명을 입력 후 선택 버튼으로 도면 위에 해당 영역을 지정하세요.</div>
+          <div class="alert-description">추가된 영역을 선택 후, 계약품목을 각 영역에 매핑하세요.</div>
+        </div>
+
+        <div class="regist-cont-wrap hidden" data-state="makeArea">
+          <div class="regist-panel-header">
+            <form-dropdown id="dropdownList">
+              <button slot="trigger" class="btn" disabled>
+                영역 선택 <i class="icon-chevron"></i>
+              </button>
+              <ul class="dropdown-menu"></ul>
+            </form-dropdown>
+          </div>
+
+          <div class="selected-area-panel">
+          </div>
+
+          <div class="regist-list-wrap">
+            <div class="regist-list">
+              <h3 class="title flex justify-between pr-2">
+                <span>계약 품목 (<span id="contractCount">0</span>)</span>
+                <span>(<span id="mappingCount">0/0</span>)</span>
+              </h3>
+              <div class="input">
+                <input type="text" id="contractItemSearch" class="w-full" placeholder="품목코드 검색">
+                <button type="button"><i class="icon-search"></i></button>
+              </div>
+
+              <ul class="mapping-list type-contract" id="contractItemList">
+                <!-- JS에서 동적 렌더링 -->
+              </ul>
+            </div>
+
+            <div class="regist-list">
+              <h3 class="title flex justify-between">매핑 품목
+                <div class="flex items-center gap-2" id="createMappingStatus">
+                  <span class="badge badge-orange-fill">미매핑</span>
+                </div>
+              </h3>
+
+              <div class="alert alert-default" data-state="mappingItem">
+                <p class="alert-title text-sm">매핑할 계약 품목을<br>선택해주세요</p>
+              </div>
+
+              <div class="mapping-list-wrap hidden" data-state="mappingItem">
+                <!-- 매핑 품목 검색 -->
+                <div class="input">
+                  <input type="text" id="mappingItemSearch" class="w-full" placeholder="품목코드 검색">
+                  <button type="button"><i class="icon-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <button type="button" class="btn btn-outline" onclick="sessionStorage.removeItem('pendingDrawing'); location.href='/layout/'">취소</button>
+            <button type="button" class="btn btn-primary" onclick="drawInfoSave()">저장</button>
+          </div>
+        </div>
+      </div>
+      <!-- regist-panel-wrap -->
+    </div>
+  </div>
+
+<th:block th:replace="~{layout/modal/editSpaceNameModal.html}"/>
+<th:block th:replace="~{layout/modal/editAreaNameModal.html}"/>
+<th:block th:replace="~{layout/modal/mappingSerialNumberModal.html}"/>
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<!-- drag & resize 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+<!-- 도면 공통 기능 -->
+<script th:src="@{/assets/js/pages/layout/draw_canvas.js}"></script>
+<!-- 등록 페이지 기능 + 품목 매핑 -->
+<script th:src="@{/assets/js/pages/layout/draw_create.js}"></script>
+
+<script th:inline="javascript">
+/* 페이지 상태 */
+let _drawingData = {};
+let _pendingDrawing = null;
+
+$(function() {
+  // sessionStorage에서 신규 등록 데이터 로드
+  const raw = sessionStorage.getItem('pendingDrawing');
+  if (!raw) {
+    alert('등록 정보가 없습니다.');
+    location.href = '/layout/';
+    return;
+  }
+  _pendingDrawing = JSON.parse(raw);
+  loadNewDrawingData();
+});
+
+/* 신규 도면 데이터 로드 (sessionStorage + 계약품목 API) */
+function loadNewDrawingData() {
+  const pd = _pendingDrawing;
+
+  $.ajax({
+    url: '/hqDrawingMng/getContractItems',
+    type: 'post',
+    data: { conIdx: pd.conIdx, addressId: pd.addressId },
+    success: function(res) {
+      const items = res.data.contractItems || [];
+      _drawingData = {
+        drawingName: pd.drawingName,
+        ctmLscno: pd.ctmLscno,
+        ctmNm: pd.ctmNm || '',
+        adr4: pd.adr4 || '',
+        addressId: pd.addressId,
+        conIdx: pd.conIdx,
+        conCd: pd.conCd || '',
+        conTitle: pd.conTitle || '',
+        pdfPath: pd.pdfPath,
+        dwgPath: pd.dwgPath,
+        dxfPath: pd.dxfPath,
+        pdfFileNm: pd.pdfFileNm,
+        dwgFileNm: pd.dwgFileNm,
+        dxfFileNm: pd.dxfFileNm,
+        contractItems: items
+      };
+      renderDrawingPage();
+    }
+  });
+}
+
+/* 페이지 렌더링 */
+function renderDrawingPage() {
+  const d = _drawingData;
+
+  // 상단 정보 — "계약번호 계약명" 표기
+  $('#infoContract').text([d.conCd, d.conTitle].filter(Boolean).join(' '));
+  $('#infoDrawingName').text(d.drawingName || '');
+  $('#infoPdfName').text(d.pdfFileNm || '');
+
+  // PDF 렌더링 (S3 프록시 경유)
+  if (d.pdfPath) {
+    const pdfProxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.pdfPath);
+    canvas.dataset.img = pdfProxyUrl;
+    if (typeof showDrawLoading === 'function') showDrawLoading();
+    pdfjsLib.getDocument(pdfProxyUrl).promise.then(async pdf => {
+      const pageData = [];
+      let totalHeight = 0, maxWidth = 0;
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1 });
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = viewport.width;
+        tempCanvas.height = viewport.height;
+        await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
+        pageData.push({ tempCanvas, height: viewport.height });
+        totalHeight += viewport.height;
+        maxWidth = Math.max(maxWidth, viewport.width);
+      }
+      canvas.width = maxWidth;
+      canvas.height = totalHeight;
+      const ctx = canvas.getContext('2d');
+      let yOffset = 0;
+      for (const { tempCanvas, height } of pageData) {
+        ctx.drawImage(tempCanvas, 0, yOffset);
+        yOffset += height;
+      }
+      // PDF 원본 크기 저장
+      _pendingDrawing.pdfWidth = maxWidth;
+      _pendingDrawing.pdfHeight = totalHeight;
+    }).catch(err => console.error('PDF 로드 실패:', err)).finally(() => {
+      if (typeof hideDrawLoading === 'function') hideDrawLoading();
+    });
+  }
+
+  // 계약 품목 렌더링
+  renderContractItems(d.contractItems || []);
+}
+
+/* 계약 품목 목록 렌더링 */
+function renderContractItems(items) {
+  const ul = document.getElementById('contractItemList');
+  ul.innerHTML = '';
+
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.dataset.itemcode = item.ITEM_CD;
+    li.dataset.colcode = item.COL_CD || '';
+    li.dataset.setyn = item.SET_YN || 'N';
+
+    const seriesNm = item.SERIES_NM || item.ITM_DESC || '';
+    // 계약 전체 수량 / 다른 도면에서 이미 매핑된 수량
+    const totalQty = item.TOTAL_QTY || 0;
+    const otherMappedQty = item.OTHER_MAPPED_QTY || 0;
+    // data-totalqty / data-otherqty — 매핑 한도 계산 및 헤더 표시용
+    li.dataset.totalqty = totalQty;
+    li.dataset.otherqty = otherMappedQty;
+    li.innerHTML = `
+      <div class="item-info">
+        <p class="text-basic">${item.ITEM_CD || ''}
+          <span class="text-sub">${item.COL_CD || ''}</span>
+        </p>
+        <p class="text-sub">${seriesNm}</p>
+      </div>
+      <div class="item-qty-check">
+        <p class="text-basic">
+          <span class="qty-count">0</span>/<span class="qty-total">${totalQty}</span>
+        </p>
+        <i class="icon-box"></i>
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+
+  // 품목 수 표시
+  document.getElementById('contractCount').textContent = items.length;
+
+  // 합계 표시 갱신 (0/총합)
+  if (typeof updateMappingCount === 'function') updateMappingCount();
+
+  // 계약 품목 클릭 이벤트 재바인딩
+  bindContractItemEvents();
+}
+
+/**
+ * 계약 품목 클릭 이벤트 바인딩
+ * 클릭 시 현재 선택된 영역의 매핑 품목에 추가
+ * 품목 고유키: itemcode + colcode 조합 (getItemKey)
+ */
+function bindContractItemEvents() {
+  const items = document.querySelectorAll('.mapping-list.type-contract li');
+  items.forEach(li => {
+    li.addEventListener('click', function() {
+      if (!activeArea) return;
+
+      const key = getItemKey(li);
+      const currentList = document.querySelector(
+        `.mapping-list.type-item[data-idx="${activeArea.idx}"]`
+      );
+      if (!currentList) return;
+
+      // 수량 초과 체크
+      const max = getMaxQty(key);
+      const total = getTotalQty(key);
+      if (total >= max) return;
+
+      // 이미 매핑된 품목이면 수량만 갱신
+      let target = null;
+      currentList.querySelectorAll('li').forEach(el => {
+        if (getItemKey(el) === key) target = el;
+      });
+      if (target) {
+        updateLeftQty(key);
+        toggleAlertMappingItem();
+        return;
+      }
+
+      // 새 매핑 품목 추가
+      const itemInfo = li.querySelector('.item-info').outerHTML;
+      const newLi = document.createElement('li');
+      newLi.dataset.itemcode = li.dataset.itemcode;
+      newLi.dataset.colcode = li.dataset.colcode || '';
+      newLi.dataset.setyn = li.dataset.setyn || 'N';
+
+      newLi.innerHTML = `
+        ${itemInfo}
+        <div class="item-actions">
+          <div class="item-counter">
+            <button type="button" class="btn btn-ghost minus">
+              <i class="icon-chevron rotate-90"></i>
+            </button>
+            <input type="text" class="input text-center qty" value="1">
+            <button type="button" class="btn btn-ghost plus">
+              <i class="icon-chevron rotate-270"></i>
+            </button>
+          </div>
+          <button type="button" class="btn btn-delete btn-ghost"></button>
+        </div>
+      `;
+
+      currentList.appendChild(newLi);
+      newLi.classList.add('hover');
+
+      updateLeftQty(key);
+      toggleAlertMappingItem();
+      syncContractCopyState();
+    });
+  });
+}
+
+/* 기존 영역 복원 */
+function restoreAreas(areas, areaItems) {
+  if (!areas || areas.length === 0) return;
+
+  areas.forEach((area, i) => {
+    const letter = getAlphaIndex(i);
+
+    // 도면 위 영역 div 생성
+    const el = document.createElement('div');
+    el.className = 'drawing-area';
+    el.style.left = area.X + 'px';
+    el.style.top = area.Y + 'px';
+    el.style.width = area.WIDTH + 'px';
+    el.style.height = area.HEIGHT + 'px';
+    el.dataset.idx = letter;
+    el.dataset.areaId = area.AREA_ID;
+    el.innerHTML = `<span class="area-label">${letter} ${area.AREA_NAME || ''}</span>`;
+    canvasCont.appendChild(el);
+    enableInteract(el);
+
+    // drawAreaData에 추가
+    const data = {
+      idx: letter,
+      areaId: area.AREA_ID,
+      name: area.AREA_NAME || '',
+      left: area.X,
+      top: area.Y,
+      width: area.WIDTH,
+      height: area.HEIGHT,
+      items: []
+    };
+    drawAreaData.push(data);
+    areaIdx++;
+
+    // 드롭다운 추가
+    if (typeof onSaveAreaData === 'function') onSaveAreaData(data);
+
+    // 매핑품목 복원
+    const mappedItems = areaItems.filter(ai => ai.AREA_ID === area.AREA_ID);
+    if (mappedItems.length > 0) {
+      // 영역 활성화하여 매핑 리스트 생성
+      activeDrawArea(letter);
+
+      const currentList = document.querySelector(`.mapping-list.type-item[data-idx="${letter}"]`);
+      if (currentList) {
+        mappedItems.forEach(mi => {
+          const miKey = (mi.CODE_CD || '') + '__' + (mi.COL_CD || '');
+
+          // 계약품목에서 동일 키(품목코드+색상) 찾기
+          let contractLi = null;
+          document.querySelectorAll('.type-contract li').forEach(el => {
+            if (getItemKey(el) === miKey) contractLi = el;
+          });
+          if (!contractLi) return;
+
+          const itemInfo = contractLi.querySelector('.item-info').outerHTML;
+          const newLi = document.createElement('li');
+          newLi.dataset.itemcode = mi.CODE_CD || '';
+          newLi.dataset.colcode = mi.COL_CD || '';
+          newLi.dataset.setyn = mi.SET_YN || 'N';
+
+          newLi.innerHTML = `
+            ${itemInfo}
+            <div class="item-actions">
+              <div class="item-counter">
+                <button type="button" class="btn btn-ghost minus">
+                  <i class="icon-chevron rotate-90"></i>
+                </button>
+                <input type="text" class="input text-center qty" value="${mi.QUANTITY || 1}">
+                <button type="button" class="btn btn-ghost plus">
+                  <i class="icon-chevron rotate-270"></i>
+                </button>
+              </div>
+              <button type="button" class="btn btn-delete btn-ghost"></button>
+            </div>
+          `;
+          currentList.appendChild(newLi);
+
+          updateLeftQty(miKey);
+        });
+      }
+    }
+  });
+
+  // 초기 선택 해제
+  activeArea = null;
+  document.querySelectorAll('.drawing-area').forEach(v => v.classList.remove('selected'));
+}
+
+/* 저장 버튼 */
+function drawInfoSave() {
+  // drawAreaData에서 영역+품목 수집
+  const areas = drawAreaData.map(area => {
+    const list = document.querySelector(`.mapping-list.type-item[data-idx="${area.idx}"]`);
+    const items = [];
+
+    if (list) {
+      list.querySelectorAll('li').forEach(li => {
+        items.push({
+          setYn: li.dataset.setyn || 'N',
+          codeCd: li.dataset.itemcode || '',
+          colCd: li.dataset.colcode || '',
+          quantity: parseInt(li.querySelector('.qty')?.value, 10) || 0
+        });
+      });
+    }
+
+    return {
+      areaName: area.name,
+      x: Math.round(area.left),
+      y: Math.round(area.top),
+      width: Math.round(area.width),
+      height: Math.round(area.height),
+      items: items
+    };
+  });
+
+  if (areas.length === 0) { alert('영역이 없습니다. 영역을 추가해주세요.'); return; }
+
+  const emptyArea = areas.find(a => a.items.length === 0);
+  if (emptyArea) { alert('품목이 매핑되지 않은 영역이 있습니다. 모든 영역에 품목을 매핑해주세요.'); return; }
+
+  if (!confirm('영역과 품목을 저장하시겠습니까?')) return;
+
+  const pd = _pendingDrawing;
+
+  // 1단계: DB INSERT (도면 + 버전 + 계약매핑 + 초기영역)
+  $.ajax({
+    url: '/hqDrawingMng/insertDrawingWithPath',
+    type: 'post',
+    data: {
+      ctmLscno: pd.ctmLscno,
+      addressId: pd.addressId,
+      conIdx: pd.conIdx,
+      drawingName: pd.drawingName,
+      useYn: pd.useYn || 'Y',
+      pdfPath: pd.pdfPath,
+      dwgPath: pd.dwgPath,
+      dxfPath: pd.dxfPath,
+      pdfFileNm: pd.pdfFileNm,
+      dwgFileNm: pd.dwgFileNm,
+      dxfFileNm: pd.dxfFileNm,
+      pdfWidth: pd.pdfWidth || 0,
+      pdfHeight: pd.pdfHeight || 0
+    },
+    success: function(res) {
+      if (res.data.error) { console.error('[insertDrawingWithPath]', res.data.error); return; }
+
+      const drawingId = res.data.drawingId;
+      const versionId = res.data.versionId;
+
+      // 2단계: 영역 + 품목 저장
+      $.ajax({
+        url: '/hqDrawingMng/saveDrawingAreas',
+        type: 'post',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          drawingId: drawingId,
+          versionId: versionId,
+          conIdx: pd.conIdx,
+          addressId: pd.addressId,
+          areas: areas
+        }),
+        success: function(res2) {
+          if (!res2.message) {
+            alert('저장되었습니다.');
+            sessionStorage.removeItem('pendingDrawing');
+            location.replace('/layout/layoutDetail?drawingId=' + drawingId);
+          } else {
+            console.error('[saveDrawingAreas]', res2.message);
+          }
+        },
+        error: function() { console.error('[saveDrawingAreas] 요청 실패'); }
+      });
+    },
+    error: function() { console.error('[insertDrawingWithPath] 요청 실패'); }
+  });
+}
+
+/* 계약 품목 검색 (keyup) */
+document.getElementById('contractItemSearch')?.addEventListener('keyup', function() {
+  const keyword = this.value.trim().toLowerCase();
+  document.querySelectorAll('#contractItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;
+    const text = (li.dataset.itemcode || '') + ' ' + (li.dataset.colcode || '') + ' ' + (li.textContent || '');
+    li.style.display = text.toLowerCase().includes(keyword) ? '' : 'none';
+  });
+});
+
+/* 매핑 품목 검색 (keyup) — 현재 활성 영역의 매핑 리스트만 필터링 */
+document.getElementById('mappingItemSearch')?.addEventListener('keyup', function() {
+  const keyword = this.value.trim().toLowerCase();
+  if (typeof activeArea === 'undefined' || !activeArea) return;
+  const listSelector = `.mapping-list.type-item[data-idx="${activeArea.idx}"] li`;
+  document.querySelectorAll(listSelector).forEach(li => {
+    if (!li.dataset.itemcode) return;
+    const text = (li.dataset.itemcode || '') + ' ' + (li.dataset.colcode || '') + ' ' + (li.textContent || '');
+    li.style.display = text.toLowerCase().includes(keyword) ? '' : 'none';
+  });
+});
+
+/* makeAreaForm 이벤트 바인딩 */
+$(function() {
+  document.querySelectorAll('.makeAreaForm').forEach(form => {
+    const input = form.querySelector('input');
+    const btn = form.querySelector('button');
+
+    input.addEventListener('input', () => {
+      btn.disabled = !input.value.trim();
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (!btn.disabled) btn.click();
+      }
+    });
+
+    btn.addEventListener('click', () => {
+      drawMode = true;
+      currentAreaName = input.value.trim();
+      input.value = '';
+      btn.disabled = true;
+      drawCont.style.cursor = 'crosshair';
+    });
+  });
+});
+
+/* Modal: 지정된 영역 이름 변경 > 저장 버튼 */
+function saveChangeAreaName(){
+  if(!activeArea) return;
+
+  const input = document.querySelector('#editAreaNameInput');
+  const newName = input.value.trim();
+  if(!newName) return;
+
+  activeArea.name = newName;
+  const areaEl = document.querySelector(`.drawing-area[data-idx="${activeArea.idx}"] .area-label`);
+  if(areaEl){
+    areaEl.textContent = `${activeArea.idx} ${newName}`;
+  }
+
+  const dropdownItem = document.querySelector(`.dropdown-item[data-idx="${activeArea.idx}"] .area-name`);
+  if(dropdownItem){
+    dropdownItem.innerHTML = `<span class="flag">${activeArea.idx}</span>${newName}`;
+  }
+
+  renderSelectedArea();
+  closeModal('editAreaNameModal');
+}
+</script>
+</th:block>
+</body>
+</html>

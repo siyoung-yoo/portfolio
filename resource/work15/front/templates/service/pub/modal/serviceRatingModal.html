@@ -1,0 +1,68 @@
+<div role="dialog" class="popup-wrap" id="serviceRatingModal">
+  <div class="popup-dim"></div>
+  <div class="popup-cont">
+    <div class="popup-header">만족도 조사</div>
+    <div class="popup-body">
+
+      <div class="layout-column gap-sm">
+        <p>케어서비스에 대한 만족도를 평가해 주세요.<br>소중한 의견은 서비스 개선에 반영됩니다.</p>
+
+        <div class="form-box p-0 border-0">
+          <div class="form-chk">
+            <input type="checkbox" id="chk01" checked>
+            <label for="chk01">확인했습니다.</label>
+          </div>
+        </div>
+
+        <div class="layout-column gap-2xs items-start">
+          <p class="text-title required">만족도 평가</p>
+
+          <div class="rating-wrap">
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1"></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2"></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3"></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4"></label>
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5"></label>
+          </div>
+        </div>
+
+        <div class="form-group mt-sm">
+          <label for="form01" class="text-label">추가 의견 (선택)</label>
+          <div class="form-box textarea border-active">
+            <textarea name="" id="form01" placeholder="서비스 개선을 위한 의견을 자유롭게 작성해 주세요." title="추가 의견(선택) 입력"></textarea>
+            <span class="counter">(0/1,000)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup-footer btn-full">
+      <button type="button" class="btn line" onclick="btnRatingLater()">나중에 하기</button>
+      <button type="button" class="btn dark" onclick="btnRatingComplete()">완료하고 닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function btnRatingLater() {
+  fnPopupClose('serviceRatingModal')
+  fnPopupClose('careReportModal')
+}
+
+function btnRatingComplete() {
+  const checkedRating = document.querySelector('.rating-wrap input[name="rating"]:checked');
+  if (!checkedRating) {
+    alertPopup('만족도 평가를 진행해 주세요');
+    return false;
+  }
+
+  fnPopupClose('serviceRatingModal')
+  fnPopupClose('careReportModal')
+  document.querySelector("#careReportModal .popup-footer.btn-wide .btn").classList.add('is-active');
+  document.querySelector("#careReportModal .popup-footer.btn-wide .btn").disabled = true;
+}
+</script>

@@ -1,0 +1,1077 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+
+<head>
+  <th:block layout:fragment="page-style">
+    <style>
+      :root {
+        --home-dark-blue:   #152a69;
+        --home-blue:        #0075EA;
+        --home-orange:      #F47018;
+        --home-red:         #E3001C;
+
+        --home-black:       #0D1012;
+        --home-dark:        #1F2122;
+        --home-dark2:       #2A2C2D;
+        --home-dark-gray:   #2F383B;
+        --home-gray:        #505253;
+        --home-medium-gray: #768185;
+        --home-light-gray:  #B0BBBF;
+        --home-light:       #EBF0F2;
+        --home-lighter:     #f9f9f9;
+      }
+
+      i[class*=icon-] { display: inline-block; width: 20px; height: 20px; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; background-color: currentColor; }
+      .icon-package {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z"/></svg>'); }
+      .icon-paid {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M444-200h70v-50q50-9 86-39t36-89q0-42-24-77t-96-61q-60-20-83-35t-23-41q0-26 18.5-41t53.5-15q32 0 50 15.5t26 38.5l64-26q-11-35-40.5-61T516-710v-50h-70v50q-50 11-78 44t-28 74q0 47 27.5 76t86.5 50q63 23 87.5 41t24.5 47q0 33-23.5 48.5T486-314q-33 0-58.5-20.5T390-396l-66 26q14 48 43.5 77.5T444-252v52Zm36 120q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M444-200h70v-50q50-9 86-39t36-89q0-42-24-77t-96-61q-60-20-83-35t-23-41q0-26 18.5-41t53.5-15q32 0 50 15.5t26 38.5l64-26q-11-35-40.5-61T516-710v-50h-70v50q-50 11-78 44t-28 74q0 47 27.5 76t86.5 50q63 23 87.5 41t24.5 47q0 33-23.5 48.5T486-314q-33 0-58.5-20.5T390-396l-66 26q14 48 43.5 77.5T444-252v52Zm36 120q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>');
+      }
+      .icon-handshake {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l136-136 56 56-135 136q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l136-135 56 56-135 136q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l136-135 56 56-136 136q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l232-231 131 131q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-9 9-15 21t-8 24q-2 12 0 24.5t8 23.5l-58 58q-17-23-25-50.5T40-590q2-28 14-54.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-99-560Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M475-160q4 0 8-2t6-4l328-328q12-12 17.5-27t5.5-30q0-16-5.5-30.5T817-607L647-777q-11-12-25.5-17.5T591-800q-15 0-30 5.5T534-777l-11 11 74 75q15 14 22 32t7 38q0 42-28.5 70.5T527-522q-20 0-38.5-7T456-550l-75-74-175 175q-3 3-4.5 6.5T200-435q0 8 6 14.5t14 6.5q4 0 8-2t6-4l136-136 56 56-135 136q-3 3-4.5 6.5T285-350q0 8 6 14t14 6q4 0 8-2t6-4l136-135 56 56-135 136q-3 2-4.5 6t-1.5 8q0 8 6 14t14 6q4 0 7.5-1.5t6.5-4.5l136-135 56 56-136 136q-3 3-4.5 6.5T454-180q0 8 6.5 14t14.5 6Zm-1 80q-37 0-65.5-24.5T375-166q-34-5-57-28t-28-57q-34-5-56.5-28.5T206-336q-38-5-62-33t-24-66q0-20 7.5-38.5T149-506l232-231 131 131q2 3 6 4.5t8 1.5q9 0 15-5.5t6-14.5q0-4-1.5-8t-4.5-6L398-777q-11-12-25.5-17.5T342-800q-15 0-30 5.5T285-777L144-635q-9 9-15 21t-8 24q-2 12 0 24.5t8 23.5l-58 58q-17-23-25-50.5T40-590q2-28 14-54.5T87-692l141-141q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l11 11 11-11q24-23 53.5-35t60.5-12q31 0 60.5 12t52.5 35l169 169q23 23 35 53t12 61q0 31-12 60.5T873-437L545-110q-14 14-32.5 22T474-80Zm-99-560Z"/></svg>');
+      }
+      .icon-verified {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m344-60-76-128-144-32 14-148-98-112 98-112-14-148 144-32 76-128 136 58 136-58 76 128 144 32-14 148 98 112-98 112 14 148-144 32-76 128-136-58-136 58Zm34-102 102-44 104 44 56-96 110-26-10-112 74-84-74-86 10-112-110-24-58-96-102 44-104-44-56 96-110 24 10 112-74 86 74 84-10 114 110 24 58 96Zm102-318Zm-42 142 226-226-56-58-170 170-86-84-56 56 142 142Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m344-60-76-128-144-32 14-148-98-112 98-112-14-148 144-32 76-128 136 58 136-58 76 128 144 32-14 148 98 112-98 112 14 148-144 32-76 128-136-58-136 58Zm34-102 102-44 104 44 56-96 110-26-10-112 74-84-74-86 10-112-110-24-58-96-102 44-104-44-56 96-110 24 10 112-74 86 74 84-10 114 110 24 58 96Zm102-318Zm-42 142 226-226-56-58-170 170-86-84-56 56 142 142Z"/></svg>');
+      }
+      .icon-running-error {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q88 0 166.5 36T782-742L480-440v-360q-134 0-227 93t-93 227q0 134 93 227t227 93q69 0 132-28.5T720-270v110q-53 38-114 59T480-80Zm320-160v-320h80v320h-80Zm11.5 148.5Q800-103 800-120t11.5-28.5Q823-160 840-160t28.5 11.5Q880-137 880-120t-11.5 28.5Q857-80 840-80t-28.5-11.5Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q88 0 166.5 36T782-742L480-440v-360q-134 0-227 93t-93 227q0 134 93 227t227 93q69 0 132-28.5T720-270v110q-53 38-114 59T480-80Zm320-160v-320h80v320h-80Zm11.5 148.5Q800-103 800-120t11.5-28.5Q823-160 840-160t28.5 11.5Q880-137 880-120t-11.5 28.5Q857-80 840-80t-28.5-11.5Z"/></svg>');
+      }
+      .icon-trendingup {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z"/></svg>');
+      }
+      .icon-warning {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm330.5-51.5Q520-263 520-280t-11.5-28.5Q497-320 480-320t-28.5 11.5Q440-297 440-280t11.5 28.5Q463-240 480-240t28.5-11.5ZM440-360h80v-200h-80v200Zm40-100Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm330.5-51.5Q520-263 520-280t-11.5-28.5Q497-320 480-320t-28.5 11.5Q440-297 440-280t11.5 28.5Q463-240 480-240t28.5-11.5ZM440-360h80v-200h-80v200Zm40-100Z"/></svg>');
+      }
+      .icon-money {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M441-120v-86q-53-12-91.5-46T293-348l74-30q15 48 44.5 73t77.5 25q41 0 69.5-18.5T587-356q0-35-22-55.5T463-458q-86-27-118-64.5T313-614q0-65 42-101t86-41v-84h80v84q50 8 82.5 36.5T651-650l-74 32q-12-32-34-48t-60-16q-44 0-67 19.5T393-614q0 33 30 52t104 40q69 20 104.5 63.5T667-358q0 71-42 108t-104 46v84h-80Z"/></svg>');
+      }
+      .icon-info {
+        -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>');
+                mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960" fill="currentColor"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>');
+      }
+
+      .card { display: flex; flex-direction: column; color: var(--home-dark); font-weight: var(--font-weight-medium); }
+      .card .card-header { padding-top: calc(var(--spacing) * 8); }
+      .card.kpi-item { padding: 20px; gap: 16px; }
+      .kpi-list .kpi-item { padding: 20px 20px 24px; word-break: keep-all; }
+      .kpi-list .kpi-item .value:not(.sm) { font-size: 30px; }
+      .kpi-item .card-title { display: flex; align-items: center; gap: 8px; }
+      .kpi-item .value { display: flex; align-items: center; gap: 2px; font-size: var(--text-xl); font-weight: 700; line-height: 1.1; color: var(--home-black); word-break: keep-all; }
+      .kpi-item .value.sm { font-size: 18px; }
+      .kpi-item .value.lg { font-size: 30px; }
+      .kpi-item .value .unit { font-size: var(--text-sm); color: var(--home-dark); margin-top: 10px; }
+      .kpi-item .value.lg .unit { font-size: var(--text-lg); }
+      .kpi-item .icon-area { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; }
+      .kpi-item .icon-area i[class*=icon-] { width: 24px; height: 24px; }
+      .kpi-item.type-title { position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%); text-align: center; }
+      .kpi-item.type-info { align-items: center; justify-content: center; gap: 4px; background-color: var(--home-lighter); }
+      .chart-area { width: 100%; height: 100%; }
+      .legend-item { width: 100%; display: grid; gap: 16px 20px; font: 500 var(--text-sm)/var(--text-sm--line-height) "Noto Sans KR", sans-serif; }
+      .legend-item li { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: 2px; min-width: 0; padding-left: 24px; cursor: pointer; }
+      .legend-item li::before { content: ''; position: absolute; left: 0; top: 2px; display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: currentColor; }
+      .legend-item li .title { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #000; font-weight: var(--font-weight-medium); }
+      .legend-item li .text { width: 100%; color: var(--home-dark2); }
+      .legend-item li:hover .title, .legend-item li.hover .title { font-weight: var(--font-weight-bold); }
+      .custom-tooltip { display: flex; align-items: flex-start; flex-direction: column; font-size: 12px; color: var(--home-black); line-height: 1 !important; }
+      .custom-tooltip .dot { width: 10px; height: 10px; border-radius: 4px; background-color: currentColor; }
+      .custom-tooltip .title { margin: 0 8px 0 4px; font-weight: 400; }
+      .custom-tooltip .value { font-weight: 800; }
+      .home-grid { width: 100%; height: 100%; }
+      .custom-tooltip.flex-row { flex-direction: row; align-items: center; }
+      .custom-tooltip.flex-row .title { margin-bottom: 0; }
+      .home-grid .aui-grid-left-main-panel, .home-grid .aui-grid-content-panel-mask { border-style: solid; border-color: var(--home-light); }
+      .home-grid .aui-grid-left-main-panel { border-width: 1px 0 1px 1px; }
+      .home-grid .aui-grid-content-panel-mask { border-width: 1px 1px 1px 0; }
+      .home-grid .aui-grid-left-main-panel .aui-grid-renderer-base { width: 100% !important; margin: 0; }
+
+      @media (min-width: 1280px) and (max-width: 1535px) {
+        .legend-item { justify-content: center; padding-bottom: 15px; }
+      }
+      @media (max-width: 767px) {
+        .legend-item { display: flex; justify-content: center; gap: 30px !important; padding-bottom: 15px; }
+      }
+      @media (min-width: 451px) and (max-width: 550px),
+              (min-width: 768px) and (max-width: 800px),
+              (min-width: 1536px) and (max-width: 1580px) {
+        .kpi-list .kpi-item .value:not(.sm) { font-size: var(--text-xl); }
+      }
+      @media (max-width: 480px) {
+        .kpi-list { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .kpi-list .card.col-span-2 { grid-column: span 1 / span 1; }
+      }
+    </style>
+  </th:block>
+</head>
+
+<body>
+<th:block layout:fragment="main">
+  <!-- S: 상단 카드 영역 -->
+  <div class="kpi-list grid gap-4 grid-cols-2 md:grid-cols-3 2xl:grid-cols-[repeat(4,minmax(0,1fr))_310px]">
+    <div class="card kpi-item shadow-md">
+      <p class="card-title"><i class="icon-package"></i>렌탈 운영 현황</p>
+      <div class="flex items-end justify-between">
+        <div class="flex flex-col gap-2">
+          <p class="value">₩1,000 <span class="unit">억</span></p>
+          <p class="text-sm">장부가액 ₩1,284억</p>
+        </div>
+        <ul class="flex flex-col items-end gap-1">
+          <li class="text-xs">전월 대비</li>
+          <li class="value sm">
+            <strong class="text-primary-300">0.0%</strong><!-- 타입 추가: 전월대비 변동 없을 경우 -->
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card kpi-item shadow-md">
+      <p class="card-title"><i class="icon-paid"></i>당월 매출 현황</p>
+      <div class="flex items-end justify-between">
+        <div class="flex flex-col gap-2">
+          <p class="value">₩ 126<span class="unit">억</span></p>
+          <p class="text-sm">전월 대비 -1,1억원</p>
+        </div>
+        <ul class="flex flex-col items-end gap-1">
+          <li class="text-xs">전월 대비</li>
+          <li class="value sm"><strong class="text-orange-600">↓2.1%</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card kpi-item shadow-md">
+      <p class="card-title"><i class="icon-handshake"></i>신규 계약 현황</p>
+      <div class="flex items-end justify-between">
+        <div class="flex flex-col gap-2">
+          <p class="value">438<span class="unit">건</span></p>
+          <p class="text-sm">전월 대비 +37건</p>
+        </div>
+        <ul class="flex flex-col items-end gap-1">
+          <li class="text-xs">전월 대비</li>
+          <li class="value sm"><strong class="text-blue-800">↑9.2%</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card kpi-item shadow-md">
+      <p class="card-title"><i class="icon-verified"></i>당월 수납 현황</p>
+      <div class="flex items-end justify-between">
+        <div class="flex flex-col gap-2">
+          <p class="value"><span class="unit mr-2">수납률</span> 94.2%</p>
+          <p class="text-sm">n건 / n건</p><!-- 수납된 건수 / 전체 건수 -->
+        </div>
+        <ul class="flex flex-col items-end gap-1">
+          <li class="text-xs">전월 대비</li>
+          <li class="value sm"><strong class="text-orange-600">↓0.4%</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card kpi-item shadow-md col-span-2 2xl:col-span-1">
+      <p class="card-title"><i class="icon-running-error"></i>만료 임박 관리</p>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2">
+          <p class="value">1,234 <span class="unit">건</span></p>
+          <p class="text-sm">90일 내 만료 예정 자산</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <p class="value">₩1,000 <span class="unit">억</span></p>
+          <p class="text-sm break-keep">예상 회수 잔존가치 기준</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- E: 상단 카드 영역 -->
+
+  <div class="grid gap-4 mt-6 lg:grid-cols-2">
+    <!-- S: 프로젝트 승급 임박 고객 -->
+    <div class="card shadow-md">
+      <div class="card-header">
+        <div class="card-title">프로젝트 승급 임박 고객</div>
+        <div class="card-description">최근 3개월 구매액 기준으로 프로젝트 등급으로 승급이 임박한 고객입니다.</div>
+      </div>
+
+      <div class="card-content grid gap-10">
+        <div class="grid grid-cols-1 gap-6
+                    sm:grid-cols-[210px_repeat(2,minmax(0,1fr))]
+                    md:grid-cols-3
+                    2xl:grid-cols-[210px_repeat(2,minmax(0,1fr))]">
+          <div class="card kpi-item w-full flex justify-center
+                      lg:col-span-2 2xl:col-span-1">
+            <div class="flex items-start gap-4">
+              <div class="icon-area bg-blue-50">
+                <i class="icon-trendingup text-blue-900"></i>
+              </div>
+              <div class="flex-1 pt-2">
+                <p class="card-title mb-6">승급 임박 고객 수</p>
+                <div class="flex flex-col gap-1">
+                  <p class="value lg">12 <span class="unit">EA</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2 lg:col-span-3 2xl:col-span-2 h-[200px]">
+            <div id="chart2_1" class="chart-area"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4 min-w-0">
+          <div class="flex items-center justfiy-between">
+            <p class="card-title flex-1">고객 리스트</p>
+            <ul class="flex gap-6 text-sm">
+              <li>* 현재 등급 : 파트너</li>
+              <li>* 프로젝트 기준 금액 : 5억</li>
+            </ul>
+          </div>
+
+          <div id="grid2_1" class="home-grid" style="height: 257px"></div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 프로젝트 승급 임박 고객 -->
+
+    <!-- S; 프로젝트 만료 임박 고객 -->
+    <div class="card shadow-md">
+      <div class="card-header">
+        <div class="card-title">프로젝트 만료 임박 고객</div>
+        <div class="card-description">최근 3개월 기준으로 프로젝트 만료가 임박한 고객입니다.</div>
+      </div>
+
+      <div class="card-content grid gap-10">
+        <div class="grid grid-cols-1 gap-6
+                    sm:grid-cols-[210px_repeat(2,minmax(0,1fr))]
+                    md:grid-cols-3
+                    2xl:grid-cols-[210px_repeat(2,minmax(0,1fr))]">
+          <div class="card kpi-item w-full flex justify-center
+                      lg:col-span-2 2xl:col-span-1">
+            <div class="flex items-start gap-4">
+              <div class="icon-area bg-orange-50">
+                <i class="icon-warning text-orange-600"></i>
+              </div>
+              <div class="pt-2">
+                <p class="card-title mb-6">만료 임박 고객 수</p>
+                <div class="flex flex-col gap-1">
+                  <p class="value lg">5 <span class="unit">EA</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-2 lg:col-span-3 2xl:col-span-2 h-[200px]">
+            <div id="chart2_2" class="chart-area"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4 min-w-0">
+          <div class="flex items-center justfiy-between">
+            <p class="card-title flex-1">고객 리스트</p>
+          </div>
+
+          <div id="grid2_2" class="home-grid" style="height: 257px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-5 gap-4 mt-6">
+    <!-- S: 영업 성과 -->
+    <div class="card shadow-md col-span-1 xl:col-span-3 h-full">
+      <div class="card-content pt-8 flex gap-4 flex-col h-full md:flex-row xl:flex-col 2xl:flex-row">
+        <div class="flex-1 pr-4">
+          <div class="card-title mb-4">영업 성과 (월별 견적 - 채결 추이)</div>
+
+          <div class="h-[300px]">
+            <div id="chart3_1" class="chart-area"></div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-[130px] xl:w-full 2xl:w-[130px]
+                    grid grid-cols-2 md:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-1 gap-4">
+          <div class="card kpi-item type-info">
+            <div class="value">68.2%</div>
+            <p class="text-base mt-2">평균 전환율</p>
+          </div>
+          <div class="card kpi-item type-info">
+            <div class="value">4,123건</div>
+            <p class="text-base text-center mt-2">12개월<br>누적 체결</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- E: 영업 성과 -->
+
+    <!-- S: 채권 연체 구간별 현황 -->
+    <div class="card shadow-md col-span-1 xl:col-span-2">
+      <div class="card-header">
+        <div class="card-title">채권 연체 구간별 현황</div>
+      </div>
+
+      <div class="card-content flex gap-4 flex-col md:flex-row xl:flex-col 2xl:flex-row">
+        <div class="flex-1 relative">
+          <div class="kpi-item type-title">
+            <p class="text-base font-semibold">총 미수</p>
+            <p class="value mt-1">₩ 37.11억</p>
+            <p class="text-base font-semibold mt-2">연체율 5.8%</p>
+          </div>
+          <div class="h-[300px]">
+            <div id="chart3_2" class="chart-area"></div>
+          </div>
+        </div>
+        <div class="w-full md:w-[30%] xl:w-full 2xl:w-[30%]
+                    flex justify-center flex-col gap-4">
+          <ul class="legend-item" id="legendChart3_2"></ul>
+        </div>
+      </div>
+    </div>
+    <!-- E: 채권 연체 구간별 현황 -->
+  </div>
+
+  <div class="mt-6">
+    <!-- S: 월별 계약 만료 상세 -->
+    <div class="card shadow-md col-span-5">
+      <div class="card-header">
+        <div class="card-title">월별 계약 만료 상세</div>
+      </div>
+      <div class="card-content pt-0 h-[360px]">
+        <div id="chart4_1" class="chart-area"></div>
+      </div>
+    </div>
+    <!-- E: 월별 계약 만료 상세 -->
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+<script th:src="@{/assets/js/plugins/echarts/echarts.min.js}"></script>
+<script>
+  // 공통 컬러
+  const rootStyle = getComputedStyle(document.documentElement);
+  const COLORS = {
+    red: rootStyle.getPropertyValue("--home-red").trim(),
+    darkBlue: rootStyle.getPropertyValue("--home-dark-blue").trim(),
+    blue: rootStyle.getPropertyValue("--home-blue").trim(),
+    orange: rootStyle.getPropertyValue("--home-orange").trim(),
+    black: rootStyle.getPropertyValue("--home-black").trim(),
+    dark: rootStyle.getPropertyValue("--home-dark").trim(),
+    dark2: rootStyle.getPropertyValue("--home-dark2").trim(),
+    darkGray: rootStyle.getPropertyValue("--home-dark-gray").trim(),
+    gray: rootStyle.getPropertyValue("--home-gray").trim(),
+    mediumGray: rootStyle.getPropertyValue("--home-medium-gray").trim(),
+    lightGray: rootStyle.getPropertyValue("--home-light-gray").trim(),
+    light: rootStyle.getPropertyValue("--home-light").trim(),
+    lighter: rootStyle.getPropertyValue("--home-lighter").trim(),
+  };
+
+  // 공통 option
+  const BASE_OPTION = {
+    tooltip: {
+      padding: [4, 10],
+      borderColor: COLORS.lightGray,
+      position(point, params, dom) {
+        const x = point[0] - (dom.offsetWidth / 2);
+        const y = point[1] - dom.offsetHeight - 12;
+        return [x, y];
+      }
+    },
+
+    grid: {
+      top: '10%',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      containLabel: false
+    },
+  };
+
+  const PIE_OPTION = {
+    ...BASE_OPTION,
+
+    tooltip: { trigger: 'item', },
+
+    series: [{
+      type: 'pie',
+      padAngle: 2,
+      itemStyle: {
+        borderRadius: 5,
+      },
+      emphasis: {
+        scale: true,
+        scaleSize: 10,
+      },
+    }]
+  };
+
+  const BAR_OPTION = {
+    ...BASE_OPTION,
+
+    tooltip: { trigger: 'axis', },
+
+    series: [{
+      type: 'bar',
+      itemStyle: {
+        borderRadius: [6, 6, 0, 0]
+      },
+      label: {
+        show: true,
+        position: 'top',
+        color: COLORS.black,
+      }
+    }],
+
+    xAxis: [{
+      type: 'category',
+      axisLabel: {
+        color: COLORS.black
+      },
+      axisLine: {
+        lineStyle: {
+          color: COLORS.lightGray
+        }
+      },
+      axisTick: {
+        alignWithLabel: true
+      }
+    }],
+
+    yAxis: [{
+      type: 'value',
+      minInterval: 1,
+      boundaryGap: ['0%', '5%'],
+      axisLabel: {
+        color: COLORS.black,
+      },
+      splitLine: {
+        lineStyle: {
+          color: COLORS.light
+        }
+      }
+    }]
+  };
+
+  const BAR_OPTION_type1 = {
+    yAxis: [{
+      ...BAR_OPTION.yAxis[0],
+      axisLabel: {
+        ...BAR_OPTION.yAxis[0].axisLabel,
+        formatter: '{value}명'
+      },
+    }]
+  }
+
+  const BAR_OPTION_type2 = {
+    color: [COLORS.blue, COLORS.lightGray],
+
+    grid: {
+      ...BASE_OPTION.grid,
+      bottom: 50,
+    },
+
+    legend: {
+      bottom: 0,
+      itemGap: 30,
+      textStyle: {
+        color: COLORS.black
+      }
+    },
+
+    yAxis: [{
+      ...BAR_OPTION.yAxis[0],
+      axisLabel: {
+        ...BAR_OPTION.yAxis[0].axisLabel,
+        formatter: '{value}건'
+      },
+    }]
+  }
+
+  const GRID_OPTION = {
+    selectionMode: 'none',
+    usePaging: true,
+    pageRowCount: 10,
+  }
+
+  // 공통 함수
+  function createPieLegend({
+    chart,
+    legendSelector,
+    data,
+    renderItem,
+  }) {
+    const legendEl = document.querySelector(legendSelector);
+    if (!legendEl) return;
+
+    // hover 상태 토글
+    const toggleLegendItem = (index, active) => {
+      const target = legendEl.querySelector(`li[data-index="${index}"]`);
+      if (!target) return;
+
+      target.classList.toggle('hover', active);
+    };
+
+    // 차트 액션
+    const toggleChartActive = (index, active) => {
+      chart.dispatchAction({
+        type: active ? 'highlight' : 'downplay',
+        seriesIndex: 0,
+        dataIndex: index,
+      });
+
+      chart.dispatchAction({
+        type: active ? 'showTip' : 'hideTip',
+        seriesIndex: 0,
+        dataIndex: index,
+      });
+    };
+
+    // legend html 생성
+    legendEl.innerHTML = data.map((item, index) => {
+      const color = chart.getVisual({
+        seriesIndex: 0,
+        dataIndex: index,
+      }, 'color');
+
+      return renderItem({
+        item,
+        index,
+        color,
+        data,
+      });
+    }).join('');
+
+    // legend -> chart
+    legendEl.querySelectorAll('li').forEach((li) => {
+      const index = Number(li.dataset.index);
+
+      li.addEventListener('mouseenter', () => {
+        toggleLegendItem(index, true);
+        toggleChartActive(index, true);
+      });
+
+      li.addEventListener('mouseleave', () => {
+        toggleLegendItem(index, false);
+        toggleChartActive(index, false);
+      });
+    });
+
+    // chart -> legend
+    chart.on('highlight', params => {
+      toggleLegendItem(params.dataIndex, true);
+    });
+
+    chart.on('downplay', params => {
+      toggleLegendItem(params.dataIndex, false);
+    });
+
+    chart.on('mouseover', params => {
+      if (params.componentType !== 'series') return;
+
+      toggleLegendItem(params.dataIndex, true);
+    });
+
+    chart.on('mouseout', params => {
+      if (params.componentType !== 'series') return;
+
+      toggleLegendItem(params.dataIndex, false);
+    });
+  }
+
+  function createChart(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    return echarts.init(el);
+  }
+
+  function chartResize(chart) {
+    if (!chart) return;
+
+    window.addEventListener("resize", function () {
+      chart.resize();
+    });
+  }
+
+  // 2_1. 프로젝트 승급 임박 고객 > 달성률 분포
+  function initChart2_1() {
+    const chart = createChart("chart2_1");
+    if (!chart) return;
+
+    const data = [0, 1, 2, 1, 1];
+    const category = ['~ 1천 미만', '1 ~ 2천', '2 ~ 3천', '3 ~ 4천', '4 ~ 5천'];
+
+    const option = {
+      ...BAR_OPTION,
+      ...BAR_OPTION_type1,
+
+      color: COLORS.blue,
+
+      tooltip: {
+        ...BAR_OPTION.tooltip,
+        formatter: params => {
+          const { name, value } = params[0];
+          return `
+            <div class="custom-tooltip flex-row">
+              <span class="title">${name} :</span>
+              <span class="value">${value}명</span>
+            </div>
+          `;
+        },
+      },
+
+      series: [{
+        ...BAR_OPTION.series[0],
+        label: { show: false },
+        data
+      }],
+
+      xAxis: [{
+      ...BAR_OPTION.xAxis[0],
+        data: category
+      }],
+    };
+
+    chart.setOption(option);
+    chartResize(chart);
+  }
+
+  // 2_1. 프로젝트 승급 임박 고객 > 고객 리스트
+  function initGrid2_1() {
+    let myGridId2_1;
+
+    const columnLayout2_1 = [
+        { headerText: "고객명", dataField: "TEMP_DATA01" },
+        { headerText: "최근 3개월 구매 금액", dataField: "TEMP_DATA02", width: 150, style: "text-right", dataType:"numeric", postfix : " 원", },
+        { headerText: "남은 금액", dataField: "TEMP_DATA03", width: 150, style: "text-right", dataType:"numeric", renderer: { type: "TemplateRenderer" },
+          labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+            return `<strong class="text-blue-800">${value} 원</strong>`
+          }},
+      ];
+
+    const tempData2_1 = [
+      {  "TEMP_DATA01": "고객명 고객명", "TEMP_DATA02": 111, "TEMP_DATA03": 333 },
+      {  "TEMP_DATA01": "고객명 고객명", "TEMP_DATA02": 222, "TEMP_DATA03": 222 },
+    ]
+
+    myGridId2_1 = AUIGrid.create("#grid2_1", columnLayout2_1, GRID_OPTION);
+    AUIGrid.setGridData(myGridId2_1, tempData2_1);
+  }
+
+  // 2_2. 프로젝트 만료 임박 고객 > 달성률 분포
+  function initChart2_2() {
+    const chart = createChart("chart2_2");
+    if (!chart) return;
+
+    const data = [0, 1, 2];
+    const category = ['0 ~ 30일', '31 ~ 60일', '61 ~ 90일'];
+
+    const option = {
+      ...BAR_OPTION,
+      ...BAR_OPTION_type1,
+
+      color: COLORS.orange,
+
+      tooltip: {
+        ...BAR_OPTION.tooltip,
+        formatter: params => {
+          const { name, value } = params[0];
+          return `
+            <div class="custom-tooltip flex-row">
+              <span class="title">${name} :</span>
+              <span class="value">${value}명</span>
+            </div>
+          `;
+        },
+      },
+
+      series: [{
+        ...BAR_OPTION.series[0],
+        label: { show: false },
+        data
+      }],
+
+      xAxis: [{
+        ...BAR_OPTION.xAxis[0],
+        data: category
+      }]
+    };
+
+    chart.setOption(option);
+    chartResize(chart);
+  }
+
+  // 2_2. 프로젝트 만료 임박 고객 > 고객 리스트
+  function initGrid2_2() {
+      let myGridId2_2;
+
+      const columnLayout2_2 = [
+          { headerText: "고객명", dataField: "TEMP_DATA01" },
+          { headerText: "만료 예정일", dataField: "TEMP_DATA02", width: 150, style: "text-center", },
+          { headerText: "남은 기간", dataField: "TEMP_DATA03", width: 120, renderer: { type: "TemplateRenderer" },
+              labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                return `<div class="flex justify-center">
+                          <strong class="text-right text-orange-600 w-[30px]">${value}일</strong>
+                        </div>`
+              }},
+        ];
+
+      const tempData2_2 = [
+        {  "TEMP_DATA01": "고객명 고객명", "TEMP_DATA02": '2026-01-01', "TEMP_DATA03": 1 },
+        {  "TEMP_DATA01": "고객명 고객명", "TEMP_DATA02": '2026-01-01', "TEMP_DATA03": 34 },
+        {  "TEMP_DATA01": "고객명 고객명", "TEMP_DATA02": '2026-01-01', "TEMP_DATA03": 56 },
+      ]
+
+      myGridId2_2 = AUIGrid.create("#grid2_2", columnLayout2_2, GRID_OPTION);
+      AUIGrid.setGridData(myGridId2_2, tempData2_2);
+    }
+
+
+  // 3_1. 월별 견적 - 채결 추이
+  function initChart3_1() {
+    const chart = createChart("chart3_1");
+    if (!chart) return;
+
+    const data = [
+      { name: '계약 건수', type: 'line',
+        data: [220, 182, 191, 234, 290, 330, 310, 220, 182, 191, 234,
+          {
+            value: 290,
+            symbol: 'circle',
+            symbolSize: 12,
+            itemStyle: {
+              color: COLORS.blue,
+              borderColor: '#fff',
+              borderWidth: 3,
+              shadowBlur: 12,
+              shadowColor: 'rgba(0,0,0,0.25)',
+            },
+            label: {
+              fontSize: 14,
+              fontWeight: 600,
+            }
+          }
+        ]
+      },
+      { name: '견적 건수', type: 'line',
+        data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134,
+          {
+            value: 90,
+            symbol: 'circle',
+            symbolSize: 12,
+            itemStyle: {
+              color: COLORS.blue,
+              borderColor: '#fff',
+              borderWidth: 3,
+              shadowBlur: 12,
+              shadowColor: 'rgba(0,0,0,0.25)',
+            },
+            label: {
+              fontSize: 14,
+              fontWeight: 600,
+            }
+          }
+        ]
+      },
+    ]
+
+    // category 마지막 값은 이번달 입니다.
+    // 이번달에만 다른 스타일 적용이 필요합니다.
+    const category = ['25.06', '25.07', '25.08', '25.09', '25.10', '25.11', '25.12', '26.01', '26.02', '26.03', '26.04',
+      {
+        value: '26.05',
+        textStyle: {
+          fontSize: 14,
+          fontWeight: 600,
+        }
+      }
+    ]
+
+    const option = {
+      ...BAR_OPTION,
+      ...BAR_OPTION_type2,
+
+      legend: {
+        ...BAR_OPTION_type2.legend,
+        data: ['계약 건수', '견적 건수'],
+      },
+
+      tooltip: {
+        ...BAR_OPTION.tooltip,
+        formatter: params => {
+          const month = params[0].axisValue;
+          const rows = params.map(item => {
+          return `<div class="custom-tooltip flex-row">
+                    <span class="dot" style="color:${item.color}"></span>
+                    <p class="title w-[56px]">${item.seriesName}</p>
+                    <p class="value">${item.value.toLocaleString()}건</p>
+                  </div>`}).join('');
+
+          return `<div class="custom-tooltip">
+                    <div class="mb-2">${month}</div>
+                    ${rows}
+                  </div>`;
+        }
+      },
+
+      series: data.map(item => ({
+        ...BAR_OPTION.series[0],
+        ...item,
+        markArea: {
+          silent: true,
+          itemStyle: {
+            color: COLORS.light,
+            borderRadius: 8,
+          },
+          data: [
+            [
+              { x: '92%', y: '10%' },
+              { x: '100%', y: '83%' }
+            ]
+          ],
+        }
+      })),
+
+      xAxis: [{
+      ...BAR_OPTION.xAxis[0],
+        data: category
+      }],
+    }
+
+    chart.setOption(option);
+    chartResize(chart);
+  }
+
+
+  // 3_2. 채권 연체 구간별 현황
+  function initChart3_2() {
+    const chart = createChart("chart3_2");
+    if (!chart) return;
+
+    const data = [
+      {
+        name: '단기',
+        value: [712000000, 19],
+        info: ''
+      },
+      {
+        name: '중기',
+        value: [385000000, 11],
+        info: ''
+      },
+      {
+        name: '악성',
+        value: [218000000, 7],
+        info: '(90일 초과)'
+      },
+    ];
+
+    // 소수 둘째짜리까지 표기
+    const formatAmount = value => {
+      return `${(value / 100000000).toFixed(2)}억`;
+    };
+
+    const option = {
+      ...PIE_OPTION,
+
+      color: [COLORS.darkGray, COLORS.gray, COLORS.red],
+
+      tooltip: {
+        ...PIE_OPTION.tooltip,
+        formatter: params => {
+          const { name, value: [amount, count], percent, color } = params;
+          return `<div class="custom-tooltip">
+                    <div class="flex items-center mb-2">
+                      <span class="dot" style="color: ${echarts.format.encodeHTML(color)}"></span>
+                      <span class="title">${name}</span>
+                    </div>
+                    <p class="value">${formatAmount(amount)} (${percent}%)</p>
+                  </div>`
+        }
+      },
+
+
+      series: [{
+        ...PIE_OPTION.series[0],
+        radius: ['45%', '90%'],
+        label: {
+          position: 'inside',
+          color: COLORS.lighter,
+          fontWeight: '600',
+          lineHeight: 20,
+          formatter: ({ name, value: [amount, count] }) => {
+            return `{name|${name}}\n{count|${count}건}`;
+          },
+          rich: {
+            name: {
+              lineHeight: 14,
+            },
+            count: {
+              lineHeight: 24,
+            }
+          }
+        },
+        labelLine: {
+          length: 10,
+          length2: 10,
+          lineStyle: { type: "dashed" }
+        },
+        data
+      }]
+    };
+
+    chart.setOption(option);
+
+    createPieLegend({
+      chart,
+      legendSelector: '#legendChart3_2',
+      data,
+
+      renderItem: ({ item, index, color, data }) => {
+        const totalAmount = data.reduce((sum, item) => {
+          return sum + item.value[0];
+        }, 0);
+
+        const amount = item.value[0];
+        const count = item.value[1];
+        const percent = ((amount / totalAmount) * 100).toFixed(1);
+        const averageAmount = amount / count;
+
+        return `
+          <li data-index="${index}" style="color:${color};">
+            <strong class="title">${item.name} ${item.info}</strong>
+            <p class="text w-full">${count}건 · ₩ ${formatAmount(amount)} 원 (${percent}%)</p>
+          </li>
+        `;
+      }
+    });
+
+    chartResize(chart);
+  }
+
+  // 4_1. 월별 계약 만료 상세
+  function initChart4_1() {
+    const chart = createChart("chart4_1");
+    if (!chart) return;
+
+    const data = [
+      { name: '인수', type: 'bar',
+        data: [100, 100, 302, 301, 334, 390,
+          {
+            value: 330,
+            itemStyle: {
+              color: COLORS.darkBlue,
+            },
+            label: {
+              fontSize: 14,
+              fontWeight: 600,
+            }
+          },
+          320, 100, 302, 301, 334, 390
+        ]
+      },
+      { name: '반납', type: 'bar',
+        data: [320, 320, 132, 101, 134, 90,
+          {
+            value: 230,
+            itemStyle: {
+              color: COLORS.gray
+            },
+            label: {
+              fontSize: 14,
+              fontWeight: 600,
+            }
+          },
+          210, 320, 132, 101, 134, 90
+        ]
+      }
+    ];
+
+    // 이번달에만 다른 스타일 적용이 필요합니다.
+    const category = [ '25.11', '25.12', '26.01', '26.02', '26.03', '26.04',
+      {
+        value: '26.05',
+        textStyle: {
+          fontSize: 14,
+          fontWeight: 600,
+        }
+      },
+      '26.06', '26.07', '26.08', '26.09', '26.10', '26.11',
+    ]
+
+    const option = {
+      ...BAR_OPTION,
+      ...BAR_OPTION_type2,
+
+      legend: {
+        ...BAR_OPTION_type2.legend,
+        data: ['인수', '반납'],
+      },
+
+      tooltip: {
+        ...BAR_OPTION.tooltip,
+        axisPointer: {
+          type: "shadow",
+          shadowStyle: { opacity: 0.6 }
+        },
+        formatter: params => {
+          const month = params[0].axisValue;
+          const rows = params.map(item => {
+          return `<div class="custom-tooltip flex-row">
+                    <span class="dot" style="color:${item.color}"></span>
+                    <p class="title w-[56px]">${item.seriesName}</p>
+                    <p class="value">${item.value.toLocaleString()}건</p>
+                  </div>`}).join('');
+
+          return `<div class="custom-tooltip">
+                    <div class="mb-2">${month}</div>
+                    ${rows}
+                  </div>`;
+        }
+      },
+
+      series: data.map(item => ({
+        ...BAR_OPTION.series[0],
+        ...item,
+        markArea: {
+          silent: true,
+          itemStyle: {
+            color: COLORS.light,
+            borderRadius: 8,
+          },
+          data: [
+            [
+              { x: '47.8%', y: '10%' },
+              { x: '54.9%', y: '85%' }
+            ]
+          ],
+        }
+      })),
+
+      xAxis: [{
+      ...BAR_OPTION.xAxis[0],
+        data: category
+      }],
+    };
+
+    chart.setOption(option);
+    chartResize(chart);
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initChart2_1();
+    initGrid2_1();
+    initChart2_2();
+    initGrid2_2();
+    initChart3_1();
+    initChart3_2();
+    initChart4_1();
+  })
+</script>
+</th:block>
+</body>
+</html>

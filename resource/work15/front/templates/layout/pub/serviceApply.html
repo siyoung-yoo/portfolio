@@ -1,0 +1,297 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent" class="register-page">
+    <div class="title-area flex-col">
+      <h2 class="page-title">레이아웃 서비스 신청</h2>
+      <p class="page-description">기존 도면, 신규 도면 서비스 신청</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="layout-column gap-2xl">
+      <div class="form-group">
+        <label for="formA01" class="text-label required">신청명</label>
+        <div class="form-box"><!-- 항목 미입력 시, .form-box < .error 추가 -->
+          <input type="text" id="formA01" maxlength="50" autocomplete="off" placeholder="ex. 2026년 LG전자 가산캠퍼스 12층 리뉴얼 건" title="신청명 입력">
+        </div>
+        <p class="text-error">필수 항목입니다</p>
+      </div>
+
+      <div class="form-group">
+        <p class="text-label required">목적 (중복 선택 가능)</p>
+
+        <div class="form-box"><!-- 항목 미선택 시, .form-box < .error 추가 -->
+          <div class="list-inline gap-lg">
+            <div class="form-chk">
+              <input type="checkbox" name="formB" id="formB01">
+              <label for="formB01">신규 공간 구축</label>
+            </div>
+            <div class="form-chk">
+              <input type="checkbox" name="formB" id="formB02">
+              <label for="formB02">기존 공간 변경</label>
+            </div>
+            <div class="form-chk">
+              <input type="checkbox" name="formB" id="formB03">
+              <label for="formB03">기타</label>
+            </div>
+          </div>
+        </div>
+        <p class="text-error">필수 항목입니다</p>
+      </div>
+
+      <div class="layout-column gap-sm">
+        <div class="form-group">
+          <label for="formC01" class="text-label required">도면 등록</label>
+
+          <div class="form-box file-upload-area"><!-- 파일 미등록 시, .form-box < .error 추가 -->
+            <div class="form-desc">
+              <div class="icon-area"><i class="icon-upload"></i></div>
+              <p class="font-md">DWG, PDF 및 기타 참고 자료 업로드</p>
+              <div class="font-sm text-medium-gray mt-3xs">100mb 이하의 파일만 업로드 가능합니다.</div>
+            </div>
+
+            <div class="file-upload">
+              <input type="file" id="fileUpload" class="file-input" accept=".dwg,.pdf" hidden>
+              <label for="fileUpload" class="btn dark"><i class="icon-plus"></i>파일 업로드</label>
+            </div>
+          </div>
+
+          <p class="text-error">필수 항목입니다</p>
+        </div>
+
+        <div class="btn-area" id="btnSelectLayout">
+          <button type="button" class="btn line round"><i class="icon-plus"></i>기존 도면에서 추가</button>
+        </div>
+
+        <!-- 모든 영역은 숨김 처리할때 hidden 클래스로 제어해 주세요 -->
+        <div class="box-line-style type-file-select fade hidden">
+          <div class="header">
+            <p class="text-title"><i class="icon-check"></i>기존 도면에서 추가</p>
+            <button type="button" class="btn-close"><span class="sr-only">기존 도면 선택 영역 닫기</span></button>
+          </div>
+
+          <div class="cont">
+            <div class="title-area">
+              <p class="text-title">도면을 선택해 주세요.</p>
+            </div>
+
+            <div class="layout-flex">
+              <div class="select-box bg-invert w-55">
+                <button type="button" id="formD01" class="btn-select" title="주소 선택">주소</button>
+                <div class="option-list">
+                  <div class="scroll-y">
+                    <button type="button">option 01</button>
+                    <button type="button">option 02</button>
+                  </div>
+                </div>
+              </div>
+              <div class="select-box bg-invert">
+                <button type="button" id="formD02" class="btn-select" title="세부 장소 선택">세부 장소</button>
+                <div class="option-list">
+                  <div class="scroll-y">
+                    <button type="button">option 01</button>
+                    <button type="button">option 02</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="font-sm mt-xs">* 선택 시 최신 버전 도면이 자동으로 추가됩니다.</p>
+          </div>
+        </div>
+
+        <div class="box-line-style type-file-list fade hidden">
+          <p class="font-sm">업로드 파일 <strong>2개</strong></p>
+
+          <div class="box-style type-attached-file">
+            <div class="header">
+              <div class="list-inline flex-nowrap">
+                <p class="text-title font-regular">
+                  <i class="icon-attach"></i>
+                  <span class="ellipsis-line2">파일명 파일명 파일명.dwg</span>
+                </p>
+              </div>
+              <button type="button" class="btn-close-sm"><span class="sr-only">파일 삭제</span></button>
+            </div>
+            <div class="cont">
+              <div class="form-group">
+                <label for="formD11" class="text-label font-sm">파일 설명 (선택)</label>
+                <div class="form-box">
+                  <input type="text" id="formD11" autocomplete="off" placeholder="이 파일의 용도나 해당 공간을 입력해 주세요. ex. 본사 6층" title="파일 설명 입력">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-style type-attached-file">
+            <div class="header">
+              <div class="list-inline flex-nowrap">
+                <p class="text-title font-regular">
+                  <i class="icon-attach"></i>
+                  <span class="ellipsis-line2">파일명.dwg</span>
+                </p>
+                <span class="badge square sm">기존</span><!-- 기존 도면에서 추가 했을 경우 badge 추가 -->
+              </div>
+              <button type="button" class="btn-close-sm"><span class="sr-only">파일 삭제</span></button>
+            </div>
+            <div class="cont">
+              <div class="form-group">
+                <label for="formD11" class="text-label font-sm">파일 설명 (선택)</label>
+                <div class="form-box">
+                  <input type="text" id="formD11" autocomplete="off" placeholder="이 파일의 용도나 해당 공간을 입력해 주세요. ex. 본사 6층" title="파일 설명 입력">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formE01" class="text-label">내용 (선택)</label>
+        <div class="form-box textarea">
+          <textarea name="" id="formE01" placeholder="요청 내용을 자유롭게 작성해 주세요." title="요청 내용 입력"></textarea>
+          <span class="counter">(0/1,000)</span>
+        </div>
+      </div>
+
+      <div class="layout-column gap-sm">
+        <div class="form-group">
+          <p class="text-label required">대리점 선택</p>
+          <div class="form-box"><!-- 항목 미선택 시, .form-box < .error 추가 -->
+            <div class="list-inline gap-lg">
+              <div class="form-chk">
+                <input type="radio" name="formF" id="formF01">
+                <label for="formF01">기존 대리점</label>
+              </div>
+              <div class="form-chk">
+                <input type="radio" name="formF" id="formF02">
+                <label for="formF02">신규 대리점 배정 요청</label>
+              </div>
+            </div>
+          </div>
+          <p class="text-error">필수 항목입니다</p>
+        </div>
+
+        <!-- 기존 대리점 선택 시 노출 -->
+        <div class="form-group fade hidden" data-content="existing">
+          <div class="select-box"><!-- 기존 거래 대리점 미선택 시, .select-box < .error 추가 -->
+            <button type="button" id="formF01_1" class="btn-select" title="기존 대리점 선택">기존 대리점 선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button">option 01</button>
+                <button type="button">option 02</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-error">필수 항목입니다</p>
+        </div>
+
+        <!-- 신규 대리점 선택 시 노출 -->
+        <div class="form-group fade hidden" data-content="new">
+          <label for="formF02_1" class="text-label">신규 대리점 요청 사유 (선택)</label>
+          <div class="form-box textarea">
+            <textarea name="" id="formF02_1" placeholder="요청 사유를 자유롭게 작성해 주세요." title="신규 대리점 요청 사유 입력"></textarea>
+            <span class="counter">(0/1,000)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-btn-area">
+      <button type="button" class="btn dark lg">신청하기</button><!-- 수정 화면일 경우 버튼 텍스트: 수정하기 -->
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+  // 퍼블리싱 UI 확인용 스크립트
+  // 1. 파일 업로드
+  const dropZone = document.querySelector('.file-upload-area');
+  const fileInput = document.querySelector('#fileUpload');
+  const fileListWrap = document.querySelector(".type-file-list");
+  const MAX_SIZE = 100 * 1024 * 1024;
+
+  // 드래그 이벤트
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+
+  // 파일 선택
+  fileInput.addEventListener('change', () => {
+    handleFiles(fileInput.files);
+
+    console.log('1')
+  });
+
+  // 파일 처리
+  function handleFiles(fileListInput) {
+    [...fileListInput].forEach(file => {
+      if (file.size > MAX_SIZE) {
+        alertPopup("파일 용량이 100MB를 초과합니다.");
+        return;
+      }
+    });
+
+    fileListWrap.classList.remove("hidden");
+  }
+
+  // 2. 기존 도면에서 추가 버튼 클릭
+  document.querySelector("#btnSelectLayout .btn").addEventListener('click', (e) => {
+    document.querySelector("#btnSelectLayout").classList.add("hidden");
+    document.querySelector(".type-file-select").classList.remove("hidden");
+  })
+
+  document.querySelector(".type-file-select .btn-close").addEventListener('click', (e) => {
+    document.querySelector("#btnSelectLayout").classList.remove("hidden");
+    document.querySelector(".type-file-select").classList.add('hidden');
+  })
+
+  // 3. 대리점 선택
+  document.querySelectorAll("input[name='formF']").forEach(radio => {
+    radio.addEventListener("change", function () {
+      const existing = document.querySelector('[data-content="existing"]');
+      const isNew = document.querySelector('[data-content="new"]');
+
+      if (this.id === "formF01") {
+        existing?.classList.remove("hidden");
+        isNew?.classList.add("hidden");
+      } else if (this.id === "formF02") {
+        existing?.classList.add("hidden");
+        isNew?.classList.remove("hidden");
+      }
+
+    });
+  });
+
+
+  // 4. 신청하기 버튼 클릭 시 알럿
+  document.querySelector(".footer-btn-area .btn").addEventListener('click', (e) => {
+    alertPopup('서비스 신청이 완료되었습니다.','서비스 현황 조회에서<br>진행 상태를 확인하실 수 있습니다.', null, () => {
+      console.log('페이지 이동')
+
+      // 에러 타입 확인용
+      document.querySelector("#formA01").closest('.form-box').classList.add("error");
+      document.querySelector("#formB01").closest('.form-box').classList.add("error");
+      document.querySelector("#fileUpload").closest('.form-box').classList.add("error");
+      document.querySelector("#formF01").closest('.form-box').classList.add("error");
+      document.querySelector("#formF01_1").closest('.select-box').classList.add("error");
+    })
+  } )
+</script>
+</th:block>
+</body>
+</html>

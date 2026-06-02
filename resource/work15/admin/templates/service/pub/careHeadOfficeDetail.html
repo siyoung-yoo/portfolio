@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="page-style">
+<style>
+  @page print-care-report { size: portrait; margin: 0; padding: 30px 20px; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+    .pdfCareReport { page: print-care-report; background: #fff; }
+    .pdfCareReport .sidebar-wrapper { display: none; }
+    .pdfCareReport .page-wrapper { padding: 0; }
+    .pdfCareReport .page-wrapper header { display: none; }
+    .pdfCareReport .page-content { padding: 0; }
+    .pdfCareReport .container-h-full > .border-b.border-primary { display: none; }
+    .pdfCareReport .tab-contents.type-report .tab-content:not(.custom-scrollbar) { display: none; }
+    .pdfCareReport .tab-contents.type-report .tab-content.custom-scrollbar { display: block; height: auto; margin: 0; padding: 0; overflow-y: unset; }
+    .pdfCareReport .tab-content.custom-scrollbar > .grid { grid-template-columns: repeat(1, 1fr); }
+    .pdfCareReport .grid .card { box-shadow: none; border-radius: 0; border-width: 0 0 1px; }
+    .pdfCareReport .grid .card .card-header { padding-top: 20px; padding-bottom: 0; }
+    .pdfCareReport .grid .card .card-content { padding-top: 20px; padding-bottom: 40px; }
+    .pdfCareReport .grid .card .card-content .grid { grid-template-columns: repeat(4, 1fr); }
+    .pdfCareReport .grid .card .card-content .grid .lg\:col-span-3 { grid-column: span 3; }
+    .pdfCareReport .btn-toggle, .pdfCareReport .icon-chevron { display: none; }
+    .pdfCareReport .card-content.collapse-content { display: block; }
+    .pdfCareReport .layout-care-service { break-before: page; page-break-before: always; }
+    .pdfCareReport .layout-care-service .card:not(.card-care-service) { box-shadow: none; border: 0; }
+    .pdfCareReport .layout-care-service .card:not(.card-care-service) > .card-header { padding-top: 0; }
+    .pdfCareReport .layout-care-service .card.card-care-service { box-shadow: none; break-inside: avoid; page-break-inside: avoid; }
+    .pdfCareReport .layout-care-service .thumb-img-wrap { display: none; }
+  }
+</style>
+</th:block>
+
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('', ~{::titleAddon}, ~{::action})}">
+    <th:block th:fragment="action">
+      <!-- 본사 & 리포트 상태: 승인 요청일때만 버튼 영역 노출 -->
+      <div class="flex gap-2">
+        <button type="button" class="btn btn-destructive-outline" onclick="openModal('reportRejectModalPub')">반려</button>
+        <button type="button" class="btn btn-primary">승인</button>
+      </div>
+    </th:block>
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="flex justify-between border-b border-primary mb-3">
+      <ul class="tabs p-0" data-target="#tabContents">
+        <li class="tab-item px-8 is-active" data-tab="tab1">케어 리포트</li>
+        <li class="tab-item px-8" data-tab="tab2">도면 확인</li>
+      </ul>
+
+      <button type="button" class="btn btn-secondary" onclick="pdfCareReport()">
+        <i class="icon-download"></i>케어 리포트 PDF 다운로드
+      </button>
+    </div>
+
+    <div class="tab-contents type-report" id="tabContents">
+      <div id="tab1" class="tab-content custom-scrollbar is-active">
+
+        <div class="grid md:grid-cols-3 gap-3">
+          <div class="card md:col-span-2">
+            <div class="card-header">
+              <p class="card-title">기본 정보</p>
+            </div>
+            <div class="card-content pt-4 pb-6">
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 pb-5">
+                <div>
+                  <span class="label">리포트 등록일</span>
+                  <p class="label-data-text">2회차 2025-01-01</p>
+                </div>
+
+                <div class="col-span-2 lg:col-span-3">
+                  <span class="label">리포트 상태</span>
+                  <p class="label-data-text">
+                    <span class="badge badge-orange">승인 요청</span>
+                    <span class="badge badge-blue">승인 완료</span>
+                    <span class="badge badge-destructive-outline">승인 반려</span>
+                    <span class="ml-2">반려 했을 경우에만 반려 사유 노출</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 pt-5">
+                <div>
+                  <span class="label">계약번호</span>
+                  <p class="label-data-text">CNT-2024-700</p>
+                </div>
+                <div>
+                  <span class="label">계약명</span>
+                  <p class="label-data-text">판교 스마트허브</p>
+                </div>
+                <div class="col-span-2">
+                  <span class="label">주소</span>
+                  <p class="label-data-text">경기 성남시 분당구 삼평동 690</p>
+                </div>
+
+                <div>
+                  <span class="label">방문 일정</span>
+                  <p class="label-data-text">2026-01-01</p>
+                </div>
+                <div>
+                  <span class="label">계약 담당자</span>
+                  <p class="label-data-text">홍길동</p>
+                </div>
+                <div>
+                  <span class="label">담당 대리점</span>
+                  <p class="label-data-text">퍼시스강남</p>
+                </div>
+                <div>
+                  <span class="label">케어 담당자</span>
+                  <p class="label-data-text">김가나 02-1234-5678</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- // 기본 정보 -->
+
+          <div class="flex flex-col gap-3">
+            <div class="card flex-1 flex flex-col">
+              <div class="card-header">
+                <p class="card-title">현장 코멘트</p>
+              </div>
+              <div class="card-content pt-4 pb-6 flex-1">
+                <div>
+                  <span class="label">가구 특별 조치사항</span>
+                  <p class="label-data-text">가구 특별 조치사항 텍스트</p>
+                </div>
+
+                <div class="mt-4">
+                  <span class="label">현장 개선사항</span>
+                  <p class="label-data-text">4층 폰부스의 경우 사용 빈도가 높아 전체적인 점검 주기를 단축하는 것을 권장드립니다.
+                    <br>또한 3층 복도부 바테이블 체어는 2년 이상 사용으로 교체 시기가 도래하였습니다.
+                    <br>단축하는 것을 권장드립니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <p class="card-title">이전 케어 코멘트</p>
+                <i class="icon-chevron is-rotated" data-action="collapse"></i>
+              </div>
+              <div class="card-content collapse-content pt-4 pb-6">
+                <div>
+                  <span class="label">가구 특별 조치사항</span>
+                  <p class="label-data-text">-</p>
+                </div>
+
+                <div class="mt-4">
+                  <span class="label">현장 개선사항</span>
+                  <p class="label-data-text">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layout-care-service mt-4">
+          <div class="card">
+            <div class="card-header">
+              <div class="flex justify-between">
+                <div class="flex items-start gap-6">
+                  <div class="card-title mt-0.5">케어 결과 요약</div>
+                  <div class="flex items-start gap-3 flex-1">
+                    <span class="badge badge-blue">양호</span><!-- 모든 품목 양호일 경우 -->
+                    <!-- <span class="badge badge-orange">이슈</span> --><!-- 이슈 품목이 1개 이상일 경우 -->
+
+                    <ul class="flex flex-col gap-2 text-sm font-semibold">
+                      <li>모든 품목 양호</li><!-- 모든 품목 양호일 경우 -->
+
+                      <!-- 이슈 품목이 1개 이상일 경우 -->
+                      <li>· 6F : 업무존A(1품목), 업무존B(1품목)</li>
+                      <li>· 도면 공간(층수) : 영역이름(n품목), 영역이름(n품목) << 이슈 여러개일 경우 이 형태로 계속 추가</li>
+                    </ul>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-toggle is-open" onclick="toggleAllCards(this)">
+                  <span>전체 닫기</span><i class="icon-chevron"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-content" id="careInfo">
+              <!-- type: 이상(관리 or A/S) 있을 경우 먼저 노출 -->
+              <div class="card card-care-service">
+                <div class="card-header">
+                  <div class="flex items-center gap-4">
+                    <span class="badge badge-orange">이슈</span>
+                    <div class="card-title">6F</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+                </div>
+
+                <div class="card-content collapse-content is-open">
+                  <div class="p-4">
+                    <table class="table">
+                      <colgroup>
+                        <col style="width: 20%">
+                        <col style="width: 50px">
+                        <col>
+                      </colgroup>
+                      <tbody>
+                        <tr><td colspan="3">업무존A</td></tr>
+                        <tr>
+                          <!-- [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                          <td rowspan="4">
+                            <ul class="flex flex-col gap-2 font-semibold">
+                              <li>나노바나나</li>
+                              <li>품목명 데스크AAA 텍스트가 길경우 텍스트가 길경우</li>
+                              <li>MT0250320999</li>
+                              <li>WWOCY</li>
+                            </ul>
+                          </td>
+                          <!-- // [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                          <td class="font-semibold text-center">관리</td>
+                          <td>이전 화면에서 입력된 관리 품목의 특이사항 텍스트</td>
+                        </tr>
+                        <tr>
+                          <td rowspan="2" class="font-semibold text-center">A/S</td>
+                          <td>
+                            <ul class="dot-info type-desc">
+                              <li><span class="title">S/N</span>시리얼넘버시리얼넘버시리얼넘버시리얼넘버시리얼넘버시리얼넘버</li>
+                              <li><span class="title">A/S 내용</span>제품에 문제가 있어요</li>
+                            </ul>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <ul class="dot-info type-desc">
+                              <li><span class="title">S/N</span>시리얼넘버</li>
+                              <li><span class="title">A/S 내용</span>제품에 문제가 있어요</li>
+                            </ul>
+                            <div class="thumb-img-wrap mt-4">
+                              <div class="thumb-image">
+                                <img src="/assets/img/icons/error.png">
+                              </div>
+                              <div class="thumb-image">
+                                <img src="/assets/img/icons/error.png">
+                              </div>
+                              <div class="thumb-image">
+                                <img src="/assets/img/icons/error.png">
+                              </div>
+                              <div class="thumb-image">
+                                <img src="/assets/img/icons/error.png">
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <tr><td colspan="3">업무존B</td></tr>
+                        <tr>
+                          <!-- [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                          <td rowspan="4">
+                            <ul class="flex flex-col gap-2 font-semibold">
+                              <li>시리즈명</li>
+                              <li>품목명 데스크BBB</li>
+                              <li>품목코드</li>
+                              <li>색상</li>
+                            </ul>
+                          </td>
+                          <!-- // [2026-05-19] 시리즈명 품목코드 색상 추가 -->
+                          <td class="font-semibold text-center">관리</td>
+                          <td>이전 화면에서 입력된 관리 품목의 특이사항 텍스트</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- // 이상(관리 or A/S) 있을 경우 먼저 노출 -->
+
+              <!-- type: 전체 양호 -->
+              <div class="card card-care-service">
+                <div class="card-header">
+                  <div class="flex items-center gap-4">
+                    <span class="badge badge-blue">양호</span>
+                    <div class="card-title">4F 공간</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+                </div>
+
+                <div class="card-content collapse-content is-open">
+                  <div class="alert alert-default">
+                    <div class="alert-title">접수된 AS 또는 관리 품목이 없습니다.</div>
+                    <div class="alert-description">모든 품목이 양호 상태로 확인되었습니다.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card card-care-service">
+                <div class="card-header">
+                  <div class="flex items-center gap-4">
+                    <span class="badge badge-blue">양호</span>
+                    <div class="card-title">5F 회의실</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+                </div>
+
+                <div class="card-content collapse-content is-open">
+                  <div class="alert alert-default">
+                    <div class="alert-title">접수된 AS 또는 관리 품목이 없습니다.</div>
+                    <div class="alert-description">모든 품목이 양호 상태로 확인되었습니다.</div>
+                  </div>
+                </div>
+              </div>
+              <!-- // 전체 양호 -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- E: 케어 리포트 -->
+
+      <!-- S: 도면 확인 -->
+      <div id="tab2" class="tab-content">
+        <div class="layout-care-service type-report">
+          <div class="draw-panel-layout flex-col gap-0">
+            <ul class="tabs type-block" data-target="#tabCont">
+              <li class="tab-item is-active" data-tab="tab1">4F 공간</li>
+              <li class="tab-item" data-tab="tab2">5F 회의실</li>
+              <li class="tab-item" data-tab="tab3">6F</li>
+            </ul>
+
+            <div class="tab-contents" id="tabCont">
+              <div class="draw-cont-wrap">
+                <div class="draw-controls">
+                  <div class="scale-box border">
+                    <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()">
+                      <i class="icon-minus"></i>
+                    </button>
+                    <span>100%</span>
+                    <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()">
+                      <i class="icon-plus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div id="drawCont" class="draw-cont draw-fixed has-dim">
+                  <div class="img-box">
+                    <canvas id="drawImg" data-img="/assets/img/page/temp_draw_01.pdf"></canvas>
+
+                    <!-- 도면 내 지정된 영역 마크업 예시 drawing-area
+                      * 목록 리스트 해당 영역에 hover 됐을때 .hover 추가
+                      * 목록 리스트 해당 영역이 선택 됐을때 .selected 추가
+                    -->
+                    <div class="drawing-area hover" data-idx="A" data-contract="CNT-2024-112" style="left: 100px; top: 100px; width: 100px; height: 100px;">
+                      <span class="area-label">A hover</span>
+                    </div>
+                    <div class="drawing-area selected" data-idx="B" data-contract="CNT-2024-112" style="left: 300px; top: 100px; width: 200px; height: 200px;">
+                      <span class="area-label">B selected</span>
+                    </div>
+                    <div class="drawing-area" data-idx="C" data-contract="CNT-2024-112" style="left: 100px; top: 400px; width: 100px; height: 100px;">
+                      <span class="area-label">C test</span>
+                    </div>
+                    <div class="drawing-area" data-idx="D" data-contract="CNT-2025-001" style="left: 600px; top: 100px; width: 100px; height: 100px;">
+                      <span class="area-label">A test21</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- // draw-cont-wrap -->
+
+              <div class="drawing-info-wrap">
+                <div class="header">
+                  <h3 class="title">영역 목록 (n개)</h3>
+                </div>
+
+                <div class="drawing-list-wrap">
+                  <div class="drawing-area-group flex flex-col gap-2">
+
+                    <div class="drawing-area-box hover" onclick="openModal('itemInfoModalPub')"><!-- 도면 영역에 hover 됐을때 .hover 추가  -->
+                      <div class="flex-1">
+                        <div class="area-name flex-1">
+                          <span class="flag">A</span>
+                          <span class="flex-1">hover 영역 이름1</span>
+                        </div>
+                        <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                      </div>
+                    </div>
+
+                    <div class="drawing-area-box selected" onclick="openModal('itemInfoModalPub')"><!-- 도면 영역이 선택 됐을때 .selected 추가  -->
+                      <div class="flex-1">
+                        <div class="area-name flex-1">
+                          <span class="flag">B</span>
+                          <span class="flex-1">selected 영역 이름2</span>
+                        </div>
+                        <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                      </div>
+                    </div>
+
+                    <div class="drawing-area-box" onclick="openModal('itemInfoModalPub')">
+                      <div class="flex-1">
+                        <div class="area-name flex-1">
+                          <span class="flag">C</span>
+                          <span class="flex-1">영역 이름3</span>
+                        </div>
+                        <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                      </div>
+                    </div>
+
+                    <div class="drawing-area-box" onclick="openModal('itemInfoModalPub')">
+                      <div class="flex-1">
+                        <div class="area-name flex-1">
+                          <span class="flag">D</span>
+                          <span class="flex-1">영역 이름4</span>
+                        </div>
+                        <p class="item-info">품목코드-색상 n개, CH4100AH-A441 10개, FNC128HEL-FKI 13개</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <!-- drawing-list-wrap -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 도면 확인 -->
+    </div>
+  </div>
+
+<th:block th:replace="~{service/pub/modal/reportRejectModal}"/><!-- Modal: 반려 사유 등록 -->
+<th:block th:replace="~{service/pub/modal/itemInfoModal.html}"/><!-- Modal: 영역 상세정보 -->
+</th:block>
+
+<th:block layout:fragment="script">
+
+<!-- pdf > img 변환 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- drag & resize 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<!-- 도면 공통 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_canvas.js}"></script>
+<!-- 상세페이지 기능 -->
+<script th:src="@{/assets/js/pages/layout/pub/draw_detail.js}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  updateScale();
+  loadAreas();
+})
+
+/* 케어리포트 PDF 다운로드 */
+function pdfCareReport() {
+  document.body.classList.add('pdfCareReport');
+  window.print();
+}
+
+window.addEventListener("afterprint", () =>
+  document.body.classList.remove('pdfCareReport')
+);
+
+/* 케어 결과 요약 > card 영역 토글 버튼 */
+const contents = document.querySelector("#careInfo");
+contents.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn-toggle');
+  if (!btn) return;
+
+  btn.classList.toggle('is-open');
+  btn.closest('.card').querySelector('.collapse-content').classList.toggle('is-open')
+
+  syncAllToggleCard();
+})
+
+function toggleAllCards(e) {
+  if (e.classList.contains('is-open')) {
+    e.classList.remove("is-open");
+    e.querySelector('span').innerText = '전체 열기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.remove("is-open"))
+    contents.querySelectorAll('.collapse-content').forEach(el => el.classList.remove("is-open"))
+
+  } else {
+    e.classList.add("is-open");
+    e.querySelector('span').innerText = '전체 닫기';
+
+    contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.add("is-open"))
+    contents.querySelectorAll('.collapse-content').forEach(el => el.classList.add("is-open"))
+  }
+
+  syncAllToggleCard();
+}
+
+function syncAllToggleCard() {
+  const allItems = contents.querySelectorAll('.collapse-content');
+  const openItems = contents.querySelectorAll('.collapse-content.is-open');
+  const btnAllToggle = document.querySelector('.card.h-care-service > .card-header .btn-toggle');
+
+  if (!btnAllToggle) return;
+
+  // 전부 열림
+  if (allItems.length === openItems.length) {
+    btnAllToggle.classList.add('is-open');
+    btnAllToggle.querySelector('span').innerText = '전체 닫기';
+
+  // 전부 닫힘
+  } else if (openItems.length === 0) {
+    btnAllToggle.classList.remove("is-open");
+    btnAllToggle.querySelector('span').innerText = '전체 열기';
+  }
+}
+</script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<div class="modal" id="extraConstRequestModal">
+  <div class="modal-dialog modal-xxl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">추가 시공</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- S: 기본 정보 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">기본 정보</h3>
+            <i class="icon-chevron" data-action="collapse"></i>
+          </div>
+          <div class="card-content collapse-content is-open">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div>
+                <span class="text-xs text-muted-foreground">사업자명</span>
+                <p class="text-sm">중동증권(주)</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">고객명</span>
+                <p class="text-sm">대우건설</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">확정납기</span>
+                <p class="text-sm">2026-01-01</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">납품요청시간</span>
+                <p class="text-sm">14:00</p>
+              </div>
+
+              <div>
+                <span class="text-xs text-muted-foreground">수주특성</span>
+                <p class="text-sm">일반</p>
+              </div>
+              <div class="lg:col-span-2">
+                <span class="text-xs text-muted-foreground">수주건명</span>
+                <p class="text-sm">퍼시스 강남 오피스 가구 납품</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">시공유무</span>
+                <p class="text-sm">유</p>
+              </div>
+
+              <div class="lg:col-span-2">
+                <span class="text-xs text-muted-foreground">납품처명</span>
+                <p class="text-sm">중동증권(주)</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">전화번호</span>
+                <p class="text-sm">02-2188-4133</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">휴대폰 번호</span>
+                <p class="text-sm">010-1234-1234</p>
+              </div>
+
+              <div class="lg:col-span-2">
+                <span class="text-xs text-muted-foreground">납품처 주소</span>
+                <p class="text-sm">(04515) 서울 중구 서소문로 112(충정로 1가) 3층</p>
+              </div>
+              <div class="lg:col-span-2">
+                <span class="text-xs text-muted-foreground">납품처 특기사항</span>
+                <p class="text-sm">납품 시 사전 연락 필수, 주차 불가</p>
+              </div>
+
+              <div>
+                <span class="text-xs text-muted-foreground">본사 영업담당</span>
+                <p class="text-sm">김본사</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">대리점 영업담당</span>
+                <p class="text-sm">김본사</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">부서명</span>
+                <p class="text-sm">경영지원팀</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">납품처 담당</span>
+                <p class="text-sm">김철수</p>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <span class="text-xs text-muted-foreground">사다리차 필요</span>
+                  <p class="text-sm">무</p>
+                </div>
+                <div>
+                  <span class="text-xs text-muted-foreground">엘리베이터</span>
+                  <p class="text-sm">무</p>
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <span class="text-xs text-muted-foreground">하차지 상태</span>
+                  <p class="text-sm">지상</p>
+                </div>
+                <div>
+                  <span class="text-xs text-muted-foreground">차량진입 여부</span>
+                  <p class="text-sm">1톤</p>
+                </div>
+              </div>
+              <div class="sm:col-span-2 grid sm:grid-cols-4 gap-3">
+                <div>
+                  <span class="text-xs text-muted-foreground">인테리어</span>
+                  <p class="text-sm">진행중</p>
+                </div>
+                <div class="sm:col-span-2">
+                  <span class="text-xs text-muted-foreground inline-block w-full">도면</span>
+                  <button type="button" class="btn btn-link">도면관리
+                    <i class="icon-external-link"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 기본 정보 -->
+
+        <!-- S: 추가시공 -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <div class="flex items-center justify-between gap-4">
+              <h3 class="card-title">추가시공(분해, 설치)</h3>
+              <div class="flex gap-2">
+                <button type="button" class="btn btn-primary" onclick="addTableRow()">추가</button>
+                <button type="button" class="btn btn-outline" onclick="deleteTableRow()">삭제</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="border">
+              <div class="table-scroll h-[250px]">
+                <table class="table" id="targetTable">
+                  <colgroup>
+                    <col style="width: 60px">
+                    <col style="width: 60px">
+                    <col style="width: 20%">
+                    <col style="width: 25%">
+                    <col>
+                    <col style="width: 80px">
+                    <col>
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>
+                        <label class="radio-box">
+                          <input type="checkbox" class="checkbox" id="checkAll" />
+                        </label>
+                      </th>
+                      <th>번호</th>
+                      <th>이전구분</th>
+                      <th>설치품목/명</th>
+                      <th>비용단가</th>
+                      <th>수량</th>
+                      <th>예상비용</th>
+                      <th>확정비용</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="table-row">
+                      <td class="text-center">
+                        <label class="radio-box">
+                          <input type="checkbox" class="checkbox" />
+                        </label>
+                      </td>
+                      <td class="text-center">1</td>
+                      <td class="px-2 py-1">
+                        <form-select>
+                          <select name="" id="">
+                            <option value="">옵션1</option>
+                            <option value="">옵션2</option>
+                          </select>
+                        </form-select>
+                      </td>
+                      <td class="px-2 py-1">
+                        <form-select>
+                          <select name="" id="">
+                            <option value="">옵션1</option>
+                            <option value="">옵션2</option>
+                          </select>
+                        </form-select>
+                      </td>
+                      <td class="text-right">1,000</td>
+                      <td class="px-2 py-1">
+                        <input type="text" name="" id="" class="input text-center" placeholder="0">
+                      </td>
+                      <td class="text-right">1,000</td>
+                      <td class="text-right">1,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card bg-secondary mt-3">
+              <div class="card-content py-4">
+                <div class="grid sm:grid-cols-2 gap-2">
+                  <div class="input-group">
+                    <label>
+                      <div class="label">해체장소</div>
+                      <input type="text" id="" class="input">
+                    </label>
+                  </div>
+                  <div class="input-group">
+                    <label>
+                      <div class="label">설치장소</div>
+                      <input type="text" id="" class="input">
+                    </label>
+                  </div>
+                  <div class="input-group sm:col-span-2">
+                    <label>
+                      <div class="label">비고</div>
+                      <input type="text" id="" class="input">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 추가시공 -->
+
+        <!-- S: 시공정보 -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <h3 class="card-title">시공 예약</h3>
+          </div>
+          <div class="card-content">
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-3">
+              <div class="input-group">
+                <label>
+                  <span class="label">시공 예약일자</span>
+                  <form-select>
+                    <select name="" id="">
+                      <option value="">2026.01.01</option>
+                      <option value="">2026.01.11</option>
+                    </select>
+                  </form-select>
+                </label>
+              </div>
+
+              <div class="input-group">
+                <label>
+                  <span class="label">시공팀</span>
+                  <form-select>
+                    <select name="" id="">
+                      <option value="">선택</option>
+                      <option value="">시공팀1</option>
+                      <option value="">시공팀2</option>
+                    </select>
+                  </form-select>
+                </label>
+              </div>
+            </div>
+
+            <div class="border">
+              <div id="ecrGrid1" class="w-full h-full"></div>
+            </div>
+
+            <div class="card bg-secondary mt-3">
+              <div class="card-content py-4">
+                <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2">
+                  <div class="input-group">
+                    <span class="label">시공 예약일자</span>
+                    <p class="text-sm pt-2">-</p>
+                  </div>
+                  <div class="input-group">
+                    <span class="label">시공팀</span>
+                    <p class="text-sm pt-2">-</p>
+                  </div>
+                  <div class="input-group sm:col-span-2">
+                    <label>
+                      <span class="label">납품요청시간</span>
+                      <div class="flex gap-3">
+                        <form-select class="w-1/2 flex-shrink-0">
+                          <select name="" id="">
+                            <option value="">10:00</option>
+                            <option value="">10:30</option>
+                          </select>
+                        </form-select>
+
+                        <label class="radio-box">
+                          <input type="checkbox" class="checkbox" />
+                          <span class="text-sm">시간엄수</span>
+                        </label>
+                      </div>
+                    </label>
+                  </div>
+
+                  <div class="input-group sm:col-span-3 xl:col-span-6">
+                    <label>
+                      <span class="label">특기사항</span>
+                      <input type="text" id="" class="input" placeholder="특기사항 입력">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 시공정보 -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 추가시공 table 관련
+  const tbody = document.querySelector("#targetTable tbody");
+  const checkAll = document.querySelector("#checkAll");
+
+  // row 추가
+  function addTableRow() {
+    const newIndex = tbody.querySelectorAll("tr").length + 1;
+
+    const newRow = document.createElement("tr");
+    newRow.classList.add("table-row");
+
+    newRow.innerHTML = `
+      <td class="text-center">
+        <label class="radio-box">
+          <input type="checkbox" class="checkbox" />
+        </label>
+      </td>
+      <td class="text-center">${newIndex}</td>
+      <td class="px-2 py-1">
+        <form-select>
+          <select>
+            <option value="">옵션1</option>
+            <option value="">옵션2</option>
+          </select>
+        </form-select>
+      </td>
+      <td class="px-2 py-1">
+        <form-select>
+          <select>
+            <option value="">옵션1</option>
+            <option value="">옵션2</option>
+          </select>
+        </form-select>
+      </td>
+      <td class="text-right"></td>
+      <td class="px-2 py-1">
+        <input type="text" class="input text-center" placeholder="0">
+      </td>
+      <td class="text-right"></td>
+      <td class="text-right"></td>
+    `;
+
+    tbody.appendChild(newRow);
+  }
+
+  // 선택된 row 삭제
+  function deleteTableRow() {
+    const checkedChkbox = tbody.querySelectorAll("input[type='checkbox']:checked");
+
+    if (checkedChkbox.length === 0) {
+      alert("삭제할 행을 선택하세요.");
+      return;
+    }
+
+    checkedChkbox.forEach(chk => chk.closest("tr").remove() );
+
+    tbody.querySelectorAll("tr").forEach((row, index) => {
+      row.children[1].textContent = index + 1;
+    });
+
+    checkAll.checked = false;
+  }
+
+  // 체크박스 전체 선택
+  checkAll.addEventListener("change", function () {
+    const chkbox = tbody.querySelectorAll("input[type='checkbox']");
+    chkbox.forEach(chk => chk.checked = this.checked);
+  });
+
+  // 체크박스 단일 선택
+  tbody.addEventListener("change", function (e) {
+    const chkbox = this.querySelectorAll("input[type='checkbox']");
+    const checkedChkbox = this.querySelectorAll("input[type='checkbox']:checked");
+
+    if (e.target.type === "checkbox") {
+      checkAll.checked = chkbox.length === checkedChkbox.length;
+    }
+  });
+
+
+  // 시공예약 grid 관련 setting
+  let ecrGrid1;
+
+  const ecrGridProps = {
+    isRowAllCheckCurrentView: true,
+    enableSorting: true,
+    enableFilter: true,
+    useContextMenu: true,
+    hoverMode: "singleRow",
+    selectionMode: "singleRow",
+    showRowNumColumn: true,
+    showRowCheckColumn: false,
+    defaultColumnWidth: 100,
+    softRemoveRowMode: false,
+    enableMovingColumn: true,
+    height: 254,
+  }
+
+  // 시공정보
+  function create_ecrGrid1() {
+    const columnLayout = [
+      { headerText: "예정시간", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "시공금액", dataField: "TEMP_DATA02", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "예정소요시간", dataField: "TEMP_DATA03", filter: filter, style: 'text-center', },
+      { headerText: "시간엄수 구분", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "회사구분", dataField: "TEMP_DATA05", filter: filter, style: 'text-center', },
+      { headerText: "시공지역", dataField: "TEMP_DATA06", filter: filter, style: 'text-center', },
+      { headerText: "추가요청건", dataField: "TEMP_DATA07", filter: filter, width: '30%' },
+    ];
+
+    const tempData = [
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+    ]
+
+    ecrGrid1 = AUIGrid.create("#ecrGrid1", columnLayout, ecrGridProps);
+    AUIGrid.setGridData(ecrGrid1, tempData);
+  }
+
+  // 모달 열릴 때 그리드 초기화
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'extraConstRequestModal') {
+      create_ecrGrid1();
+    }
+  });
+</script>

@@ -1,0 +1,53 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area">
+      <h2 class="page-title">로딩 샘플 페이지</h2>
+      <p class="page-description">2초후 로딩 spinner 사라집니다</p>
+    </div>
+
+    <br><br><br><br>
+    <button type="button" class="btn dark lg" id="showLoading">loading 보기</button>
+
+    <div style="height: 100vh"></div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+  function showLoading() {
+    const tmpl = document.createElement("div");
+    tmpl.className = "loading-wrap";
+    tmpl.innerHTML = `<div class="spinner"></div>`;
+    document.body.appendChild(tmpl);
+    document.body.classList.add("scroll-fix");
+  }
+
+  function removeLoading() {
+    const loading = document.querySelector(".loading-wrap");
+    if (loading) loading.remove();
+    document.body.classList.remove("scroll-fix");
+  }
+
+  let loadingTimer = null;
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("showLoading");
+
+    if (btn) {
+      btn.addEventListener("click", () => {
+        showLoading();
+        if (loadingTimer) clearTimeout(loadingTimer);
+
+        loadingTimer = setTimeout(() => {
+          removeLoading();
+          loadingTimer = null;
+        }, 3000);
+      });
+    }
+  });
+</script>
+</th:block>
+</body>
+</html>

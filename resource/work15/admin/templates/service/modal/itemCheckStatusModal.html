@@ -1,0 +1,315 @@
+<div class="modal" id="itemCheckStatusModal">
+  <div class="modal-dialog modal-xl modal-care-service">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">품목 상태 확인</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="custom-chk dark sm">
+            <input type="checkbox" id="itemsChk">
+            <span class="text pl-2">품목 상태 전체 확인</span>
+          </label>
+        </div>
+
+        <table class="table" id="itemTable">
+          <colgroup>
+            <col style="width: 60px;">
+            <col style="width: 20%;">
+            <col>
+            <col style="width: 13%">
+            <col style="width: 10%">
+            <col style="width: 150px;">
+            <col style="width: 8%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>확인</th>
+              <th>시리즈명</th>
+              <th>품목명</th>
+              <th>품목코드</th>
+              <th>색상</th>
+              <th>상태</th>
+              <th>수량</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS 동적 렌더링 (openItemCheckStatusModal) -->
+            <tr data-itemcode="__DUMMY_KEEP_PARSER__" class="hidden">
+              <td class="cursor-pointer">
+                <label class="custom-chk dark sm"><input type="checkbox"></label>
+              </td>
+              <td class="text-left">
+                <strong class="text-base font-semibold">품목명 데스크AAA</strong>
+                <p class="mt-1">품목코드-색상</p>
+              </td>
+              <td>
+                <div class="flex justify-center gap-6">
+                  <label class="custom-chk">
+                    <input type="radio" name="statusAAA" data-type="good"/>
+                    <span class="text">양호</span>
+                  </label>
+                  <label class="custom-chk">
+                    <input type="radio" name="statusAAA" data-type="issue"/>
+                    <span class="text">이슈</span>
+                  </label>
+                </div>
+              </td>
+              <td>12</td>
+            </tr>
+            <tr class="sub-tr" data-itemcode="AAA">
+              <td colspan="4" class="p-0">
+                <div class="bg-white p-4">
+                  <div class="flex gap-10">
+                    <label class="custom-chk">
+                      <input type="checkbox" data-type="care" />
+                      <span class="text pl-3">관리</span>
+                    </label>
+                    <label class="custom-chk">
+                      <input type="checkbox" data-type="as" />
+                      <span class="text pl-3">A/S</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="grid">
+                  <div class="care-wrap py-6 px-4 hidden">
+                    <p class="card-title mb-4">관리 품목 특이사항</p>
+                    <textarea class="textarea input" placeholder="특이사항 입력"></textarea>
+                  </div>
+
+                  <div class="as-wrap py-6 px-4 hidden">
+                    <p class="card-title mb-4">A/S 정보 입력</p>
+
+                    <div class="as-box">
+                      <div class="flex items-center gap-2">
+                        <input type="text" class="input w-[140px]" placeholder="S/N">
+                        <input type="text" class="input" placeholder="A/S 내용 입력">
+                        <button type="button" class="btn btn-outline h-[32px]">
+                          <i class="icon-plus"></i><span class="label text-primary">이미지 첨부(선택)</span>
+                        </button>
+                        <button class="btn btn-delete btn-ghost"><span class="sr-only">A/S 항목 삭제</span></button>
+                      </div>
+
+                      <!-- <div class="thumb-img-wrap">
+                        <div class="thumb-image">
+                          <img th:src="@{/assets/img/icons/error.png}">
+                          <button class="btn btn-delete"><span class="sr-only">이미지 삭제</span></button>
+                        </div>
+                      </div> -->
+                    </div>
+
+                    <div class="as-box">
+                      <div class="flex items-center gap-2">
+                        <input type="text" class="input w-[140px]" placeholder="S/N">
+                        <input type="text" class="input" placeholder="A/S 내용 입력">
+                        <button type="button" class="btn btn-outline h-[32px]">
+                          <i class="icon-plus"></i><span class="label text-primary">이미지 첨부(선택)</span>
+                        </button>
+                        <button class="btn btn-delete btn-ghost"><span class="sr-only">A/S 항목 삭제</span></button>
+                      </div>
+
+                      <div class="thumb-img-wrap">
+                        <div class="thumb-image">
+                          <img th:src="@{/assets/img/icons/error.png}">
+                          <button class="btn btn-delete"><span class="sr-only">이미지 삭제</span></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-secondary bg-white border-dashed w-full h-[38px] mt-2"><i class="icon-plus"></i> A/S 항목 추가</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-itemcode="BBB">
+              <td class="cursor-pointer">
+                <label class="custom-chk dark sm"><input type="checkbox"></label>
+              </td>
+              <td class="text-left">
+                <strong class="text-base font-semibold">품목명 데스크BBB</strong>
+                <p class="mt-1">품목코드-색상</p>
+              </td>
+              <td>
+                <div class="flex justify-center gap-6">
+                  <label class="custom-chk">
+                    <input type="radio" name="statusBBB" data-type="good"/>
+                    <span class="text">양호</span>
+                  </label>
+                  <label class="custom-chk">
+                    <input type="radio" name="statusBBB" data-type="issue"/>
+                    <span class="text">이슈</span>
+                  </label>
+                </div>
+              </td>
+              <td>12</td>
+            </tr>
+            <tr class="sub-tr" data-itemcode="BBB">
+              <td colspan="4" class="p-0">
+                <div class="bg-white p-4">
+                  <div class="flex gap-10">
+                    <label class="custom-chk">
+                      <input type="checkbox" data-type="care" />
+                      <span class="text pl-3">관리</span>
+                    </label>
+                    <label class="custom-chk">
+                      <input type="checkbox" data-type="as" />
+                      <span class="text pl-3">A/S</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="grid">
+                  <div class="care-wrap py-6 px-4 hidden">
+                    <p class="card-title mb-4">관리 품목 특이사항</p>
+                    <textarea class="textarea input" placeholder="특이사항 입력"></textarea>
+                  </div>
+
+                  <div class="as-wrap py-6 px-4 hidden">
+                    <p class="card-title mb-4">A/S 정보 입력</p>
+
+                    <button type="button" class="btn btn-secondary bg-white border-dashed w-full h-[38px] mt-2"><i class="icon-plus"></i> A/S 항목 추가</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="saveItemCheckStatus()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const table = document.querySelector("#itemTable");
+const allChkBox = document.querySelector("#itemsChk");
+
+/* 품목 상태 전체 확인 버튼 — 모든 행에 dispatchEvent 전파하여 행별 핸들러가
+   (해제 시) 라디오 캐시/해제, (체크 시) 캐시 복원 또는 양호 자동 선택 처리하도록 위임 */
+allChkBox.addEventListener("change", () => {
+  const isChecked = allChkBox.checked;
+
+  const rows = table.querySelectorAll('tr[data-itemcode]');
+  rows.forEach(row => {
+    const checkbox = row.querySelector('input[type="checkbox"]:not([data-type])');
+    if (!checkbox || checkbox.checked === isChecked) return;
+    checkbox.checked = isChecked;
+    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+
+  syncItemsCheckButton();
+});
+
+/* 전체 확인 버튼 상태 동기화 */
+function syncItemsCheckButton() {
+  const checks = table.querySelectorAll(
+    'input[type="checkbox"]:not([data-type])'
+  );
+
+  const checked = table.querySelectorAll(
+    'input[type="checkbox"]:not([data-type]):checked'
+  );
+
+  // 🔥 class가 아니라 checked로
+  allChkBox.checked = checks.length === checked.length;
+}
+
+/* 첫번째 셀 클릭 시 체크박스 토글 */
+table.addEventListener('click', (e) => {
+  const cell = e.target.closest('td');
+  if (!cell) return;
+
+  const row = cell.closest('tr:not(.sub-tr)');
+  if (!row) return;
+
+  if (cell !== row.children[0]) return;
+
+  const checkbox = cell.querySelector('input[type="checkbox"]');
+  if (!checkbox) return;
+
+  checkbox.checked = !checkbox.checked;
+  checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+});
+
+
+
+/* 체크 시 기본 상태값 (양호) — 해제 시에는 자동 선택 금지 */
+document.addEventListener('change', (e) => {
+  const checkbox = e.target;
+
+  if (!checkbox.matches('input[type="checkbox"]:not([data-type])')) return;
+
+  const row = checkbox.closest('tr');
+  if (!row) return;
+
+  syncItemsCheckButton();
+  if (checkbox.checked) syncDefaultStatus(row);
+});
+
+function syncDefaultStatus(row) {
+  const statusRadios = row.querySelectorAll(
+    '.custom-chk input[type="radio"][data-type]'
+  );
+
+  const checkedRadio = [...statusRadios].find(radio => radio.checked);
+
+  if (!checkedRadio) {
+    const goodRadio = row.querySelector(
+      '.custom-chk input[data-type="good"]'
+    );
+
+    if (goodRadio) {
+      goodRadio.checked = true;
+      goodRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+}
+
+/* 상태 선택 시 */
+document.addEventListener('change', (e) => {
+  const radio = e.target;
+
+  if (!radio.matches('.custom-chk input[type="radio"]')) return;
+
+  const row = radio.closest('tr');
+  const itemCode = row.dataset.itemcode;
+  const status = radio.dataset.type;
+
+  const rowCheckbox = row.querySelector('.custom-chk.dark input');
+  if (rowCheckbox) rowCheckbox.checked = true;
+
+  const subRow = document.querySelector(`.sub-tr[data-itemcode="${itemCode}"]`);
+  subRow.classList.remove('is-open');
+  if (status === 'issue') subRow.classList.add('is-open')
+});
+
+/* 관리, as 선택 */
+document.addEventListener('change', (e) => {
+  const checkbox = e.target;
+
+  if (!checkbox.matches('.custom-chk input[type="checkbox"]')) return;
+
+  const row = checkbox.closest('.sub-tr');
+  if (!row) return;
+
+  const type = checkbox.dataset.type;
+
+  if (type === 'care') {
+    row.querySelector('.care-wrap')
+      ?.classList.toggle('hidden', !checkbox.checked);
+  }
+
+  if (type === 'as') {
+    row.querySelector('.as-wrap')
+      ?.classList.toggle('hidden', !checkbox.checked);
+  }
+});
+</script>

@@ -1,0 +1,43 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <!-- header 기본 -->
+  <th:block th:fragment="header-default">
+    <header class="header">
+      <div class="sidebar-toggle-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 5h18" />
+          <path d="M3 12h18" />
+          <path d="M3 19h18" />
+        </svg>
+      </div>
+      <div class="breadcrumbs">
+        <span class="breadcrumb-item" th:text="${mainTitle}"></span>
+        <i class="breadcrumbs-separator"></i>
+        <span class="breadcrumb-itemSub" th:text="${subTitle}"></span>
+      </div>
+    </header>
+  </th:block>
+
+  <!-- 뒤로가기 header(param)
+  /**
+  * @param title 페이지 제목
+  * @param titleAddon 페이지 제목 바로 옆 (뱃지나 버튼이 들어올 영역)
+  * @param action 우측 영역
+  */-->
+  <th:block th:fragment="empty"></th:block>
+  <th:block th:fragment="header-back(title, titleAddon, action)">
+    <header class="header">
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center gap-8">
+          <a href="javascript:history.back()" class="flex items-center text-sm text-primary-300">
+            <i class="icon-arrow-left"></i>돌아가기
+          </a>
+          <span class="font-medium" th:text="${title}"></span>
+
+          <th:block th:replace="${titleAddon} ?: ~{::empty}"></th:block>
+        </div>
+
+        <th:block th:replace="${action} ?: ~{::empty}"></th:block>
+      </div>
+    </header>
+  </th:block>
+</html>

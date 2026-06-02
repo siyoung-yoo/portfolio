@@ -1,0 +1,38 @@
+<!--
+  * SelectBox Fragment 사용 예시 *
+
+  <th:block th:replace="~{common/fragments/selectbox :: selectBox(
+      id='',
+      title='',
+      options=${options},
+      selected='',
+      isError=${isError},
+      isDisabled=${isDisabled},
+      placeholder=''
+  )}">
+  </th:block>
+-->
+
+<th:block th:fragment="selectBox">
+  <div class="select-box">
+    <button type="button"
+            th:id="${id}"
+            class="btn-select"
+            th:classappend="${isError ?: false} ? 'error'"
+            th:disabled="${isDisabled ?: false}"
+            th:title="${title ?: '선택'}"
+            th:text="${!#lists.isEmpty(selectedOpt ?: {}) ? selectedOpt.get(0).label : (placeholder ?: '선택해 주세요')}">
+    </button>
+
+    <div class="option-list">
+      <div class="scroll-y">
+        <button type="button"
+                th:each="opt : ${options ?: {}}"
+                th:text="${opt.label}"
+                th:attr="data-value=${opt.value}, aria-selected=${opt.value == (selected ?: '')}"
+                th:classappend="${opt.value == (selected ?: '')} ? 'selected'">
+        </button>
+      </div>
+    </div>
+  </div>
+</th:block>

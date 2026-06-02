@@ -1,0 +1,123 @@
+:root {
+  /* FONT BASE */
+  --font-family: "FursysSans", "FursysHangul", sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  --line-height-base: 1.2;
+  --line-height-lg:  1.5;
+
+  --letter-spacing-base: -0.02em;
+  --letter-spacing-lg: 0;
+
+  --label-xs-r:      var(--font-weight-regular) 10px/var(--line-height-base) var(--font-family);
+  --label-xs-m:      var(--font-weight-medium)  10px/var(--line-height-base) var(--font-family);
+  --label-sm-r:      var(--font-weight-regular) 12px/var(--line-height-base) var(--font-family);
+  --label-sm-m:      var(--font-weight-medium)  12px/var(--line-height-base) var(--font-family);
+
+  --body-sm-r:       var(--font-weight-regular) 12px/var(--line-height-base) var(--font-family);
+  --body-sm-m:       var(--font-weight-medium)  12px/var(--line-height-base) var(--font-family);
+  --body-md-r:       var(--font-weight-regular) 14px/var(--line-height-base) var(--font-family);
+  --body-md-m:       var(--font-weight-medium)  14px/var(--line-height-base) var(--font-family);
+  --body-lg-r:       var(--font-weight-regular) 16px/var(--line-height-base) var(--font-family);
+  --body-lg-m:       var(--font-weight-medium)  16px/var(--line-height-base) var(--font-family);
+
+  --title-sm-m:      var(--font-weight-medium)  18px/var(--line-height-lg)   var(--font-family);
+  --title-md-m:      var(--font-weight-medium)  20px/var(--line-height-lg)   var(--font-family);
+  --title-lg-m:      var(--font-weight-medium)  24px/var(--line-height-lg)   var(--font-family);
+  --title-xl-m:      var(--font-weight-medium)  32px/var(--line-height-lg)   var(--font-family);
+
+
+  /* COLOR BASE */
+  --fursys-black-rgb: 13, 16, 18;
+
+  --pure-white:    #FFFFFF;
+  --oj-light-gray: #f9f9f9;
+  --fursys-white:  #EBF0F2;
+
+  --fursys-black:  #0D1012;
+  --oj-black:      #1F2122;
+  --oj-black2:     #2A2C2D;
+  --dark-gray:     #2F383B;
+  --oj-gray:       #505253;
+  --medium-gray:   #768185;
+  --light-gray:    #B0BBBF;
+
+
+  --fursys-red:    #E3001C;
+  --oj-red:        #E77887;
+  --orange:        #F47018;
+  --yellow:        #FFAF05;
+  --olive:         #828705;
+  --green:         #309F2E;
+  --slate:         #37847D;
+  --mint:          #A5D3CE;
+  --sky:           #67C0FF;
+  --blue:          #0075EA;
+  --lilac:         #C6AEE0;
+  --brown:         #4F360D;
+  --cornflower:    #6B8FE5;
+  --light-cornflower: #99B2EC;
+
+
+  /* LAYOUT SPACING  */
+  --space-2xl: 48px;
+  --space-xl:  40px;
+  --space-lg:  32px;
+  --space-md:  24px;
+  --space-sm:  20px;
+  --space-xs:  16px;
+  --space-2xs: 8px;
+  --space-3xs: 4px;
+
+
+  /* ETC */
+  --scrollbar-width:  4px;
+  --scrollbar-height: 6px;
+
+  --transition-setting:   .15s ease-in-out;
+  --transition-base:       all .15s ease-in-out;
+  --transition-collapse:   max-height .4s cubic-bezier(.25, .8, .5, 1);
+
+  --hover-filter: brightness(0.95);
+  --hover-filter_dark: contrast(90%);
+
+  --disabled-coef: 0.6;
+  --dim-bg: rgba(13, 16, 18, var(--disabled-coef));
+  --shadow-base: 0 0px 6px 0 rgba(0,0,0,0.2);
+
+  --radius-base: 8px;
+  --radius-round-lg: 100px;
+
+  --icon-size-sm: 16px;
+  --icon-size: 24px;
+  --icon-size-lg: 36px;
+
+
+  /* COMMON SETTING */
+  --color-red:        var(--fursys-red);
+  --color-error:      var(--blue);
+  --color-disabled:   var(--light-gray);
+
+  --text-color-white:           var(--pure-white);
+  --text-color-default:         var(--fursys-black);
+  --text-color-sub:             var(--medium-gray);
+
+  --text-color-label:           var(--oj-black);
+  --text-color-placeholder:     var(--medium-gray);
+  --text-color-red:             var(--color-red);
+  --text-color-error:           var(--color-error);
+  --text-color-disabled:        var(--medium-gray);
+
+  --border-color-default:       var(--light-gray);
+  --border-color-active:        var(--oj-gray);
+  --border-color-error:         var(--color-error);
+  --border-color-disabled:      var(--color-disabled);
+  --border-color-scroll:        var(--fursys-white);
+
+  --fill-color-default:         var(--pure-white);
+  --fill-color-disabled:        var(--color-disabled);
+  --item-color-off:             var(--pure-white);
+  --item-color-on:              var(--fursys-black);
+}

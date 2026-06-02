@@ -1,0 +1,178 @@
+<div class="modal" id="orderChgRequestModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">수주 변경등록</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card bg-primary-50" style="padding: 5px 10px 10px; margin-bottom: 20px;">
+          <div class="card-header">
+            <h4 class="font-medium">변경하고 싶은 항목을 선택해 주세요</h4>
+          </div>
+          <div class="card-content">
+            <div class="flex flex-wrap gap-4">
+              <button type="button" class="btn btn btn-secondary" onclick="openModal('orderChgCancelModal')">수주 취소</button>
+              <button type="button" class="btn btn btn-secondary" onclick="openModal('orderChgDateModal')">납기 변경</button>
+              <button type="button" class="btn btn btn-secondary" onclick="openModal('orderChgQtyModal')">납기 분할</button>
+              <button type="button" class="btn btn btn-secondary" onclick="openModal('orderChgInfoModal')">부가정보 변경</button>
+              <button type="button" class="btn btn btn-secondary" onclick="openModal('orderChgTimeModal')">시공 예약시간 변경</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="sm:-order-1 lg:order-0">
+            <span class="text-xs text-muted-foreground">수주번호</span>
+            <p class="text-sm font-medium">F20250110000101</p>
+          </div>
+          <div class="sm:col-span-2">
+            <span class="text-xs text-muted-foreground">수주건명</span>
+            <p class="text-sm font-medium">퍼시스 강남 오피스 가구 납품</p>
+          </div>
+          <div class="sm:-order-1 lg:order-0">
+            <span class="text-xs text-muted-foreground">확정 납기일</span>
+            <p class="text-sm font-medium">2026-01-01</p>
+          </div>
+
+          <div class="input-group sm:col-span-2 lg:col-span-4">
+            <span class="text-xs text-muted-foreground">진행 상태</span>
+            <div class="flex flex-wrap">
+              <label class="radio-box text-primary mr-4">
+                <input type="checkbox" name="chk" class="checkbox opacity-100" disabled checked />
+                시공일정 확정
+              </label>
+              <label class="radio-box text-primary mr-4">
+                <input type="checkbox" name="chk" class="checkbox opacity-100" disabled checked />
+                운송계획 확정
+              </label>
+              <label class="radio-box text-primary mr-4">
+                <input type="checkbox" name="chk" class="checkbox opacity-100" disabled />
+                WMS 계획확정
+              </label>
+              <label class="radio-box text-primary mr-4">
+                <input type="checkbox" name="chk" class="checkbox opacity-100" disabled />
+                매출 발행완료
+              </label>
+              <label class="radio-box text-primary mr-4">
+                <input type="checkbox" name="chk" class="checkbox opacity-100" disabled />
+                긴급 생산여부
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="card-title mb-2 mt-5">수주 변경내역 조회</h4>
+        <div class="border mt-2">
+          <div id="ocrGrid1" class="w-full h-full"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let ocrGrid1;
+
+  function create_ocrGrid1() {
+    const columnLayout = [
+      {
+        headerText: "순번",
+        dataField: "TEMP_DATA01",
+        filter: filter,
+        width: 75,
+        style: 'text-center',
+      },
+      {
+        headerText: "접수일자",
+        dataField: "TEMP_DATA02",
+        filter: filter,
+        style: 'text-center',
+      },
+      {
+        headerText: "접수시간",
+        dataField: "TEMP_DATA03",
+        filter: filter,
+        style: 'text-center',
+      },
+      {
+        headerText: "요청유형",
+        dataField: "TEMP_DATA04",
+        filter: filter,
+        style: 'text-center',
+      },
+      {
+        headerText: "진행상태",
+        dataField: "TEMP_DATA05",
+        filter: filter,
+        style: 'text-center',
+      },
+      {
+        headerText: "불가사유",
+        dataField: "TEMP_DATA06",
+        filter: filter,
+        width: "23%",
+      },
+      {
+        headerText: "삭제",
+        dataField: "TEMP_DATA07",
+        filter: filter,
+        width: 75,
+        style: 'text-center',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return `<button type="button" class="btn btn-outline">삭제</button>` }
+        }
+      },
+    ];
+
+    // ocrGrid1 그리드 속성 재정의
+    AUIGrid.defaultProps = {
+      rowNumHeaderText: '번호',
+      headerHeight: 36,
+      rowHeight: 36,
+
+      isRowAllCheckCurrentView: true,
+      enableSorting: true,
+      enableFilter: true,
+      useContextMenu: true,
+      hoverMode: "singleRow",
+      selectionMode: "none",
+      showRowNumColumn: true,
+			showRowCheckColumn: false,
+      defaultColumnWidth: 100,
+      softRemoveRowMode: false,
+      enableMovingColumn: true,
+    }
+
+    const gridPropsFixHeight = { height: 326 }
+    const gridPropsAutoHeight = { autoGridHeight: true }
+
+    const tempData = [
+      { "TEMP_DATA01": "001", "TEMP_DATA02": "2026-01-01", "TEMP_DATA03": "10:00", "TEMP_DATA04": "수주 취소", "TEMP_DATA05": "진행중", "TEMP_DATA06": "-", "TEMP_DATA07": "Y", },
+    ]
+
+    ocrGrid1 = AUIGrid.create("#ocrGrid1", columnLayout, gridPropsFixHeight);
+    AUIGrid.setGridData(ocrGrid1, tempData);
+
+    // row 수가 많을 경우 그리드 높이를 auto로 바꾸기 위해 위해 그리드 재생성
+    const rowCount = AUIGrid.getRowCount(ocrGrid1);
+    if (rowCount > 8) {
+      AUIGrid.destroy(ocrGrid1);
+      ocrGrid1 = AUIGrid.create("#ocrGrid1", columnLayout, gridPropsAutoHeight);
+      AUIGrid.setGridData(ocrGrid1, tempData);
+    }
+  }
+
+  // 모달 열릴 때 그리드 초기화
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'orderChgRequestModal') {
+      create_ocrGrid1();
+    }
+  });
+</script>

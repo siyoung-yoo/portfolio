@@ -1,0 +1,65 @@
+<!-- Modal: 영역 상세 (도면 영역 박스 클릭 시 표시) -->
+<div class="modal" id="itemInfoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="area-name font-semibold text-base"><span class="flag" id="itemInfoFlag">A</span><span id="itemInfoAreaName">-</span></h5>
+          <p class="modal-description mt-2">영역에 매핑된 품목 정보입니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table break-word table-fixed border">
+          <colgroup>
+            <col style="width: 25%;">
+            <col>
+            <col style="width: 18%">
+            <col style="width: 13%">
+            <col style="width: 10%;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>시리즈명</th>
+              <th>품목명</th>
+              <th>품목코드</th>
+              <th>색상</th>
+              <th class="px-0">수량</th>
+            </tr>
+          </thead>
+          <tbody id="itemInfoBody">
+            <tr><td colspan="5" class="text-center text-primary-300 py-3">-</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openItemInfoModal(areaId, areaName, flag) {
+  document.getElementById('itemInfoFlag').textContent     = flag || '';
+  document.getElementById('itemInfoAreaName').textContent = areaName || '-';
+
+  const items = (window._reportData?.areaItems || []).filter(it =>
+    String(it.areaId) === String(areaId) && it.codeCd
+  );
+  const tbody = document.getElementById('itemInfoBody');
+  if (items.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-primary-300 py-3">매핑된 품목이 없습니다.</td></tr>';
+  } else {
+    tbody.innerHTML = items.map(it => `
+      <tr>
+        <td class="px-3">${escapeHtml(it.seriesNm || '-')}</td>
+        <td class="px-3">${escapeHtml(it.itemName || '-')}</td>
+        <td class="px-3">${escapeHtml(it.codeCd || '-')}</td>
+        <td class="px-3">${escapeHtml(it.colCd || '-')}</td>
+        <td class="text-center px-0">${Number(it.quantity || 0)}</td>
+      </tr>`).join('');
+  }
+  if (typeof openModal === 'function') openModal('itemInfoModal');
+}
+</script>

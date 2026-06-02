@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" data-mode="light" data-sidebar-size="lg" data-layout="vertical" data-topbar="light" data-sidebar="light" data-theme-colors="default">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no">
+<title>grid sample</title>
+<th:block th:replace="common/common_css.html"></th:block>
+<th:block th:replace="common/vanilla_grid.html"></th:block>
+<script>
+  const renderer = { type: "TemplateRenderer"};
+  const filter = { showIcon: true};
+</script>
+</head>
+<body>
+<div class="p-8 mx-auto">
+  <header class="mb-12">
+    <h1 class="text-2xl font-bold mb-2">Custom Design System</h1>
+    <p class="text-muted-foreground">
+      Fursys 디자인 시스템 기반 컴포넌트 라이브러리
+    </p>
+  </header>
+
+  <section>
+    <h2 class="text-xl font-bold mb-4">AUIGrid UI 샘플</h2>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">basic</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid1" class="w-full h-full"></div>
+
+        <script>
+          let myGridId1;
+          const columnLayout1 = [
+            { headerText: "견적등록일", dataField: "TEMP_DATA01", filter: filter, width: 120, },
+            { headerText: '<span class="inline-flex">견적수정<br/>여부</span>', dataField: "TEMP_DATA02", filter: filter, width: 110, dataType:"boolean", style: 'text-center', renderer: renderer,
+              labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                if (value) { return '<i class="icon-check"></i>' }
+              }
+            },
+            { headerText: "최종할인율", dataField: "TEMP_DATA03", filter: filter, width: 100, dataType:"numeric", postfix : "%", },
+            { headerText: "상태", dataField: "TEMP_DATA04", filter: filter, width: 85, style: "text-center", renderer: renderer,
+              labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                if (value == "A") {
+                  return '<span class="badge badge-rounded badge-default">승인</span>'
+                } else if (value == "B") {
+                  return '<span class="badge badge-rounded badge-outline">요청</span>'
+                } else if (value == "C") {
+                  return '<span class="badge badge-rounded badge-destructive">반려</span>'
+                } else {
+                  return '<span class="badge badge-rounded badge-outline-default">결재중</span>'
+                }
+              }
+            },
+            { headerText: "견적전송여부", dataField: "TEMP_DATA05", filter: filter, width: 110, dataType:"boolean", style: 'text-center', renderer: renderer,
+              labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                if (value) {
+                  return `<button class="btn btn-outline" onclick="openModal('transferHistoryModal')">전송이력</button>`;
+                }
+              }
+            },
+            { headerText: "도면", dataField: "TEMP_DATA06", filter: filter, width: 120, style: 'text-center', renderer: renderer,
+              labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                if (value) {
+                  return value + ` 건 <button class="btn btn-outline btn-icon ml-1 align-middle" onclick="openModal('drawingInfoModal')"><i class="icon-search w-[12px] h-[12px] bg-size-[12px]"></i></button>`
+                }
+              }
+            },
+            { headerText: "여신잔액", dataField: "TEMP_DATA07", filter: filter, width: 180, dataType:"numeric", style: 'text-right', },
+            { headerText: "title", dataField: "TEMP_DATA08", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA09", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA10", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA11", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA12", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA13", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA14", filter: filter, width: 150, },
+            { headerText: "title", dataField: "TEMP_DATA15", filter: filter, width: 150, },
+          ];
+
+          const auiGridProps1 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "singleRow",
+            showRowNumColumn: true,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+          };
+
+          const tempData1 = [
+            { "TEMP_DATA01": "2026-03-14", "TEMP_DATA02": true, "TEMP_DATA03": 32.5, "TEMP_DATA04": "A", "TEMP_DATA05": false, "TEMP_DATA06": 1, "TEMP_DATA07": 480000000, "TEMP_DATA08": "value", "TEMP_DATA09": "value", "TEMP_DATA10": "value", "TEMP_DATA11": "value", "TEMP_DATA12": "value", "TEMP_DATA13": "value", "TEMP_DATA14": "value", "TEMP_DATA15": "value", },
+            { "TEMP_DATA01": "2026-03-14", "TEMP_DATA02": false, "TEMP_DATA03": 32.5, "TEMP_DATA04": "B", "TEMP_DATA05": true, "TEMP_DATA06": 2, "TEMP_DATA07": 480000000, "TEMP_DATA08": "value", "TEMP_DATA09": "value", "TEMP_DATA10": "value", "TEMP_DATA11": "value", "TEMP_DATA12": "value", "TEMP_DATA13": "value", "TEMP_DATA14": "value", "TEMP_DATA15": "value", },
+            { "TEMP_DATA01": "2026-03-14", "TEMP_DATA02": true, "TEMP_DATA03": 32.5, "TEMP_DATA04": "C", "TEMP_DATA05": false, "TEMP_DATA06": 3, "TEMP_DATA07": 480000000, "TEMP_DATA08": "value", "TEMP_DATA09": "value", "TEMP_DATA10": "value", "TEMP_DATA11": "value", "TEMP_DATA12": "value", "TEMP_DATA13": "value", "TEMP_DATA14": "value", "TEMP_DATA15": "value", },
+            { "TEMP_DATA01": "2026-03-14", "TEMP_DATA02": false, "TEMP_DATA03": 32.5, "TEMP_DATA04": "D", "TEMP_DATA05": true, "TEMP_DATA06": 4, "TEMP_DATA07": 480000000, "TEMP_DATA08": "value", "TEMP_DATA09": "value", "TEMP_DATA10": "value", "TEMP_DATA11": "value", "TEMP_DATA12": "value", "TEMP_DATA13": "value", "TEMP_DATA14": "value", "TEMP_DATA15": "value", },
+          ]
+
+          myGridId1 = AUIGrid.create("#grid1", columnLayout1, auiGridProps1);
+          AUIGrid.setGridData(myGridId1, tempData1);
+        </script>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">with paging</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid2" class="w-full h-full"></div>
+
+        <script>
+          let myGridId2;
+
+          const columnLayout2 = [
+              { headerText: "심사일", dataField: "TEMP_DATA01", filter: filter, width: 120, },
+              { headerText: "심사구분", dataField: "TEMP_DATA02", filter: filter, width: 120, },
+              { headerText: "번호", dataField: "TEMP_DATA03", filter: filter, width: 150, renderer: renderer,
+                labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+                  return `<button type="button" class="btn btn-link" onclick="openModal('')">` + value + `</button>`;
+                }
+              },
+              { headerText: "건명", dataField: "TEMP_DATA04", filter: filter, width: 250, },
+              { headerText: "실적사업소", dataField: "TEMP_DATA05", filter: filter, width: 150, },
+              { headerText: "연체이력(1년)", dataField: "TEMP_DATA06", filter: filter, width: 120, dataType:"numeric", postfix : "건", },
+              { headerText: "부채비율", dataField: "TEMP_DATA07", filter: filter, width: 100, dataType:"numeric", postfix : "%", },
+              { headerText: "유동비율", dataField: "TEMP_DATA08", filter: filter, width: 100, dataType:"numeric", postfix : "%", },
+              { headerText: "매출액", dataField: "TEMP_DATA09", filter: filter, width: 150, },
+              { headerText: "심사등급", dataField: "TEMP_DATA10", filter: filter, width: 85, },
+              { headerText: "EBITA", dataField: "TEMP_DATA11", filter: filter, width: 120, },
+              { headerText: "영업이익", dataField: "TEMP_DATA12", filter: filter, width: 120, },
+              { headerText: "여신한도", dataField: "TEMP_DATA13", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+              { headerText: "여신잔액", dataField: "TEMP_DATA14", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+              { headerText: "특별승인가능여부", dataField: "TEMP_DATA15", filter: filter, width: 150,
+                dataType:"boolean", style: 'text-center', renderer: renderer,
+                labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                  if (value) { return '<i class="icon-check"></i>' }
+                }
+              },
+              { headerText: "특별승인요청여부", dataField: "TEMP_DATA16", filter: filter, width: 150,
+                dataType:"boolean", style: 'text-center', renderer: renderer,
+                labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                  if (value) { return '<i class="icon-check"></i>' }
+                }
+              },
+              { headerText: "승인여부", dataField: "TEMP_DATA17", filter: filter, width: 100,
+                dataType:"boolean", style: 'text-center', renderer: renderer,
+                labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+                  if (value) { return '<i class="icon-check"></i>' }
+                }
+              },
+              { headerText: "최종수정자", dataField: "TEMP_DATA18", filter: filter, width: 150, },
+              { headerText: "최종수정일시", dataField: "TEMP_DATA19", filter: filter, width: 150, },
+              { headerText: "고객코드", dataField: "TEMP_DATA20", filter: filter, width: 150, },
+            ];
+
+          const auiGridProps2 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "singleRow",
+            showRowNumColumn: true,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+            usePaging: true,
+          };
+
+          const tempData2 = [
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+            {  "TEMP_DATA01": "2026-03-31", "TEMP_DATA02": "계약", "TEMP_DATA03": "C202508010001", "TEMP_DATA04": "오피스 체어 프로젝트", "TEMP_DATA05": "채널육성1팀", "TEMP_DATA06": 0, "TEMP_DATA07": 120, "TEMP_DATA08": 150, "TEMP_DATA09": "5,200억원", "TEMP_DATA10": "S", "TEMP_DATA11": "50억원", "TEMP_DATA12": "35억원", "TEMP_DATA13": 500000000, "TEMP_DATA14": 480000000, "TEMP_DATA15": true, "TEMP_DATA16": false, "TEMP_DATA17": true, "TEMP_DATA18": "이현영", "TEMP_DATA19": "2026-01-12", "TEMP_DATA20": "2025111503969" },
+          ]
+
+          myGridId2 = AUIGrid.create("#grid2", columnLayout2, auiGridProps2);
+          AUIGrid.setGridData(myGridId2, tempData2);
+        </script>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">with footer</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid3" class="w-full h-full"></div>
+
+        <script>
+          const columnLayout3 = [
+            { headerText: "그룹(품목)", dataField: "TEMP_DATA01", filter: filter, width: 150, },
+            { headerText: "시리즈", dataField: "TEMP_DATA02", filter: filter, width: 180, },
+            { headerText: "품목코드", dataField: "TEMP_DATA03", filter: filter, width: 150, },
+            { headerText: "품목색상", dataField: "TEMP_DATA04", filter: filter, width: 120, },
+            { headerText: "품목명", dataField: "TEMP_DATA05", filter: filter, width: 250, },
+            { headerText: "규격", dataField: "TEMP_DATA06", filter: filter, width: 150, },
+            { headerText: "수량", dataField: "TEMP_DATA07", filter: filter, width: 85, },
+            { headerText: "렌탈소비자가", dataField: "TEMP_DATA08", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+            { headerText: "렌탈소비자가총액", dataField: "TEMP_DATA09", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+            { headerText: "할인율", dataField: "TEMP_DATA10", filter: filter, width: 85, dataType:"numeric", postfix : "%", },
+            { headerText: "견적단가", dataField: "TEMP_DATA11", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+            { headerText: "견적총액", dataField: "TEMP_DATA12", filter: filter, width: 150, dataType:"numeric", style: 'text-right', },
+            { headerText: "공급브랜드", dataField: "TEMP_DATA13", filter: filter, width: 120, },
+            { headerText: "비고", dataField: "TEMP_DATA14", filter: filter, width: 150, },
+          ];
+
+          const auiGridProps3 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "singleRow",
+            showRowNumColumn: true,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+            showFooter: true,
+            footerHeight: 36,
+          };
+
+          const tempData3 = [
+            { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "ENABLE", "TEMP_DATA03": "FDD014NN", "TEMP_DATA04": "WW", "TEMP_DATA05": "회의실 테이블", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "3", "TEMP_DATA08": "466000", "TEMP_DATA09": "9600000", "TEMP_DATA10": 6, "TEMP_DATA11": "186200", "TEMP_DATA12": "17400000", "TEMP_DATA13": "", "TEMP_DATA14": "", },
+            { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "ENABLE", "TEMP_DATA03": "FDD014NN", "TEMP_DATA04": "WW", "TEMP_DATA05": "회의실 테이블", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "3", "TEMP_DATA08": "466000", "TEMP_DATA09": "9600000", "TEMP_DATA10": 6, "TEMP_DATA11": "186200", "TEMP_DATA12": "17400000", "TEMP_DATA13": "", "TEMP_DATA14": "", },
+          ]
+
+          const footerLayout3 = [
+            { labelText: "합계", positionField: "#base", },
+            { dataField: "TEMP_DATA07", positionField: "TEMP_DATA07", operation: "SUM", formatString: "#,##0", },
+            { dataField: "TEMP_DATA08", positionField: "TEMP_DATA08", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA09", positionField: "TEMP_DATA09", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA10", positionField: "TEMP_DATA10", operation: "SUM", postfix : "%" },
+            { dataField: "TEMP_DATA11", positionField: "TEMP_DATA11", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA12", positionField: "TEMP_DATA12", operation: "SUM", formatString: "#,##0", style: "text-right", }
+          ];
+
+          myGridId3 = AUIGrid.create("#grid3", columnLayout3, auiGridProps3);
+          AUIGrid.setFooter(myGridId3, footerLayout3);
+          AUIGrid.setGridData(myGridId3, tempData3);
+        </script>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">2depth 합계</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid4" class="w-full h-full"></div>
+
+        <script>
+          let myGridId4;
+
+          const columnLayout4 = [
+            { headerText: "번호", dataField: "No", width: 44, style: "leftnum-fixed-style", headerStyle : "leftnum-fixed-style", cellColMerge : true, cellColSpan : 2, },
+            { headerText: "그룹(품목)", dataField: "TEMP_DATA01", filter: filter, width: 150, },
+            { headerText: "품목코드", dataField: "TEMP_DATA02", filter: filter, width: 185, },
+            { headerText: "색상", dataField: "TEMP_DATA03", filter: filter, width: 85, },
+            { headerText: "구분", dataField: "TEMP_DATA04", filter: filter, width: 85, },
+            { headerText: "품목명", dataField: "TEMP_DATA05", filter: filter, width: 300, },
+            { headerText: "규격", dataField: "TEMP_DATA06", filter: filter, width: 150, },
+            { headerText: "수량", dataField: "TEMP_DATA07", filter: filter, width: 100, },
+            { headerText: "렌탈소비자가", dataField: "TEMP_DATA08", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "렌탈소비자가 총액", dataField: "TEMP_DATA09", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "할인율", dataField: "TEMP_DATA10", filter: filter, dataType:"numeric", postfix : "%", width: 100, },
+            { headerText: "견적단가", dataField: "TEMP_DATA11", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "견적총액", dataField: "TEMP_DATA12", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가", dataField: "TEMP_DATA13", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가 총액", dataField: "TEMP_DATA14", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가", dataField: "TEMP_DATA15", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가 총액", dataField: "TEMP_DATA16", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가", dataField: "TEMP_DATA17", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가 총액", dataField: "TEMP_DATA18", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가", dataField: "TEMP_DATA19", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가 총액", dataField: "TEMP_DATA20", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+          ];
+
+          const auiGridProps4 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "none",
+            showRowNumColumn: false,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+
+            autoGridHeight: true,
+            fixedColumnCount: 2,
+            enableCellMerge: true,
+            displayTreeOpen: true,
+            onlyTreeLastDepthSorting: true,
+            rowStyleForOnlyTr: true,
+            rowStyleFunction: function (rowIndex, item) {
+              if ( item.calcSum === "groupTotal") {
+                return "custom-group-total title-center";
+              } else if (item.calcSum === "sectionTotal") {
+                return "custom-section-total title-center";
+              }
+            }
+          };
+
+          const tempData4 = [
+            // 첫번째 그룹
+            {"No": "서울시 오금동 311", "TEMP_DATA01": "서울시 오금동 311" },
+            {"TEMP_DATA01": "6층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            {"TEMP_DATA01": "소계", "calcSum": "groupTotal"},
+
+            {"TEMP_DATA01": "7층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+
+
+            // 두번째 그룹
+            {"No": "서울시 오금동 312", "TEMP_DATA01": "서울시 오금동 312", },
+            {"TEMP_DATA01": "8층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+          ]
+
+
+          function processGridData(data) {
+            // 그룹별 index 생성
+            data.forEach(group => {
+              if (group.children) {
+                let index = 1;
+                group.children.forEach(child => {
+                  if (!child.calcSum)  child.No = index++;
+                });
+              }
+            });
+
+            const sumFields = [ "TEMP_DATA07", "TEMP_DATA09", "TEMP_DATA12", "TEMP_DATA14", "TEMP_DATA16", "TEMP_DATA18", "TEMP_DATA19", "TEMP_DATA20", ];
+            let currentAddressTotals = [];  // sectionTotal 누적
+
+            for (let i = 0; i < data.length; i++) {
+              const row = data[i];
+
+              // groupTotal 계산
+              if (row.children) {
+                let groupTotal = {};
+
+                sumFields.forEach(field => groupTotal[field] = 0);
+                row.children.forEach(item => {
+                  sumFields.forEach(field => {
+                    groupTotal[field] += Number(item[field] || 0);
+                  });
+                });
+
+                const nextRow = data[i + 1];
+                if (nextRow && nextRow.calcSum === "groupTotal") {
+                  sumFields.forEach(field => {
+                    nextRow[field] = groupTotal[field];
+                  });
+                }
+
+                currentAddressTotals.push(groupTotal);
+              }
+
+
+              // sectionTotal 계산
+              if (row.calcSum === "sectionTotal") {
+
+                let sectionTotal = {};
+                sumFields.forEach(field => sectionTotal[field] = 0);
+
+                currentAddressTotals.forEach(total => {
+                  sumFields.forEach(field => {
+                    sectionTotal[field] += total[field];
+                  });
+                });
+
+                sumFields.forEach(field => {
+                  row[field] = sectionTotal[field];
+                });
+
+                currentAddressTotals = [];
+              }
+            }
+          }
+          processGridData(tempData4);
+
+          myGridId4 = AUIGrid.create("#grid4", columnLayout4, auiGridProps4);
+          AUIGrid.setGridData(myGridId4, tempData4);
+        </script>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">3depth 합계</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid5" class="w-full h-full"></div>
+
+        <script>
+          let myGridId5;
+
+          const columnLayout5 = [
+            { headerText: "번호", dataField: "No", width: 44, sorting: false, style: "leftnum-fixed-style", headerStyle : "leftnum-fixed-style", cellColMerge : true, cellColSpan : 2, },
+            { headerText: "그룹(품목)", dataField: "TEMP_DATA01", filter: filter, width: 150, },
+            { headerText: "품목코드", dataField: "TEMP_DATA02", filter: filter, width: 185, },
+            { headerText: "색상", dataField: "TEMP_DATA03", filter: filter, width: 85, },
+            { headerText: "구분", dataField: "TEMP_DATA04", filter: filter, width: 85, },
+            { headerText: "품목명", dataField: "TEMP_DATA05", filter: filter, width: 300, },
+            { headerText: "규격", dataField: "TEMP_DATA06", filter: filter, width: 150, },
+            { headerText: "수량", dataField: "TEMP_DATA07", filter: filter, width: 100, },
+            { headerText: "렌탈소비자가", dataField: "TEMP_DATA08", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "렌탈소비자가 총액", dataField: "TEMP_DATA09", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "할인율", dataField: "TEMP_DATA10", filter: filter, dataType:"numeric", postfix : "%", width: 100, },
+            { headerText: "견적단가", dataField: "TEMP_DATA11", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "견적총액", dataField: "TEMP_DATA12", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가", dataField: "TEMP_DATA13", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가 총액", dataField: "TEMP_DATA14", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가", dataField: "TEMP_DATA15", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가 총액", dataField: "TEMP_DATA16", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가", dataField: "TEMP_DATA17", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가 총액", dataField: "TEMP_DATA18", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가", dataField: "TEMP_DATA19", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가 총액", dataField: "TEMP_DATA20", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+          ];
+
+          const auiGridProps5 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "none",
+            showRowNumColumn: false,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+
+            autoGridHeight: true,
+            fixedColumnCount: 2,
+
+            enableCellMerge: true,
+            displayTreeOpen: true,
+            onlyTreeLastDepthSorting: true,
+            rowStyleForOnlyTr: true,
+            rowStyleFunction: function (rowIndex, item) {
+              if (item.calcSum === "groupTotal") {
+                return "custom-group-total title-center";
+              } else if (item.calcSum === "sectionTotal") {
+                return "custom-section-total title-center";
+              } else if (item.calcSum === "grandTotal") {
+                return "custom-grand-total title-center";
+              }
+            }
+          };
+
+          const tempData5 = [
+            // 첫번째 그룹
+            {"No": "서울시 오금동 311", "TEMP_DATA01": "서울시 오금동 311" },
+            {"TEMP_DATA01": "6층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            {"TEMP_DATA01": "소계", "calcSum": "groupTotal"},
+
+            {"TEMP_DATA01": "7층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+
+
+            // 두번째 그룹
+            {"No": "서울시 오금동 312", "TEMP_DATA01": "서울시 오금동 312", },
+            {"TEMP_DATA01": "8층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+
+            // 전체 합계
+            { "TEMP_DATA01": "총 합계", "calcSum": "grandTotal" },
+          ]
+
+          function processGridData(data) {
+
+            // 그룹별 index 생성
+            data.forEach(group => {
+              if (group.children) {
+                let index = 1;
+                group.children.forEach(child => {
+                  if (!child.calcSum)  child.No = index++;
+                });
+              }
+            });
+
+            const sumFields = [ "TEMP_DATA07", "TEMP_DATA09", "TEMP_DATA12", "TEMP_DATA14", "TEMP_DATA16", "TEMP_DATA18", "TEMP_DATA19", "TEMP_DATA20", ];
+            let currentAddressTotals = [];  // sectionTotal 누적
+            let grandTotals = {};           // grandTotal 합계
+
+            sumFields.forEach(field => grandTotals[field] = 0);
+
+            for (let i = 0; i < data.length; i++) {
+              const row = data[i];
+
+              // groupTotal 계산
+              if (row.children) {
+                let groupTotal = {};
+                sumFields.forEach(field => groupTotal[field] = 0);
+
+                row.children.forEach(item => {
+                  sumFields.forEach(field => {
+                    groupTotal[field] += Number(item[field] || 0);
+                  });
+                });
+
+                const nextRow = data[i + 1];
+                if (nextRow && nextRow.calcSum === "groupTotal") {
+                  sumFields.forEach(field => {
+                    nextRow[field] = groupTotal[field];
+                  });
+                }
+
+                currentAddressTotals.push(groupTotal);
+              }
+
+
+              // sectionTotal 계산
+              if (row.calcSum === "sectionTotal") {
+                let sectionTotal = {};
+                sumFields.forEach(field => sectionTotal[field] = 0);
+
+                currentAddressTotals.forEach(total => {
+                  sumFields.forEach(field => {
+                    sectionTotal[field] += total[field];
+                  });
+                });
+
+                sumFields.forEach(field => {
+                  row[field] = sectionTotal[field];
+                  grandTotals[field] += sectionTotal[field]; // 전체합 누적
+                });
+
+                currentAddressTotals = [];
+              }
+
+              // grandTotal 계산
+              if (row.calcSum === "grandTotal") {
+                sumFields.forEach(field => {
+                  row[field] = grandTotals[field];
+                });
+              }
+            }
+          }
+          processGridData(tempData5);
+
+          myGridId5 = AUIGrid.create("#grid5", columnLayout5, auiGridProps5);
+          AUIGrid.setGridData(myGridId5, tempData5);
+        </script>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 50px;">
+      <div class="card-header">
+        <h3 class="card-title">3depth 합계 with footer (그리드 높이값 고정일 경우 사용)</h3>
+      </div>
+      <div class="card-content">
+        <div id="grid6" class="w-full h-full"></div>
+
+        <script>
+          let myGridId6;
+
+          const columnLayout6 = [
+            { headerText: "번호", dataField: "No", width: 44, style: "leftnum-fixed-style", headerStyle : "leftnum-fixed-style", cellColMerge : true, cellColSpan : 2, },
+            { headerText: "그룹(품목)", dataField: "TEMP_DATA01", filter: filter, width: 150, },
+            { headerText: "품목코드", dataField: "TEMP_DATA02", filter: filter, width: 185, },
+            { headerText: "색상", dataField: "TEMP_DATA03", filter: filter, width: 85, },
+            { headerText: "구분", dataField: "TEMP_DATA04", filter: filter, width: 85, },
+            { headerText: "품목명", dataField: "TEMP_DATA05", filter: filter, width: 300, },
+            { headerText: "규격", dataField: "TEMP_DATA06", filter: filter, width: 150, },
+            { headerText: "수량", dataField: "TEMP_DATA07", filter: filter, width: 100, },
+            { headerText: "렌탈소비자가", dataField: "TEMP_DATA08", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "렌탈소비자가 총액", dataField: "TEMP_DATA09", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "할인율", dataField: "TEMP_DATA10", filter: filter, dataType:"numeric", postfix : "%", width: 100, },
+            { headerText: "견적단가", dataField: "TEMP_DATA11", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "견적총액", dataField: "TEMP_DATA12", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가", dataField: "TEMP_DATA13", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "입고가 총액", dataField: "TEMP_DATA14", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가", dataField: "TEMP_DATA15", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "공장도가 총액", dataField: "TEMP_DATA16", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가", dataField: "TEMP_DATA17", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "기준단가 총액", dataField: "TEMP_DATA18", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가", dataField: "TEMP_DATA19", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+            { headerText: "소비자가 총액", dataField: "TEMP_DATA20", filter: filter, dataType:"numeric", style: 'text-right', width: 150, },
+          ];
+
+          const auiGridProps6 = {
+            isRowAllCheckCurrentView: true,
+            enableSorting: true,
+            enableFilter: true,
+            useContextMenu: true,
+            hoverMode: "singleRow",
+            selectionMode: "none",
+            showRowNumColumn: false,
+            showRowCheckColumn: false,
+            defaultColumnWidth: 85,
+            softRemoveRowMode: false,
+            enableMovingColumn: true,
+
+            height: 500,
+            showFooter: true,
+            footerHeight: 36,
+            fixedColumnCount: 2,
+            enableCellMerge: true,
+            displayTreeOpen: true,
+            onlyTreeLastDepthSorting: true,
+            rowStyleForOnlyTr: true,
+            rowStyleFunction: function (rowIndex, item) {
+              if ( item.calcSum === "groupTotal") {
+                return "custom-group-total title-center";
+              } else if (item.calcSum === "sectionTotal") {
+                return "custom-section-total title-center";
+              }
+            }
+          };
+
+          const footerLayout6 = [
+            { labelText: "총 합계", positionField: "TEMP_DATA01", style: "text-center" },
+            { dataField: "TEMP_DATA07", positionField: "TEMP_DATA07", operation: "SUM", formatString: "#,##0", },
+            { dataField: "TEMP_DATA09", positionField: "TEMP_DATA09", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA12", positionField: "TEMP_DATA12", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA14", positionField: "TEMP_DATA14", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA16", positionField: "TEMP_DATA16", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA18", positionField: "TEMP_DATA18", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA19", positionField: "TEMP_DATA19", operation: "SUM", formatString: "#,##0", style: "text-right", },
+            { dataField: "TEMP_DATA20", positionField: "TEMP_DATA20", operation: "SUM", formatString: "#,##0", style: "text-right", },
+          ];
+
+          const tempData6 = [
+            // 첫번째 그룹
+            {"No": "서울시 오금동 311", "TEMP_DATA01": "서울시 오금동 311" },
+            {"TEMP_DATA01": "6층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            {"TEMP_DATA01": "소계", "calcSum": "groupTotal"},
+
+            {"TEMP_DATA01": "7층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+
+
+            // 두번째 그룹
+            {"No": "서울시 오금동 312", "TEMP_DATA01": "서울시 오금동 312", },
+            {"TEMP_DATA01": "8층 회의실",
+              "children":[
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+                { "TEMP_DATA01": "시스템부스", "TEMP_DATA02": "LF5112", "TEMP_DATA03": "WW", "TEMP_DATA04": "주문품", "TEMP_DATA05": "LTX형 커넥터", "TEMP_DATA06": "1800 x 600 x 70", "TEMP_DATA07": "16", "TEMP_DATA08": "343000", "TEMP_DATA09": "9600000", "TEMP_DATA10": "16", "TEMP_DATA11": "7000", "TEMP_DATA12": "144000", "TEMP_DATA13": "7000", "TEMP_DATA14": "112000", "TEMP_DATA15": "9000", "TEMP_DATA16": "144000", "TEMP_DATA17": "9000", "TEMP_DATA18": "144000", "TEMP_DATA19": "12000", "TEMP_DATA20": "144000", },
+              ]
+            },
+            // 그룹 소계
+            { "TEMP_DATA01": "소계", "calcSum": "groupTotal" },
+            // 주소 합계
+            { "TEMP_DATA01": "합계", "calcSum": "sectionTotal" },
+          ]
+
+          function processGridData(data) {
+
+            // 그룹별 index 생성
+            data.forEach(group => {
+              if (group.children) {
+                let index = 1;
+                group.children.forEach(child => {
+                  if (!child.calcSum)  child.No = index++;
+                });
+              }
+            });
+
+            const sumFields = [ "TEMP_DATA07", "TEMP_DATA09", "TEMP_DATA12", "TEMP_DATA14", "TEMP_DATA16", "TEMP_DATA18", "TEMP_DATA19", "TEMP_DATA20", ];
+            let currentAddressTotals = [];  // sectionTotal 누적
+
+            for (let i = 0; i < data.length; i++) {
+              const row = data[i];
+
+              // groupTotal 계산
+              if (row.children) {
+                let groupTotal = {};
+
+                sumFields.forEach(field => groupTotal[field] = 0);
+                row.children.forEach(item => {
+                  sumFields.forEach(field => {
+                    groupTotal[field] += Number(item[field] || 0);
+                  });
+                });
+
+                const nextRow = data[i + 1];
+                if (nextRow && nextRow.calcSum === "groupTotal") {
+                  sumFields.forEach(field => {
+                    nextRow[field] = groupTotal[field];
+                  });
+                }
+
+                currentAddressTotals.push(groupTotal);
+              }
+
+
+              // sectionTotal 계산
+              if (row.calcSum === "sectionTotal") {
+
+                let sectionTotal = {};
+                sumFields.forEach(field => sectionTotal[field] = 0);
+
+                currentAddressTotals.forEach(total => {
+                  sumFields.forEach(field => {
+                    sectionTotal[field] += total[field];
+                  });
+                });
+
+                sumFields.forEach(field => {
+                  row[field] = sectionTotal[field];
+                });
+
+                currentAddressTotals = [];
+              }
+            }
+          }
+          processGridData(tempData6);
+
+          myGridId6 = AUIGrid.create("#grid6", columnLayout6, auiGridProps6);
+          AUIGrid.setFooter(myGridId6, footerLayout6);
+          AUIGrid.setGridData(myGridId6, tempData6);
+
+          // footerRow에 스타일 추가 (AUIGrid.create 이후 추가)
+          document.querySelectorAll("#grid6 .aui-grid-footer-panel tbody tr").forEach((row) => {
+            row.classList.add("custom-grand-total");
+          })
+        </script>
+      </div>
+    </div>
+  <footer
+    class="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+    <p>Fursys Custom Design System v1.0</p>
+  </footer>
+</div>
+</body>
+</html>

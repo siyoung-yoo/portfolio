@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="page-style">
+<style>
+  @page print-care-report { size: portrait; margin: 0; padding: 30px 20px; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+    .pdfCareReport { page: print-care-report; background: #fff; }
+    .pdfCareReport .sidebar-wrapper { display: none; }
+    .pdfCareReport .page-wrapper { padding: 0; }
+    .pdfCareReport .page-wrapper header { display: none; }
+    .pdfCareReport .page-content { padding: 0; }
+    .pdfCareReport .container-h-full > .border-b.border-primary { display: none; }
+    .pdfCareReport .tab-contents.type-report .tab-content:not(.custom-scrollbar) { display: none; }
+    .pdfCareReport .tab-contents.type-report .tab-content.custom-scrollbar { display: block; height: auto; margin: 0; padding: 0; overflow-y: unset; }
+    .pdfCareReport .tab-content.custom-scrollbar > .grid { grid-template-columns: repeat(1, 1fr); }
+    .pdfCareReport .grid .card { box-shadow: none; border-radius: 0; border-width: 0 0 1px; }
+    .pdfCareReport .grid .card .card-header { padding-top: 20px; padding-bottom: 0; }
+    .pdfCareReport .grid .card .card-content { padding-top: 20px; padding-bottom: 40px; }
+    .pdfCareReport .grid .card .card-content .grid { grid-template-columns: repeat(4, 1fr); }
+    .pdfCareReport .grid .card .card-content .grid .lg\:col-span-3 { grid-column: span 3; }
+    .pdfCareReport .btn-toggle, .pdfCareReport .icon-chevron { display: none; }
+    .pdfCareReport .card-content.collapse-content { display: block; }
+    .pdfCareReport .layout-care-service { break-before: page; page-break-before: always; }
+    .pdfCareReport .layout-care-service .card:not(.card-care-service) { box-shadow: none; border: 0; }
+    .pdfCareReport .layout-care-service .card:not(.card-care-service) > .card-header { padding-top: 0; }
+    .pdfCareReport .layout-care-service .card.card-care-service { box-shadow: none; break-inside: avoid; page-break-inside: avoid; }
+    .pdfCareReport .layout-care-service .thumb-img-wrap { display: none; }
+  }
+</style>
+</th:block>
+
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('오피스케어 결과', null, ~{::action})}">
+    <th:block th:fragment="action">
+      <!-- 본사 모드(/care/hq/) + 승인요청(OR4003) 회차일 때만 노출 -->
+      <div class="flex gap-2" id="hqActionBtns" style="display:none;">
+        <button type="button" id="btnReject"  class="btn btn-destructive-outline" onclick="openModal('reportRejectModal')">반려</button>
+        <button type="button" id="btnApprove" class="btn btn-primary" onclick="approveReport()">승인</button>
+      </div>
+    </th:block>
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="flex justify-between border-b border-primary mb-3">
+      <ul class="tabs p-0" data-target="#tabContents">
+        <li class="tab-item px-8 is-active" data-tab="tab1">케어 리포트</li>
+        <li class="tab-item px-8" data-tab="tab2">도면 확인</li>
+      </ul>
+
+      <button type="button" id="btnPdfDownload" class="btn btn-secondary" onclick="pdfCareReport()">
+        <i class="icon-download"></i>케어 리포트 PDF 다운로드
+      </button>
+    </div>
+
+    <div class="tab-contents type-report" id="tabContents">
+      <!-- S: 케어 리포트 탭 -->
+      <div id="tab1" class="tab-content custom-scrollbar is-active">
+
+        <div class="grid md:grid-cols-3 gap-3">
+          <!-- 기본 정보 -->
+          <div class="card md:col-span-2">
+            <div class="card-header"><p class="card-title">기본 정보</p></div>
+            <div class="card-content pt-4 pb-6">
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 pb-5">
+                <div>
+                  <span class="label">리포트 등록일</span>
+                  <p class="label-data-text" id="vReportInsertDt">-</p>
+                </div>
+                <div class="col-span-2 lg:col-span-3">
+                  <span class="label">리포트 상태</span>
+                  <p class="label-data-text" id="vReportStatus">-</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 pt-5">
+                <div><span class="label">채권번호</span><p class="label-data-text" id="vBondNo">-</p></div>
+                <div><span class="label">계약명</span><p class="label-data-text" id="vConTitle">-</p></div>
+                <div class="col-span-2"><span class="label">주소</span><p class="label-data-text" id="vAddress">-</p></div>
+
+                <div><span class="label">방문 일정</span><p class="label-data-text" id="vCareRequestDate">-</p></div>
+                <div><span class="label">계약 담당자</span><p class="label-data-text" id="vAgentName">-</p></div>
+                <div><span class="label">담당 대리점</span><p class="label-data-text" id="vVendor">-</p></div>
+                <div><span class="label">케어 담당자</span><p class="label-data-text" id="vCareAgentName">-</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 현장 코멘트 + 이전 케어 코멘트 -->
+          <div class="flex flex-col gap-3">
+            <div class="card flex-1 flex flex-col">
+              <div class="card-header"><p class="card-title">현장 코멘트</p></div>
+              <div class="card-content pt-4 pb-6 flex-1">
+                <div>
+                  <span class="label">가구 특별 조치사항</span>
+                  <p class="label-data-text" id="vFurnitureFix" style="white-space: pre-wrap;">-</p>
+                </div>
+                <div class="mt-4">
+                  <span class="label">현장 개선사항</span>
+                  <p class="label-data-text" id="vImprovement" style="white-space: pre-wrap;">-</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" id="prevCommentCard">
+              <div class="card-header">
+                <p class="card-title">이전 케어 코멘트</p>
+                <i class="icon-chevron is-rotated" data-action="collapse"></i>
+              </div>
+              <div class="card-content collapse-content pt-4 pb-6">
+                <div>
+                  <span class="label">가구 특별 조치사항</span>
+                  <p class="label-data-text" id="vPrevFurnitureFix" style="white-space: pre-wrap;">-</p>
+                </div>
+                <div class="mt-4">
+                  <span class="label">현장 개선사항</span>
+                  <p class="label-data-text" id="vPrevImprovement" style="white-space: pre-wrap;">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 케어 결과 요약 -->
+        <div class="layout-care-service mt-4">
+          <div class="card">
+            <div class="card-header">
+              <div class="flex justify-between">
+                <div class="flex items-start gap-6">
+                  <div class="card-title mt-0.5">케어 결과 요약</div>
+                  <div class="flex items-start gap-3 flex-1">
+                    <span class="badge" id="vSummaryBadge">양호</span>
+                    <ul class="flex flex-col gap-2 text-sm font-semibold" id="vSummaryIssueList">
+                      <li>모든 품목 양호</li>
+                    </ul>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-toggle is-open" onclick="toggleAllCards(this)">
+                  <span>전체 닫기</span><i class="icon-chevron"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-content" id="careInfo">
+              <!-- JS 렌더링: 도면별 카드 -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- E: 케어 리포트 탭 -->
+
+      <!-- S: 도면 확인 탭 -->
+      <div id="tab2" class="tab-content">
+        <div class="layout-care-service type-report">
+          <div class="draw-panel-layout flex-col gap-0">
+            <ul class="tabs type-block" data-target="#tabCont" id="floorTabs">
+              <!-- JS 렌더링: 도면 탭 -->
+            </ul>
+
+            <div class="tab-contents" id="tabCont">
+              <div class="draw-cont-wrap" style="position: relative;">
+                <div class="draw-controls">
+                  <div class="scale-box border">
+                    <button type="button" class="btn btn-icon btn-ghost" onclick="scaleMinus()"><i class="icon-minus"></i></button>
+                    <span id="scaleLabel">100%</span>
+                    <button type="button" class="btn btn-icon btn-ghost" onclick="scalePlus()"><i class="icon-plus"></i></button>
+                  </div>
+                </div>
+
+                <div id="drawCont" class="draw-cont draw-fixed has-dim" style="overflow: auto;">
+                  <div class="img-box">
+                    <canvas id="drawImg"></canvas>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="drawing-info-wrap">
+                <div class="header">
+                  <h3 class="title">영역 목록 (<span id="areaCount">0</span>개)</h3>
+                </div>
+                <div class="drawing-list-wrap">
+                  <div class="drawing-area-group flex flex-col gap-2" id="areaListWrap">
+                    <!-- JS 렌더링 -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 도면 확인 탭 -->
+    </div>
+  </div>
+
+<th:block th:replace="~{service/modal/itemInfoModal}"/><!-- Modal: 영역 상세 -->
+<th:block th:replace="~{service/modal/reportRejectModal}"/><!-- Modal: 반려 사유 등록 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+  (function(){
+    const params = new URLSearchParams(window.location.search);
+    const seg = window.location.pathname.split('/').filter(Boolean);
+    window._careCtx = {
+      conIdx:        params.get('conIdx'),
+      mIdx:          params.get('mIdx'),
+      estaIdx:       params.get('estaIdx'),
+      officecareSeq: seg[seg.length - 1]
+    };
+  })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+
+<script>
+let _reportData = {};
+let _detailMap  = {};
+let _currentVersionId = null;
+let _scale = 100;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 모달이 container scale/scroll 안에 묶이지 않도록 body 로 portal
+  document.querySelectorAll('.container-h-full .modal').forEach(m => document.body.appendChild(m));
+
+  // 도면 마우스 드래그 패닝 (overflow:auto 컨테이너 스크롤 제어)
+  attachDrawPanHandler('drawCont');
+
+  // PDF 다운로드 버튼은 모든 탭에서 노출
+
+
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/getReportInitData',
+    type: 'post',
+    data: _careCtx,
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      _reportData = res.data || {};
+      // itemInfoModal 등 외부 스크립트가 window._reportData 를 참조하므로 전역 노출
+      window._reportData = _reportData;
+      buildDetailMap(_reportData.savedDetails || [], _reportData.savedIssues || [], _reportData.savedIssueFiles || []);
+      // 진단 로그 — 데이터 흐름 확인용
+      console.log('[careHeadOfficeDetail] header:', _reportData.header);
+      console.log('[careHeadOfficeDetail] drawings:', _reportData.drawings);
+      console.log('[careHeadOfficeDetail] areaItems:', _reportData.areaItems);
+      console.log('[careHeadOfficeDetail] savedDetails:', _reportData.savedDetails);
+      console.log('[careHeadOfficeDetail] _detailMap:', _detailMap);
+      renderHeader(_reportData.header);
+      renderSummary();
+      renderDrawingTabs(_reportData.drawings || []);
+      const first = (_reportData.drawings || [])[0];
+      if (first) selectDrawingTab(first.versionId);
+    }
+  });
+});
+
+/* 헤더 정보 */
+function renderHeader(h) {
+  if (!h) return;
+  const seq = h.officecareSeq;
+  const reportDt = h.reportInsertDt ? String(h.reportInsertDt).slice(0,10) : '-';
+  setText('vReportInsertDt', `${seq}회차 ${reportDt}`);
+
+  // 리포트 상태 badge
+  let badge = '';
+  if      (h.progressCd === 'OR4003') badge = `<span class="badge badge-orange">승인 요청</span>`;
+  else if (h.progressCd === 'OR4004') badge = `<span class="badge badge-blue">승인 완료</span>`;
+  else if (h.progressCd === 'OR4005') badge = `<span class="badge badge-blue">확인 완료</span>`;
+  else if (h.progressCd === 'OR4007') {
+    badge = `<span class="badge badge-destructive-outline">승인 반려</span>`;
+    if (h.rejectReason) {
+      badge += `<span class="ml-2">${escapeHtml(h.rejectReason)}</span>`;
+    }
+  }
+  document.getElementById('vReportStatus').innerHTML = badge || '-';
+
+  // 본사 모드 + 승인요청 상태 → 승인/반려 버튼 노출
+  syncHqActionButtons(h.progressCd);
+
+  setText('vBondNo', h.bondNo);
+  setText('vConTitle', h.conTitle);
+  setText('vAddress', h.addressText);
+  setText('vCareRequestDate', formatDate(h.careRequestDate));
+  // 계약 담당자 — RBO_CONTRACT.CON_CT_MANAGER (계약서 자유 입력 텍스트)
+  setText('vAgentName', h.contractManager);
+  setText('vVendor', h.vendorName);
+  // 케어 담당자 — PLAN.U_IDX → RBO_USER (이름 + 연락처)
+  const careNm = h.agentName || '';
+  const carePh = h.agentPhone ? ` ${h.agentPhone}` : '';
+  setText('vCareAgentName', careNm ? careNm + carePh : '-');
+
+  setText('vFurnitureFix', (_reportData.savedMaster?.furnitureFix) || '-');
+  setText('vImprovement',  (_reportData.savedMaster?.improvement)  || '-');
+
+  // 이전 케어 코멘트 — 1회차는 직전 회차가 없으므로 카드 자체 숨김
+  const prevCard = document.getElementById('prevCommentCard');
+  if (Number(seq) <= 1) {
+    if (prevCard) prevCard.style.display = 'none';
+  } else {
+    if (prevCard) prevCard.style.display = '';
+    setText('vPrevFurnitureFix', h.prevFurnitureFix || '-');
+    setText('vPrevImprovement',  h.prevImprovement  || '-');
+  }
+}
+
+/* 케어 리포트 PDF 다운로드 — window.print() 활용 (퍼블 동일 패턴) */
+function pdfCareReport() {
+  document.body.classList.add('pdfCareReport');
+  window.print();
+}
+window.addEventListener('afterprint', () => document.body.classList.remove('pdfCareReport'));
+
+/* 본사 모드(/service/care/hq/headOffice/...) 일 때만 승인요청(OR4003) 회차에 승인/반려 버튼 노출 */
+function syncHqActionButtons(progressCd) {
+  const isHq = window.location.pathname.includes('/care/hq/');
+  const wrap = document.getElementById('hqActionBtns');
+  if (!wrap) return;
+  wrap.style.display = (isHq && progressCd === 'OR4003') ? '' : 'none';
+}
+
+function approveReport() {
+  if (!confirm('승인 처리하시겠습니까?')) return;
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/approveReport',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      conIdx:        _careCtx.conIdx,
+      mIdx:          _careCtx.mIdx,
+      estaIdx:       _careCtx.estaIdx,
+      officecareSeq: _careCtx.officecareSeq
+    }),
+    complete: function() { LoadingManager.dec(); },
+    success: function() {
+      window.location.href = '/service/care/hq';
+    },
+    error: function(xhr) {
+      const msg = xhr.responseJSON?.message || '승인 처리 중 오류가 발생했습니다.';
+      alert(msg);
+    }
+  });
+}
+
+/* 반려 모달 제출 — 퍼블 reportRejectModal 패턴 */
+function submitRejectReport() {
+  const ta = document.getElementById('rejectRemark');
+  const remark = (ta?.value || '').trim();
+  if (!remark) { alert('반려 사유를 입력해주세요.'); ta?.focus(); return; }
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDistHq/rejectReport',
+    type: 'post',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      conIdx:        _careCtx.conIdx,
+      mIdx:          _careCtx.mIdx,
+      estaIdx:       _careCtx.estaIdx,
+      officecareSeq: _careCtx.officecareSeq,
+      remark:        remark
+    }),
+    complete: function() { LoadingManager.dec(); },
+    success: function() {
+      if (typeof closeModal === 'function') closeModal('reportRejectModal');
+      alert('반려 처리되었습니다.');
+      window.location.href = '/service/care/hq';
+    },
+    error: function(xhr) {
+      const msg = xhr.responseJSON?.message || '반려 처리 중 오류가 발생했습니다.';
+      alert(msg);
+    }
+  });
+}
+
+/* _detailMap 빌드 — careDistributionDetail.html 의 restoreSavedReport 로직 단순화 */
+function buildDetailMap(details, issues, files) {
+  _detailMap = {};
+  const filesByIssue = {};
+  files.forEach(f => {
+    const key = `${f.issueGubun}_${f.issueSeq}`;
+    if (!filesByIssue[key]) filesByIssue[key] = [];
+    filesByIssue[key].push(f);
+  });
+
+  details.forEach(d => {
+    if (d.areaItemId == null) return;
+    const item = (_reportData.areaItems || []).find(it => String(it.areaItemId) === String(d.areaItemId));
+    if (!item) return;
+    _detailMap[item.areaItemId] = {
+      areaItemId: Number(item.areaItemId),
+      areaId:     item.areaId,
+      areaName:   item.areaName,
+      seriesNm:   item.seriesNm,
+      codeCd:     item.codeCd,
+      colCd:      item.colCd,
+      itemName:   item.itemName,
+      quantity:   item.quantity,
+      checkStatus: d.checkStatus,
+      checkBigo:  d.checkBigo,
+      confirmYn:  d.confirmYn || 'N',
+      issueCare:  'N',
+      issueAs:    'N',
+      careMemo:   '',
+      asList:     []
+    };
+  });
+  issues.forEach(iss => {
+    if (iss.areaItemId == null) return;
+    const k = String(iss.areaItemId);
+    if (!_detailMap[k]) return;
+    if (iss.issueGubun === '관리') {
+      _detailMap[k].issueCare = 'Y';
+      _detailMap[k].careMemo  = iss.checkBigo || '';
+    } else if (iss.issueGubun === 'AS') {
+      _detailMap[k].issueAs = 'Y';
+      const fkey = `${iss.issueGubun}_${iss.issueSeq}`;
+      _detailMap[k].asList.push({
+        serialNo:  iss.serialNo  || '',
+        asContent: iss.checkBigo || '',
+        files: (filesByIssue[fkey] || []).map(f => ({ filePath: f.filePath, fileNm: f.fileNm }))
+      });
+    }
+  });
+}
+
+/* 결과 요약 렌더 */
+function renderSummary() {
+  const wrap = document.getElementById('careInfo');
+  if (!wrap) return;
+  const drawings = _reportData.drawings || [];
+  if (drawings.length === 0) {
+    wrap.innerHTML = '<div class="text-center text-primary-300 py-10">표시할 도면이 없습니다.</div>';
+    return;
+  }
+
+  // 도면별 이슈 영역 집계 (badge + ul 목록용)
+  const drawingIssueLines = [];
+  drawings.forEach(drw => {
+    const items = (_reportData.areaItems || []).filter(it =>
+      String(it.versionId) === String(drw.versionId) && it.areaItemId
+    );
+    const areaMap = new Map();
+    items.forEach(it => {
+      if (_detailMap[it.areaItemId]?.checkStatus !== '2') return;
+      if (!areaMap.has(it.areaId)) areaMap.set(it.areaId, { areaName: it.areaName, count: 0 });
+      areaMap.get(it.areaId).count += 1;
+    });
+    if (areaMap.size === 0) return;
+    const parts = [];
+    areaMap.forEach(a => parts.push(`${escapeHtml(a.areaName)}(${a.count}품목)`));
+    drawingIssueLines.push(`· ${escapeHtml(drw.drawingName || '도면')} : ${parts.join(', ')}`);
+  });
+
+  const summaryBadge = document.getElementById('vSummaryBadge');
+  const summaryList  = document.getElementById('vSummaryIssueList');
+  if (drawingIssueLines.length === 0) {
+    summaryBadge.className = 'badge badge-blue';
+    summaryBadge.textContent = '양호';
+    summaryList.innerHTML = '<li>모든 품목 양호</li>';
+  } else {
+    summaryBadge.className = 'badge badge-orange';
+    summaryBadge.textContent = '이슈';
+    summaryList.innerHTML = drawingIssueLines.map(line => `<li>${line}</li>`).join('');
+  }
+
+  // 이슈 있는 도면을 먼저 위로
+  const sorted = [...drawings].sort((a, b) => {
+    const ia = hasIssueInDrawing(a.versionId) ? 0 : 1;
+    const ib = hasIssueInDrawing(b.versionId) ? 0 : 1;
+    return ia - ib;
+  });
+
+  wrap.innerHTML = sorted.map(drw => buildDrawingCard(drw)).join('');
+}
+
+function hasIssueInDrawing(versionId) {
+  return (_reportData.areaItems || []).some(it =>
+    String(it.versionId) === String(versionId)
+    && it.areaItemId
+    && _detailMap[it.areaItemId]?.checkStatus === '2'
+  );
+}
+
+function buildDrawingCard(drw) {
+  const items = (_reportData.areaItems || []).filter(it =>
+    String(it.versionId) === String(drw.versionId) && it.areaItemId
+  );
+  const totalQty = items.reduce((s, it) => s + Number(it.quantity || 0), 0);
+  const goodQty  = items.reduce((s, it) => s + (_detailMap[it.areaItemId]?.checkStatus === '1' ? Number(it.quantity || 0) : 0), 0);
+  const issueQty = items.reduce((s, it) => s + (_detailMap[it.areaItemId]?.checkStatus === '2' ? Number(it.quantity || 0) : 0), 0);
+  const hasIssue = issueQty > 0;
+  const allGood  = !hasIssue;
+  const itemCnt  = items.length;
+
+  let body;
+  if (allGood) {
+    body = `
+      <div class="alert alert-default">
+        <div class="alert-title">접수된 AS 또는 관리 품목이 없습니다.</div>
+        <div class="alert-description">모든 품목이 양호 상태로 확인되었습니다.</div>
+      </div>`;
+  } else {
+    const issueItems = items.filter(it => _detailMap[it.areaItemId]?.checkStatus === '2');
+    const areaMap = new Map();
+    issueItems.forEach(it => {
+      if (!areaMap.has(it.areaId)) areaMap.set(it.areaId, { areaName: it.areaName, items: [] });
+      areaMap.get(it.areaId).items.push(it);
+    });
+    const tbodies = [];
+    areaMap.forEach(area => {
+      const rows = [`<tr><td colspan="3" class="bg-background font-semibold">${escapeHtml(area.areaName)}</td></tr>`];
+      area.items.forEach(it => {
+        const saved = _detailMap[it.areaItemId] || {};
+        const careRow = saved.issueCare === 'Y';
+        const asList  = Array.isArray(saved.asList) ? saved.asList : [];
+        const rowSpan = (careRow ? 1 : 0) + asList.length;
+        if (rowSpan === 0) return;
+        const itemNameCell = `
+          <!-- [2026-05-19] 시리즈명/품목명/품목코드/색상 -->
+          <td rowspan="${rowSpan}">
+            <ul class="flex flex-col gap-2 font-semibold">
+              <li>${escapeHtml(it.seriesNm || '-')}</li>
+              <li>${escapeHtml(it.itemName || '-')}</li>
+              <li>${escapeHtml(it.codeCd   || '-')}</li>
+              <li>${escapeHtml(it.colCd    || '-')}</li>
+            </ul>
+          </td>`;
+
+        let first = true;
+        if (careRow) {
+          rows.push(`<tr>${itemNameCell}<td class="font-semibold text-center">관리</td><td>${escapeHtml(saved.careMemo || '-')}</td></tr>`);
+          first = false;
+        }
+        asList.forEach((as, idx) => {
+          const thumbs = (as.files || []).filter(f => f.filePath).map(f =>
+            `<div class="thumb-image"><img src="/hqDrawingMng/pdfProxy?pdfPath=${encodeURIComponent(f.filePath)}" alt="${escapeHtml(f.fileNm || '')}"></div>`
+          ).join('');
+          const asLabel = idx === 0 ? `<td rowspan="${asList.length}" class="font-semibold text-center">A/S</td>` : '';
+          const content = `
+            <td>
+              <ul class="dot-info type-desc">
+                <li><span class="title">S/N</span>${escapeHtml(as.serialNo || '-')}</li>
+                <li><span class="title">A/S 내용</span>${escapeHtml(as.asContent || '-')}</li>
+              </ul>
+              ${thumbs ? `<div class="thumb-img-wrap mt-4">${thumbs}</div>` : ''}
+            </td>`;
+          if (idx === 0) rows.push(`<tr>${first ? itemNameCell : ''}${asLabel}${content}</tr>`);
+          else rows.push(`<tr>${content}</tr>`);
+          first = false;
+        });
+      });
+      tbodies.push(`<tbody>${rows.join('')}</tbody>`);
+    });
+    body = `
+      <div class="p-4">
+        <table class="table">
+          <colgroup><col style="width:20%"><col style="width:50px"><col></colgroup>
+          ${tbodies.join('')}
+        </table>
+      </div>`;
+  }
+
+  const badgeCls = hasIssue ? 'badge-orange' : 'badge-blue';
+  const badgeTxt = hasIssue ? '이슈' : '양호';
+  return `
+    <div class="card card-care-service">
+      <div class="card-header">
+        <div class="flex items-center gap-4">
+          <span class="badge ${badgeCls}">${badgeTxt}</span>
+          <div class="card-title">${escapeHtml(drw.drawingName || '도면')}</div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-toggle is-open"><i class="icon-chevron"></i></button>
+      </div>
+      <div class="card-content collapse-content is-open">${body}</div>
+    </div>`;
+}
+
+/* 결과 요약 카드 토글 */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('#careInfo .card-care-service .btn-toggle');
+  if (!btn) return;
+  btn.classList.toggle('is-open');
+  btn.closest('.card').querySelector('.collapse-content')?.classList.toggle('is-open');
+});
+function toggleAllCards(btn) {
+  const wrap = document.getElementById('careInfo');
+  if (!wrap) return;
+  const open = btn.classList.contains('is-open');
+  if (open) {
+    btn.classList.remove('is-open');
+    btn.querySelector('span').innerText = '전체 열기';
+    wrap.querySelectorAll('.card-care-service .btn-toggle').forEach(b => b.classList.remove('is-open'));
+    wrap.querySelectorAll('.collapse-content').forEach(el => el.classList.remove('is-open'));
+  } else {
+    btn.classList.add('is-open');
+    btn.querySelector('span').innerText = '전체 닫기';
+    wrap.querySelectorAll('.card-care-service .btn-toggle').forEach(b => b.classList.add('is-open'));
+    wrap.querySelectorAll('.collapse-content').forEach(el => el.classList.add('is-open'));
+  }
+}
+
+/* 도면 탭 + PDF + 영역 박스 */
+function renderDrawingTabs(drawings) {
+  const ul = document.getElementById('floorTabs');
+  if (!ul) return;
+  ul.innerHTML = '';
+  drawings.forEach((drw, idx) => {
+    const li = document.createElement('li');
+    li.className = 'tab-item' + (idx === 0 ? ' is-active' : '');
+    li.dataset.versionId = drw.versionId;
+    li.dataset.pdfPath   = drw.pdfPath || '';
+    li.textContent = drw.drawingName || `도면${idx + 1}`;
+    li.onclick = () => selectDrawingTab(drw.versionId);
+    ul.appendChild(li);
+  });
+}
+
+function selectDrawingTab(versionId) {
+  _currentVersionId = versionId;
+  document.querySelectorAll('#floorTabs .tab-item').forEach(t => {
+    t.classList.toggle('is-active', String(t.dataset.versionId) === String(versionId));
+  });
+  renderAreaList();
+  const tab = document.querySelector(`#floorTabs .tab-item[data-version-id="${versionId}"]`);
+  loadDrawingPdf(tab?.dataset.pdfPath);
+}
+
+function renderAreaList() {
+  const items = (_reportData.areaItems || []).filter(it =>
+    _currentVersionId && String(it.versionId) === String(_currentVersionId)
+  );
+  const areaMap = new Map();
+  items.forEach(it => {
+    if (!it.areaId) return;
+    if (!areaMap.has(it.areaId)) {
+      areaMap.set(it.areaId, { areaId: it.areaId, areaName: it.areaName, x: it.x, y: it.y, width: it.width, height: it.height, items: [] });
+    }
+    if (it.codeCd) areaMap.get(it.areaId).items.push(it);
+  });
+  const areas = Array.from(areaMap.values());
+  document.getElementById('areaCount').textContent = areas.length;
+
+  const wrap = document.getElementById('areaListWrap');
+  wrap.innerHTML = '';
+  areas.forEach((area, idx) => {
+    const flag = String.fromCharCode(65 + idx);
+    const summary = area.items.length === 0
+      ? '품목 없음'
+      : `${area.items.length}품목 ` + area.items.map(i => `${i.codeCd}-${i.colCd || '?'} ${i.quantity || 0}개`).slice(0,3).join(', ') + (area.items.length > 3 ? '...' : '');
+    const box = document.createElement('div');
+    box.className = 'drawing-area-box';
+    box.dataset.areaId = area.areaId;
+    box.innerHTML = `
+      <div class="flex-1">
+        <div class="area-name flex-1">
+          <span class="flag">${flag}</span>
+          <span class="flex-1">${escapeHtml(area.areaName || '-')}</span>
+        </div>
+        <p class="item-info">${escapeHtml(summary)}</p>
+      </div>`;
+    box.onclick = () => { selectArea(area.areaId); openItemInfoModal(area.areaId, area.areaName, flag); };
+    wrap.appendChild(box);
+  });
+
+  // 도면 위 박스
+  const imgBox = document.querySelector('#drawCont .img-box');
+  imgBox.querySelectorAll('.drawing-area').forEach(el => el.remove());
+  areas.forEach((area, idx) => {
+    const flag = String.fromCharCode(65 + idx);
+    const box = document.createElement('div');
+    box.className = 'drawing-area';
+    box.dataset.areaId = area.areaId;
+    box.style.left   = (area.x || 0) + 'px';
+    box.style.top    = (area.y || 0) + 'px';
+    box.style.width  = (area.width || 0) + 'px';
+    box.style.height = (area.height || 0) + 'px';
+    box.innerHTML = `<span class="area-label">${flag} ${escapeHtml(area.areaName)}</span>`;
+    box.onclick = (e) => {
+      e.stopPropagation();
+      selectArea(area.areaId);
+      openItemInfoModal(area.areaId, area.areaName, flag);
+    };
+    imgBox.appendChild(box);
+  });
+}
+
+/* 도면 컨테이너 마우스 드래그 패닝 — overflow:auto 의 scrollLeft/scrollTop 제어
+ * .drawing-area 박스 위에서 시작한 mousedown 은 무시 (영역 모달 클릭 우선) */
+function attachDrawPanHandler(containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  let isPanning = false, startX = 0, startY = 0, startScrollLeft = 0, startScrollTop = 0, moved = false;
+
+  el.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;                       // 좌클릭만
+    if (e.target.closest('.drawing-area')) return;    // 영역 박스는 클릭 동작 유지
+    isPanning = true; moved = false;
+    startX = e.pageX; startY = e.pageY;
+    startScrollLeft = el.scrollLeft; startScrollTop = el.scrollTop;
+    el.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+  const stopPan = () => {
+    if (!isPanning) return;
+    isPanning = false;
+    el.style.cursor = '';
+  };
+  el.addEventListener('mouseup', stopPan);
+  el.addEventListener('mouseleave', stopPan);
+  el.addEventListener('mousemove', (e) => {
+    if (!isPanning) return;
+    const dx = e.pageX - startX, dy = e.pageY - startY;
+    if (!moved && Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+    el.scrollLeft = startScrollLeft - dx;
+    el.scrollTop  = startScrollTop  - dy;
+  });
+  // 드래그 직후 발생한 click 은 흡수 (모달 의도치 않게 열리는 것 방지)
+  el.addEventListener('click', (e) => {
+    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+  }, true);
+}
+
+/* 영역 선택 — 도면 위 박스 + 우측 목록 동시 selected 토글 */
+function selectArea(areaId) {
+  document.querySelectorAll('#drawCont .drawing-area').forEach(el => {
+    el.classList.toggle('selected', String(el.dataset.areaId) === String(areaId));
+  });
+  document.querySelectorAll('#areaListWrap .drawing-area-box').forEach(el => {
+    el.classList.toggle('selected', String(el.dataset.areaId) === String(areaId));
+  });
+}
+
+function loadDrawingPdf(pdfPath) {
+  const canvas = document.getElementById('drawImg');
+  if (!canvas) return;
+  canvas.width = canvas.width;
+  if (!pdfPath) return;
+  LoadingManager.inc();
+  const proxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(pdfPath);
+  pdfjsLib.getDocument(proxyUrl).promise.then(async pdf => {
+    const pageData = [];
+    let totalHeight = 0, maxWidth = 0;
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 1 });
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = viewport.width;
+      tempCanvas.height = viewport.height;
+      await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
+      pageData.push({ tempCanvas, height: viewport.height });
+      totalHeight += viewport.height;
+      maxWidth = Math.max(maxWidth, viewport.width);
+    }
+    canvas.width = maxWidth;
+    canvas.height = totalHeight;
+    const ctx = canvas.getContext('2d');
+    let y = 0;
+    pageData.forEach(({ tempCanvas, height }) => {
+      ctx.drawImage(tempCanvas, 0, y);
+      y += height;
+    });
+    applyScale();
+  }).catch(err => console.error('PDF 로드 실패:', err)).finally(() => LoadingManager.dec());
+}
+
+function scalePlus()  { _scale = Math.min(_scale + 10, 200); updateScaleLabel(); applyScale(); }
+function scaleMinus() { _scale = Math.max(_scale - 10, 50);  updateScaleLabel(); applyScale(); }
+function updateScaleLabel() { const el = document.getElementById('scaleLabel'); if (el) el.textContent = _scale + '%'; }
+function applyScale() {
+  const imgBox = document.querySelector('#drawCont .img-box');
+  const canvas = document.getElementById('drawImg');
+  if (!imgBox || !canvas) return;
+  const s = _scale / 100;
+  imgBox.style.transformOrigin = '0 0';
+  imgBox.style.transform = `scale(${s})`;
+  imgBox.style.width  = (canvas.width  * s) + 'px';
+  imgBox.style.height = (canvas.height * s) + 'px';
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = (v == null || v === '') ? '-' : v; }
+function formatDate(s) {
+  if (!s) return '';
+  const str = String(s);
+  if (/^\d{8}$/.test(str)) return `${str.slice(0,4)}-${str.slice(4,6)}-${str.slice(6,8)}`;
+  if (str.length >= 10) return str.slice(0, 10);
+  return str;
+}
+</script>
+</th:block>
+</body>
+</html>

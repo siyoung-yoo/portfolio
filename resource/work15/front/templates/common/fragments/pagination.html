@@ -1,0 +1,29 @@
+<!--
+  pagination 모델 변수 (컨트롤러에서 model.addAttribute 로 주입)
+    currentPage  : 현재 페이지 번호 (1-based, Integer)
+    totalPages   : 전체 페이지 수 (Integer)
+    totalCount   : 전체 건수 (Integer)
+  없을 경우 정적 미리보기(1~5) 로 fallback.
+-->
+<th:block th:fragment="pagination"
+          th:with="cp=${currentPage ?: 1},
+                   tp=${totalPages ?: 0},
+                   tc=${totalCount ?: 0},
+                   pg=${(cp - 1) / 5},
+                   sPage=${pg * 5 + 1},
+                   pgEnd=${pg * 5 + 5},
+                   ePage=${tp > 0 ? (pgEnd > tp ? tp : pgEnd) : 5}">
+  <div class="pagination"
+       th:attr="data-current-page=${cp}, data-total-pages=${tp}, data-total-count=${tc}">
+    <button type="button" class="prev" aria-label="이전 페이지"
+            th:disabled="${cp <= 1}"></button>
+    <div class="page-link">
+      <button type="button"
+              th:each="p : ${#numbers.sequence(sPage, ePage)}"
+              th:text="${p}"
+              th:attr="aria-current=${p == cp ? 'page' : null}"></button>
+    </div>
+    <button type="button" class="next" aria-label="다음 페이지"
+            th:disabled="${tp > 0 and cp >= tp}"></button>
+  </div>
+</th:block>

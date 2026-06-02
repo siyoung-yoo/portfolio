@@ -1,0 +1,90 @@
+<!-- 결과파일 업로드 모달 -->
+<div class="modal" id="attachUploadModal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">작업결과 업로드</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body grid col-span-1">
+        <div class="input-group">
+          <span class="label">파일 선택</span>
+          <div class="flex items-center gap-2 mt-1">
+            <label class="btn btn-outline cursor-pointer">
+              파일 선택
+              <input type="file" id="attachFileHidden" class="hidden" onchange="onAttachFileSelect(this)">
+            </label>
+            <span id="attachFileName" class="text-sm text-muted-foreground"></span>
+          </div>
+        </div>
+        <div class="input-group mt-3">
+          <label>
+            <span class="label">설명</span>
+            <textarea class="textarea focus:outline-none focus:ring-0 focus:border-input" id="attachFileDesc" rows="3" placeholder="파일에 대한 설명을 입력하세요"></textarea>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="uploadAttachFile()">업로드</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let pendingAttachFile = null;
+
+  function openAttachUploadModal() {
+    pendingAttachFile = null;
+    document.getElementById('attachFileName').textContent = '';
+    document.getElementById('attachFileDesc').value = '';
+    document.getElementById('attachFileHidden').value = '';
+    openModal('attachUploadModal');
+  }
+
+  function onAttachFileSelect(input) {
+    if (input.files[0]) {
+      pendingAttachFile = input.files[0];
+      document.getElementById('attachFileName').textContent = pendingAttachFile.name;
+    }
+  }
+
+  async function uploadAttachFile() {
+    if (!pendingAttachFile) {
+      alert('파일을 선택하세요.');
+      return;
+    }
+
+    if (!serviceRequestId) {
+      alert('서비스 요청 정보를 찾을 수 없습니다.');
+      return;
+    }
+
+    try {
+      const memo = document.getElementById('attachFileDesc').value.trim();
+      const formData = new FormData();
+      formData.append('file', pendingAttachFile);
+      formData.append('ojLayoutServiceRequestId', serviceRequestId);
+      formData.append('memo', memo);
+
+      const response = await fetch('/layout/service/insertServiceResult.ajax', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        alert('등록되었습니다.');
+        closeModal('attachUploadModal');
+        pendingAttachFile = null;
+        loadServiceDetail();
+      } else {
+        const msg = await response.text();
+        alert(msg || '도면 등록에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('도면 등록 실패:', error);
+      alert('도면 등록 중 오류가 발생했습니다.');
+    }
+  }
+</script>

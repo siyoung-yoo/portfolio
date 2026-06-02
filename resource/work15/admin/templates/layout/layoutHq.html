@@ -1,0 +1,904 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="panel-layout type-hq">
+      <div class="list-panel-dim"></div>
+      <div class="list-panel-wrap">
+        <div class="panel-header">
+          <h3 class="title">고객사별 도면 현황</h3>
+          <button type="button" class="btn btn-icon btn-ghost" onclick="toggleListPanel()">
+            <i class="icon-arrow-left-to-line"></i>
+          </button>
+        </div>
+
+        <div class="panel-list-wrap">
+          <div class="panel-search">
+            <!-- 실적사업소 / 실적대리점 -->
+            <div class="input w-full" style="background:#fff;cursor:pointer" onclick="openAgencyModal(this)">
+              <input type="text" id="agencySelectionInput" data-agency-display class="w-full overflow-hidden whitespace-nowrap text-ellipsis" placeholder="실적사업소 / 실적대리점 선택" readonly style="background:#fff;cursor:pointer;pointer-events:none" />
+              <input type="hidden" id="selectedBranchCds" data-agency-branch />
+              <input type="hidden" id="selectedDealerCds" data-agency-dealer />
+              <button type="button" tabindex="-1">
+                <i class="icon-search w-[18px] h-[18px] bg-size-[18px]"></i>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1">
+              <form-select>
+                <select id="searchTypeSelect" name="">
+                  <option value="ctmNm">고객사명</option>
+                  <option value="ctmLscno">사업자번호</option>
+                  <option value="address">주소</option>
+                </select>
+              </form-select>
+
+              <div class="input">
+                <input id="searchKeyword" type="text" class="w-full" placeholder="검색어를 입력하세요">
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="fetchDrawingList()" disabled>검색</button>
+          </div>
+
+          <ul class="tabs type-underline">
+            <li class="tab-item is-active" data-filter="all">
+              전체 <span id="sumCustomerCntMenu" class="ml-1 badge badge-default badge-rounded hidden"></span>
+            </li>
+            <li class="tab-item" data-filter="unmapped">
+              미매핑 <span id="sumUnmappedCntMenu" class="ml-1 badge badge-orange-fill badge-rounded hidden"></span>
+            </li>
+          </ul>
+
+          <div class="panel-list">
+
+            <div id="customerList" class="card-selected-wrap">
+            </div><!-- // card-selected-wrap -->
+
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <p>전체 <span id="sumCustomerCnt"></span>개사</p>
+          <p>총 <span id="sumAddressCnt"></span>주소 · <span id="sumDrawingCnt"></span>도면</p>
+        </div>
+      </div>
+      <!-- // list-panel-wrap -->
+
+      <div class="content-panel-wrap">
+
+        <!-- div.alert, div.content-panel-cont 영역 show/hide는 hidden 클래스로 제어해주세요-->
+        <div class="alert alert-default" data-state="selectList">
+          <div class="alert-title">고객사와 주소를 선택하세요</div>
+          <div class="alert-description mt-5">고객사 > 주소(법정동) > 층 순으로 탐색할 수 있습니다</div>
+          <div class="alert-description">고객사별 도면 현황 목록에서 고객사를 선택하세요</div>
+        </div>
+
+        <div class="content-panel-cont hidden" data-state="selectList">
+          <div class="panel-header">
+            <div class="flex flex-col">
+              <h3 id="ctmNmTitle" class="title"></h3>
+              <p id="ctmLscnoTitle" class="text-xs text-primary-300"></p>
+            </div>
+          </div>
+
+          <div id="drawingDetailPanel" class="content-panel">
+            <!-- JS에서 동적 렌더링 -->
+          </div>
+        </div>
+      </div>
+      <!-- // content-panel-wrap -->
+
+    </div>
+    <!-- // panel-layout -->
+  </div>
+
+<th:block th:replace="~{modal/agencyModal.html}"/><!-- Modal: 실적사업소/실적대리점 선택 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<!-- 본사: 읽기 전용 — 도면 등록/편집 JS 불필요 -->
+
+<script>
+  $(function() {
+    // 검색 유형 변경 시 검색어 초기화
+    $('#searchTypeSelect').on('change', function() {
+      $('#searchKeyword').val('');
+    });
+
+    // 검색어 입력 시 엔터키 핸들링 — 단, 실적사업소/실적대리점이 선택되어야 동작
+    $('#searchKeyword').keydown(e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        fetchDrawingList();
+      }
+    })
+
+    // 초기 진입 시 목록 미로드 — 사용자가 실적사업소/실적대리점 선택 후 검색 버튼 클릭해야 조회됨
+    updateSearchBtnState();
+  });
+
+  /* 실적사업소 + 실적대리점 둘 다 선택된 경우에만 검색 버튼 활성화 */
+  function updateSearchBtnState() {
+    const branch = document.getElementById('selectedBranchCds')?.value || '';
+    const dealer = document.getElementById('selectedDealerCds')?.value || '';
+    const btn = document.querySelector('.panel-search button.btn-primary');
+    if (!btn) return;
+    const valid = branch.trim() !== '' && dealer.trim() !== '';
+    btn.disabled = !valid;
+  }
+
+  /* agencyModal 선택값이 바뀌었을 때 버튼 상태 갱신
+   * (display input 의 value 변경을 MutationObserver 로 감지) */
+  (function bindAgencyChangeWatcher() {
+    const displayInput = document.getElementById('agencySelectionInput');
+    if (!displayInput) return;
+    // value 속성 변화 감지
+    const obs = new MutationObserver(() => updateSearchBtnState());
+    obs.observe(displayInput, { attributes: true, attributeFilter: ['value'] });
+    // 백업: 주기적 폴링 (값이 JS property 로만 set 되는 경우 대비)
+    let lastVal = displayInput.value;
+    setInterval(() => {
+      if (displayInput.value !== lastVal) {
+        lastVal = displayInput.value;
+        updateSearchBtnState();
+      }
+    }, 300);
+  })();
+
+  /* 고객사별 도면 현황 목록 API 호출 */
+  function fetchDrawingList(selectCtmLscno) {
+    // 실적사업소 / 실적대리점 필수 검증
+    const branch = document.getElementById('selectedBranchCds')?.value || '';
+    const dealer = document.getElementById('selectedDealerCds')?.value || '';
+    if (branch.trim() === '' || dealer.trim() === '') {
+      alert('실적사업소 / 실적대리점을 먼저 선택해주세요.');
+      return;
+    }
+
+    const reqParam = {};
+
+    // 검색 조건에 따른 request 파라메터 셋팅
+    const searchKeyword = $('#searchKeyword').val();
+    switch ($('#searchTypeSelect').val()) {
+      case "ctmNm":
+        reqParam.searchKeywordCtmNm = searchKeyword;
+        break;
+      case "ctmLscno":
+        reqParam.searchKeywordCtmLscno = searchKeyword;
+        break;
+      case "address":
+        reqParam.searchKeywordAddress = searchKeyword;
+        break;
+    }
+
+    // 실적사업소(comMngest) / 실적대리점(agtCd) — 콤마 구분 문자열
+    reqParam.comMngest = branch;
+    reqParam.agtCd     = dealer;
+
+    $.ajax({
+      url: '/hqDrawingMng/getDrawingListByCustomer'
+      ,type: 'post'
+      ,data: reqParam
+      ,success: function(res) {
+        renderDrawingList(res);
+
+        // 도면 등록 후 호출 시 해당 고객사 카드 자동 선택
+        if (selectCtmLscno) {
+          const card = document.querySelector(`.card[data-ctm-lscno="${selectCtmLscno}"]`);
+          if (card) card.classList.add('selected');
+        }
+      }
+    });
+  }
+
+  /* 고객사별 도면 현황 목록 렌더링 */
+  function renderDrawingList(res) {
+    const resData = res.data[0];
+    const groupedDrawingList = resData.drawingList.reduce((acc, currentValue) => {
+      acc[currentValue.CTM_LSCNO] = acc[currentValue.CTM_LSCNO] ?? [];
+      acc[currentValue.CTM_LSCNO].push(currentValue);
+      return acc;
+    }, {});
+
+    $('#sumCustomerCnt').html(Object.keys(groupedDrawingList).length);
+    $('#sumAddressCnt').html(resData.drawingList.length);
+    $('#sumDrawingCnt').html(resData.sumDrawingCount);
+    $('#sumCustomerCntMenu').html(Object.keys(groupedDrawingList).length).removeClass('hidden');
+
+    // 고객사별 도면 현황 좌측 미매핑 탭 카운팅 (주소지별 계약 중 매핑 미완료가 하나라도 있으면 포함)
+    let sumUnmappedContractCount = 0;
+    Object.entries(groupedDrawingList).forEach(([key, items]) => {
+      if (Number(items[0].HasUnmapped) === 1) {
+        sumUnmappedContractCount++;
+      }
+    });
+    $('#sumUnmappedCntMenu').html(sumUnmappedContractCount).removeClass('hidden');
+
+    // 고객사별 도면 현황 좌측 메뉴 탭 렌더링
+    let customerHtml = '';
+    Object.entries(groupedDrawingList).forEach(([key, items]) => {
+      customerHtml += `
+            <div class="card" data-mapped="${Number(items[0].HasUnmapped) === 1 ? 'false' : 'true'}" data-ctm-lscno="${key}" data-ctm-nm="${items[0].CTM_NM}">
+              <div class="card-content">
+                <i class="icon-chevron"></i>
+                <ul class="text-list">
+                  <li class="text-primary-300">${items[0].CTM_LSCNO}</li>
+                  <li class="text-sm"><strong>${items[0].CTM_NM}</strong></li>
+                  <li>${items[0].ADR4}${items.length > 1 ? ' <span class="text-primary-300">외 ' + (items.length - 1) + '개</span>' : ''}</li>
+                </ul>
+                <div class="badge-list">
+                  <span class="badge badge-blue">계약 ${items[0].CompletedContractCount}건</span>
+                  <span class="badge badge-orange">미매핑 ${items[0].UnmappedContractCount}건</span>
+                  <span class="badge badge-green">도면 ${items[0].DrawingCount}건</span>
+                </div>
+              </div>
+
+              <div class="card-content toggle-cont">
+                <ul class="address-list">
+                  ${items.map(item => `<li data-address-id="${item.ADDRESS_ID}">${item.ADR4}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+            `;
+    });
+    $('#customerList').html(customerHtml);
+  }
+
+  /* 고객사 상세 조회 API 호출 */
+  function getDrawingDetail(ctmLscno, ctmNm) {
+    // 헤더 설정
+    $('#ctmNmTitle').text(ctmNm);
+    $('#ctmLscnoTitle').text(ctmLscno);
+
+    $.ajax({
+      url: '/hqDrawingMng/getDrawingDetail',
+      type: 'post',
+      data: { ctmLscno: ctmLscno },
+      success: function(res) {
+        renderDrawingDetail(res);
+      }
+    });
+  }
+
+  /* 고객사 상세 - 우측 패널 렌더링 */
+  let _currentCtmLscno = '';
+  let _currentCtmNm = '';
+  let _selectedAddressId = null;  /* 주소 선택 시 필터용 */
+
+  function renderDrawingDetail(res) {
+    const resData = res.data[0];
+    const contractList = resData.contractList || [];
+    const drawingList = resData.drawingList || [];
+
+    // 고객사 정보 저장 (모달에서 사용)
+    if (contractList.length > 0) {
+      _currentCtmLscno = contractList[0].CTM_LSCNO;
+      _currentCtmNm = contractList[0].CTM_NM;
+    }
+
+    // ADDRESS_ID 기준으로 그룹핑
+    const addressMap = {};
+
+    // 계약 데이터 그룹핑
+    contractList.forEach(item => {
+      const addrId = item.ADDRESS_ID;
+      if (!addressMap[addrId]) {
+        addressMap[addrId] = { ADR4: item.ADR4, contracts: [], drawings: [] };
+      }
+      if (item.CON_IDX) {
+        addressMap[addrId].contracts.push(item);
+      }
+    });
+
+    // 도면 데이터 그룹핑
+    const noContractDrawings = []; // 계약 없는 도면
+    drawingList.forEach(item => {
+      const addrId = item.ADDRESS_ID;
+      if (!addrId) {
+        noContractDrawings.push(item);
+        return;
+      }
+      if (!addressMap[addrId]) {
+        addressMap[addrId] = { ADR4: item.ADR4, contracts: [], drawings: [] };
+      }
+      addressMap[addrId].drawings.push(item);
+    });
+    // 계약 없는 도면을 첫 번째 주소 섹션에 추가
+    if (noContractDrawings.length > 0) {
+      const firstAddr = Object.values(addressMap)[0];
+      if (firstAddr) {
+        noContractDrawings.forEach(d => firstAddr.drawings.push(d));
+      }
+    }
+
+    // 주소별 섹션 렌더링 (ADR4 기준 정렬)
+    let html = '';
+    Object.entries(addressMap).sort((a, b) => (a[1].ADR4 || '').localeCompare(b[1].ADR4 || '')).forEach(([addrId, addr]) => {
+      const hasContracts = addr.contracts.length > 0;
+      const allMapped = hasContracts && addr.contracts.every(c => Number(c.CONTRACT_ITEM_QTY) > 0 && Number(c.DRAWING_COUNT) > 0 && Number(c.TOTAL_MAPPED_QTY) >= Number(c.CONTRACT_ITEM_QTY));
+      const hasUnmapped = hasContracts && !allMapped;
+
+      html += `
+        <div class="draw-wrap" data-mapped="${hasUnmapped ? 'false' : 'true'}" data-address-id="${addrId}">
+          <div class="title-area">
+            <h3 class="title">${addr.ADR4}</h3>
+            ${hasUnmapped ? '<span class="badge badge-orange-fill">미매핑</span>' : ''}
+          </div>
+          <div class="info-area">
+            <span class="title">계약</span>
+            <div class="badge-list">
+              ${addr.contracts.map(c => {
+                const contractQty = Number(c.CONTRACT_ITEM_QTY);
+                const mappedQty = Number(c.TOTAL_MAPPED_QTY);
+                const isMapped = contractQty > 0 && Number(c.DRAWING_COUNT) > 0 && mappedQty >= contractQty;
+                const remaining = Math.max(contractQty - mappedQty, 0);
+                return isMapped
+                    ? '<span class="badge badge-blue">' + c.CON_CD + '</span>'
+                    : '<span class="badge badge-orange">' + c.CON_CD + ' (' + remaining + '품목)</span>';
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="draw-list">
+            ${addr.drawings.map(d => {
+              const isDisabled = Number(d.CONTRACT_COUNT) === 0;
+              return `
+              <div class="draw-box${isDisabled ? ' disabled' : ''}" style="cursor:pointer" onclick="goDrawingDetail(${d.DRAWING_ID})">
+                <div class="title-group">
+                  ${isDisabled ? '<span class="badge badge-outline">계약 없음</span>' : ''}
+                  <h4>${d.DRAWING_NAME}</h4>
+                  <span class="text-xs text-primary-300">${d.VERSION_NO ? d.VERSION_NO.replace(/^v(\\d+)$/, 'ver $1') : ''}</span>
+                </div>
+                <ul class="text-group">
+                  <li class="text-primary font-medium">계약 ${d.CONTRACT_COUNT}건</li>
+                  <li class="no-dot">
+                    <ul>
+                      <li>등록 ${d.REG_DATE}</li>
+                      ${d.MOD_DATE ? '<li>수정 ' + d.MOD_DATE + '</li>' : ''}
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    });
+
+    // 데이터 없는 경우
+    if (Object.keys(addressMap).length === 0) {
+      html = '<div class="alert alert-default"><div class="alert-title">등록된 도면이 없습니다.</div></div>';
+    }
+
+    $('#drawingDetailPanel').html(html);
+
+    /* 주소 선택 상태면 해당 주소만 표시 */
+    if (_selectedAddressId) {
+      document.querySelectorAll('#drawingDetailPanel .draw-wrap').forEach(wrap => {
+        wrap.classList.toggle('hidden', wrap.dataset.addressId !== String(_selectedAddressId));
+      });
+    }
+  }
+
+  /* 도면 클릭 → 도면 상세 화면 이동 (본사) */
+  function goDrawingDetail(drawingId) {
+    location.href = '/layout/hq/layoutDetail?drawingId=' + drawingId;
+  }
+
+  /* 1. 안내문구 토글 */
+  function toggleAlertPanelArea() {
+    const alertEl = document.querySelector('.alert[data-state="selectList"]');
+    const panelEl = document.querySelector('.content-panel-cont[data-state="selectList"]');
+    if (!alertEl || !panelEl) return;
+
+    alertEl.classList.add("hidden");
+    panelEl.classList.remove("hidden");
+  }
+
+  /* 2. list-panel 토글 */
+  function toggleListPanel() {
+    document.querySelector(".panel-layout").classList.toggle("close-panel");
+  }
+
+
+  /* 3. list-panel 영역 이벤트 */
+  function selectItem(container, selector, target) {
+    container.querySelectorAll(selector).forEach(el => el.classList.remove("selected"));
+    if (target) target.classList.add("selected");
+  }
+
+  document.addEventListener("click", (e) => {
+    const cardList = document.querySelector(".card-selected-wrap");
+
+    /* 전체, 미매핑 클릭 */
+    const tab = e.target.closest(".tab-item");
+    if (tab) {
+
+      const filter = tab.dataset.filter;
+      const cards = cardList.querySelectorAll(".card");
+
+      document.querySelectorAll(".tab-item").forEach(item => item.classList.remove("is-active") );
+      tab.classList.add("is-active");
+
+      cards.forEach(card => {
+        const isMapped = card.dataset.mapped === "true";
+        card.classList.toggle("hidden", filter === "unmapped" && isMapped);
+      });
+
+      return;
+    }
+
+    /* card 클릭 */
+    const card = e.target.closest(".card-selected-wrap .card");
+    if (!card) return;
+
+    const addressItem = e.target.closest(".address-list li");
+
+    if (!addressItem) {
+      /* 카드(회사) 클릭 → 전체 주소 조회 */
+      _selectedAddressId = null;
+
+      selectItem(cardList, ".card.selected");
+      selectItem(cardList, ".address-list li.selected");
+      card.classList.add("selected");
+      toggleAlertPanelArea();
+
+      getDrawingDetail(card.dataset.ctmLscno, card.dataset.ctmNm);
+    }
+
+    /* address 클릭 → 해당 주소만 조회 */
+    else {
+      const addrList = addressItem.closest(".address-list");
+      const isSelected = addressItem.classList.contains("selected");
+
+      selectItem(addrList, "li.selected");
+
+      /* 카드가 선택 안 된 상태면 먼저 선택 */
+      if (!card.classList.contains("selected")) {
+        selectItem(cardList, ".card.selected");
+        card.classList.add("selected");
+        toggleAlertPanelArea();
+      }
+
+      if (!isSelected) {
+        addressItem.classList.add("selected");
+        _selectedAddressId = addressItem.dataset.addressId;
+      } else {
+        _selectedAddressId = null;
+      }
+
+      /* 상세 조회 API 호출 → 렌더링 후 주소 필터 적용 */
+      getDrawingDetail(card.dataset.ctmLscno, card.dataset.ctmNm);
+    }
+  });
+</script>
+
+<!-- 영역지정 모달 JS (모달 오픈 후 초기화) -->
+<script>
+  let _drawingData = {};
+  let _drawAreaIsNewDrawing = false;  // 신규 등록에서 온 경우
+  let _drawAreaDrawingId = null;      // 현재 도면 ID
+
+  /**
+   * 도면등록팝업 열기
+   * @param {number} drawingId
+   * @param {boolean} isNew - true: 신규 등록에서 온 경우 (취소 시 도면 삭제)
+   */
+  function openDrawAreaModal(drawingId, isNew) {
+    _drawAreaIsNewDrawing = isNew === true;
+    _drawAreaDrawingId = drawingId;
+    const modal = document.getElementById('drawAreaModal');
+
+    // 1. 모달 내부 DOM 초기화 (재오픈 시 이전 데이터 잔존 방지)
+    const imgBox = modal.querySelector('.img-box');
+    imgBox.innerHTML = '<canvas id="drawImg" data-img=""></canvas>';
+
+    modal.querySelectorAll('.drawing-area').forEach(el => el.remove());
+    modal.querySelector('#contractItemList').innerHTML = '';
+    modal.querySelector('.dropdown-menu').innerHTML = '';
+    modal.querySelector('.selected-area-panel').innerHTML = '';
+    const mappingWrapEl = modal.querySelector('.mapping-list-wrap');
+    if (mappingWrapEl) {
+      mappingWrapEl.querySelectorAll('.mapping-list.type-item').forEach(el => el.remove());
+    }
+
+    // alert 초기 상태로
+    modal.querySelector('.alert[data-state="makeArea"]')?.classList.remove('hidden');
+    modal.querySelector('.regist-cont-wrap[data-state="makeArea"]')?.classList.add('hidden');
+
+    // 2. 모달 열기
+    openModal('drawAreaModal');
+
+    // 3. draw_canvas.js / draw_create.js 전역 변수 재참조 (모달 DOM 기준)
+    reinitDrawCanvas();
+
+    // 4. 데이터 로드
+    loadDrawingData(drawingId);
+  }
+
+  /**
+   * draw_canvas.js / draw_create.js의 전역 DOM 참조를 모달 내부로 재설정
+   * draw_canvas.js는 const로 선언되어 재할당 불가하므로, 해당 변수를 let으로 변경함
+   */
+  function reinitDrawCanvas() {
+    // draw_canvas.js 전역 변수 재참조
+    drawCont = document.querySelector('#drawAreaModal #drawCont');
+    canvasCont = drawCont.querySelector('.img-box');
+    canvas = document.querySelector('#drawAreaModal #drawImg');
+    scaleText = document.querySelector('#drawAreaModal .scale-box span');
+
+    // draw_create.js 전역 변수 재참조
+    selectedAreaPanel = document.querySelector('#drawAreaModal .selected-area-panel');
+    mappingWrap = document.querySelector('#drawAreaModal .mapping-list-wrap');
+    contractList = document.querySelector('#drawAreaModal .mapping-list.type-contract');
+    contractCount = document.querySelector('#drawAreaModal #contractCount');
+    mappingCount = document.querySelector('#drawAreaModal #mappingCount');
+
+    // 상태 초기화
+    drawAreaData = [];
+    areaIdx = 0;
+    activeArea = null;
+    drawMode = false;
+    drawScale = 1;
+
+    // makeAreaForm 이벤트 재바인딩
+    document.querySelectorAll('#drawAreaModal .makeAreaForm').forEach(form => {
+      const input = form.querySelector('input');
+      const btn = form.querySelector('button');
+
+      // 기존 이벤트 제거를 위해 clone
+      const newInput = input.cloneNode(true);
+      const newBtn = btn.cloneNode(true);
+      input.parentNode.replaceChild(newInput, input);
+      btn.parentNode.replaceChild(newBtn, btn);
+
+      newInput.addEventListener('input', () => {
+        newBtn.disabled = !newInput.value.trim();
+      });
+      newInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); if (!newBtn.disabled) newBtn.click(); }
+      });
+
+      newBtn.addEventListener('click', () => {
+        drawMode = true;
+        currentAreaName = newInput.value.trim();
+        newInput.value = '';
+        newBtn.disabled = true;
+        drawCont.style.cursor = 'crosshair';
+      });
+    });
+  }
+
+  /** 영역지정 모달 닫기 (취소) */
+  function closeDrawAreaModal() {
+    closeModal('drawAreaModal');
+    // 상세 화면 새로고침
+    if (_currentCtmLscno) {
+      getDrawingDetail(_currentCtmLscno, _currentCtmNm);
+    }
+  }
+
+  /** 도면 데이터 로드 (API 호출) */
+  function loadDrawingData(drawingId) {
+    $.ajax({
+      url: '/hqDrawingMng/getDrawingCreateData',
+      type: 'post',
+      data: { drawingId: drawingId },
+      success: function(res) {
+        _drawingData = res.data;
+        renderDrawingPage();
+      }
+    });
+  }
+
+  /** 모달 내부 페이지 렌더링 */
+  function renderDrawingPage() {
+    const d = _drawingData;
+    const modal = document.getElementById('drawAreaModal');
+
+    // 상단 정보
+    modal.querySelector('#infoContract').textContent = (d.conCd || '') + ' ' + (d.conTitle || '');
+    modal.querySelector('#infoDrawingName').textContent = d.drawingName || '';
+    modal.querySelector('#infoPdfName').textContent = d.pdfFileNm || (d.pdfPath ? d.pdfPath.split('/').pop() : '');
+
+    // PDF 렌더링 (서버 프록시 경유 — CORS 우회)
+    if (d.pdfPath) {
+      const pdfProxyUrl = '/hqDrawingMng/pdfProxy?pdfPath=' + encodeURIComponent(d.pdfPath);
+      const cv = modal.querySelector('#drawImg');
+      cv.dataset.img = pdfProxyUrl;
+      pdfjsLib.getDocument(pdfProxyUrl).promise.then(async pdf => {
+        const pageData = [];
+        let totalHeight = 0, maxWidth = 0;
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1 });
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = viewport.width;
+          tempCanvas.height = viewport.height;
+          await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
+          pageData.push({ tempCanvas, height: viewport.height });
+          totalHeight += viewport.height;
+          maxWidth = Math.max(maxWidth, viewport.width);
+        }
+        cv.width = maxWidth;
+        cv.height = totalHeight;
+        const ctx = cv.getContext('2d');
+        let yOffset = 0;
+        for (const { tempCanvas, height } of pageData) {
+          ctx.drawImage(tempCanvas, 0, yOffset);
+          yOffset += height;
+        }
+      }).catch(err => {
+        console.error('PDF 로드 실패:', err);
+      });
+    }
+
+    // 계약 품목 렌더링
+    renderContractItems(d.contractItems || []);
+
+    // 기존 영역 복원
+    restoreAreas(d.areas || [], d.areaItems || []);
+  }
+
+  /** 계약 품목 목록 렌더링 */
+  function renderContractItems(items) {
+    const ul = document.getElementById('contractItemList');
+    ul.innerHTML = '';
+
+    if (!items || items.length === 0) {
+      ul.innerHTML = '<div class="alert alert-default"><p class="alert-title text-sm">계약 품목이 없습니다</p></div>';
+      document.getElementById('contractCount').textContent = '0';
+      return;
+    }
+
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.dataset.itemcode = item.ITEM_CD;
+      li.dataset.colcode = item.COL_CD || '';
+      li.dataset.setyn = item.SET_YN || 'N';
+
+      const seriesNm = item.SERIES_NM || item.ITM_DESC || '';
+      li.innerHTML = `
+        <div class="item-info">
+          <p class="text-basic">${item.ITEM_CD || ''}
+            <span class="text-sub">${item.COL_CD || ''}</span>
+          </p>
+          <p class="text-sub">${seriesNm}</p>
+        </div>
+        <div class="item-qty-check">
+          <p class="text-basic">
+            <span class="qty-count">0</span>/<span class="qty-total">${item.QTY || 0}</span>
+          </p>
+          <i class="icon-box"></i>
+        </div>
+      `;
+      ul.appendChild(li);
+    });
+
+    document.getElementById('contractCount').textContent = items.length;
+    bindContractItemEvents();
+  }
+
+  /** 계약 품목 클릭 이벤트 바인딩 */
+  function bindContractItemEvents() {
+    const items = document.querySelectorAll('#drawAreaModal .mapping-list.type-contract li');
+    items.forEach(li => {
+      li.addEventListener('click', function() {
+        if (!activeArea) return;
+
+        const key = getItemKey(li);
+        const currentList = document.querySelector(
+          `.mapping-list.type-item[data-idx="${activeArea.idx}"]`
+        );
+        if (!currentList) return;
+
+        const max = getMaxQty(key);
+        const total = getTotalQty(key);
+        if (total >= max) return;
+
+        let target = null;
+        currentList.querySelectorAll('li').forEach(el => {
+          if (getItemKey(el) === key) target = el;
+        });
+        if (target) {
+          updateLeftQty(key);
+          toggleAlertMappingItem();
+          return;
+        }
+
+        const itemInfo = li.querySelector('.item-info').outerHTML;
+        const newLi = document.createElement('li');
+        newLi.dataset.itemcode = li.dataset.itemcode;
+        newLi.dataset.colcode = li.dataset.colcode || '';
+        newLi.dataset.setyn = li.dataset.setyn || 'N';
+
+        newLi.innerHTML = `
+          ${itemInfo}
+          <div class="item-actions">
+            <div class="item-counter">
+              <button type="button" class="btn btn-ghost minus">
+                <i class="icon-chevron rotate-90"></i>
+              </button>
+              <input type="text" class="input text-center qty" value="1">
+              <button type="button" class="btn btn-ghost plus">
+                <i class="icon-chevron rotate-270"></i>
+              </button>
+            </div>
+            <button type="button" class="btn btn-delete btn-ghost"></button>
+          </div>
+        `;
+
+        currentList.appendChild(newLi);
+        updateLeftQty(key);
+        toggleAlertMappingItem();
+        syncContractCopyState();
+      });
+    });
+  }
+
+  /** 기존 영역 복원 */
+  function restoreAreas(areas, areaItems) {
+    if (!areas || areas.length === 0) return;
+
+    areas.forEach((area, i) => {
+      const letter = getAlphaIndex(i);
+
+      const el = document.createElement('div');
+      el.className = 'drawing-area';
+      el.style.left = area.X + 'px';
+      el.style.top = area.Y + 'px';
+      el.style.width = area.WIDTH + 'px';
+      el.style.height = area.HEIGHT + 'px';
+      el.dataset.idx = letter;
+      el.dataset.areaId = area.AREA_ID;
+      el.innerHTML = `<span class="area-label">${letter} ${area.AREA_NAME || ''}</span>`;
+      canvasCont.appendChild(el);
+      enableInteract(el);
+
+      const data = {
+        idx: letter,
+        areaId: area.AREA_ID,
+        name: area.AREA_NAME || '',
+        left: area.X,
+        top: area.Y,
+        width: area.WIDTH,
+        height: area.HEIGHT,
+        items: []
+      };
+      drawAreaData.push(data);
+      areaIdx++;
+
+      if (typeof onSaveAreaData === 'function') onSaveAreaData(data);
+
+      const mappedItems = areaItems.filter(ai => ai.AREA_ID === area.AREA_ID);
+      if (mappedItems.length > 0) {
+        activeDrawArea(letter);
+
+        const currentList = document.querySelector(`.mapping-list.type-item[data-idx="${letter}"]`);
+        if (currentList) {
+          mappedItems.forEach(mi => {
+            const miKey = (mi.CODE_CD || '') + '__' + (mi.COL_CD || '');
+            let contractLi = null;
+            document.querySelectorAll('#drawAreaModal .type-contract li').forEach(el => {
+              if (getItemKey(el) === miKey) contractLi = el;
+            });
+            if (!contractLi) return;
+
+            const itemInfo = contractLi.querySelector('.item-info').outerHTML;
+            const newLi = document.createElement('li');
+            newLi.dataset.itemcode = mi.CODE_CD || '';
+            newLi.dataset.colcode = mi.COL_CD || '';
+            newLi.dataset.setyn = mi.SET_YN || 'N';
+
+            newLi.innerHTML = `
+              ${itemInfo}
+              <div class="item-actions">
+                <div class="item-counter">
+                  <button type="button" class="btn btn-ghost minus">
+                    <i class="icon-chevron rotate-90"></i>
+                  </button>
+                  <input type="text" class="input text-center qty" value="${mi.QUANTITY || 1}">
+                  <button type="button" class="btn btn-ghost plus">
+                    <i class="icon-chevron rotate-270"></i>
+                  </button>
+                </div>
+                <button type="button" class="btn btn-delete btn-ghost"></button>
+              </div>
+            `;
+            currentList.appendChild(newLi);
+            updateLeftQty(miKey);
+          });
+        }
+      }
+    });
+
+    activeArea = null;
+    document.querySelectorAll('.drawing-area').forEach(v => v.classList.remove('selected'));
+  }
+
+  /** 영역 + 품목 저장 */
+  function drawInfoSave() {
+    const areas = drawAreaData.map(area => {
+      const list = document.querySelector(`.mapping-list.type-item[data-idx="${area.idx}"]`);
+      const items = [];
+
+      if (list) {
+        list.querySelectorAll('li').forEach(li => {
+          items.push({
+            setYn: li.dataset.setyn || 'N',
+            codeCd: li.dataset.itemcode || '',
+            colCd: li.dataset.colcode || '',
+            quantity: parseInt(li.querySelector('.qty')?.value, 10) || 0
+          });
+        });
+      }
+
+      return {
+        areaName: area.name,
+        x: Math.round(area.left),
+        y: Math.round(area.top),
+        width: Math.round(area.width),
+        height: Math.round(area.height),
+        items: items
+      };
+    });
+
+    if (areas.length === 0) { alert('영역이 없습니다. 영역을 추가해주세요.'); return; }
+
+    const emptyArea = areas.find(a => a.items.length === 0);
+    if (emptyArea) { alert('품목이 매핑되지 않은 영역이 있습니다. 모든 영역에 품목을 매핑해주세요.'); return; }
+
+    if (!confirm('영역과 품목을 저장하시겠습니까?')) return;
+
+    $.ajax({
+      url: '/hqDrawingMng/saveDrawingAreas',
+      type: 'post',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        drawingId: _drawingData.drawingId,
+        versionId: _drawingData.versionId,
+        conIdx: _drawingData.conIdx,
+        addressId: _drawingData.addressId,
+        areas: areas
+      }),
+      success: function(res) {
+        if (!res.message) {
+          alert('저장되었습니다.');
+          closeDrawAreaModal();
+          fetchDrawingList(_currentCtmLscno);
+        } else {
+          alert(res.message);
+        }
+      },
+      error: function() {
+        alert('저장 중 오류가 발생했습니다.');
+      }
+    });
+  }
+
+  /** 영역 이름 변경 저장 */
+  function saveChangeAreaName(){
+    if(!activeArea) return;
+    const input = document.querySelector('#editAreaNameInput');
+    const newName = input.value.trim();
+    if(!newName) return;
+
+    activeArea.name = newName;
+    const areaEl = document.querySelector(`.drawing-area[data-idx="${activeArea.idx}"] .area-label`);
+    if(areaEl) areaEl.textContent = `${activeArea.idx} ${newName}`;
+
+    const dropdownItem = document.querySelector(`.dropdown-item[data-idx="${activeArea.idx}"] .area-name`);
+    if(dropdownItem) dropdownItem.innerHTML = `<span class="flag">${activeArea.idx}</span>${newName}`;
+
+    renderSelectedArea();
+    closeModal('editAreaNameModal');
+  }
+</script>
+</th:block>
+</body>
+</html>

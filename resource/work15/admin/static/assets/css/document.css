@@ -1,0 +1,113 @@
+body {
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+.documentForm-wrap {
+    overflow-x: auto;
+    padding: 0 15px;
+}
+.documentForm {
+    width: 1000px;
+    min-height: 1414px;
+    margin: 0 auto;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+}
+.documentForm .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.documentForm h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 35px;
+    letter-spacing: 15px;
+    font-weight: 600;
+}
+.documentForm .logo-area {
+    text-align: center!important;
+    padding: 10px 0;
+}
+.documentForm .logo-area img {
+    width: 30%;
+}
+.documentForm .content-footer {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.documentForm .table thead th,
+.documentForm .table tbody th,
+.documentForm .table tfoot th {
+    font-size: 14px;
+    background: #F1F5F8!important;
+    font-weight: 700;
+}
+.documentForm .table td,
+.documentForm .table th {
+    font-size: 14px!important;
+}
+.documentForm  .table td {
+    text-align: start;
+}
+.documentForm .table-bordered td,
+.documentForm .table-bordered th {
+    border-color: #b5b5b5!important;
+}
+.documentForm .table .ellipsis {
+    max-width: 440px;
+}
+.documentForm input {
+    border: 2px solid #333;
+    padding: 5px 10px;
+    font-size: inherit;
+    text-align: right;
+    border-radius: 5px;
+}
+.provider-btn {
+    display: block;
+    font-size: 12px;
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+.pdfSave-btn {
+    background: #C3281F;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 0 0 auto;
+    font-size: 11.5px;
+}
+@media print {
+    .documentForm input {
+        border: 0;
+        padding: 0;
+    }
+    .provider-btn, .pdfSave-btn {
+        display: none;
+    }
+}
+
+.printing .documentForm {
+    padding: 60px;
+}
+
+.printing .documentForm input {
+    border: 0;
+    padding: 0;
+}
+
+.printing .provider-btn,
+.printing .pdfSave-btn,
+.printing .pdfSave-area {
+    display: none;
+}

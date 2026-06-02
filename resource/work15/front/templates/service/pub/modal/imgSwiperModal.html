@@ -1,0 +1,60 @@
+<div role="dialog" class="popup-wrap" id="imgSwiperModal">
+  <div class="popup-dim"></div>
+  <div class="popup-cont w-xl">
+    <div class="popup-body px-0 pb-0">
+      <div class="img-swiper-wrap">
+        <div class="swiper img-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지"><!-- alt 값: as 대상 품목 시리얼넘버 + '이미지' -->
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_04.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_05.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+            </div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <button type="button" class="btn-close close-btn"><span class="sr-only">닫기</span></button>
+  </div>
+</div>
+
+<!-- swiper 라이브러리 -->
+<script th:src="@{/assets/js/plugins/swiper-bundle.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/plugins/swiper-bundle.min.css}"/>
+<script>
+  var imgSwiper = new Swiper(".img-swiper", {
+    loop: true,
+    autoHeight: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>

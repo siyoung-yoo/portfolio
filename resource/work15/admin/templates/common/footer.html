@@ -1,0 +1,163 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="alarmMsg-container" style="display: none">
+    <div class="alarmMsg show">
+        <div class="alarmMsg_header">
+            <div class="flex" style="gap:10px;">
+                <p class="alarmMsg_sender">이름</p>
+                <span>추가1</span>
+                <span>추가2</span>
+            </div>
+            <i class="alarmMsg_close"></i>
+        </div>
+        <div class="alarmMsg_content">
+            메시지 내용 메시지 내용 메시지 내용 메시지 내용
+        </div>
+        <div class="alarmMsg_footer">
+            <textarea class="alarmMsg_Comment" placeholder="댓글 등록" rows="1"></textarea>
+
+            <div style="margin-top:10px">
+                <div class="alarmMsg_fileList"></div>
+                <div class="alarmMsg_footer_row">
+                    <select class="form-control select" data-placeholder="선택">
+                        <option value="코멘트">코멘트</option>
+                        <option value="요청승인">요청승인</option>
+                        <option value="요청반려">요청반려</option>
+                        <option value="처리회송">처리회송</option>
+                        <option value="처리중">처리중</option>
+                        <option value="처리완료">처리완료</option>
+                        <option value="재요청">재요청</option>
+                    </select>
+                    <div class="flex" style="gap:10px">
+                        <label class="flex align-items-center">
+                            <input type="file" multiple onchange="alarmMsgAddFile(this)">
+                            <i class="icon-attachment"></i>
+                        </label>
+                        <button type="button" class="btn btn-basic">&nbsp;등록&nbsp;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alarmMsg show">
+        <div class="alarmMsg_header">
+            <div class="flex" style="gap:10px;">
+                <p class="alarmMsg_sender">이름</p>
+                <span>추가1</span>
+                <span>추가2</span>
+            </div>
+            <i class="alarmMsg_close"></i>
+        </div>
+        <div class="alarmMsg_content">
+            메시지 내용 메시지 내용 메시지 내용 메시지 내용
+        </div>
+        <div class="alarmMsg_footer">
+            <textarea class="alarmMsg_Comment" placeholder="댓글 등록" rows="1"></textarea>
+
+            <div style="margin-top:10px">
+                <div class="alarmMsg_fileList"></div>
+                <div class="alarmMsg_footer_row">
+                    <select class="form-control select" data-placeholder="선택">
+                        <option value="코멘트">코멘트</option>
+                        <option value="요청승인">요청승인</option>
+                        <option value="요청반려">요청반려</option>
+                        <option value="처리회송">처리회송</option>
+                        <option value="처리중">처리중</option>
+                        <option value="처리완료">처리완료</option>
+                        <option value="재요청">재요청</option>
+                    </select>
+                    <div class="flex" style="gap:10px">
+                        <label class="flex align-items-center">
+                            <input type="file" multiple onchange="alarmMsgAddFile(this)">
+                            <i class="icon-attachment"></i>
+                        </label>
+                        <button type="button" class="btn btn-basic">&nbsp;등록&nbsp;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const alarmMsgClose = document.querySelectorAll('.alarmMsg_close');
+
+    alarmMsgClose.forEach(button => {
+        button.addEventListener('click', function() {
+            const alarmMsg = this.closest('.alarmMsg');
+            if (alarmMsg) {
+                alarmMsg.classList.remove('show');
+
+                setTimeout(() => {
+                    alarmMsg.style.display = 'none';
+                }, 700);
+            }
+        });
+    });
+
+    // textarea 자동높이 조절
+    const $alarmMsgComment = document.querySelector('.alarmMsg_Comment');
+    $alarmMsgComment.oninput = (event) => {
+        const $target = event.target;
+
+        $target.style.height = 0;
+        $target.style.height = $target.scrollHeight + 'px';
+    };
+
+    // 첨부파일 멀티 업로드
+    var fileNo = 0;
+    var filesArr = new Array();
+
+    /* 첨부파일 추가 */
+    function alarmMsgAddFile(obj){
+        var maxFileCnt = 4; //첨부파일 최대 개수
+        var attFileCnt = document.querySelectorAll('.filebox').length; //기존 추가된 첨부파일 개수
+        var remainFileCnt = maxFileCnt - attFileCnt; //추가로 첨부가능한 개수
+        var curFileCnt = obj.files.length; //현재 선택된 첨부파일 개수
+
+        // 첨부파일 개수 확인
+        if (curFileCnt > remainFileCnt) {
+            alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+        } else {
+            for (const file of obj.files) {
+                // 첨부파일 검증
+                if (validation(file)) {
+                    // 파일 배열에 담기
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        filesArr.push(file);
+                    };
+                    reader.readAsDataURL(file);
+
+                    // 목록 추가
+                    let htmlData = '';
+                    htmlData += '<div id="file' + fileNo + '" class="filebox">';
+                    htmlData += '   <p class="name">' + file.name + '</p>';
+                    htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"><i class="icon-file-minus" style="color:#e97968"></i></a>';
+                    htmlData += '</div>';
+                    $('.alarmMsg_fileList').append(htmlData);
+                    fileNo++;
+                } else {
+                    continue;
+                }
+            }
+        }
+        // 초기화
+        document.querySelector(".alarmMsg_footer_row input[type=file]").value = "";
+    }
+
+    /* 첨부파일 검증 */
+    function validation(obj){
+        if (obj.name.lastIndexOf('.') == -1) {
+            alert("확장자가 없는 파일은 제외되었습니다.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /* 첨부파일 삭제 */
+    function deleteFile(num) {
+        document.querySelector("#file" + num).remove();
+        filesArr[num].is_delete = true;
+    }
+</script>
+</html>

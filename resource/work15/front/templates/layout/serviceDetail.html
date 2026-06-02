@@ -1,0 +1,381 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+
+  <div id="bodyContent" class="service-page">
+    <div class="title-area flex-col">
+      <h2 class="contents-title items-center gap-2xs" id="reqTitleArea">
+        <span class="title-text" id="reqTitle">&nbsp;</span>
+        <span id="statusBadge" class="badge-line-orange w-fix" style="display:none;"></span>
+      </h2>
+
+      <p class="page-description" id="reqNo" th:text="${ojLayoutServiceNumber}">-</p>
+      <button type="button" class="btn line rounded" id="btnEdit" style="display:none;">
+        <i class="icon-edit"></i>수정
+      </button>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="service-layout">
+
+      <div class="service-contents">
+        <div class="header">
+          <h3 class="group-title">서비스 신청 정보</h3>
+        </div>
+
+        <div class="contents">
+          <div class="group">
+            <ul class="info-list col-2">
+              <li>
+                <div class="title">목적</div>
+                <div class="value" id="infoPurpose">-</div>
+              </li>
+              <li>
+                <div class="title">대리점</div>
+                <div class="value" id="infoVnd">-</div>
+              </li>
+              <li>
+                <div class="title">서비스 담당자</div>
+                <div class="value" id="infoCep">-</div>
+              </li>
+              <li>
+                <div class="title">담당자 연락처</div>
+                <div class="value" id="infoTel">-</div>
+              </li>
+              <li>
+                <div class="title">신청일자</div>
+                <div class="value spacing-lg" id="infoReqDate">-</div>
+              </li>
+              <li>
+                <div class="title">최종 업로드일</div>
+                <div class="value" id="infoUpdDate">-</div>
+              </li>
+              <li class="span-2 pb-md">
+                <div class="title">내용</div>
+                <div class="value font-regular" id="infoContent">-</div>
+              </li>
+            </ul>
+          </div>
+          <!-- // 상세 정보 -->
+
+          <div class="group type-upload">
+            <div class="title-area justify-between">
+              <h3 class="group-title">업로드 파일</h3>
+              <span class="font-sm font-bold"><span id="floorPlanCount">0</span>개</span>
+            </div>
+
+            <div class="list-column" id="floorPlanList"></div>
+          </div>
+          <!-- // 업로드 파일-->
+        </div>
+      </div>
+      <!-- // 왼쪽 영역(.service-contents) -->
+
+      <div class="service-panel">
+        <div class="header">
+          <h3 class="group-title">작업 결과</h3>
+        </div>
+
+        <div class="text-nodata" id="resultNoData" style="display:none;"></div>
+
+        <div class="panel-cont hidden" id="resultPanelCont">
+          <div class="flex justify-end mb-xs">
+            <p class="font-sm">업로드 파일 <strong id="resultCount">0</strong>개</p>
+          </div>
+
+          <div class="scroll-area">
+            <div class="list-column" id="resultList"></div>
+          </div>
+        </div>
+
+        <div class="panel-footer hidden" id="completePanel">
+          <div class="flex items-center gap-2xs font-md pr-md">
+            <i class="icon-check bg-green"></i>결과물 확인이 완료 되셨나요?
+          </div>
+          <p class="font-sm">확인 후 완료 처리를 해주시면 서비스가 종료됩니다.</p>
+          <button type="button" class="btn dark mt-2xs" onclick="fnPopupOpen('layoutRatingModal')">확인 완료</button>
+        </div>
+      </div>
+      <!-- // 오른쪽 영역(.service-panel) -->
+
+    </div>
+  </div>
+
+  <th:block th:insert="~{layout/modal/layoutRatingModal}"></th:block><!-- Modal: 레이아웃서비스 > 만족도 조사 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+  /* global alertPopup, fnPopupOpen, fnPopupClose */
+
+  const REQ_NO = /*[[${ojLayoutServiceNumber}]]*/ '';
+
+  const STATUS_LABEL = {
+    'NOT-ASSIGNED': { text: '신청', cls: 'badge-line-orange w-fix' },
+    'REQUEST'     : { text: '신청', cls: 'badge-line-orange w-fix' },
+    'ACCEPT'      : { text: '접수', cls: 'badge-line-green  w-fix' },
+    'IN-PROGRESS' : { text: '진행', cls: 'badge-line-blue   w-fix' },
+    'COMPLETE'    : { text: '완료', cls: 'badge bg-light-gray w-fix' }
+  };
+
+  let mainData = null;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initEditButton();
+    initRatingModalCompleteBtn();
+    loadDetail();
+  });
+
+  function initEditButton() {
+    document.getElementById('btnEdit').addEventListener('click', () => {
+      location.href = '/layout/service/apply?edit=' + encodeURIComponent(REQ_NO);
+    });
+  }
+
+  /** layoutRatingModal "완료하고 닫기" 버튼 → /complete API 호출 */
+  function initRatingModalCompleteBtn() {
+    const btn = document.querySelector('#layoutRatingModal .popup-footer .btn.dark');
+    if (btn) btn.addEventListener('click', completeService);
+  }
+
+  async function loadDetail() {
+    const fd = new FormData();
+    fd.append('ojLayoutServiceNumber', REQ_NO);
+
+    try {
+      const res = await fetch('/layout/service/detail', { method: 'POST', body: fd });
+      if (!res.ok) {
+        const msg = '상세 조회에 실패했습니다.';
+        alertPopup ? alertPopup(msg) : alert(msg);
+        return;
+      }
+      const { data } = await res.json();
+      if (!data || !data.length) {
+        const goList = () => { location.href = '/layout/service'; };
+        const msg = '해당 신청건을 찾을 수 없습니다.';
+        alertPopup ? alertPopup(msg, goList) : (alert(msg), goList());
+        return;
+      }
+
+      mainData = data[0];
+      renderMain(mainData);
+      renderFloorPlans(data);
+      renderActionButtons(mainData.SERVICE_STATUS);
+      await loadResultList(mainData.OJ_LAYOUT_SERVICE_REQUEST_ID, mainData.SERVICE_STATUS);
+    } catch (e) {
+      console.error(e);
+      const msg = '상세 조회 중 오류가 발생했습니다.';
+      alertPopup ? alertPopup(msg) : alert(msg);
+    }
+  }
+
+  function renderMain(d) {
+    document.getElementById('reqTitle').textContent = d.REQ_TITLE || '-';
+    document.getElementById('reqNo').textContent = d.REQ_NO || REQ_NO;
+
+    const status = STATUS_LABEL[d.SERVICE_STATUS] || { text: d.SERVICE_STATUS || '-', cls: 'badge bg-light-gray w-fix' };
+    const badge = document.getElementById('statusBadge');
+    badge.className = status.cls;
+    badge.textContent = status.text;
+    badge.style.display = '';
+
+    const purposes = [];
+    if (d.NEW_SECTION_BUILD_YN === 'Y') purposes.push('신규 공간 구축');
+    if (d.OLD_SECTION_CHANGE_YN === 'Y') purposes.push('기존 공간 변경');
+    if (d.ETC_YN === 'Y') purposes.push('기타');
+    setText('infoPurpose', purposes.join(', ') || '-');
+
+    const vndDisplay = (d.VND_ASSIGN_TYPE === 'NEW' && !d.COM_VND_NM) ? '배정 대기' : (d.COM_VND_NM || '-');
+    setText('infoVnd', vndDisplay);
+    setText('infoCep', d.CEP_NM || '-');
+    setText('infoTel', d.CEP_HP || '-');   // 영업담당자(CEP) 연락처 — selectServiceDetail 에서 ERP 조회로 보강
+    setText('infoReqDate', d.REQ_DATE || '-');
+    setText('infoUpdDate', d.UPD_SYS_DT || '-');
+    setText('infoContent', d.REQUEST_CONTENT || '-');
+  }
+
+  function renderFloorPlans(rows) {
+    const list = document.getElementById('floorPlanList');
+    const plans = rows.filter(r => r.OJ_LAYOUT_FLOOR_PLAN_ID);
+
+    document.getElementById('floorPlanCount').textContent = String(plans.length);
+
+    if (!plans.length) {
+      list.innerHTML = '<p class="text-nodata">등록된 도면 파일이 없습니다.</p>';
+      return;
+    }
+
+    list.innerHTML = plans.map(r => {
+      const memo = r.FLOOR_PLAN_MEMO ? `<p class="font-sm text-gray">${escapeHtml(r.FLOOR_PLAN_MEMO)}</p>` : '';
+      const badge = r.FLOOR_PLAN_NEW_YN === 'N' ? '<span class="badge square sm align-bottom">기존</span>' : '';
+      const downloadUrl = '/layout/service/floorplan/download'
+        + '?filePath=' + encodeURIComponent(r.FLOOR_PLAN_FILE_PATH || '')
+        + '&fileName=' + encodeURIComponent(r.FLOOR_PLAN_FILE_NM || '');
+      return `
+        <a href="${downloadUrl}" class="btn attach-file js-download-link">
+          <div class="icon-area"><i class="icon-attach"></i></div>
+          <div class="list-column flex-1">
+            <div class="font-md"><span class="mr-3xs">${escapeHtml(r.FLOOR_PLAN_FILE_NM || '')}</span>${badge}</div>
+            ${memo}
+          </div>
+          <div class="icon-area"><i class="icon-download"></i></div>
+        </a>`;
+    }).join('');
+    bindDownloadLinks(list);
+  }
+
+  function renderActionButtons(status) {
+    const btnEdit = document.getElementById('btnEdit');
+    const completePanel = document.getElementById('completePanel');
+
+    btnEdit.style.display = (status === 'NOT-ASSIGNED' || status === 'REQUEST') ? '' : 'none';
+
+    if (status === 'IN-PROGRESS') {
+      completePanel.classList.remove('hidden');
+    } else {
+      completePanel.classList.add('hidden');
+    }
+  }
+
+  async function loadResultList(reqId, status) {
+    const fd = new FormData();
+    fd.append('ojLayoutServiceRequestId', reqId);
+
+    try {
+      const res = await fetch('/layout/service/result/list', { method: 'POST', body: fd });
+      if (!res.ok) return;
+      const { data } = await res.json();
+      renderResultList(data || [], status);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function renderResultList(rows, status) {
+    const noData = document.getElementById('resultNoData');
+    const panelCont = document.getElementById('resultPanelCont');
+
+    if (!rows.length) {
+      panelCont.classList.add('hidden');
+      noData.style.display = '';
+      noData.textContent = getResultEmptyMsg(status);
+      return;
+    }
+
+    noData.style.display = 'none';
+    panelCont.classList.remove('hidden');
+    document.getElementById('resultCount').textContent = String(rows.length);
+
+    document.getElementById('resultList').innerHTML = rows.map(r => {
+      const downloadUrl = '/layout/service/result/download?ojLayoutServiceResultId='
+        + encodeURIComponent(r.OJ_LAYOUT_SERVICE_RESULT_ID);
+      const memo = r.MEMO ? `<p class="font-sm text-gray">${escapeHtml(r.MEMO)}</p>` : '';
+      return `
+        <a href="${downloadUrl}" class="btn attach-file js-download-link">
+          <div class="icon-area"><i class="icon-document"></i></div>
+          <div class="flex-1 min-w-0">
+            <div class="title list-inline flex-nowrap">
+              <strong class="ellipsis">${escapeHtml(r.FLOOR_PLAN_FILE_NM || '')}</strong>
+            </div>
+            <p class="font-sm">최종 수정</p>
+            <p class="font-sm text-gray mt-2xs spacing-lg">${escapeHtml(r.REG_DATE || '')}</p>
+            ${memo}
+          </div>
+          <div class="icon-area"><i class="icon-download"></i></div>
+        </a>`;
+    }).join('');
+    bindDownloadLinks(document.getElementById('resultList'));
+  }
+
+  function getResultEmptyMsg(status) {
+    switch (status) {
+      case 'NOT-ASSIGNED': return '대리점 배정 대기 중입니다.';
+      case 'REQUEST'     : return '대리점 접수 대기 중입니다.';
+      case 'ACCEPT'      : return '대리점에서 확인 중입니다.';
+      case 'IN-PROGRESS' : return '대리점에서 작업 중입니다.';
+      case 'COMPLETE'    : return '결과 파일이 등록되지 않았습니다.';
+      default            : return '';
+    }
+  }
+
+  async function completeService() {
+    if (!mainData) return;
+
+    // "확인했습니다" 체크박스는 비필수 — 미체크여도 완료 진행 (별점만 필수)
+    const checkedRating = document.querySelector('#layoutRatingModal .rating-wrap input[name="rating"]:checked');
+    if (!checkedRating) {
+      alertPopup ? alertPopup('만족도 평가를 진행해 주세요') : alert('만족도 평가를 진행해 주세요');
+      return;
+    }
+    const comment = (document.getElementById('layoutRatingComment') || {}).value || '';
+
+    const fd = new FormData();
+    fd.append('ojLayoutServiceRequestId', mainData.OJ_LAYOUT_SERVICE_REQUEST_ID);
+    fd.append('satisfactionScore', checkedRating.value);
+    fd.append('satisfactionComment', comment);
+
+    try {
+      const res = await fetch('/layout/service/complete', { method: 'POST', body: fd });
+      if (!res.ok) {
+        const msg = '완료 처리에 실패했습니다.\n' + (await res.text());
+        alertPopup ? alertPopup(msg) : alert(msg);
+        return;
+      }
+      if (typeof fnPopupClose === 'function') fnPopupClose('layoutRatingModal');
+      const okMsg = '서비스 완료 처리되었습니다.';
+      const reload = () => location.reload();
+      alertPopup ? alertPopup(okMsg, reload) : (alert(okMsg), reload());
+    } catch (e) {
+      console.error(e);
+      const msg = '완료 처리 중 오류가 발생했습니다.';
+      alertPopup ? alertPopup(msg) : alert(msg);
+    }
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  /**
+   * 다운로드 링크 클릭 가로채기 — 파일 미존재 시 새 페이지 이동 대신 alert.
+   * 서버 /download 엔드포인트는 파일 있으면 presigned URL 로 302 redirect, 없으면 404 plain-text.
+   * fetch(redirect:'manual') 로 먼저 확인: opaqueredirect(302) → 존재 → navigation 으로 다운로드 / 그 외 → alert.
+   */
+  function bindDownloadLinks(scope) {
+    const root = scope || document;
+    root.querySelectorAll('.js-download-link').forEach(a => {
+      a.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const url = a.getAttribute('href');
+        if (!url || url === '#') {
+          alertPopup ? alertPopup('파일이 존재하지 않습니다.') : alert('파일이 존재하지 않습니다.');
+          return;
+        }
+        try {
+          const res = await fetch(url, { redirect: 'manual' });
+          // 서버가 presigned URL 로 redirect → opaqueredirect (status 0). 파일 존재로 간주.
+          if (res.type === 'opaqueredirect' || (res.status >= 200 && res.status < 400)) {
+            window.location.href = url; // 실제 다운로드는 navigation 으로 (302 따라가 attachment 다운로드)
+            return;
+          }
+          alertPopup ? alertPopup('파일이 존재하지 않습니다.') : alert('파일이 존재하지 않습니다.');
+        } catch (err) {
+          console.error('download error', err);
+          alertPopup ? alertPopup('파일이 존재하지 않습니다.') : alert('파일이 존재하지 않습니다.');
+        }
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+</script>
+</th:block>
+</body>
+</html>

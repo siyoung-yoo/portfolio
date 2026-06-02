@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+</head>
+<body class="scroll-responsive">
+  <div class="full-page login-page">
+    <h1 class="main-logo"><strong>OFFICE JOURNEY<br>PROGRAM</strong></h1>
+
+
+    <div class="login-content">
+
+      <form id="otpForm">
+      <div class="login-box layout-column gap-2xl">
+        <div class="title-area">
+          <h2 class="page-title">계정이 잠겼습니다.</h2>
+
+          <p class="page-description" th:if="${lockReason == 'PWD'}">비밀번호를 5회 이상 잘못 입력하여<br>계정이 잠금 처리 되었습니다.<br>아래 번호로 문의하여 잠금을 해제해 주세요.</p>
+          <p class="page-description" th:if="${lockReason == 'OTP'}">인증번호를 5회 이상 잘못 입력하여<br>계정이 잠금 처리 되었습니다.<br>아래 번호로 문의하여 잠금을 해제해 주세요.</p>
+          <p class="page-description" th:if="${lockReason == 'INACTIVITY'}">장기간 접속하지 않아 계정이 잠금 처리 되었습니다.<br>아래 번호로 문의하여 잠금을 해제해 주세요.</p>
+        </div>
+
+        <div class="box-line-style">
+          <p class="text-center">02-3400-6911 (계정 문의)</p>
+        </div>
+
+        <div class="logo-area mt-xs">
+          <div class="mark-logo"><span class="sr-only">FURSYS</span></div>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <th:block th:replace="~{common/layout/js.html}" />
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!--
+  도면 PDF 로딩 스피너 fragment
+  사용법:
+    1) 도면 컨테이너(부모: position: relative) 안에 include
+       <div class="draw-cont-wrap" style="position: relative;">
+         ...
+         <th:block th:replace="~{common/fragments/drawLoading :: drawLoading}"/>
+       </div>
+    2) PDF 로드 시작/완료 시점에 호출 (현재 컨텍스트의 스피너만 토글)
+       showDrawLoading();              // 페이지의 모든 .draw-loading 표시
+       showDrawLoading('#drawAreaModal'); // 특정 컨테이너 안의 스피너만 표시
+       hideDrawLoading();              // 동일
+-->
+<th:block th:fragment="drawLoading">
+  <div class="draw-loading"
+       style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+              flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+              z-index: 20; pointer-events: none;">
+    <div style="width: 40px; height: 40px; border: 4px solid #e5e5e5; border-top-color: var(--primary, #2c2c2c); border-radius: 50%; animation: drawSpin 0.9s linear infinite;"></div>
+    <span class="text-sm text-primary-300">도면을 불러오는 중...</span>
+  </div>
+  <style>@keyframes drawSpin { to { transform: rotate(360deg); } }</style>
+  <script>
+    /* 전역 — 도면 화면 어디서든 호출 가능
+       scope: 선택자(string) 또는 Element. 미지정 시 document 전체 */
+    (function() {
+      function resolveRoot(scope) {
+        if (!scope) return document;
+        if (typeof scope === 'string') return document.querySelector(scope) || document;
+        return scope;
+      }
+      function toggle(scope, value) {
+        const root = resolveRoot(scope);
+        root.querySelectorAll('.draw-loading').forEach(el => {
+          // scope 없이 호출 시 모달 내부 스피너는 제외 (모달은 자기 scope로 호출되어야 함)
+          if (!scope && el.closest('.modal')) return;
+          el.style.display = value;
+        });
+      }
+      window.showDrawLoading = function(scope) { toggle(scope, 'flex'); };
+      window.hideDrawLoading = function(scope) { toggle(scope, 'none'); };
+    })();
+  </script>
+</th:block>

@@ -1,0 +1,54 @@
+<div class="modal" id="editSpaceNameModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">등록 정보 수정</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group w-full">
+          <label>
+            <span class="label required">도면 공간(층수)</span>
+            <input type="text" id="editSpaceNameInput" class="input" placeholder="도면 공간(층수) 입력"
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();saveSpaceName();}">
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="saveSpaceName()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openEditSpaceName() {
+  const el = document.getElementById('detailDrawingName') || document.getElementById('infoDrawingName');
+  const current = el ? el.textContent : '';
+  document.getElementById('editSpaceNameInput').value = current;
+  openModal('editSpaceNameModal');
+}
+
+function saveSpaceName() {
+  const newName = document.getElementById('editSpaceNameInput').value.trim();
+  if (!newName) { alert('도면 공간(층수)을 입력하세요.'); return; }
+
+  const nameEl = document.getElementById('detailDrawingName') || document.getElementById('infoDrawingName');
+  if (nameEl) nameEl.textContent = newName;
+
+  // 메모리만 업데이트 (DB 저장은 하단 저장 버튼에서)
+  if (typeof _pendingDrawing !== 'undefined' && _pendingDrawing) {
+    _pendingDrawing.drawingName = newName;
+    sessionStorage.setItem('pendingDrawing', JSON.stringify(_pendingDrawing));
+  }
+  if (typeof _drawingData !== 'undefined' && _drawingData) {
+    _drawingData.drawingName = newName;
+  }
+  if (typeof _detailData !== 'undefined' && _detailData) {
+    _detailData.drawingName = newName;
+  }
+
+  closeModal('editSpaceNameModal');
+}
+</script>

@@ -1,0 +1,350 @@
+<div class="modal" id="returnRequestModal">
+  <div class="modal-dialog modal-xxl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">반품 의뢰/접수 등록</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- S: 기본정보 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">기본정보</div>
+            <i class="icon-chevron" data-action="collapse"></i>
+          </div>
+          <div class="card-content collapse-content is-open">
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3">
+              <div>
+                <span class="text-xs text-muted-foreground">수주번호</span>
+                <p class="text-sm font-medium">F20250110000101</p>
+              </div>
+              <div class="col-span-2">
+                <span class="text-xs text-muted-foreground">수주명</span>
+                <p class="text-sm font-medium">퍼시스 강남 오피스 가구 납품</p>
+              </div>
+              <div class="col-span-2">
+                <span class="text-xs text-muted-foreground">고객(상호)명</span>
+                <p class="text-sm font-medium">참좋은여행(주)</p>
+              </div>
+
+              <div>
+                <span class="text-xs text-muted-foreground">시공 가입여부</span>
+                <p class="text-sm font-medium">유</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">시공팀 구분</span>
+                <p class="text-sm font-medium">-</p>
+              </div>
+              <div>
+                <span class="text-xs text-muted-foreground">시공 유무</span>
+                <p class="text-sm font-medium">유</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 기본정보 -->
+
+        <!-- S: 반품 의뢰/회수 목록 -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <div class="flex items-center justify-between gap-4">
+              <h3 class="card-title">반품 의뢰/회수 목록</h3>
+              <div class="flex gap-2">
+                <input type="text" name="" id="" class="input text-right" value="0" readonly>
+                <button type="button" class="btn btn-outline h-[32px]">반품수수료 예상비용</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="border">
+              <div id="rtnRqGrid1" class="w-full h-full"></div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 반품 의뢰/회수 목록 -->
+
+        <!-- S: 시공팀 정보 -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <h3 class="card-title">시공팀 정보</h3>
+          </div>
+          <div class="card-content">
+            <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-3">
+              <div class="input-group">
+                <label>
+                  <span class="label">시공 예약일자</span>
+                  <form-select>
+                    <select name="" id="">
+                      <option value="">2026.01.01</option>
+                      <option value="">2026.01.11</option>
+                    </select>
+                  </form-select>
+                </label>
+              </div>
+
+              <div class="input-group">
+                <label>
+                  <span class="label">시공팀</span>
+                  <form-select>
+                    <select name="" id="">
+                      <option value="">선택</option>
+                      <option value="">시공팀1</option>
+                      <option value="">시공팀2</option>
+                    </select>
+                  </form-select>
+                </label>
+              </div>
+            </div>
+
+            <div class="border">
+              <div id="rtnRqGrid2" class="w-full h-full"></div>
+            </div>
+
+            <div class="card bg-secondary mt-3">
+              <div class="card-content py-4">
+                <div class="grid sm:grid-cols-3 xl:grid-cols-6 gap-2">
+                  <div class="input-group">
+                    <span class="label">시공 예약일자</span>
+                    <p class="text-sm h-[30px] pt-1">-</p>
+                  </div>
+                  <div class="input-group">
+                    <span class="label">시공팀</span>
+                    <p class="text-sm h-[30px] pt-1">-</p>
+                  </div>
+                  <div class="input-group sm:col-span-2">
+                    <label>
+                      <span class="label">납품요청시간</span>
+                      <div class="flex gap-3">
+                        <form-select class="w-1/2 flex-shrink-0">
+                          <select name="" id="">
+                            <option value="">10:00</option>
+                            <option value="">10:30</option>
+                          </select>
+                        </form-select>
+
+                        <label class="radio-box">
+                          <input type="checkbox" class="checkbox" />
+                          <span class="text-sm">시간엄수</span>
+                        </label>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 xl:grid-cols-6 mt-2">
+                  <div class="input-group sm:col-span-3 xl:col-span-6">
+                    <label>
+                      <span class="label">특기사항</span>
+                      <input type="text" id="" class="input" placeholder="특기사항 입력">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 시공팀 정보 -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 수량 검증
+  function validateQty2(value, min, max) {
+    if (value < min) {
+      // alert(`최소 수량은 ${min}개 입니다.`);
+      return min;
+    }
+
+    if (value > max) {
+      alert(`최대 수량은 ${max}개 입니다.`);
+      return max;
+    }
+
+    return value;
+  }
+
+  // row 수량 정보 가져오기
+  function getQtyInfo2(rowIndex) {
+    const item = AUIGrid.getItemByRowIndex(rtnRqGrid1, rowIndex);
+    if (!item) return null;
+
+    return {
+      currentValue: parseInt(item.TEMP_DATA08, 10) || 0,
+      maxQty: parseInt((item.TEMP_DATA06 - item.TEMP_DATA07), 10) || 0
+    };
+  }
+
+  // 수량 변경 공통 처리
+  function changeQty2(rowIndex, newValue) {
+    const info = getQtyInfo2(rowIndex);
+    if (!info) return;
+
+    const validValue = validateQty2(newValue, 0, info.maxQty);
+    if (validValue === info.currentValue) return;
+
+    updateQty2(rowIndex, validValue);
+  }
+
+
+  // 수량변경 minus 버튼
+  function chgQtyMinus2(rowIndex, value, e) {
+    e.stopPropagation();
+
+    const info = getQtyInfo2(rowIndex);
+    if (!info) return;
+
+    changeQty2(rowIndex, info.currentValue - 1);
+  }
+
+
+  // 수량변경 plus 버튼
+  function chgQtyPlus2(rowIndex, value, e) {
+    e.stopPropagation();
+
+    const info = getQtyInfo2(rowIndex);
+    if (!info) return;
+    changeQty2(rowIndex, info.currentValue + 1);
+  }
+
+
+  // 수량변경 input 직접 입력
+  function handleQtyInput2(rowIndex, el) {
+    let inputValue = el.value.replace(/[^0-9]/g, "");
+    let newValue = parseInt(inputValue, 10) || 0;
+
+    const info = getQtyInfo2(rowIndex);
+    if (!info) return;
+
+    const validValue = validateQty(newValue, 1, info.maxQty);
+    el.value = validValue;
+    if (validValue !== info.currentValue) {
+      changeQty2(rowIndex, validValue);
+    }
+  }
+
+
+  // grid 데이터 업데이트
+  function updateQty2(rowIndex, newValue) {
+    AUIGrid.updateRow(
+      rtnRqGrid1,
+      {
+        TEMP_DATA08: newValue
+      },
+      rowIndex
+    );
+  }
+
+
+
+  // grid 관련 setting
+  let rtnRqGrid1, rtnRqGrid2;
+
+  const rtnRqGridProps = {
+    isRowAllCheckCurrentView: true,
+    enableSorting: true,
+    enableFilter: true,
+    useContextMenu: true,
+    hoverMode: "singleRow",
+    selectionMode: "none",
+    showRowNumColumn: true,
+    showRowCheckColumn: false,
+    defaultColumnWidth: 100,
+    softRemoveRowMode: false,
+    enableMovingColumn: true,
+    height: 268,
+    showEditedCellMarker: false,     // 셀을 수정하면 수정된 표시(마크)를 출력할지 여부
+  }
+
+  // 반품 의뢰/회수 목록
+  function create_rtnRqGrid1() {
+    const columnLayout = [
+      { headerText: "세트코드", dataField: "TEMP_DATA01", filter: filter, width: 120, },
+      { headerText: "세트색상", dataField: "TEMP_DATA02", filter: filter, width: 100, },
+      { headerText: "단품코드", dataField: "TEMP_DATA03", filter: filter, width: 120, },
+      { headerText: "단품색상", dataField: "TEMP_DATA04", filter: filter, width: 100, },
+      { headerText: "단품명", dataField: "TEMP_DATA05", filter: filter, width: 250, },
+      { headerText: "수주수량", dataField: "TEMP_DATA06", filter: filter, width: 100, dataType:"numeric", style: 'text-center', },
+      { headerText: '<span class="inline-flex">반품<br/>의뢰수량</span>', dataField: "TEMP_DATA07", filter: filter, width: 100, dataType:"numeric", style: 'text-center', },
+      { headerText: "의뢰수량", dataField: "TEMP_DATA08", width: 100, style: 'text-center p-0',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item, dataField, cItem) {
+          return `<div class="flex items-center gap-1 px-1">
+                    <button type="button" class="btn btn-icon" onclick="chgQtyMinus2(${rowIndex}, ${value}, event)">
+                      <i class="icon-chevron rotate-90"></i>
+                    </button>
+                    <input type="text" name="" id="" class="input text-center p-0" value="${value}" onchange="handleQtyInput2(${rowIndex}, this)">
+                    <button type="button" class="btn btn-icon" onclick="chgQtyPlus2(${rowIndex}, ${value}, event)">
+                      <i class="icon-chevron rotate-270"></i>
+                    </button>
+                  </div>`;
+        }
+      },
+      { headerText: "재고구분", dataField: "TEMP_DATA09", filter: filter, width: 100, style: 'text-center' },
+      { headerText: '<span class="inline-flex">수주단가<br/>(단가)</span>', dataField: "TEMP_DATA10", filter: filter, width: 100, dataType:"numeric", style: 'text-right', },
+      { headerText: '<span class="inline-flex">수주단가<br/>(금액)</span>', dataField: "TEMP_DATA11", filter: filter, width: 100, dataType:"numeric", style: 'text-right', },
+      { headerText: '<span class="inline-flex">시공팀<br/>의뢰요청수량</span>', dataField: "TEMP_DATA12", filter: filter, width: 100, dataType:"numeric", style: 'text-center', },
+      { headerText: "제품구분", dataField: "TEMP_DATA13", filter: filter, width: 200, },
+      { headerText: "담당자", dataField: "TEMP_DATA14", filter: filter, width: 100, style: 'text-center' },
+      { headerText: "연락처", dataField: "TEMP_DATA15", filter: filter, width: 150, style: 'text-center' },
+    ];
+
+    const tempData = [
+      { "TEMP_DATA01": "CHA4200A", "TEMP_DATA02": "SH1A5G", "TEMP_DATA03": "CHA4200A", "TEMP_DATA04": "SH1A5G", "TEMP_DATA05": "일반형 의자", "TEMP_DATA06": 6, "TEMP_DATA07": 2, "TEMP_DATA09": "비재고", "TEMP_DATA10": 277000, "TEMP_DATA11": 0, "TEMP_DATA12": 0, "TEMP_DATA13": "평택의자상품", "TEMP_DATA14": "홍길동", "TEMP_DATA15": "031-1234-1234", },
+      { "TEMP_DATA01": "CHA4200A", "TEMP_DATA02": "SH1A5G", "TEMP_DATA03": "CHA4200A", "TEMP_DATA04": "SH1A5G", "TEMP_DATA05": "일반형 의자", "TEMP_DATA06": 10, "TEMP_DATA07": 2, "TEMP_DATA09": "비재고", "TEMP_DATA10": 277000, "TEMP_DATA11": 0, "TEMP_DATA12": 0, "TEMP_DATA13": "평택의자상품", "TEMP_DATA14": "홍길동", "TEMP_DATA15": "031-1234-1234", },
+      { "TEMP_DATA01": "CHA4200A", "TEMP_DATA02": "SH1A5G", "TEMP_DATA03": "CHA4200A", "TEMP_DATA04": "SH1A5G", "TEMP_DATA05": "일반형 의자", "TEMP_DATA06": 2, "TEMP_DATA07": 1, "TEMP_DATA09": "비재고", "TEMP_DATA10": 277000, "TEMP_DATA11": 0, "TEMP_DATA12": 0, "TEMP_DATA13": "평택의자상품", "TEMP_DATA14": "홍길동", "TEMP_DATA15": "031-1234-1234", },
+      { "TEMP_DATA01": "CHA4200A", "TEMP_DATA02": "SH1A5G", "TEMP_DATA03": "CHA4200A", "TEMP_DATA04": "SH1A5G", "TEMP_DATA05": "일반형 의자", "TEMP_DATA06": 4, "TEMP_DATA07": 3, "TEMP_DATA09": "비재고", "TEMP_DATA10": 277000, "TEMP_DATA11": 0, "TEMP_DATA12": 0, "TEMP_DATA13": "평택의자상품", "TEMP_DATA14": "홍길동", "TEMP_DATA15": "031-1234-1234", },
+    ]
+
+    // 의뢰수량 초기 값 세팅
+    tempData.forEach(row => {
+      row.TEMP_DATA08 = 0;
+    });
+
+    rtnRqGrid1 = AUIGrid.create("#rtnRqGrid1", columnLayout, rtnRqGridProps);
+    AUIGrid.setGridData(rtnRqGrid1, tempData);
+  }
+
+  // 시공팀 정보
+  function create_rtnRqGrid2() {
+    const columnLayout = [
+      { headerText: "예정시간", dataField: "TEMP_DATA01", filter: filter, style: 'text-center', },
+      { headerText: "시공금액", dataField: "TEMP_DATA02", filter: filter, dataType:"numeric", style: 'text-right', },
+      { headerText: "예정소요시간", dataField: "TEMP_DATA03", filter: filter, style: 'text-center', },
+      { headerText: "시간엄수 구분", dataField: "TEMP_DATA04", filter: filter, style: 'text-center', renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+          if (value === "Y") { return '<i class="icon-check"></i>' }
+        }
+      },
+      { headerText: "회사구분", dataField: "TEMP_DATA05", filter: filter, style: 'text-center', },
+      { headerText: "시공지역", dataField: "TEMP_DATA06", filter: filter, style: 'text-center', },
+      { headerText: "추가요청건", dataField: "TEMP_DATA07", filter: filter, width: '30%' },
+    ];
+
+    const tempData = [
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+      { "TEMP_DATA01": "11:00", "TEMP_DATA02": 500000, "TEMP_DATA03": "-", "TEMP_DATA04": "Y", "TEMP_DATA05": "-", "TEMP_DATA06": "서울", "TEMP_DATA07": "추가 요청 내용 입니다.", },
+    ]
+
+    rtnRqGrid2 = AUIGrid.create("#rtnRqGrid2", columnLayout, rtnRqGridProps);
+    AUIGrid.setGridData(rtnRqGrid2, tempData);
+  }
+
+  // 모달 열릴 때 그리드 초기화
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'returnRequestModal') {
+      create_rtnRqGrid1();
+      create_rtnRqGrid2();
+    }
+  });
+</script>

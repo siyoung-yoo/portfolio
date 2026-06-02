@@ -1,0 +1,39 @@
+<div class="modal" id="layoutRatingModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">만족도 조사 결과</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title text-base">★ <span id="ratingScoreText">-</span></div>
+          </div>
+          <div class="card-content">
+            <span class="label">추가 의견</span>
+            <div id="ratingSuggestText" class="text-sm font-medium break-keep mt-1">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * 만족도 조사 결과 모달 열기
+   * @param {number|string} score    - satisfactionScore (점수)
+   * @param {string}        suggest  - suggestContents (추가 의견)
+   */
+  function openLayoutRatingModal(score, suggest) {
+    const scoreEl   = document.getElementById('ratingScoreText');
+    const suggestEl = document.getElementById('ratingSuggestText');
+    if (scoreEl)   scoreEl.textContent   = (score !== undefined && score !== null && score !== '') ? score : '-';
+    if (suggestEl) suggestEl.textContent = (suggest !== undefined && suggest !== null && suggest !== '') ? suggest : '-';
+    openModal('layoutRatingModal');
+  }
+</script>

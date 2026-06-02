@@ -1,0 +1,788 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">오피스 케어</h2>
+      <p class="page-description">오피스 케어 및 유지관리 서비스</p>
+    </div>
+    <!-- // .title-area -->
+
+    <!-- S: 예정 일정 -->
+    <div class="care-cards-wrap" id="upcomingWrap">
+      <div class="title-area">
+        <h3 class="group-title gap-2xs">예정 일정 확인<span class="text-blue" id="upcomingCount">0건</span></h3>
+      </div>
+
+      <!-- 빈 상태 -->
+      <div class="text-nodata bg-lighter" id="upcomingEmpty">
+        <div class="flex-all-center gap-2xs">
+          <i class="icon-calendar bg-gray"></i><span class="text-gray">예정된 일정이 없습니다.</span>
+        </div>
+      </div>
+
+      <!-- 카드 그리드 -->
+      <div class="layout-grid col-3" id="upcomingGrid" style="display:none;"></div>
+    </div>
+    <!-- E: 예정 일정 -->
+
+    <!-- S: 미진행 일정 -->
+    <div class="care-cards-wrap float-bg-white" id="pendingWrap" style="display:none;">
+      <div class="title-area">
+        <h3 class="group-title gap-2xs">미진행 일정<span class="text-blue" id="pendingCount">0건</span></h3>
+      </div>
+      <div class="layout-grid col-3" id="pendingGrid"></div>
+    </div>
+    <!-- E: 미진행 일정 -->
+
+    <!-- S: 케어 이력 -->
+    <div class="title-area mt-100px">
+      <h3 class="group-title">케어 이력</h3>
+    </div>
+    <div class="search-area mt-0">
+      <div class="row">
+        <div class="form-group">
+          <label for="searchConIdx" class="text-label">계약 건명</label>
+          <div class="select-box" data-name="conIdx">
+            <button type="button" id="searchConIdx" class="btn-select" title="계약 건명 선택" data-value="">전체</button>
+            <div class="option-list">
+              <div class="scroll-y" id="contractOptions">
+                <button type="button" class="selected" data-value="">전체</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group w-md">
+          <label for="searchKeyword" class="text-label">검색</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="searchKeyword" autocomplete="off" placeholder="주소 검색" title="주소 입력">
+          </div>
+        </div>
+
+        <div class="form-group w-lg">
+          <label for="fromDt" class="text-label">방문 일정</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="fromDt" class="start-date" autocomplete="off" placeholder="연도.월.일" title="방문 일정 시작 날짜 선택">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="toDt" class="end-date" autocomplete="off" placeholder="연도.월.일" title="방문 일정 종료 날짜 선택">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="btn-area">
+          <button type="button" class="btn dark" id="btnSearch">검색</button>
+          <button type="button" class="btn line" id="btnReset"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+    <!-- // search-area -->
+
+    <div class="table-utils">
+      <p class="table-info"><span id="totalCountLabel">전체</span> <strong id="totalCount">0</strong>건</p>
+
+      <button type="button" class="btn tag" id="btnUnconfirmed" disabled>
+        <span class="dot"></span>확인필요<span id="unconfirmedCount">0</span>
+      </button>
+    </div>
+
+    <div class="text-nodata" id="historyNoData" style="display:none;">검색 내역이 존재하지 않습니다.</div>
+
+    <div class="table-wrap" id="historyTableArea">
+      <table>
+        <colgroup>
+          <col style="width: 158px">
+          <col>
+          <col style="width: 320px">
+          <col style="width: 120px">
+          <col style="width: 100px">
+          <col style="width: 100px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">계약번호</th>
+            <th scope="col">계약 건명</th>
+            <th scope="col">주소</th>
+            <th scope="col" class="text-center">방문 일정</th>
+            <th scope="col" class="text-center">확인 상태</th>
+            <th scope="col" class="text-center">리포트</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+
+    <div id="historyPagination"></div>
+  </div>
+
+  <!-- 케어 리포트 상세 모달 (퍼블 그대로 재사용) -->
+  <th:block th:insert="~{service/pub/modal/careReportModal}"></th:block>
+  <th:block th:insert="~{service/pub/modal/imgSwiperModal}"></th:block>
+  <th:block th:insert="~{service/pub/modal/serviceRatingModal}"></th:block>
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+  /* global alertPopup, fnPopupOpen, fnPopupClose, imgSwiper */
+
+  /** 현재 선택된 리포트 키 (모달 내부 액션에서 사용) */
+  let currentReportKey = null;
+  /** 검색 상태 — 페이지 이동 시에도 유지. unconfirmedOnly 토글도 서버 사이드 필터로 함께 전달. */
+  const searchState = { conIdx: '', keyword: '', fromDt: '', toDt: '', pageNo: 1, pageSize: 10, unconfirmedOnly: false };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    bindConIdxSelect();
+    document.getElementById('btnSearch').addEventListener('click', () => { searchState.pageNo = 1; loadHistory(); });
+    document.getElementById('btnReset').addEventListener('click', resetSearch);
+    document.getElementById('searchKeyword').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); searchState.pageNo = 1; loadHistory(); }
+    });
+    document.getElementById('btnUnconfirmed').addEventListener('click', toggleUnconfirmed);
+
+    Promise.all([loadDashboard(), loadContractOptions(), loadHistory()]);
+    bindReportModalActions();
+  });
+
+  /* ====================================================================
+   *  1. 대시보드 - 예정/미진행/확인필요 카운트
+   * ==================================================================== */
+
+  async function loadDashboard() {
+    const [up, pe, uc] = await Promise.all([
+      fetchJson('/api/care/upcoming',         { method: 'POST' }),
+      fetchJson('/api/care/pending',          { method: 'POST' }),
+      fetchJson('/api/care/unconfirmedCount', { method: 'POST' })
+    ]);
+    renderUpcoming(up || []);
+    renderPending(pe || []);
+    renderUnconfirmedBadge((uc && uc.count) || 0);
+  }
+
+  function renderUpcoming(cards) {
+    document.getElementById('upcomingCount').textContent = `${cards.length}건`;
+    const grid = document.getElementById('upcomingGrid');
+    const empty = document.getElementById('upcomingEmpty');
+    if (!cards.length) {
+      grid.innerHTML = '';
+      grid.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+    empty.style.display = 'none';
+    grid.style.display = '';
+    grid.innerHTML = cards.map(c => cardHtml(c, dDayBadge(c.dDay))).join('');
+  }
+
+  function renderPending(cards) {
+    const wrap = document.getElementById('pendingWrap');
+    document.getElementById('pendingCount').textContent = `${cards.length}건`;
+    if (!cards.length) {
+      wrap.style.display = 'none';
+      return;
+    }
+    wrap.style.display = '';
+    const badge = `<span class="badge bg-light-gray">미진행</span>`;
+    document.getElementById('pendingGrid').innerHTML = cards.map(c => cardHtml(c, badge)).join('');
+  }
+
+  function cardHtml(c, badge) {
+    const ddCls = (c.dDay === 0) ? ' type-dday' : '';
+    // 담당자 정보 — 데이터 없는 항목은 구분점(·)도 함께 숨겨서 '· · -' 같은 잔여 표기 방지
+    const agentParts = [];
+    if (c.vndNm)      agentParts.push(`<li><i class="icon-user"></i><span class="ellipsis">${escapeHtml(c.vndNm)}</span></li>`);
+    if (c.agentName)  agentParts.push(`<li>·</li><li>${escapeHtml(c.agentName)}</li>`);
+    if (c.agentPhone) agentParts.push(`<li>·</li><li>${escapeHtml(c.agentPhone)}</li>`);
+    const agentList = agentParts.length
+      ? `<ul class="list-inline">${agentParts.join('')}</ul>`
+      : `<ul class="list-inline"><li><i class="icon-user"></i><span class="ellipsis text-medium-gray">담당자 정보 없음</span></li></ul>`;
+
+    return `
+      <div class="box-style${ddCls}">
+        <div class="flex-center-between">
+          <p class="group-title spacing-lg">${formatDateWithDow(c.careRequrestDate)}</p>
+          ${badge}
+        </div>
+        <ul class="list-column">
+          <li><a href="/contract/${escapeAttr(c.conIdx)}" class="btn link text-blue">${escapeHtml(c.conCd || '')}</a></li>
+          <li class="w-full title-sm ellipsis">${escapeHtml(c.conTitle || '')}</li>
+          <li class="text-box"><i class="icon-location"></i><span class="ellipsis">${escapeHtml(c.estaAdr4 || '')}</span></li>
+        </ul>
+        ${agentList}
+      </div>`;
+  }
+
+  function dDayBadge(dDay) {
+    if (dDay == null) return `<span class="badge">-</span>`;
+    if (dDay === 0)   return `<span class="badge bg-blue">D-DAY</span>`;
+    if (dDay > 0)     return `<span class="badge">D-${dDay}</span>`;
+    return `<span class="badge bg-light-gray">D+${Math.abs(dDay)}</span>`;
+  }
+
+  function renderUnconfirmedBadge(count) {
+    const btn = document.getElementById('btnUnconfirmed');
+    document.getElementById('unconfirmedCount').textContent = String(count);
+    btn.disabled = (count === 0);
+    if (count === 0) btn.classList.remove('is-active');
+  }
+
+  /* ====================================================================
+   *  2. 검색 - 계약 옵션 select
+   * ==================================================================== */
+
+  async function loadContractOptions() {
+    const opts = await fetchJson('/api/care/contractOptions', { method: 'POST' });
+    if (!opts) return;
+    const box = document.getElementById('contractOptions');
+    const prev = box.innerHTML;
+    box.innerHTML = `<button type="button" class="selected" data-value="">전체</button>`
+      + (opts || []).map(o =>
+          `<button type="button" data-value="${escapeAttr(o.conIdx)}">${escapeHtml(o.conTitle || '-')}</button>`
+        ).join('');
+    bindConIdxSelect();
+  }
+
+  function bindConIdxSelect() {
+    const box = document.querySelector('.select-box[data-name="conIdx"]');
+    if (!box) return;
+    const trigger = box.querySelector('.btn-select');
+    box.querySelectorAll('.option-list button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        box.querySelectorAll('.option-list button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        trigger.textContent = btn.textContent;
+        trigger.dataset.value = btn.dataset.value || '';
+      });
+    });
+  }
+
+  /* ====================================================================
+   *  3. 케어 이력 - 검색/페이지네이션
+   * ==================================================================== */
+
+  async function loadHistory() {
+    const trigger = document.querySelector('.select-box[data-name="conIdx"] .btn-select');
+    searchState.conIdx  = (trigger && trigger.dataset.value) || '';
+    searchState.keyword = document.getElementById('searchKeyword').value.trim();
+    searchState.fromDt  = normalizeDate(document.getElementById('fromDt').value);
+    searchState.toDt    = normalizeDate(document.getElementById('toDt').value);
+
+    const data = await fetchJson('/api/care/history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(searchState)
+    });
+    if (!data) return;
+    renderHistory(data.items || [], data.totalCount || 0);
+    renderPagination(data.currentPage || 1, data.totalPages || 0, data.totalCount || 0);
+  }
+
+  function renderHistory(rows, totalCount) {
+    document.getElementById('totalCount').textContent = String(totalCount);
+    // 라벨은 토글 여부와 무관하게 항상 "전체"
+    const label = document.getElementById('totalCountLabel');
+    if (label) label.textContent = '전체';
+    const tbody = document.getElementById('historyBody');
+    const noData = document.getElementById('historyNoData');
+    const area = document.getElementById('historyTableArea');
+
+    if (!rows.length) {
+      tbody.innerHTML = '';
+      noData.style.display = '';
+      area.style.display = 'none';
+      return;
+    }
+    noData.style.display = 'none';
+    area.style.display = '';
+
+    tbody.innerHTML = rows.map(r => {
+      const isUnconfirmed = r.confirmStatus === 'UNCONFIRMED';
+      const isRejected    = r.confirmStatus === 'REJECTED';
+      const badge = isUnconfirmed
+        ? `<span class="badge-line-blue w-fix-lg">확인필요</span>`
+        : isRejected
+          ? `<span class="badge bg-light-gray w-fix">반려</span>`
+          : `<span class="badge bg-light-gray w-fix">완료</span>`;
+      const key = JSON.stringify({
+        conIdx: r.conIdx, mIdx: r.mIdx, estaIdx: r.estaIdx, officecareSeq: r.officecareSeq
+      });
+      return `
+        <tr data-key='${escapeAttr(key)}'>
+          <td><a href="/contract/${escapeAttr(r.conIdx)}" class="btn link lg text-medium-gray">${escapeHtml(r.conCd || '')}</a></td>
+          <td class="text-black">${escapeHtml(r.conTitle || '')}</td>
+          <td class="text-black">${escapeHtml(r.estaAdr4 || '')}</td>
+          <td class="text-center text-black">${formatDate(r.careRequrestDate)}</td>
+          <td class="text-center">${badge}</td>
+          <td class="text-center">
+            <button type="button" class="btn link js-report-detail">상세</button>
+          </td>
+        </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('.js-report-detail').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const tr = e.currentTarget.closest('tr');
+        openReportModal(JSON.parse(tr.dataset.key));
+      });
+    });
+  }
+
+  /** 확인필요 토글 — 서버 사이드 필터로 조회. 페이지를 1로 리셋해 필터된 전체 기준 페이지네이션 재산정. */
+  function toggleUnconfirmed() {
+    const btn = document.getElementById('btnUnconfirmed');
+    if (btn.disabled) return;
+    searchState.unconfirmedOnly = btn.classList.toggle('is-active');
+    searchState.pageNo = 1;
+    loadHistory();
+  }
+
+  function renderPagination(currentPage, totalPages, totalCount) {
+    const cont = document.getElementById('historyPagination');
+    if (totalPages <= 0) { cont.innerHTML = ''; return; }
+
+    const pg = Math.floor((currentPage - 1) / 5);
+    const sPage = pg * 5 + 1;
+    const ePage = Math.min(pg * 5 + 5, totalPages);
+    let html = `<div class="pagination" data-current-page="${currentPage}" data-total-pages="${totalPages}" data-total-count="${totalCount}">`;
+    html += `<button type="button" class="prev" aria-label="이전 페이지"${currentPage <= 1 ? ' disabled' : ''} data-page="${currentPage - 1}"></button>`;
+    html += `<div class="page-link">`;
+    for (let p = sPage; p <= ePage; p++) {
+      html += `<button type="button" data-page="${p}"${p === currentPage ? ' aria-current="page"' : ''}>${p}</button>`;
+    }
+    html += `</div>`;
+    html += `<button type="button" class="next" aria-label="다음 페이지"${currentPage >= totalPages ? ' disabled' : ''} data-page="${currentPage + 1}"></button>`;
+    html += `</div>`;
+    cont.innerHTML = html;
+
+    cont.querySelectorAll('button[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const p = parseInt(btn.dataset.page, 10);
+        if (!isNaN(p) && p >= 1 && p <= totalPages) {
+          searchState.pageNo = p;
+          loadHistory();
+        }
+      });
+    });
+  }
+
+  function resetSearch() {
+    document.getElementById('searchKeyword').value = '';
+    document.getElementById('fromDt').value = '';
+    document.getElementById('toDt').value = '';
+    const trigger = document.querySelector('.select-box[data-name="conIdx"] .btn-select');
+    if (trigger) { trigger.textContent = '전체'; trigger.dataset.value = ''; }
+    document.querySelectorAll('.select-box[data-name="conIdx"] .option-list button')
+      .forEach((b, i) => b.classList.toggle('selected', i === 0));
+    searchState.pageNo = 1;
+    loadHistory();
+  }
+
+  /* ====================================================================
+   *  4. 리포트 상세 모달
+   * ==================================================================== */
+
+  async function openReportModal(key) {
+    const data = await fetchJson('/api/care/report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(key)
+    });
+    if (!data || !data.header) {
+      alertPopup ? alertPopup('리포트를 조회할 수 없습니다.') : alert('리포트를 조회할 수 없습니다.');
+      return;
+    }
+    currentReportKey = key;
+    fillReportHeader(data.header);
+    fillReportIssues(data.issues || [], data.files || []);
+    syncSatisfactionState(data.header);
+    fnPopupOpen('careReportModal');
+  }
+
+  function fillReportHeader(h) {
+    const m = document.getElementById('careReportModal');
+    if (!m) return;
+
+    // 발행일
+    const publishedEl = m.querySelector('.popup-header .text-dark-gray');
+    if (publishedEl) publishedEl.textContent = h.publishedDate ? `${formatDate(h.publishedDate)} 발행` : '-';
+
+    // 품목별 이슈 탭 뱃지
+    const badge = m.querySelector('.tab-list .badge');
+    if (badge) badge.textContent = String(h.issueCnt || 0);
+
+    // 기본 정보
+    setKeyValue(m, '계약번호',   h.conCd);
+    setKeyValue(m, '계약 건명',  h.conTitle);
+    setKeyValue(m, '주소',       h.estaAdr4);
+    // 일정/담당 정보
+    setKeyValue(m, '방문일정',     formatDate(h.careRequrestDate));
+    setKeyValue(m, '계약 담당자', h.contractManager);
+    setKeyValue(m, '대리점',       h.vndNm);
+    setKeyValue(m, '대리점 담당자', `${h.agentName || '-'} ${h.agentPhone || ''}`.trim());
+
+    // 점검 결과
+    const issueCount = m.querySelector('.box-style.bg-dark-gray .text-green');
+    if (issueCount) issueCount.textContent = `${h.issueItemCnt || 0}개`;
+
+    // 현장 코멘트 (가구 + 개선사항) — 둘 다 비면 제목 포함 영역(.group) 전체 숨김
+    const commentBox = m.querySelector('#tabCont01 .box-style.gap-2xs');
+    if (commentBox) {
+      const commentGroup = commentBox.closest('.group');
+      const hasComment = h.furnitureFix || h.improvement;
+      if (commentGroup) commentGroup.classList.toggle('hidden', !hasComment);
+      if (hasComment) {
+        commentBox.innerHTML = '';
+        if (h.furnitureFix) commentBox.insertAdjacentHTML('beforeend', `<p>${escapeHtml(h.furnitureFix).replace(/\n/g, '<br>')}</p>`);
+        if (h.improvement)  commentBox.insertAdjacentHTML('beforeend', `<p>${escapeHtml(h.improvement).replace(/\n/g, '<br>')}</p>`);
+      }
+    }
+
+    // 이전 케어 코멘트
+    const prevGroup = Array.from(m.querySelectorAll('#tabCont01 .group')).pop();
+    if (prevGroup) {
+      const hasPrev = h.prevFurnitureFix || h.prevImprovement;
+      prevGroup.classList.toggle('hidden', !hasPrev);
+      if (hasPrev) {
+        const lines = [];
+        if (h.prevFurnitureFix) lines.push(`<p>${escapeHtml(h.prevFurnitureFix).replace(/\n/g, '<br>')}</p>`);
+        if (h.prevImprovement)  lines.push(`<p>${escapeHtml(h.prevImprovement).replace(/\n/g, '<br>')}</p>`);
+        const flexCol = prevGroup.querySelector('.flex-col');
+        if (flexCol) flexCol.innerHTML = lines.join('');
+      }
+    }
+  }
+
+  /** info-list 안의 title/value 쌍 채우기 */
+  function setKeyValue(modal, label, value) {
+    modal.querySelectorAll('.info-list li').forEach(li => {
+      const t = li.querySelector('.title');
+      const v = li.querySelector('.value');
+      if (t && v && t.textContent.trim() === label) v.textContent = value || '-';
+    });
+  }
+
+  function fillReportIssues(issues, files) {
+    const m = document.getElementById('careReportModal');
+    if (!m) return;
+    const tab = m.querySelector('#tabCont02');
+    if (!tab) return;
+
+    if (!issues.length) {
+      tab.innerHTML = `<div class="text-nodata lg bg-light">이슈가 없습니다.</div>`;
+      rebuildImgSwiper([]);
+      return;
+    }
+
+    // 아이템(AREA_ITEM_ID) 기준으로 묶고, ISSUE_GUBUN 분기:
+    //   · 관리 → 카드 상단 설명 박스 (시리얼 없는 단일 코멘트)
+    //   · AS   → 카드 하단 AS 행 (시리얼 + 비고 + 사진)
+    // 아이템 식별이 안 되는 행(레거시) 은 areaName+itemName+코드 조합으로 fallback 그룹핑.
+    const groups = new Map();
+    issues.forEach(iss => {
+      const k = (iss.areaItemId != null)
+        ? `id:${iss.areaItemId}`
+        : `nm:${iss.areaName}|${iss.itemName}|${iss.setYn}|${iss.codeCd}|${iss.colCd}`;
+      if (!groups.has(k)) groups.set(k, { meta: iss, management: [], asRows: [] });
+      if (iss.issueGubun === '관리') groups.get(k).management.push(iss);
+      else groups.get(k).asRows.push(iss); // 'AS' 또는 그 외 → AS 처리
+    });
+
+    // 사진을 AREA_ITEM_ID 기준 그룹핑 (서버에서 areaItemId 함께 반환)
+    const filesByItem = new Map();
+    (files || []).forEach(f => {
+      const k = (f.areaItemId != null) ? `id:${f.areaItemId}` : null;
+      if (!k) return;
+      if (!filesByItem.has(k)) filesByItem.set(k, []);
+      filesByItem.get(k).push(f);
+    });
+
+    // 전역 Swiper 용 — 카드 썸네일 클릭 시 정확한 인덱스로 슬라이드 이동 위해 평탄화 보존
+    rebuildImgSwiper(files || []);
+
+    let html = `<div class="layout-column gap-sm">`;
+    let toggleNo = 0;
+    groups.forEach((g, key) => {
+      toggleNo++;
+      const targetId = `careToggleTarget${toggleNo}`;
+      const meta = g.meta;
+      const itemFiles = filesByItem.get(key) || [];
+
+      // 1) 관리 코멘트(상단 설명 박스) — 관리 이슈가 있을 때만
+      const managementBox = g.management.length
+        ? `<div class="text-box bg-white">
+             ${g.management.map(i =>
+               `<strong class="font-sm font-bold">${escapeHtml(i.checkBigo || '')}</strong>`
+             ).join('<br>')}
+           </div>`
+        : '';
+
+      // 2) 사진 갤러리 — 해당 아이템의 첨부 사진이 있을 때만
+      const photoSection = itemFiles.length
+        ? `<div class="as-img-wrap mt-2xs">
+             <div class="flex-center-between mb-2xs">
+               <h4 class="font-sm">업로드 사진 <strong>(${itemFiles.length})</strong></h4>
+               <button type="button" class="btn link text-medium-gray js-download-all" data-key="${escapeAttr(key)}">전체 다운로드</button>
+             </div>
+             <div class="thumb-img-list">
+               ${itemFiles.map(f => `
+                 <button type="button" class="thumb-img js-item-thumb" data-global-index="${(files || []).indexOf(f)}">
+                   <img src="${escapeAttr(fileProxyUrl(f.filePath))}" alt="${escapeAttr(f.fileNm || 'SN 이미지')}">
+                 </button>`).join('')}
+             </div>
+           </div>`
+        : '';
+
+      // 3) AS 행 — AS 이슈가 있을 때만
+      const asRowsHtml = g.asRows.length
+        ? `<div class="list-column">${g.asRows.map(it => issueRowHtml(it)).join('')}</div>`
+        : '';
+
+      // is-expanded 클래스를 버튼과 콘텐츠 div 양쪽에 모두 부여 — ui_common.js 의 initBtnToggle 은
+      // 페이지 로드 시점에 한 번만 실행되므로 동적으로 렌더링된 박스는 콘텐츠 측 클래스를 함께 명시해야
+      // 펼친 상태로 보인다. 사용자 클릭 시에는 document 레벨 click 핸들러가 정상 토글한다.
+      html += `
+        <div class="box-toggle">
+          <button type="button" class="btn-toggle is-expanded" aria-controls="#${targetId}" aria-expanded="true">
+            <div class="flex gap-md">
+              <p>${escapeHtml(meta.areaName || '-')}</p>
+              <p>${escapeHtml(meta.itemName || '-')}</p>
+            </div>
+          </button>
+          <div class="box-style pb-lg is-expanded" id="${targetId}">
+            <ul class="info-list type-inline">
+              <li><span class="title">시리즈</span><span class="value">${escapeHtml(meta.seriesNm || '-')}</span></li>
+              <li><span class="title">품목 코드</span><span class="value">${escapeHtml(meta.codeCd || '-')}</span></li>
+              <li><span class="title">색상</span><span class="value">${escapeHtml(meta.colorName || '-')}</span></li>
+              <li><span class="title">옵션</span><span class="value">-</span></li>
+            </ul>
+            <hr class="dash-line">
+            ${managementBox}
+            ${photoSection}
+            ${asRowsHtml}
+          </div>
+        </div>`;
+    });
+    html += `</div>`;
+    tab.innerHTML = html;
+
+    // 동적으로 추가된 box-toggle 은 ui_common.js 의 initBtnToggle (페이지 로드 시 한 번만 실행)
+    // 루프를 거치지 못해 콘텐츠 측 CSS grid-template-rows 가 초기 1fr 로 잡히지 않는 경우가 있다.
+    // 다음 프레임에 명시적으로 is-expanded 를 다시 부여해 강제 reflow 를 유도, 펼침 상태로 시작하게 한다.
+    requestAnimationFrame(() => {
+      tab.querySelectorAll('.box-toggle').forEach(box => {
+        const btn = box.querySelector('.btn-toggle');
+        const content = box.querySelector(':scope > .box-style');
+        if (btn && content) {
+          btn.classList.add('is-expanded');
+          btn.setAttribute('aria-expanded', 'true');
+          content.classList.add('is-expanded');
+        }
+      });
+    });
+
+    // 카드 내 썸네일 클릭 → 전역 Swiper 열고 해당 인덱스로 이동
+    tab.querySelectorAll('.js-item-thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.globalIndex, 10);
+        if (typeof imgSwiper !== 'undefined' && !isNaN(idx) && idx >= 0) {
+          imgSwiper.slideToLoop(idx, 0);
+        }
+        fnPopupOpen('imgSwiperModal');
+      });
+    });
+
+    // "전체 다운로드" — 아이템 사진 일괄 저장 (브라우저 다운로드 다중 트리거)
+    tab.querySelectorAll('.js-download-all').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.key;
+        const list = filesByItem.get(key) || [];
+        list.forEach((f, idx) => setTimeout(() => downloadFile(fileProxyDownloadUrl(f.filePath, f.fileNm), f.fileNm), idx * 200));
+      });
+    });
+  }
+
+  /** S3 키(FILE_PATH) → 서버 프록시 URL (이미지 인라인 표시용). */
+  function fileProxyUrl(filePath) {
+    if (!filePath) return '';
+    return '/api/care/fileProxy?filePath=' + encodeURIComponent(filePath);
+  }
+
+  /** S3 키(FILE_PATH) → 서버 프록시 다운로드 URL (download=true 로 attachment 강제). */
+  function fileProxyDownloadUrl(filePath, fileName) {
+    if (!filePath) return '';
+    return '/api/care/fileProxy?download=true'
+      + '&filePath=' + encodeURIComponent(filePath)
+      + '&fileName=' + encodeURIComponent(fileName || '');
+  }
+
+  /** 동일 출처 파일을 강제 다운로드. 외부 URL 은 새 탭으로 열리는 경우가 있다(서버 응답 헤더에 따라). */
+  function downloadFile(url, filename) {
+    if (!url) return;
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || url.split('/').pop() || 'file';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function issueRowHtml(it) {
+    const badgeCls = it.issueGubun === 'AS' ? 'bg-red' : 'bg-blue';
+    return `
+      <div class="box-style bg-white p-xs">
+        <div class="flex gap-2xs">
+          <span class="badge ${badgeCls} xs square">${escapeHtml(it.issueGubun || '-')}</span>
+          <div class="list-column gap-3xs">
+            <ul class="info-list type-inline">
+              <li><span class="title">시리얼 번호</span><span class="value">${escapeHtml(it.serialNo || '-')}</span></li>
+            </ul>
+            <p>${escapeHtml(it.checkBigo || '')}</p>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function rebuildImgSwiper(files) {
+    const wrapper = document.querySelector('#imgSwiperModal .swiper-wrapper');
+    if (!wrapper) return;
+    if (!files.length) {
+      wrapper.innerHTML = '';
+      return;
+    }
+    wrapper.innerHTML = files.map(f => `
+      <div class="swiper-slide">
+        <img src="${escapeAttr(fileProxyUrl(f.filePath))}" alt="${escapeAttr(f.fileNm || 'SN 이미지')}">
+      </div>`).join('');
+    if (typeof imgSwiper !== 'undefined') {
+      imgSwiper.update();
+      imgSwiper.slideToLoop(0, 0);
+    }
+  }
+
+  /* ====================================================================
+   *  5. 만족도 평가 → 확인 완료
+   * ==================================================================== */
+
+  /** 이미 평가된 케이스 / 완료(OR4005) / 반려(OR4007) 는 만족도 팝업 띄우지 않도록 확인완료 버튼 잠금 */
+  function syncSatisfactionState(header) {
+    const btn = document.querySelector('#careReportModal .popup-footer.btn-wide .btn');
+    if (!btn) return;
+    const locked = header.ratedYn === 'Y'
+      || header.officecareProgress === 'OR4005'
+      || header.officecareProgress === 'OR4007';
+    if (locked) {
+      btn.classList.add('is-active');
+      btn.disabled = true;
+    } else {
+      btn.classList.remove('is-active');
+      btn.disabled = false;
+    }
+  }
+
+  /** 모달의 "완료하고 닫기" / "확인 완료" 버튼 핸들러 오버라이드 */
+  function bindReportModalActions() {
+    // 만족도 - 완료하고 닫기 → 백엔드 저장 → 확인완료 호출
+    const btnRatingComplete = document.querySelector('#serviceRatingModal .popup-footer .btn.dark');
+    if (btnRatingComplete) {
+      btnRatingComplete.onclick = async () => {
+        // "확인했습니다" 체크박스는 비필수 — 미체크여도 완료 진행 (별점만 필수)
+        const checkedRating = document.querySelector('#serviceRatingModal .rating-wrap input[name="rating"]:checked');
+        if (!checkedRating) {
+          alertPopup ? alertPopup('만족도 평가를 진행해 주세요') : alert('만족도 평가를 진행해 주세요');
+          return;
+        }
+        if (!currentReportKey) return;
+        const comment = (document.querySelector('#serviceRatingModal textarea[id="form01"]') || {}).value || '';
+        const sat = await fetchJson('/api/care/satisfaction', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...currentReportKey, satisfactionScore: parseInt(checkedRating.value, 10), satisfactionComment: comment })
+        });
+        if (!sat || sat.message !== '만족도 평가가 저장되었습니다.') {
+          // 이미 평가됨 등은 그대로 진행 (확인완료 시도)
+        }
+        const conf = await fetchJson('/api/care/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentReportKey)
+        });
+        if (!conf) return;
+
+        const btnChk = document.querySelector('#careReportModal .popup-footer.btn-wide .btn');
+        if (btnChk) { btnChk.classList.add('is-active'); btnChk.disabled = true; }
+        fnPopupClose('serviceRatingModal');
+        fnPopupClose('careReportModal');
+        // 메인 새로고침 — 이력 + 확인필요 카운트 동기화
+        Promise.all([loadHistory(), refreshUnconfirmedCount()]);
+      };
+    }
+  }
+
+  async function refreshUnconfirmedCount() {
+    const uc = await fetchJson('/api/care/unconfirmedCount', { method: 'POST' });
+    renderUnconfirmedBadge((uc && uc.count) || 0);
+  }
+
+  /* ====================================================================
+   *  헬퍼
+   * ==================================================================== */
+
+  async function fetchJson(url, opts) {
+    try {
+      const res = await fetch(url, opts);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        alertPopup ? alertPopup(body.message || '요청 처리 중 오류가 발생했습니다.')
+                   : alert(body.message || '요청 처리 중 오류가 발생했습니다.');
+        return null;
+      }
+      return await res.json();
+    } catch (e) {
+      console.error(url, e);
+      alertPopup ? alertPopup('요청 처리 중 오류가 발생했습니다.') : alert('요청 처리 중 오류가 발생했습니다.');
+      return null;
+    }
+  }
+
+  /** yyyymmdd → yyyy.MM.dd */
+  function formatDate(s) {
+    if (!s) return '-';
+    const v = String(s).replace(/[^0-9]/g, '');
+    if (v.length !== 8) return s;
+    return `${v.slice(0, 4)}.${v.slice(4, 6)}.${v.slice(6, 8)}`;
+  }
+
+  /** yyyymmdd → yyyy.MM.dd (요일) */
+  function formatDateWithDow(s) {
+    if (!s) return '-';
+    const v = String(s).replace(/[^0-9]/g, '');
+    if (v.length !== 8) return s;
+    const d = new Date(`${v.slice(0, 4)}-${v.slice(4, 6)}-${v.slice(6, 8)}T00:00:00`);
+    const dows = ['일','월','화','수','목','금','토'];
+    return `${v.slice(0, 4)}.${v.slice(4, 6)}.${v.slice(6, 8)} (${dows[d.getDay()]})`;
+  }
+
+  /** "2026.01.01" → "20260101" */
+  function normalizeDate(v) {
+    if (!v) return '';
+    return String(v).replace(/[^0-9]/g, '');
+  }
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+</script>
+</th:block>
+</body>
+</html>

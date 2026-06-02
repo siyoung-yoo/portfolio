@@ -1,0 +1,220 @@
+<div class="modal" id="contractDetailModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">계약 상세</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- S: 계약 기본 정보 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">계약 정보</h3>
+            <i class="icon-chevron" data-action="collapse"></i>
+          </div>
+          <div class="card-content collapse-content is-open">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div>
+                <span class="label">계약번호</span>
+                <p class="label-data-text" id="cdContractNo">-</p>
+              </div>
+              <div class="col-span-2">
+                <span class="label">계약명</span>
+                <p class="label-data-text" id="cdContractNm">-</p>
+              </div>
+              <div>
+                <span class="label">고객명</span>
+                <p class="label-data-text" id="cdCtmNm">-</p>
+              </div>
+              <div>
+                <span class="label">계약기간</span>
+                <p class="label-data-text" id="cdContractPeriod">-</p>
+              </div>
+              <div>
+                <span class="label">개시일</span>
+                <p class="label-data-text" id="cdStartDt">-</p>
+              </div>
+              <div>
+                <span class="label">완료일</span>
+                <p class="label-data-text" id="cdEndDt">-</p>
+              </div>
+              <div>
+                <span class="label">지급횟수</span>
+                <p class="label-data-text" id="cdPayCnt">-</p>
+              </div>
+              <div>
+                <span class="label">진행상태</span>
+                <p class="label-data-text" id="cdStatus">-</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 계약 기본 정보 -->
+
+        <!-- S: 주소별 회차 소진 현황 -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <h3 class="card-title">주소별 회차 소진 현황</h3>
+          </div>
+          <div class="card-content">
+            <p class="text-center py-4" id="cdNoData">데이터가 없습니다.</p>
+            <table class="table w-full" id="cdDetailTable" style="display:none;">
+              <thead>
+                <tr>
+                  <th class="w-20 text-center">회차</th>
+                  <th class="w-24 text-center">사용여부</th>
+                  <th class="w-40 text-center">서비스번호</th>
+                  <th class="w-28 text-center">완료일자</th>
+                </tr>
+              </thead>
+              <tbody id="cdDetailTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <!-- E: 주소별 회차 소진 현황 -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var cdCurrentContractNo = null;
+
+  function cdInitModal(contractNo) {
+    cdCurrentContractNo = contractNo;
+    cdLoadContractInfo(contractNo);
+    cdLoadDetailList(contractNo);
+  }
+
+  function cdLoadContractInfo(contractNo) {
+    // TODO: API 연결 시 아래 주석 해제
+    // var result = await fetchJson('/service/clean/selectContractInfo.dataTable', 'POST', 'contractNo=' + contractNo);
+    var info = { CONTRACT_NO: contractNo, CONTRACT_NM: '퍼시스 본사 클리닝 계약', CTM_NM: '(주)퍼시스', CONTRACT_PERIOD: '60개월', START_DT: '2026-01-01', END_DT: '2026-12-31', PAY_CNT: '2', STATUS: '진행' };
+    document.getElementById('cdContractNo').textContent = info.CONTRACT_NO || '-';
+    document.getElementById('cdContractNm').textContent = info.CONTRACT_NM || '-';
+    document.getElementById('cdCtmNm').textContent = info.CTM_NM || '-';
+    document.getElementById('cdContractPeriod').textContent = info.CONTRACT_PERIOD || '-';
+    document.getElementById('cdStartDt').textContent = info.START_DT || '-';
+    document.getElementById('cdEndDt').textContent = info.END_DT || '-';
+    document.getElementById('cdPayCnt').textContent = info.PAY_CNT || '-';
+    document.getElementById('cdStatus').textContent = info.STATUS || '-';
+  }
+
+  function cdLoadDetailList(contractNo) {
+    var noData = document.getElementById('cdNoData');
+    var table = document.getElementById('cdDetailTable');
+    var tbody = document.getElementById('cdDetailTbody');
+
+    // TODO: API 연결 시 아래 주석 해제
+    // var result = await fetchJson('/service/clean/selectContractDetailList.dataTable', 'POST', 'contractNo=' + contractNo);
+    // var dataList = (result && result.data) ? result.data : [];
+    var dataList = [
+      { ADDR: '서울특별시 강남구 테헤란로 123', ROUND: '1회차', USE_YN: 'Y', SERVICE_NO: 'SV-2026-0101', SERVICE_DT: '2026-02-15' },
+      { ADDR: '서울특별시 강남구 테헤란로 123', ROUND: '2회차', USE_YN: 'N', SERVICE_NO: '', SERVICE_DT: '' },
+      { ADDR: '경기도 파주시 탄현면 헤이리마을길 45', ROUND: '1회차', USE_YN: 'Y', SERVICE_NO: 'SV-2026-0102', SERVICE_DT: '2026-02-16' },
+      { ADDR: '경기도 파주시 탄현면 헤이리마을길 45', ROUND: '2회차', USE_YN: 'N', SERVICE_NO: '', SERVICE_DT: '' },
+      { ADDR: '서울특별시 서초구 서초대로 398', ROUND: '1회차', USE_YN: 'Y', SERVICE_NO: 'SV-2026-0103', SERVICE_DT: '2026-03-01' },
+      { ADDR: '서울특별시 서초구 서초대로 398', ROUND: '2회차', USE_YN: 'N', SERVICE_NO: '', SERVICE_DT: '' },
+    ];
+
+      // 주소별 그룹핑
+      var grouped = {};
+      dataList.forEach(function(row) {
+        var addr = row.ADDR || '주소 없음';
+        if (!grouped[addr]) grouped[addr] = [];
+        grouped[addr].push(row);
+      });
+
+      var addrs = Object.keys(grouped);
+      if (addrs.length === 0) {
+        noData.style.display = '';
+        table.style.display = 'none';
+        return;
+      }
+      noData.style.display = 'none';
+      table.style.display = '';
+      tbody.innerHTML = '';
+
+      addrs.forEach(function(addr, idx) {
+        var rows = grouped[addr];
+        var groupId = 'cdGroup_' + idx;
+        var usedCnt = rows.filter(function(r) { return r.USE_YN === 'Y'; }).length;
+
+        // 주소 그룹 헤더 행
+        var groupRow = document.createElement('tr');
+        groupRow.className = 'cursor-pointer bg-gray-50 hover:bg-gray-100';
+        groupRow.innerHTML = '<td colspan="4" class="text-left">'
+          + '<div class="flex items-center gap-2">'
+          + '<i class="icon-chevron cd-chevron transition-transform duration-200"></i>'
+          + addr
+          + '<span class="ml-auto text-sm text-gray-400">잔여 ' + usedCnt + ' / ' + rows.length + '회차</span>'
+          + '</div></td>';
+        tbody.appendChild(groupRow);
+
+        // 회차 데이터 행들
+        var detailRows = [];
+        rows.forEach(function(row) {
+          var badge = row.USE_YN === 'Y'
+            ? '<span class="badge badge-rounded badge-secondary">사용</span>'
+            : '<span class="badge badge-rounded badge-default">미사용</span>';
+          var svcLink = row.SERVICE_NO
+            ? '<a href="javascript:void(0);" class="btn-link" onclick="cdGoServiceDetail(\'' + row.SERVICE_NO + '\')">' + row.SERVICE_NO + '</a>'
+            : '-';
+
+          var tr = document.createElement('tr');
+          tr.className = groupId;
+          tr.innerHTML = '<td class="text-center">' + (row.ROUND || '') + '</td>'
+            + '<td class="text-center">' + badge + '</td>'
+            + '<td class="text-center">' + svcLink + '</td>'
+            + '<td class="text-center">' + (row.SERVICE_DT || '-') + '</td>';
+          tbody.appendChild(tr);
+          detailRows.push(tr);
+        });
+
+        // 접기/펴기 토글
+        groupRow.addEventListener('click', function() {
+          var chevron = groupRow.querySelector('.cd-chevron');
+          var isOpen = detailRows[0] && detailRows[0].style.display !== 'none';
+          detailRows.forEach(function(r) { r.style.display = isOpen ? 'none' : ''; });
+          if (isOpen) {
+            chevron.classList.add('-rotate-90');
+          } else {
+            chevron.classList.remove('-rotate-90');
+          }
+        });
+      });
+  }
+
+  function cdGoServiceDetail(serviceNo) {
+    window.open('/service/cleanDetail/' + serviceNo, '_blank');
+
+  }
+
+  function cdResetModal() {
+    cdCurrentContractNo = null;
+    document.getElementById('cdContractNo').textContent = '-';
+    document.getElementById('cdContractNm').textContent = '-';
+    document.getElementById('cdCtmNm').textContent = '-';
+    document.getElementById('cdContractPeriod').textContent = '-';
+    document.getElementById('cdStartDt').textContent = '-';
+    document.getElementById('cdEndDt').textContent = '-';
+    document.getElementById('cdPayCnt').textContent = '-';
+    document.getElementById('cdStatus').textContent = '-';
+    document.getElementById('cdDetailTbody').innerHTML = '';
+    document.getElementById('cdDetailTable').style.display = 'none';
+    document.getElementById('cdNoData').style.display = '';
+  }
+
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'contractDetailModal') {
+      // nothing
+    }
+  });
+
+  document.addEventListener('modalClosed', function(e) {
+    if (e.detail && e.detail.modalId === 'contractDetailModal') {
+      cdResetModal();
+    }
+  });
+</script>

@@ -1,0 +1,364 @@
+<div class="modal" id="printDetailQrModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">QR코드 상세 출력</h5>
+          <p class="modal-description mt-2">CNT-2024-888 - 강남 파이낸스 입주사 모음</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group w-full lg:w-1/2">
+          <label class="flex items-center gap-4">
+            <span class="label mb-0">검색</span>
+            <div class="input">
+              <input id="searchSerialCodeKeyword" type="text" class="w-full" placeholder="단품코드, 색상, 시리얼 코드 검색" />
+              <button type="button" onclick="onClickFetchSerialCodeList()"><i class="icon-search"></i></button>
+            </div>
+          </label>
+        </div>
+
+        <div class="border mt-5">
+          <div id="detailQrGrid1" class="w-full h-full"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-between flex-wrap">
+        <div class="flex gap-2 mr-4 flex-wrap">
+          <p class="mr-4">* 선택된 시리얼 코드 : <span id="sumRow">0</span>개</p>
+          <p>* 총 출력 장수 : <span id="sumQr">0</span>장</p>
+        </div>
+        <div class="flex gap-2 flex-1 justify-end">
+          <button type="button" class="btn btn-outline modal-close">닫기</button>
+          <button type="button" class="btn btn-primary" onclick="printDetailQr()">출력</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="detail-qr-list"></ul>
+</div>
+
+<style>
+  #printDetailQrModal .detail-qr-list { display: none; }
+  @page print-detail-qr { size: A4 portrait; margin: 0; padding: 1.25cm 0.65cm; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+    .printDetailQr { page: print-detail-qr; background-color: #fff; }
+    .printDetailQr .sidebar-wrapper, .printDetailQr .page-wrapper .header, .printDetailQr .page-wrapper .container-h-full,
+    .printDetailQr #printDetailQrModal .modal-header, .printDetailQr #printDetailQrModal .modal-dialog { display: none !important; }
+    .printDetailQr .page-wrapper, .printDetailQr .page-content { padding: 0; margin: 0; background: #fff; }
+    .printDetailQr #printDetailQrModal.modal { position: static; z-index: 999; height: auto; overflow: visible; background: #fff; }
+
+    .printDetailQr #printDetailQrModal .detail-qr-list::after { content: ''; display: block; clear: both; }
+    .printDetailQr #printDetailQrModal .detail-qr-list { display: block; width: 100%; font-size: 0; }
+    .printDetailQr #printDetailQrModal .detail-qr-list > li { display: block; width: 6.4cm; height: 3.4cm; margin: 0 0.25cm 0 0; padding: 0.16cm; border: 0; float: left; overflow: hidden; }
+    .printDetailQr #printDetailQrModal .detail-qr-list > li:nth-child(3n) { margin-right: 0; }
+    .printDetailQr #printDetailQrModal .detail-qr-list .logo-area p,
+    .printDetailQr #printDetailQrModal .detail-qr-list dl dt,
+    .printDetailQr #printDetailQrModal .detail-qr-list dl dd { font-size: 0.26cm; font-weight: var(--font-weight-bold); line-height: 1; color: var(--primary-500); }
+    .printDetailQr #printDetailQrModal .detail-qr-list .logo-area { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--primary-500); padding: 0.16cm 0; margin: 0 0 0.16cm }
+    .printDetailQr #printDetailQrModal .detail-qr-list .logo-area .qr-logo { width: 40%; height: auto; }
+    .printDetailQr #printDetailQrModal .detail-qr-list .info { width: 74%; padding: 0 0.1cm 0 0; border-right: 1px solid var(--primary-500); }
+    .printDetailQr #printDetailQrModal .detail-qr-list dl { display: flex; padding: 0.1cm 0.05cm; border-bottom: 1px solid var(--primary-500); }
+    .printDetailQr #printDetailQrModal .detail-qr-list dt { flex: none; padding: 0 0.1cm 0 0; letter-spacing: -0.04cm; border-right: 1px solid var(--primary-500); }
+    .printDetailQr #printDetailQrModal .detail-qr-list dd { padding: 0 0 0 0.05cm; letter-spacing: -0.03cm; white-space: normal; word-break: break-all; }
+    .printDetailQr #printDetailQrModal .detail-qr-list .dl-item { padding-top: 0.15cm; border-bottom: 0; }
+    .printDetailQr #printDetailQrModal .detail-qr-list .qr-box { width: 26%; padding-left: 0.16cm; }
+    .printDetailQr #printDetailQrModal .detail-qr-list .qr-box > * { width: 100%; height: 100%; object-fit: contain; object-position: 50%; }
+  }
+</style>
+
+<script>
+  let detailQrGrid1;
+
+  // QR코드 상세 출력 목록 조회 — qr.html 에서 저장한 _detailQrCtx 의 conIdx/estaIdx 함께 전달
+  function onClickFetchSerialCodeList() {
+    const ctx = window._detailQrCtx || {};
+    $.ajax({
+      url: '/hqDrawingMng/getSerialCodeList'
+      ,type: 'post'
+      ,data: {
+        searchKeyword: $('#searchSerialCodeKeyword').val(),
+        conIdx:        ctx.conIdx  || '',
+        estaIdx:       ctx.estaIdx || ''
+      }
+      ,success: function(res){
+        renderSerialCodeList(res.data);
+      }
+    });
+  }
+
+  function renderSerialCodeList(dataList) {
+    const renderer = { type: 'TemplateRenderer' };
+    const filter = { showIcon: true };
+
+    const chgQtyGridProps = {
+      isRowAllCheckCurrentView: true,
+      enableSorting: true,
+      enableFilter: true,
+      useContextMenu: true,
+      hoverMode: "singleRow",
+      selectionMode: "none",
+      showRowNumColumn: false,
+      showRowCheckColumn: true,
+      defaultColumnWidth: 100,
+      softRemoveRowMode: false,
+      enableMovingColumn: true,
+      showEditedCellMarker: false,
+    }
+
+    const columnLayout = [
+      { headerText: "단품코드", dataField: "TEMP_DATA01", filter: filter, width: 150, },
+      { headerText: "색상", dataField: "TEMP_DATA02", filter: filter, width: 150, },
+      { headerText: "시리얼코드", dataField: "TEMP_DATA03", filter: filter, },
+      { headerText: "출력장수", dataField: "TEMP_DATA04", width: 100, style: 'text-center p-0',
+        renderer: renderer,
+        labelFunction: function (rowIndex, columnIndex, value, headerText, item, dataField, cItem) {
+          const hidden = item.showCounter ? "" : "hidden";
+
+          return `<div class="flex items-center gap-1 px-1 ${hidden}">
+                    <button type="button" class="btn btn-icon"
+                      onclick="changePrintQrQty('${rowIndex}', -1, event)">
+                      <i class="icon-chevron rotate-90"></i>
+                    </button>
+
+                    <input type="text" class="input text-center p-0" value="${value}"
+                      onchange="setPrintQrQty('${rowIndex}', this)">
+
+                    <button type="button" class="btn btn-icon"
+                      onclick="changePrintQrQty('${rowIndex}', 1, event)">
+                      <i class="icon-chevron rotate-270"></i>
+                    </button>
+                  </div>`;
+        }
+      },
+    ];
+
+    const serialCodeGridData = [];
+    dataList.forEach(data => {
+      serialCodeGridData.push({ 'TEMP_DATA01': data.RSC_ITM_CD, 'TEMP_DATA02': data.RSC_COL_CD, 'TEMP_DATA03': data.SERIAL_NO, 'TEMP_DATA04': 1 });
+    });
+
+    detailQrGrid1 = AUIGrid.create("#detailQrGrid1", columnLayout, chgQtyGridProps);
+    AUIGrid.setGridData(detailQrGrid1, serialCodeGridData);
+
+    let checkedRowItems = [];
+    AUIGrid.bind(detailQrGrid1, "rowAllCheckClick", function (isAllChecked) {
+      if (isAllChecked) {
+        checkedRowItems = AUIGrid.getCheckedRowItems('#detailQrGrid1');
+        checkedRowItems.forEach(row => {
+          const { item, rowIndex } = row;
+          const pid = detailQrGrid1;
+
+          // 체크 시 출력장수 초기화
+          if (isAllChecked) item.TEMP_DATA04 = 1;
+
+          // counter 표시 여부
+          item.showCounter = isAllChecked;
+
+          // row 갱신
+          AUIGrid.updateRow(pid, item, rowIndex);
+
+          // 선택 row / 출력장수 합계
+          updateSummary(pid);
+        });
+      } else {
+        checkedRowItems.forEach(row => {
+          const {item, rowIndex} = row;
+          const pid = detailQrGrid1;
+
+          // counter 표시 여부
+          item.showCounter = isAllChecked;
+
+          // row 갱신
+          AUIGrid.updateRow(pid, item, rowIndex);
+
+          // 선택 row / 출력장수 합계
+          updateSummary(pid);
+        });
+      }
+    });
+
+    AUIGrid.bind(detailQrGrid1, "rowCheckClick", function (e) {
+      const { pid, item, rowIndex } = e;
+      const rowIdField = AUIGrid.getProp(pid, "rowIdField");
+      const rowId = item[rowIdField];
+
+      const isChecked = AUIGrid.isCheckedRowById(pid, rowId);
+
+      // 체크 시 출력장수 초기화
+      if (isChecked) item.TEMP_DATA04 = 1;
+
+      // counter 표시 여부
+      item.showCounter = isChecked;
+
+      // row 갱신
+      AUIGrid.updateRow(pid, item, rowIndex);
+
+      // 선택 row / 출력장수 합계
+      updateSummary(pid);
+    });
+
+    AUIGrid.bind(detailQrGrid1, "cellClick", function (e) {
+      if (e.dataField === "TEMP_DATA04") return; // 출력장수 컬럼 제외
+
+      const { pid, item, rowIndex } = e;
+      const rowIdField = AUIGrid.getProp(pid, "rowIdField");
+      const rowId = item[rowIdField];
+
+      const isChecked = AUIGrid.isCheckedRowById(pid, rowId);
+
+      // 체크 상태 토글
+      AUIGrid[isChecked ? "addUncheckedRowsByIds" : "addCheckedRowsByIds"](pid, rowId);
+
+      // 체크 시 출력장수 초기화
+      if (!isChecked) item.TEMP_DATA04 = 1;
+
+      // counter 표시 여부
+      item.showCounter = !isChecked;
+
+      // row 갱신
+      AUIGrid.updateRow(pid, item, rowIndex);
+
+      // 선택 row / 출력장수 합계
+      updateSummary(pid);
+    });
+  }
+
+  // 최소값 보정
+  const normalizeQty = v => Math.max(1, v);
+
+  // row 데이터
+  const getRow = rowIndex => AUIGrid.getItemByRowIndex(detailQrGrid1, rowIndex);
+
+  // 버튼 수량 변경
+  function changePrintQrQty(rowIndex, diff, e) {
+    e.stopPropagation();
+
+    const item = getRow(rowIndex);
+    if (!item) return;
+
+    const current = parseInt(item.TEMP_DATA04, 10) || 1;
+    const next = normalizeQty(current + diff);
+
+    if (current !== next) updateQty(rowIndex, next);
+  }
+
+  // input 직접 입력
+  function setPrintQrQty(rowIndex, el) {
+    const item = getRow(rowIndex);
+    if (!item) return;
+
+    const current = parseInt(item.TEMP_DATA04, 10) || 1;
+
+    let value = parseInt(el.value.replace(/\D/g, ""), 10) || 0;
+    value = normalizeQty(value);
+
+    el.value = value;
+
+    if (value !== current) updateQty(rowIndex, value);
+  }
+
+  // 체크 row 수 + 출력장수 합계
+  function updateSummary() {
+    const checkedRows = AUIGrid.getCheckedRowItems(detailQrGrid1);
+
+    document.querySelector("#sumRow").textContent = checkedRows.length;
+
+    const total = checkedRows.reduce((sum, row) => {
+      return sum + (parseInt(row.item.TEMP_DATA04, 10) || 0);
+    }, 0);
+
+    document.querySelector("#sumQr").textContent = total;
+  }
+
+  // grid 업데이트
+  function updateQty(rowIndex, qty) {
+    AUIGrid.updateRow(
+      detailQrGrid1,
+      { TEMP_DATA04: qty },
+      rowIndex
+    );
+
+    updateSummary();
+  }
+
+  async function printDetailQr() {
+    const modal = document.querySelector("#printDetailQrModal");
+    const checkedRows = AUIGrid.getCheckedRowItems(detailQrGrid1);
+    if (!checkedRows || checkedRows.length === 0) {
+      alert("출력할 시리얼 코드를 선택하세요.");
+      return;
+    }
+
+    const ctx = window._detailQrCtx || {};
+    let detailQrList = modal.querySelector(".detail-qr-list");
+    detailQrList.innerHTML = ""; // 기존 내용 초기화
+
+    // 선택된 행마다 출력장수만큼 li 생성. QR 이미지는 시리얼 번호로 실시간 dataURL 채번
+    for (const row of checkedRows) {
+      const item = row.item;
+      const qty      = parseInt(item.TEMP_DATA04, 10) || 1;
+      const itmCd    = item.TEMP_DATA01 || '';
+      const colCd    = item.TEMP_DATA02 || '';
+      const serialNo = item.TEMP_DATA03 || '';
+
+      // QRCode.toDataURL Promise 래핑
+      const qrUrl = await new Promise(resolve => {
+        QRCode.toDataURL(serialNo, (err, url) => resolve(err ? '' : url));
+      });
+
+      for (let i = 0; i < qty; i++) {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <div class="logo-area">
+            <img class="qr-logo" src="/assets/img/logo/logo_fursys_mark.svg" alt="퍼시스 로고">
+            <p>세트</p>
+          </div>
+          <div class="flex">
+            <div class="info">
+              <dl>
+                <dt>계약번호</dt>
+                <dd>${ctx.conCd || '-'}</dd>
+              </dl>
+              <dl>
+                <dt>품목코드(색상)</dt>
+                <dd>${itmCd}${colCd ? ' (' + colCd + ')' : ''}</dd>
+              </dl>
+            </div>
+            <div class="qr-box">
+              <img class='qr-logo' src='${qrUrl}' alt='qr 코드'>
+            </div>
+          </div>
+          <dl>
+            <dt>시리얼 넘버</dt>
+            <dd>${serialNo}</dd>
+          </dl>
+        `;
+        detailQrList.appendChild(li);
+      }
+    }
+
+    document.body.classList.add('printDetailQr');
+
+    // 이미지 로드 기다렸다가 프린트 실행
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.print();
+      });
+    });
+  }
+
+  window.addEventListener("afterprint", () =>
+    document.body.classList.remove('printDetailQr')
+  );
+
+  // 모달 열릴 때 그리드 초기화 및 데이터 로드
+  document.addEventListener('modalOpened', function(e) {
+    if (e.detail.modalId === 'printDetailQrModal') {
+      onClickFetchSerialCodeList();
+    }
+  });
+</script>

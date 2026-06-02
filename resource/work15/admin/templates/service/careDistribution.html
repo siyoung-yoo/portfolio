@@ -1,0 +1,656 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="panel-layout type-care-service">
+      <div class="list-panel-dim"></div>
+      <div class="list-panel-wrap">
+        <div class="panel-header">
+          <button type="button" class="btn btn-toggle" onclick="toggleSearchPanel(this)">
+            <span class="text-sm">상세검색</span>
+            <i class="icon-chevron"></i>
+          </button>
+          <button type="button" class="btn btn-icon btn-ghost" onclick="toggleListPanel()">
+            <i class="icon-arrow-left-to-line"></i>
+          </button>
+        </div>
+
+        <div class="panel-list-wrap">
+          <div class="panel-search">
+            <div class="flex items-center gap-1">
+              <form-select>
+                <select id="searchTypeSelect">
+                  <option value="conTitle">계약명</option>
+                  <option value="conCd">계약번호</option>
+                  <option value="ctmNm">고객명</option>
+                </select>
+              </form-select>
+              <input id="searchKeyword" type="text" class="input" placeholder="검색어 입력">
+            </div>
+            <input id="contractDateRange" type="text" class="input datepicker-range" placeholder="계약 등록일 FROM ~ TO">
+            <button type="button" class="btn btn-primary" onclick="fetchContractList()">검색</button>
+          </div>
+
+          <ul class="tabs type-underline" id="contractTabs" style="flex-shrink: 0;">
+            <li class="tab-item is-active" data-filter="all">전체</li>
+            <li class="tab-item" data-filter="unscheduled">
+              예정 <span id="cntScheduled" class="ml-1 badge badge-dark-gray badge-rounded">0</span>
+            </li>
+            <li class="tab-item" data-filter="pending">
+              미진행 <span id="cntPending" class="ml-1 badge badge-orange-fill badge-rounded">0</span>
+            </li>
+            <li class="tab-item" data-filter="overdue">
+              미결 <span id="cntOverdue" class="ml-1 badge badge-destructive badge-rounded">0</span>
+            </li>
+          </ul>
+
+          <div class="panel-list">
+            <div id="contractList" class="card-selected-wrap">
+              <!-- JS 렌더링 -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // list-panel-wrap -->
+
+      <div class="content-panel-wrap">
+        <div class="alert alert-default" data-state="selectList">
+          <div class="alert-title">계약을 선택하세요</div>
+          <div class="alert-description mt-5">계약을 선택하여 상세 정보를 확인하세요</div>
+          <div class="alert-description">계약에 연결된 주소별 케어 히스토리를 확인할 수 있습니다</div>
+        </div>
+
+        <div class="content-panel-cont hidden" data-state="selectList">
+          <div class="panel-header">
+            <div class="flex flex-col">
+              <h3 id="detailTitle" class="title"></h3>
+              <p id="detailSubTitle" class="text-xs text-primary-300"></p>
+            </div>
+            <button type="button" class="btn btn-toggle" onclick="toggleAllSchedule(this)">
+              <span>전체 열기</span><i class="icon-chevron"></i>
+            </button>
+          </div>
+
+          <div id="addressDetailPanel" class="content-panel">
+            <!-- JS 렌더링 -->
+          </div>
+        </div>
+      </div>
+      <!-- // content-panel-wrap -->
+    </div>
+    <!-- // panel-layout -->
+  </div>
+
+<th:block th:replace="~{service/modal/registScheduleModal}"/><!-- Modal: 예정일정 등록 -->
+<th:block th:replace="~{service/modal/careHistoryModal}"/><!-- Modal: 케어 히스토리 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script th:inline="javascript">
+/* ============================================================
+ * 오피스케어 (유통망) — 목록 화면
+ * 좌측: 계약 카드 / 우측: 주소별 회차 테이블
+ * ============================================================ */
+
+let _contractList = [];        // 마지막 조회 계약 리스트
+let _selectedContract = null;  // 선택된 계약
+
+/* 진행상태 코드 → 표시 매핑 (TT_COMCD 미등록 대비 백업) */
+const PROGRESS_LABEL = {
+  OR4001: { name: '예정',     cls: 'gray'   },
+  OR4002: { name: '미진행',    cls: 'orange' },
+  OR4003: { name: '승인 요청', cls: 'orange' },
+  OR4004: { name: '승인 완료', cls: 'strong' },
+  OR4005: { name: '확인 완료', cls: 'strong' }
+};
+
+/* ============================================================
+ * 화면 토글
+ * ============================================================ */
+function toggleSearchPanel(e) {
+  document.querySelector(".panel-search").classList.toggle("is-open");
+  e.classList.toggle("is-open");
+}
+function toggleListPanel() {
+  document.querySelector(".panel-layout").classList.toggle("close-panel");
+}
+
+/* ============================================================
+ * 계약 목록 조회
+ * ============================================================ */
+function fetchContractList() {
+  const range = $('#contractDateRange').val() || '';
+  let dateFrom = '', dateTo = '';
+  if (range) {
+    const m = range.split('~');
+    if (m.length === 2) { dateFrom = m[0].trim(); dateTo = m[1].trim(); }
+  }
+  const reqParam = {
+    searchType:        $('#searchTypeSelect').val(),
+    searchKeyword:     $('#searchKeyword').val(),
+    contractDateFrom:  dateFrom.replace(/-/g, ''),
+    contractDateTo:    dateTo.replace(/-/g, '')
+  };
+
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDist/getContractList',
+    type: 'post',
+    data: reqParam,
+    success: function(res) {
+      _contractList = res.data || [];
+      renderContractList(_contractList);
+    },
+    complete: function() { LoadingManager.dec(); }
+  });
+}
+
+function renderContractList(list) {
+  const wrap = document.getElementById('contractList');
+  wrap.innerHTML = '';
+
+  // 탭 카운트 집계
+  let scheduledCnt = 0, pendingCnt = 0, overdueCnt = 0;
+  list.forEach(c => {
+    scheduledCnt += Number(c.scheduledCnt || 0);
+    pendingCnt   += Number(c.pendingCnt   || 0);
+    overdueCnt   += Number(c.overdueCnt   || 0);
+  });
+  setBadge('cntScheduled', scheduledCnt);
+  setBadge('cntPending',   pendingCnt);
+  setBadge('cntOverdue',   overdueCnt);
+
+  if (list.length === 0) {
+    return;
+  }
+
+  list.forEach(c => {
+    const mappedStates = [];
+    if (Number(c.scheduledCnt) > 0) mappedStates.push('unscheduled');
+    if (Number(c.pendingCnt)   > 0) mappedStates.push('pending');
+    if (Number(c.overdueCnt)   > 0) mappedStates.push('overdue');
+
+    // 주소가 다르면 여러 상태를 모두 노출 (매퍼 카운트는 주소 단위 mutually exclusive 분류)
+    // 우선순위 표시 순서: 미결 > 미진행 > 예정 > 종료
+    const badges = [];
+    if (Number(c.overdueCnt)   > 0) badges.push(`<span class="badge badge-destructive-outline">미결 ${c.overdueCnt}건</span>`);
+    if (Number(c.pendingCnt)   > 0) badges.push(`<span class="badge badge-orange">미진행 ${c.pendingCnt}건</span>`);
+    if (Number(c.scheduledCnt) > 0) badges.push(`<span class="badge badge-dark-gray">예정 ${c.scheduledCnt}건</span>`);
+    if (Number(c.finishedCnt)  > 0) badges.push(`<span class="badge">종료 ${c.finishedCnt}건</span>`);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.mapped = mappedStates.join(' ');
+    card.dataset.conIdx = c.conIdx;
+    card.dataset.mIdx   = c.mIdx;
+    card.innerHTML = `
+      <div class="card-content">
+        <ul class="text-list">
+          <li>
+            <span class="badge badge-outline">${escapeHtml(c.careCycle || '-')}</span>
+            <div class="flex gap-2">${badges.join('')}</div>
+          </li>
+          ${(c.bondNo && c.estCode)
+            ? `<li class="-mb-1"><ul class="flex items-center gap-2">
+                 <li class="text-xs">${escapeHtml(c.bondNo)}</li>
+                 <li class="font-bold">·</li>
+                 <li class="text-xs">${escapeHtml(c.estCode)}</li>
+               </ul></li>`
+            : `<li class="text-xs">${escapeHtml(c.bondNo || c.estCode || '-')}</li>`}
+          <li><strong>${escapeHtml(c.conTitle || '-')}</strong></li>
+          <li>
+            <span class="text-primary-300">고객사</span>
+            <strong>${escapeHtml(c.ctmNm || '-')}</strong>
+          </li>
+          <li>
+            <span class="text-primary-300">계약금액</span>
+            <strong>${formatNumber(c.rentalTotal)}원</strong>
+          </li>
+        </ul>
+        <ul class="text-list bottom">
+          <li>
+            <p>${escapeHtml(c.mainAddress || '-')} ${Number(c.extraAddressCnt) > 0 ? `<span class="text-primary-300">외 ${c.extraAddressCnt}개</span>` : ''}</p>
+          </li>
+          <li>
+            <span>케어 횟수: 총 ${c.careCount || 0}회</span>
+            <span>최근 케어일: ${formatDate(c.recentCareDt) || '-'}</span>
+          </li>
+        </ul>
+      </div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function setBadge(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val || 0;
+}
+
+/* ============================================================
+ * 탭 필터 (전체/예정/미진행/미결)
+ * ============================================================ */
+document.getElementById('contractTabs').addEventListener('click', (e) => {
+  const tab = e.target.closest('.tab-item');
+  if (!tab) return;
+  const filter = tab.dataset.filter;
+  document.querySelectorAll('#contractTabs .tab-item').forEach(t => t.classList.remove('is-active'));
+  tab.classList.add('is-active');
+  document.querySelectorAll('#contractList .card').forEach(card => {
+    const status = card.dataset.mapped || '';
+    const isHidden = filter !== 'all' && !status.split(' ').includes(filter);
+    card.classList.toggle('hidden', isHidden);
+  });
+});
+
+/* ============================================================
+ * 계약 카드 클릭 → 우측 상세
+ * ============================================================ */
+document.getElementById('contractList').addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (!card) return;
+
+  const isSelected = card.classList.contains('selected');
+  document.querySelectorAll('#contractList .card.selected').forEach(el => el.classList.remove('selected'));
+
+  const alertEl = document.querySelector('.alert[data-state="selectList"]');
+  const panelEl = document.querySelector('.content-panel-cont[data-state="selectList"]');
+
+  if (isSelected) {
+    panelEl.classList.add('hidden');
+    alertEl.classList.remove('hidden');
+    _selectedContract = null;
+    return;
+  }
+  card.classList.add('selected');
+  alertEl.classList.add('hidden');
+  panelEl.classList.remove('hidden');
+
+  const conIdx = card.dataset.conIdx;
+  const mIdx   = card.dataset.mIdx;
+  _selectedContract = _contractList.find(c => String(c.conIdx) === conIdx && String(c.mIdx) === mIdx);
+  if (!_selectedContract) return;
+
+  document.getElementById('detailTitle').innerHTML =
+    `${escapeHtml(_selectedContract.conTitle || '-')} <span class="text-sm">(총 <span id="detailAddrCnt">0</span>개)</span>`;
+  document.getElementById('detailSubTitle').textContent = _selectedContract.bondNo || '';
+
+  fetchAddressSummary(conIdx, mIdx);
+});
+
+/* ============================================================
+ * 주소별 회차 요약 → schedule-box 골격 렌더 + 각 주소별 detail 호출
+ * ============================================================ */
+function fetchAddressSummary(conIdx, mIdx) {
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDist/getAddressSummary',
+    type: 'post',
+    data: { conIdx, mIdx },
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      const list = res.data || [];
+      const addrCntEl = document.getElementById('detailAddrCnt');
+      if (addrCntEl) addrCntEl.textContent = list.length;
+
+      const panel = document.getElementById('addressDetailPanel');
+      panel.innerHTML = '';
+      if (list.length === 0) {
+        return;
+      }
+      list.forEach(addr => {
+        panel.appendChild(renderAddressBox(addr));
+        fetchAddressDetail(addr);
+      });
+    }
+  });
+}
+
+function renderAddressBox(addr) {
+  // 대표 상태: 미결 > 미진행 > 예정 > 종료
+  // 종료는 명시적 판정 — 그 주소의 모든 회차가 OR4004/OR4005 일 때만
+  const total = Number(addr.totalSeqCnt) || 0;
+  const finished = Number(addr.finishedCnt) || 0;
+  const isFinished = total > 0 && finished === total;
+  let badge = '';
+  if (Number(addr.overdueCnt) > 0)        badge = '<span class="badge badge-destructive-outline">미결</span>';
+  else if (Number(addr.pendingCnt) > 0)   badge = '<span class="badge badge-orange">미진행</span>';
+  else if (Number(addr.scheduledCnt) > 0) badge = '<span class="badge badge-dark-gray">예정</span>';
+  else if (isFinished)                    badge = '<span class="badge">종료</span>';
+
+  const box = document.createElement('div');
+  box.className = 'schedule-box';
+  box.dataset.estaIdx  = addr.estaIdx;
+  box.dataset.estaAdr4 = addr.estaAdr4 || '';
+  box.innerHTML = `
+    <div class="toggle-clickable">
+      <div class="title-area items-center">
+        ${badge}
+        <h3 class="title flex-1">${escapeHtml(addr.addressText || '-')}</h3>
+        <div class="info-area">
+          <div>진행률 : ${addr.finishedCnt || 0}<span class="mx-1">/</span>${addr.totalSeqCnt || 0}회</div>
+          <div>최근 케어일 : <span class="tracking-wider">${formatDate(addr.recentCareDt) || '-'}</span></div>
+        </div>
+        <button type="button" class="btn btn-icon btn-toggle">
+          <i class="icon-chevron"></i>
+        </button>
+      </div>
+    </div>
+    <div class="toggle-cont">
+      <div class="table-scroll custom-scrollbar">
+        <table class="table">
+          <colgroup>
+            <col style="width: 40px"><col style="width: 90px"><col style="width: 90px">
+            <col style="width: 80px"><col style="width: 104px"><col style="width: 104px">
+            <col style="width: 76px"><col style="width: 76px"><col style="width: 40px"><col style="width: 44px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="p-0">회차</th><th>마감 기한</th><th>최종 케어일</th>
+              <th>케어 상태</th><th>예정 일정</th><th>최종 케어일</th>
+              <th>리포트 상태</th><th>케어<br>담당자</th>
+              <th class="p-0">미결</th><th>케어<br>히스토리</th>
+            </tr>
+          </thead>
+          <tbody class="seq-tbody">
+            <tr><td colspan="10" class="text-center text-primary-300 py-3">불러오는 중...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  return box;
+}
+
+function fetchAddressDetail(addr) {
+  LoadingManager.inc();
+  $.ajax({
+    url: '/careDist/getAddressDetail',
+    type: 'post',
+    data: {
+      conIdx:   addr.conIdx,
+      mIdx:     addr.mIdx,
+      estaIdx:  addr.estaIdx,
+      estaAdr4: addr.estaAdr4 || ''
+    },
+    complete: function() { LoadingManager.dec(); },
+    success: function(res) {
+      const rows = res.data || [];
+      const adr4 = (addr.estaAdr4 || '').replace(/"/g, '\\"');
+      const box = document.querySelector(
+        `.schedule-box[data-esta-idx="${addr.estaIdx}"][data-esta-adr4="${adr4}"]`);
+      if (!box) return;
+      const tbody = box.querySelector('.seq-tbody');
+      tbody.innerHTML = '';
+      if (rows.length === 0) {
+        return;
+      }
+      // 회차별 계약 기간 (1회: 계약일~due, 그외: 직전 due+1일~현재 due) 계산 후
+      // 오늘이 포함된 회차에 현재(current) 하이라이트
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
+      const addOneDay = (yyyymmdd) => {
+        if (!/^\d{8}$/.test(yyyymmdd)) return null;
+        const d = new Date(Number(yyyymmdd.slice(0,4)), Number(yyyymmdd.slice(4,6))-1, Number(yyyymmdd.slice(6,8)));
+        d.setDate(d.getDate() + 1);
+        return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      };
+      const startDates = []; const endDates = [];
+      rows.forEach((r, i) => {
+        const due = String(r.dueDate || '').replace(/[^0-9]/g, '');
+        endDates[i] = /^\d{8}$/.test(due) ? due : null;
+        if (i === 0) {
+          const c = String(r.contractStartDate || '').replace(/[^0-9]/g, '');
+          startDates[i] = /^\d{8}$/.test(c) ? c : null;
+        } else {
+          startDates[i] = addOneDay(endDates[i - 1]);
+        }
+      });
+      // 현재 진행회차 = 첫 미완료 회차 (매퍼 scheduledCnt 정의와 일관성)
+      // 기간 기반은 보조 — 첫 미완료가 없을 때만 사용
+      let currentIdx = rows.findIndex(r => {
+        const p = r.progressCd || 'OR4001';
+        return p !== 'OR4004' && p !== 'OR4005';
+      });
+      if (currentIdx === -1) {
+        currentIdx = rows.findIndex((r, i) =>
+          startDates[i] && endDates[i] && startDates[i] <= todayStr && todayStr <= endDates[i]
+        );
+      }
+      rows.forEach((r, i) => {
+        r._periodStart = startDates[i];
+        r._periodEnd   = endDates[i];
+        tbody.appendChild(renderSeqRow(r, i, rows.length, currentIdx));
+      });
+    }
+  });
+}
+
+function renderSeqRow(r, idx, total, currentIdx) {
+  const tr = document.createElement('tr');
+  if (idx === currentIdx) tr.classList.add('current');
+  const seq = r.officecareSeq;
+  const progress = r.progressCd || 'OR4001';
+  // 미결 판정: miguelYn 플래그 OR (예정/임시/승인요청 상태에서 예정일이 오늘보다 이전)
+  // DUE_DATE 는 회차 마감기한이라 별개 — 사용자가 등록한 예정일(CARE_REQRUEST_DATE) 기준
+  const reqDt = (r.careRequestDate || '').replace(/-/g, '');
+  const todayDt = new Date();
+  const todayStr = `${todayDt.getFullYear()}${String(todayDt.getMonth()+1).padStart(2,'0')}${String(todayDt.getDate()).padStart(2,'0')}`;
+  // 미결 — 마지막 회차: 일 단위 / 그 외 회차: 월 단위 (다음 달부터 미결)
+  const dueDt = String(r.dueDate || '').replace(/[^0-9]/g, '');
+  const inProgress = ['OR4001','OR4002','OR4003','OR4007'].includes(progress);
+  const isLastSeq = idx === total - 1;
+  const todayYm = todayStr.slice(0, 6);
+  const reqOver = /^\d{8}$/.test(reqDt) && (isLastSeq ? reqDt < todayStr : reqDt.slice(0,6) < todayYm);
+  const dueOver = /^\d{8}$/.test(dueDt) && (isLastSeq ? dueDt < todayStr : dueDt.slice(0,6) < todayYm);
+  const isOverdueByDate = inProgress && (reqOver || dueOver);
+  const isOverdue = r.miguelYn === 'Y' || isOverdueByDate;
+  const labelObj = PROGRESS_LABEL[progress] || { name: '-', cls: 'gray' };
+
+  // 케어 상태:
+  //  - 예정: 현재 진행 회차이면서 OR4001 + careRequestDate 미등록
+  //  - 미진행: 일정 등록됨(OR4001+careRequestDate) 또는 OR4002/OR4003, 예정일이 미래
+  //  - 미결: 예정일이 오늘 이전 + 진행 상태(OR4001~OR4003)
+  //  - "-": 현재 회차 이후의 미진행 회차 (일정도 안 잡힌 미래 회차)
+  // 반려(OR4007) 도 케어 상태는 미진행 (가이드 기준), 진행중 그룹에 포함
+  let careStatusTd;
+  if (progress === 'OR4001' || progress === 'OR4002' || progress === 'OR4003' || progress === 'OR4007') {
+    if (isOverdue) {
+      careStatusTd = `<span class="status red">미결</span>`;
+    } else if (progress === 'OR4001' && !r.careRequestDate) {
+      if (idx === currentIdx)       careStatusTd = `<span class="status gray">예정</span>`;
+      else if (idx < currentIdx)    careStatusTd = `<span class="status red">미결</span>`;  // 이미 지난 회차 + 일정 미등록 = 미결
+      else                          careStatusTd = '-';
+    } else {
+      careStatusTd = `<span class="status orange">미진행</span>`;
+    }
+  } else {
+    careStatusTd = `<strong>${labelObj.name}</strong>`;
+  }
+
+  // 예정 일정 — OR4001 + careRequestDate 없음: 신규 등록, 있음: 수정 (기존값 셋팅)
+  // 단, 케어 상태가 '-' (미래 회차) 인 경우엔 등록 버튼도 숨김
+  // minRequestDate: 직전 회차 마감기한 + 1일 (회차의 시작일 _periodStart) — datepicker minDate 로 사용
+  // 1회차는 직전 회차가 없으므로 제약 없음
+  const minReqDate = (Number(seq) <= 1) ? '' : (r._periodStart || '');
+  let scheduleTd;
+  if (progress === 'OR4001' && !r.careRequestDate) {
+    // 현재 회차 OR 미결(마감기한 지남) 회차는 신규 등록 버튼 노출
+    scheduleTd = (idx === currentIdx || isOverdue)
+      ? `<button type="button" class="btn"
+           data-min-request-date="${minReqDate}"
+           onclick="openScheduleModalFromBtn(this, ${seq})">+ 등록</button>`
+      : '-';
+  } else if (progress === 'OR4001') {
+    scheduleTd = `<button type="button" class="btn-link"
+        data-care-request-date="${r.careRequestDate || ''}"
+        data-u-idx="${r.agentUIdx != null ? r.agentUIdx : ''}"
+        data-min-request-date="${minReqDate}"
+        onclick="openScheduleModalFromBtn(this, ${seq})">${formatDate(r.careRequestDate)} <i class="icon-edit"></i></button>`;
+  } else {
+    scheduleTd = formatDate(r.careRequestDate) || '-';
+  }
+
+  // 케어 리포트 등록 버튼 노출 조건:
+  //  - OR4001 + 예정일 등록됨 + 예정일 <= 오늘 (예정일 당일부터 가능)
+  //  - 예정일 미등록 또는 예정일이 미래면 버튼 X
+  const canRegisterReport =
+       progress === 'OR4001'
+    && /^\d{8}$/.test(reqDt)
+    && reqDt <= todayStr;
+
+  let reportTd = '-';
+  if (canRegisterReport) {
+    reportTd = `<button type="button" class="btn" onclick="goReportRegist(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq}, ${Number(r.drawingCount || 0)})">+ 등록</button>`;
+  } else if (progress === 'OR4002' || progress === 'OR4007') {
+    // 임시저장 / 반려 — 유통망이 다시 작업해야 함. 결과등록 화면으로 재진입(수정 가능)
+    reportTd = `<button type="button" class="btn-link" onclick="goReportRegist(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq}, ${Number(r.drawingCount || 0)})">${formatDate(r.reportInsertDt) || (progress === 'OR4007' ? '반려' : '임시저장')} <i class="icon-edit"></i></button>`;
+  } else if (progress === 'OR4003' || progress === 'OR4004' || progress === 'OR4005') {
+    // 승인요청/승인완료 — 수정 불가, 결과뷰(headOffice) 로만 이동
+    reportTd = `<button type="button" class="btn-link" onclick="goReportView(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq})">${formatDate(r.reportInsertDt) || '-'}</button>`;
+  }
+
+  // 리포트 상태
+  let reportStatusTd = '-';
+  if (progress === 'OR4003')                                  reportStatusTd = `<span class="status orange">승인 요청</span>`;
+  else if (progress === 'OR4004' || progress === 'OR4005')    reportStatusTd = `<strong>승인 완료</strong>`;
+  else if (progress === 'OR4007')                             reportStatusTd = `<span class="status red">반려</span>`;
+
+  const overdueTd = isOverdue ? '<i class="icon-check"></i>' : '-';
+  // 케어 상태 = "예정"(OR4001 + 일정 미등록) 또는 "-"(미래 회차) 일 땐 히스토리 버튼 숨김
+  const isScheduledOnly = progress === 'OR4001' && !r.careRequestDate;
+  const histTd = isScheduledOnly
+    ? '-'
+    : `<button type="button" class="btn btn-icon" onclick="openCareHistoryModal(${r.conIdx}, ${r.mIdx}, ${r.estaIdx}, ${seq})"><i class="icon-history"></i></button>`;
+
+  tr.innerHTML = `
+    <td class="no">${seq}회</td>
+    <td>${formatDate(r.dueDate) || '-'}</td>
+    <td>${formatDate(r.careFinalDate) || '-'}</td>
+    <td>${careStatusTd}</td>
+    <td>${scheduleTd}</td>
+    <td>${reportTd}</td>
+    <td>${reportStatusTd}</td>
+    <td class="px-2">${escapeHtml(r.agentName) || '-'}</td>
+    <td class="p-0">${overdueTd}</td>
+    <td class="p-0">${histTd}</td>`;
+  return tr;
+}
+
+/* ============================================================
+ * schedule-box 토글
+ * ============================================================ */
+document.addEventListener('click', (e) => {
+  const clickArea = e.target.closest('.toggle-clickable');
+  if (!clickArea) return;
+  if (!document.getElementById('addressDetailPanel').contains(clickArea)) return;
+  clickArea.querySelector('.btn-toggle').classList.toggle('is-open');
+  clickArea.closest('.schedule-box').querySelector('.toggle-cont').classList.toggle('is-open');
+  syncAllToggleButton();
+});
+
+function toggleAllSchedule(e) {
+  const contents = document.getElementById('addressDetailPanel');
+  const open = !e.classList.contains('is-open');
+  e.classList.toggle('is-open', open);
+  e.querySelector('span').innerText = open ? '전체 닫기' : '전체 열기';
+  contents.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.toggle('is-open', open));
+  contents.querySelectorAll('.toggle-cont').forEach(el => el.classList.toggle('is-open', open));
+}
+
+function syncAllToggleButton() {
+  const contents = document.getElementById('addressDetailPanel');
+  const allItems = contents.querySelectorAll('.toggle-cont');
+  const openItems = contents.querySelectorAll('.toggle-cont.is-open');
+  const headerBtn = document.querySelector('.content-panel-cont .panel-header .btn-toggle');
+  if (!headerBtn) return;
+  if (allItems.length === openItems.length) {
+    headerBtn.classList.add('is-open');
+    headerBtn.querySelector('span').innerText = '전체 닫기';
+  } else if (openItems.length === 0) {
+    headerBtn.classList.remove('is-open');
+    headerBtn.querySelector('span').innerText = '전체 열기';
+  }
+}
+
+/* ============================================================
+ * 모달 진입 helper
+ * ============================================================ */
+function openScheduleModalFromBtn(btn, seq) {
+  const box = btn.closest('.schedule-box');
+  const ctx = {
+    conIdx:           _selectedContract.conIdx,
+    mIdx:             _selectedContract.mIdx,
+    estaIdx:          Number(box.dataset.estaIdx),
+    estaAdr4:         box.dataset.estaAdr4,
+    officecareSeq:    seq,
+    /* 수정 모드에서 미리 셋팅할 값 (data-* 에서 읽음) */
+    careRequestDate:  btn.dataset.careRequestDate || '',
+    uIdx:             btn.dataset.uIdx            || '',
+    /* 직전 회차 마감기한+1일 (회차 시작일) — datepicker 최소 선택일 */
+    minRequestDate:   btn.dataset.minRequestDate  || ''
+  };
+  if (typeof openRegistScheduleModal === 'function') openRegistScheduleModal(ctx);
+}
+
+function openCareHistoryModal(conIdx, mIdx, estaIdx, seq) {
+  if (typeof loadCareHistory === 'function') {
+    loadCareHistory({ conIdx, mIdx, estaIdx, officecareSeq: seq });
+  }
+  openModal('careHistoryModal');
+}
+
+function goReportRegist(conIdx, mIdx, estaIdx, seq, drawingCount) {
+  // 도면 미등록 검증
+  if (Number(drawingCount || 0) === 0) {
+    alert('등록된 도면이 없습니다. 도면 등록 후 진행해주세요.');
+    return;
+  }
+  // detail 화면 이동 — ServiceController @GetMapping("care/{careNo}")
+  window.location.href = `/service/care/${seq}?conIdx=${conIdx}&mIdx=${mIdx}&estaIdx=${estaIdx}`;
+}
+function goReportView(conIdx, mIdx, estaIdx, seq) {
+  // 승인 완료(OR4004/OR4005) 회차 — 읽기 전용 view 화면으로 이동
+  window.location.href = `/service/care/headOffice/${seq}?conIdx=${conIdx}&mIdx=${mIdx}&estaIdx=${estaIdx}`;
+}
+
+/* 일정 저장 후 외부 호출용
+ *   - 우측 주소별 회차 상세 갱신
+ *   - 좌측 계약 카드 목록 + 상단 탭(예정/미진행/미결) 카운트 갱신 (fetchContractList 가 내부에서 setBadge 처리) */
+function reloadAfterScheduleSave() {
+  if (!_selectedContract) return;
+  fetchAddressSummary(_selectedContract.conIdx, _selectedContract.mIdx);
+  fetchContractList();
+}
+
+/* ============================================================
+ * 유틸
+ * ============================================================ */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function formatNumber(n) {
+  if (n == null || n === '') return '0';
+  return Number(n).toLocaleString();
+}
+function formatDate(s) {
+  if (!s) return '';
+  const str = String(s);
+  if (/^\d{8}$/.test(str)) return `${str.slice(0,4)}-${str.slice(4,6)}-${str.slice(6,8)}`;
+  if (str.length >= 10) return str.slice(0, 10);
+  return str;
+}
+
+/* 페이지 로드 시 자동 조회 */
+$(function() {
+  $('#searchKeyword').keydown(e => { if (e.key === 'Enter') { e.preventDefault(); fetchContractList(); } });
+  $('#searchTypeSelect').on('change', () => $('#searchKeyword').val(''));
+  fetchContractList();
+});
+</script>
+</th:block>
+</body>
+</html>

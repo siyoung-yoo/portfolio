@@ -1,0 +1,11 @@
+<th:block th:fragment="viewerInfoRows"
+          xmlns:th="http://www.thymeleaf.org">
+  <tr th:each="item : ${viewers}">
+    <td th:text="${item.ojNm}"></td>
+    <td th:text="${item.ojId}"></td>
+    <td th:text="${item.userEmail}"></td>
+  </tr>
+  <tr th:if="${#lists.isEmpty(viewers)}">
+    <td colspan="3" class="text-nodata">열람자 정보가 없습니다.</td>
+  </tr>
+</th:block>

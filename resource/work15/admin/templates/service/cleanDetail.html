@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{common/layout/vanilla_default.html}">
+<body>
+<th:block layout:fragment="header">
+  <th:block th:replace="~{common/header :: header-back('', null, ~{::headerAction})}" />
+  <th:block th:fragment="headerAction">
+  </th:block>
+</th:block>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full overflow-y-auto">
+    <div class="grid lg:grid-cols-2 gap-3">
+      <!-- S: 계약 정보 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">계약 정보</h3>
+        </div>
+        <div class="card-content">
+          <div class="grid sm:grid-cols-2 gap-2">
+            <div>
+              <span class="label">계약번호</span>
+              <p class="label-data-text" id="info_CONTRACT_NO"></p>
+            </div>
+            <div>
+              <span class="label">계약명</span>
+              <p class="label-data-text" id="info_CONTRACT_NM"></p>
+            </div>
+            <div>
+              <span class="label">고객명</span>
+              <p class="label-data-text" id="info_CTM_NM"></p>
+            </div>
+            <div>
+              <span class="label">계약기간</span>
+              <p class="label-data-text" id="info_CONTRACT_PERIOD"></p>
+            </div>
+            <div>
+              <span class="label">개시일</span>
+              <p class="label-data-text" id="info_START_DT"></p>
+            </div>
+            <div>
+              <span class="label">완료일</span>
+              <p class="label-data-text" id="info_END_DT"></p>
+            </div>
+            <div class="col-span-2">
+              <span class="label">클리닝 품목</span>
+              <div class="w-full" id="itemGrid" style="height:250px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 계약 정보 -->
+
+      <!-- S: 신청 정보 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">신청 정보</h3>
+        </div>
+        <div class="card-content collapse-content is-open">
+          <!-- S: 진행상태 스텝 -->
+          <div class="flex justify-center items-start py-3 gap-0 mb-3" id="stepBreadcrumbs">
+            <div class="flex flex-col items-center" id="step_REQ">
+              <span class="chapter" id="stepChapter_REQ">1</span>
+              <span class="text-sm font-medium mt-1">신청</span>
+              <span class="text-xs text-gray-400 mt-1" id="stepDt_REQ">-</span>
+            </div>
+            <div class="w-20" id="stepLine_1" style="height:1px;background-color:var(--border);margin-top:9.5px;"></div>
+            <div class="flex flex-col items-center" id="step_REC">
+              <span class="chapter" id="stepChapter_REC">2</span>
+              <span class="text-sm font-medium mt-1">접수</span>
+              <span class="text-xs text-gray-400 mt-1" id="stepDt_REC">-</span>
+            </div>
+            <div class="w-20" id="stepLine_2" style="height:1px;background-color:var(--border);margin-top:9.5px;"></div>
+            <div class="flex flex-col items-center" id="step_COMP">
+              <span class="chapter" id="stepChapter_COMP">3</span>
+              <span class="text-sm font-medium mt-1">완료</span>
+              <span class="text-xs text-gray-400 mt-1" id="stepDt_COMP">-</span>
+            </div>
+            <div class="w-20" id="stepLine_3" style="height:1px;background-color:var(--border);margin-top:9.5px;"></div>
+            <div class="flex flex-col items-center" id="step_RPT">
+              <span class="chapter" id="stepChapter_RPT">4</span>
+              <span class="text-sm font-medium mt-1">리포트</span>
+              <span class="text-xs text-gray-400 mt-1" id="stepDt_RPT">-</span>
+            </div>
+          </div>
+          <!-- E: 진행상태 스텝 -->
+          <div class="grid sm:grid-cols-2 gap-2">
+            <div>
+              <span class="label">신청번호</span>
+              <p class="label-data-text" id="info_REQ_NO"></p>
+            </div>
+            <div>
+              <span class="label">신청명</span>
+              <p class="label-data-text" id="info_REQ_NM"></p>
+            </div>
+            <div>
+              <span class="label">회차</span>
+              <p class="label-data-text" id="info_ROUND"></p>
+            </div>
+            <div>
+              <span class="label">신청자</span>
+              <p class="label-data-text" id="info_REQ_USER"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <span class="label">주소</span>
+              <p class="label-data-text" id="info_ADDR"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <span class="label">비고</span>
+              <p class="label-data-text whitespace-pre-wrap" id="info_REMARK"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <span class="label">첨부파일</span>
+              <ul id="reqFileList" class="mt-1 flex flex-col gap-1">
+                <li class="text-sm text-muted-foreground" id="reqFileEmptyMsg">등록된 첨부파일이 없습니다.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 신청 정보 -->
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-3 mt-3">
+      <!-- S: 레터스 담당자 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">레터스 담당자</h3>
+        </div>
+        <div class="card-content">
+          <div class="grid sm:grid-cols-2 gap-2">
+            <div>
+              <span class="label">담당자명</span>
+              <p class="label-data-text" id="info_MANAGER_NM"></p>
+            </div>
+            <div>
+              <span class="label">연락처</span>
+              <p class="label-data-text" id="info_MANAGER_TEL"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- E: 레터스 담당자 -->
+
+      <!-- S: 클리닝 결과 리포트 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">클리닝 결과 리포트</h3>
+        </div>
+        <div class="card-content">
+          <ul id="reportFileList" class="flex flex-col gap-2">
+            <li class="text-sm text-muted-foreground" id="reportEmptyMsg">등록된 리포트가 없습니다.</li>
+          </ul>
+        </div>
+      </div>
+      <!-- E: 클리닝 결과 리포트 -->
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    var itemGridId = null;
+
+    var renderer = { type: "TemplateRenderer" };
+    var filter = { showIcon: true };
+
+    var itemColumnLayout = [
+      { headerText: '품목코드', dataField: 'ITEM_CD', filter: filter, width: 140, style: 'text-center' },
+      { headerText: '색상코드', dataField: 'COLOR_CD', filter: filter, width: 120, style: 'text-center' },
+      { headerText: '품목명', dataField: 'ITEM_NM', filter: filter, style: 'aui-left' },
+      { headerText: '수량', dataField: 'QTY', filter: filter, width: 100, style: 'text-center',
+        dataType: 'numeric', formatString: '#,##0'
+      },
+    ];
+
+    var itemGridProps = {
+      enableSorting: true,
+      enableFilter: true,
+      showRowNumColumn: true,
+      showRowCheckColumn: false,
+      selectionMode: 'singleRow',
+      height: '100%',
+    };
+
+    var stepOrder = ['REQ', 'REC', 'COMP', 'RPT'];
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCleanDetail();
+    });
+
+    function loadCleanDetail() {
+      var pathSegments = window.location.pathname.split('/');
+      var reqNo = pathSegments[pathSegments.length - 1];
+
+      if (!reqNo) {
+        console.error('신청번호를 찾을 수 없습니다.');
+        return;
+      }
+
+      // TODO: API 연동
+      // try {
+      //   var response = await fetchJson('/service/clean/selectCleanDetail.dataTable', 'POST', 'reqNo=' + reqNo);
+      //   var data = (response && response.data) ? response.data[0] : null;
+      //   if (data) populateFields(data);
+      // } catch (error) {
+      //   console.error('클리닝 상세 조회 실패:', error);
+      // }
+
+      // 임시 더미 데이터
+      var dummyData = {
+        // 신청 정보
+        REQ_NO: reqNo,
+        REQ_NM: '퍼시스 본사 5F 의자 클리닝',
+        REQ_DATE: '2026-03-15',
+        REQ_USER: '김영수',
+        ADDR: '서울특별시 강남구 테헤란로 123',
+        ROUND: '1회차',
+        REMARK: '의자 30석 클리닝 요청',
+
+        // 계약 정보
+        CONTRACT_NO: 'CT-2026-0001',
+        CONTRACT_NM: '퍼시스 본사 클리닝 계약',
+        CTM_NM: '(주)퍼시스',
+        CONTRACT_PERIOD: '60개월',
+        START_DT: '2026-01-01',
+        END_DT: '2030-12-31',
+
+        // 진행상태 스텝 일자
+        STATUS: '완료',
+        REQ_STEP_DT: '2026-03-15',
+        REC_STEP_DT: '2026-03-16',
+        COMP_STEP_DT: '2026-03-20',
+        RPT_STEP_DT: '',
+
+        // 레터스 담당자
+        MANAGER_NM: '박지훈',
+        MANAGER_TEL: '010-1234-5678',
+
+        // 클리닝 대상 품목
+        ITEMS: [
+          { ITEM_CD: 'CH-A001', COLOR_CD: 'BK-001', ITEM_NM: 'SIDIZ T50', QTY: 15 },
+          { ITEM_CD: 'CH-A002', COLOR_CD: 'GR-002', ITEM_NM: 'SIDIZ T80', QTY: 10 },
+          { ITEM_CD: 'CH-B001', COLOR_CD: 'BK-001', ITEM_NM: 'SIDIZ EGA', QTY: 5 },
+        ],
+
+        // 신청 첨부파일
+        REQ_FILES: [
+          { FILE_ID: 'AF001', FILE_NM: '의자_배치도.pdf', UPLOAD_DATE: '2026-03-15' },
+          { FILE_ID: 'AF002', FILE_NM: '클리닝_요청서.xlsx', UPLOAD_DATE: '2026-03-15' },
+        ],
+
+        // 리포트 파일
+        REPORTS: [
+          { FILE_ID: 'RPT001', FILE_NM: '클리닝_결과_리포트_20260320.pdf', UPLOAD_DATE: '2026-03-20' },
+        ],
+      };
+      populateFields(dummyData);
+    }
+
+    function populateFields(data) {
+      // 헤더 타이틀
+      var headerTitle = document.querySelector('.header .font-medium');
+      if (headerTitle) headerTitle.textContent = data.REQ_NM || data.REQ_NO || '';
+
+      // 기본 필드
+      var fields = [
+        'REQ_NO', 'REQ_NM', 'REQ_DATE', 'REQ_USER', 'ADDR', 'ROUND', 'REMARK',
+        'CONTRACT_NO', 'CONTRACT_NM', 'CTM_NM', 'CONTRACT_PERIOD', 'START_DT', 'END_DT',
+        'MANAGER_NM', 'MANAGER_TEL'
+      ];
+      fields.forEach(function(field) {
+        var el = document.getElementById('info_' + field);
+        if (el) el.textContent = data[field] || '-';
+      });
+
+      // 진행상태 스텝 업데이트
+      updateSteps(data);
+
+      // 품목 그리드
+      var r = ensureGrid('#itemGrid', itemColumnLayout, itemGridProps, itemGridId);
+      itemGridId = r.gridId;
+      AUIGrid.setGridData(itemGridId, data.ITEMS || []);
+
+      // 신청 첨부파일
+      renderReqFiles(data.REQ_FILES || []);
+
+      // 리포트 파일
+      renderReportFiles(data.REPORTS || []);
+    }
+
+    function updateSteps(data) {
+      var stepDtFields = { 'REQ': 'REQ_STEP_DT', 'REC': 'REC_STEP_DT', 'COMP': 'COMP_STEP_DT', 'RPT': 'RPT_STEP_DT' };
+      var activeColor = 'var(--primary)';
+
+      stepOrder.forEach(function(step, idx) {
+        var dt = data[stepDtFields[step]] || '';
+        var dtEl = document.getElementById('stepDt_' + step);
+        var chapterEl = document.getElementById('stepChapter_' + step);
+
+        if (dtEl) dtEl.textContent = dt || '-';
+
+        if (dt) {
+          chapterEl.style.backgroundColor = activeColor;
+          chapterEl.style.color = '#fff';
+        }
+
+        // 연결선: 이전 스텝과 현재 스텝 사이
+        if (idx > 0) {
+          var lineEl = document.getElementById('stepLine_' + idx);
+          if (lineEl && dt) {
+            lineEl.style.backgroundColor = activeColor;
+          }
+        }
+      });
+    }
+
+    function renderReqFiles(files) {
+      var ul = document.getElementById('reqFileList');
+      var emptyMsg = document.getElementById('reqFileEmptyMsg');
+
+      if (!files || files.length === 0) {
+        emptyMsg.style.display = '';
+        return;
+      }
+
+      emptyMsg.style.display = 'none';
+      ul.querySelectorAll('li:not(#reqFileEmptyMsg)').forEach(function(li) { li.remove(); });
+
+      files.forEach(function(item) {
+        var li = document.createElement('li');
+        li.className = 'flex items-center gap-2 px-3 py-2 border rounded text-sm';
+        li.innerHTML =
+          '<div class="flex-1 flex flex-col gap-0.5 overflow-hidden">'
+            + '<span class="label-data-text overflow-hidden whitespace-nowrap text-ellipsis mt-0">' + item.FILE_NM + '</span>'
+          + '</div>'
+          + '<button type="button" class="flex-shrink-0 text-xs text-muted-foreground underline cursor-pointer" onclick="downloadReqFile(\'' + item.FILE_ID + '\')">다운로드</button>';
+        ul.appendChild(li);
+      });
+    }
+
+    function downloadReqFile(fileId) {
+      if (!fileId) return;
+      // TODO: API 연동
+      alert('첨부파일 다운로드: ' + fileId);
+    }
+
+    function renderReportFiles(files) {
+      var ul = document.getElementById('reportFileList');
+      var emptyMsg = document.getElementById('reportEmptyMsg');
+
+      if (!files || files.length === 0) {
+        emptyMsg.style.display = '';
+        return;
+      }
+
+      emptyMsg.style.display = 'none';
+      ul.querySelectorAll('li:not(#reportEmptyMsg)').forEach(function(li) { li.remove(); });
+
+      files.forEach(function(item) {
+        var li = document.createElement('li');
+        li.className = 'flex items-center gap-2 px-3 py-2 border rounded text-sm';
+        li.innerHTML =
+          '<div class="flex-1 flex flex-col gap-0.5 overflow-hidden">'
+            + '<span class="label">' + (item.UPLOAD_DATE || '') + '</span>'
+            + '<span class="label-data-text overflow-hidden whitespace-nowrap text-ellipsis mt-0">' + item.FILE_NM + '</span>'
+          + '</div>'
+          + '<button type="button" class="flex-shrink-0 text-xs text-muted-foreground underline cursor-pointer" onclick="downloadReport(\'' + item.FILE_ID + '\')">다운로드</button>';
+        ul.appendChild(li);
+      });
+    }
+
+    function downloadReport(fileId) {
+      if (!fileId) return;
+      // TODO: API 연동
+      // location.href = '/service/clean/downloadReport?fileId=' + fileId;
+      alert('리포트 다운로드: ' + fileId);
+    }
+
+    window.addEventListener('resize', function() {
+      if (itemGridId) AUIGrid.resize(itemGridId);
+    });
+  </script>
+</th:block>
+</body>
+</html>

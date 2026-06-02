@@ -1,0 +1,224 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area">
+      <h2 class="page-title">팝업</h2>
+    </div>
+
+    <div class="list-inline">
+      <button type="button" class="btn dark" onclick="fnPopupOpen('popupSample01');">기본 팝업</button>
+      <button type="button" class="btn dark" onclick="fnPopupOpen('popupSample02');">기본 팝업 (내용이 길 경우)</button>
+      <button type="button" class="btn dark" onclick="fnPopupOpen('popupSample03');">하단 버튼 없는 팝업</button>
+    </div>
+
+    <br><br>
+
+    <div class="list-inline">
+      <button type="button" class="btn dark" id="btnAlert">alert</button>
+      <button type="button" class="btn dark" id="btnConfirmA">confirmA</button>
+      <button type="button" class="btn dark" id="btnConfirmB">confirmB</button>
+    </div>
+
+    <div class="mt-2xl">
+      <h3>!! 설명 !!</h3>
+      <h3 class="regular">
+        <br>close-btn 클래스 추가 시 팝업 닫힘
+        <br>* 추가 기능이 필요 없는 단순 닫기버튼(취소, 닫기)에만 사용
+        <br>
+        <br>fnPopupOpen("popupId");
+        <br>
+        <br>fnPopupClose("popupId", "focusEle");
+        <br>* focusEle를 전달한 경우: 해당 요소로 포커스 이동
+        <br>* focusEle를 전달하지 않은 경우 마지막으로 클릭한 요소(lastClickedElement)로 포커스 이동
+      </h3>
+    </div>
+  </div>
+
+
+
+  <div role="dialog" class="popup-wrap" id="popupSample01">
+    <div class="popup-dim"></div>
+    <div class="popup-cont">
+      <div class="popup-header">팝업 제목</div>
+      <div class="popup-body">
+        기본 팝업<br>
+        기본 팝업
+      </div>
+      <div class="popup-footer">
+        <button type="button" class="btn line close-btn">취소</button>
+        <button type="button" class="btn dark" onclick="fnPopupClose('popupSample01')">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div role="dialog" class="popup-wrap" id="popupSample02">
+    <div class="popup-dim"></div>
+    <div class="popup-cont">
+      <div class="popup-header">팝업 제목</div>
+      <div class="popup-body">
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+      </div>
+      <div class="popup-footer btn-full">
+        <button type="button" class="btn line close-btn">취소</button>
+        <button type="button" class="btn dark" onclick="fnPopupClose('popupSample02')">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <div role="dialog" class="popup-wrap" id="popupSample03">
+    <div class="popup-dim"></div>
+    <div class="popup-cont">
+      <div class="popup-header">팝업 제목</div>
+      <div class="popup-body">
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+        내용<br><br>
+        내용이 길 경우<br><br>
+      </div>
+      <button type="button" class="btn-close close-btn"><span class="sr-only">닫기</span></button>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+document.querySelector("#btnAlert").addEventListener("click", (e) => {
+  alertPopup("title", "message", "버튼 텍스트", "#btnAlert", () => {
+    console.log("alert 확인");
+  });
+});
+
+document.querySelector("#btnConfirmA").addEventListener("click", (e) => {
+  confirmPopup("title", "message", "확인 텍스트", "취소 텍스트", "#btnConfirmA", (rFlag) => {
+    if (rFlag) {
+      console.log('확인', rFlag)
+    } else {
+      console.log('취소', rFlag)
+    }
+  })
+});
+
+document.querySelector("#btnConfirmB").addEventListener("click", (e) => {
+  confirmPopup(opt);
+});
+
+const testFn = function(rFlag) { console.log("rFalg ", rFlag )};
+const opt = {
+      title     : "title",
+      message   : "msg",
+      okBtn     : "확인 텍스트",
+      cancelBtn : "취소 테스트",
+      endFocus  : "#btnConfirm",
+      callBack  : testFn
+    };
+
+</script>
+</th:block>
+
+</body>
+</html>

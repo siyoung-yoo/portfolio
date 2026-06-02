@@ -1,0 +1,34 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body class="bg-white">
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent" class="my-page">
+    <div class="title-area">
+      <h2 class="page-title">본인 확인</h2>
+      <p class="page-description">개인정보 보호를 위해 비밀번호를 다시 입력해 주세요.</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="form-group">
+      <label for="form01" class="text-label required">현재 비밀번호</label>
+      <div class="form-box">
+        <input type="password" id="form01" autocomplete="off" placeholder="비밀번호 입력" title="비밀번호 입력">
+      </div>
+    </div>
+
+    <div class="footer-btn-area py-lg">
+      <button type="button" class="btn line">취소</button>
+      <button type="button" class="btn dark">확인</button>
+    </div>
+
+    <div class="box-style bg-mint p-sm gap-0 text-center mt-2xl">
+      <p>문의 사항이 있으시면 아래로 연락해 주세요.</p>
+      <strong>퍼시스 대표번호 (02-3400-6911)</strong>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+</th:block>
+</body>
+</html>

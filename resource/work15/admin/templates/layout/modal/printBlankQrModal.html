@@ -1,0 +1,134 @@
+<div class="modal" id="printBlankQrModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">공QR 스티커 출력</h5>
+          <p class="modal-description mt-2">출력할 공QR 스티커 갯수를 입력하세요.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group w-full">
+          <label>
+            <span class="label">출력 갯수</span>
+            <input id="printCountInput" type="text" class="input" placeholder="0" oninput="onlyNumberNoDot()">
+          </label>
+          <p class="text-indent mt-2">* A4 용지에 3열로 출력됩니다.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="printBlankQr()">PDF 변환</button>
+      </div>
+    </div>
+  </div>
+
+  <ul class="blank-qr-list"></ul>
+</div>
+
+<style>
+  #printBlankQrModal .blank-qr-list { display: none; }
+  @page print-blank-qr { size: A4 portrait; margin: 0; padding: 1.25cm 0.65cm; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+    .printBlankQr { page: print-blank-qr; background: #fff; }
+    .printBlankQr .sidebar-wrapper, .printBlankQr .page-wrapper .header, .printBlankQr .page-wrapper .container-h-full,
+    .printBlankQr #printBlankQrModal .modal-header, .printBlankQr #printBlankQrModal .modal-dialog { display: none !important; }
+    .printBlankQr .page-wrapper, .printBlankQr .page-content { padding: 0; margin: 0; background: #fff; }
+    .printBlankQr #printBlankQrModal.modal { position: static; z-index: 999; height: auto; overflow: visible; background: #fff; }
+
+    .printBlankQr #printBlankQrModal .blank-qr-list::after { content: ''; display: block; clear: both; }
+    .printBlankQr #printBlankQrModal .blank-qr-list { display: block; width: 100%; font-size: 0; }
+    .printBlankQr #printBlankQrModal .blank-qr-list > li { display: block; width: 6.4cm; height: 3.4cm; margin: 0 0.25cm 0 0; padding: 0.16cm; border: 0; float: left; overflow: hidden; }
+    .printBlankQr #printBlankQrModal .blank-qr-list > li:nth-child(3n) { margin-right: 0; }
+    .printBlankQr #printBlankQrModal .blank-qr-list .logo-area p,
+    .printBlankQr #printBlankQrModal .blank-qr-list dl dt,
+    .printBlankQr #printBlankQrModal .blank-qr-list dl dd { font-size: 0.26cm; font-weight: var(--font-weight-bold); line-height: 1; color: var(--primary-500); }
+    .printBlankQr #printBlankQrModal .blank-qr-list .logo-area { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--primary-500); padding: 0.16cm 0; margin: 0 0 0.16cm }
+    .printBlankQr #printBlankQrModal .blank-qr-list .logo-area .qr-logo { width: 40%; height: auto; }
+    .printBlankQr #printBlankQrModal .blank-qr-list .info { width: 74%; padding: 0 0.1cm 0 0; border-right: 1px solid var(--primary-500); }
+    .printBlankQr #printBlankQrModal .blank-qr-list dl { display: flex; padding: 0.1cm 0.05cm; border-bottom: 1px solid var(--primary-500); }
+    .printBlankQr #printBlankQrModal .blank-qr-list dt { flex: none; padding: 0 0.1cm 0 0; letter-spacing: -0.04cm; border-right: 1px solid var(--primary-500); }
+    .printBlankQr #printBlankQrModal .blank-qr-list dd { padding: 0 0 0 0.05cm; letter-spacing: -0.03cm; white-space: normal; word-break: break-all; }
+    .printBlankQr #printBlankQrModal .blank-qr-list .dl-item { padding-top: 0.15cm; border-bottom: 0; }
+    .printBlankQr #printBlankQrModal .blank-qr-list .qr-box { width: 26%; padding-left: 0.16cm; }
+    .printBlankQr #printBlankQrModal .blank-qr-list .qr-box .blank-qr { width: 100%; height: 100%; object-fit: contain; object-position: 50%; background-color: var(--primary-50); }
+  }
+</style>
+
+<script>
+  const printBlankQrModal = document.querySelector("#printBlankQrModal");
+  const input = printBlankQrModal.querySelector("input");
+  let blnkQrList = printBlankQrModal.querySelector(".blank-qr-list");
+
+  function printBlankQr() {
+    const count = parseInt(input.value, 10);
+
+    if (!count || count <= 0) {
+      alert("출력할 갯수를 입력하세요.");
+      return;
+    }
+
+    if (count > 100) {
+      alert("최대 100개까지 출력할 수 있습니다.");
+      input.value = 100;
+      return;
+    }
+
+    for (let i = 1; i <= count; i++) {
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+        <div class="logo-area">
+          <img class="qr-logo" src="/assets/img/logo/logo_fursys_mark.svg" alt="퍼시스 로고">
+          <p>세트</p>
+        </div>
+        <div class="flex">
+          <div class="info">
+            <dl>
+              <dt>계약번호</dt>
+              <dd>${this.selectedContractNo}</dd>
+            </dl>
+            <dl>
+              <dt>시리즈명</dt>
+              <dd></dd>
+            </dl>
+            <dl>
+              <dt>품목코드(색상)</dt>
+              <dd></dd>
+            </dl>
+          </div>
+          <div class="qr-box">
+            <div class="blank-qr"></div>
+          </div>
+        </div>
+        <dl class="dl-item">
+          <dt>시리얼 넘버</dt>
+          <dd></dd>
+        </dl>
+      `;
+
+      blnkQrList.appendChild(li);
+    }
+
+    document.body.classList.add('printBlankQr');
+
+    // 이미지 로드 기다렸다가 프린트 실행
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.print();
+      })
+    });
+  }
+
+  function afterPrintBlankQr() {
+    document.body.classList.remove('printBlankQr');
+    blnkQrList.innerHTML = "";
+    input.value = "";
+  }
+
+  window.addEventListener("afterprint", () =>
+    afterPrintBlankQr()
+  );
+</script>

@@ -1,0 +1,72 @@
+<div class="modal" id="orderChgDateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">납기 변경</h3>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-content">
+            <div class="grid sm:grid-cols-3 gap-4">
+              <div>
+                <span class="label">품질번호</span>
+                <p class="font-medium">25525</p>
+              </div>
+              <div class="sm:col-span-2">
+                <span class="label">납품처 주소</span>
+                <p class="font-medium">경기도 성남시 분당구 판교역로 310</p>
+              </div>
+
+              <div class="sm:col-span-3">
+                <span class="label">확정 납기일</span>
+                <p class="font-medium">2026-01-01</p>
+              </div>
+
+              <label class="input-group">
+                <span class="label">변경 납기일</span>
+                <input id="" type="text" class="input datepicker-basic" placeholder="YYYY-MM-DD" value="2026-01-01">
+              </label>
+
+              <div class="input-group sm:col-span-2">
+                <span class="label">착불 진행여부</span>
+                <div class="flex flex-wrap">
+                  <label class="radio-box mr-4">
+                    <input type="radio" name="radio" class="radio" checked/>
+                    아니요
+                  </label>
+                  <label class="radio-box shrink">
+                    <input type="radio" name="radio" class="radio"/>
+                    <div class="flex items-end gap-1">
+                      예 <span class="text-xs">(착불가능 처리시 배차비용 대리점 부담)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <div class="flex justify-between flex-wrap gap-2">
+            <h5 class="card-title">변경요청 사유</h5>
+            <span class="text-red-indent font-medium">* 처리 여부에 참고되는 내용입니다. 가급적 자세히 기술해 주시기 바랍니다.</span>
+          </div>
+          <div class="mt-3">
+            <textarea name="" id="" class="textarea input"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">수주 변경요청</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+</script>

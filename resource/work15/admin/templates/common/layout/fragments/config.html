@@ -1,0 +1,35 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <th:block layout:fragment="title">
+    <title th:text="${subTitle}"></title>
+  </th:block>
+
+  <link rel="shortcut icon" th:href="@{/assets/img/logo/logo_color.svg}" type="image/svg+xml">
+
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap"/>
+
+
+  <!-- air-datepicker -->
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/air-datepicker/air-datepicker.css}"/>
+  <!-- tom-select -->
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/tom-select/tom-select.css}"/>
+  <!-- summernote -->
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/summernote.min.css}"/>
+  <!-- tailwind out.css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/assets/css/out.css}"/>
+  <!-- lucide icons -->
+  <script th:src="@{/assets/js/lucide.min.js}" defer></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+    });
+  </script>
+</head>
+</html>

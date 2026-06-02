@@ -1,0 +1,557 @@
+<!-- 영역 정보 수정 모달 -->
+<div class="modal" id="editItemMappingInfoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title" id="editItemModalTitle">영역 정보 수정</h5>
+          <p class="modal-description mt-2" id="editItemModalDesc">영역에 매핑된 품목을 수정합니다.<br>품목이 수정되면 미매핑 알림이 발생할 수 있습니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close" onclick="cancelEditItemMapping()"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- 영역명 -->
+        <div class="flex gap-3">
+          <label class="input-group w-[46%]">
+            <span class="label">영역명</span>
+            <input type="text" id="editAreaName" class="input" placeholder="예: 업무존 A, 회의실">
+          </label>
+        </div>
+
+        <!-- 계약품목 / 매핑품목 -->
+        <div class="regist-panel-wrap type-edit mt-4">
+          <div class="regist-list-wrap">
+            <div class="regist-list">
+              <h3 class="title flex justify-between pr-2">
+                <span>계약 품목 (<span id="editContractCount">0</span>)</span>
+                <span>(<span id="editMappingCount">0/0</span>)</span>
+              </h3>
+              <div class="input">
+                <input type="text" id="editContractSearch" class="w-full" placeholder="품목코드 검색">
+                <button type="button"><i class="icon-search"></i></button>
+              </div>
+              <ul class="mapping-list type-contract" id="editContractItemList">
+              </ul>
+            </div>
+
+            <div class="regist-list">
+              <h3 class="title flex justify-between pr-4">매핑 품목
+                <div class="flex items-center gap-2" id="editMappingStatus">
+                  <span class="badge badge-orange-fill">미매핑</span>
+                </div>
+              </h3>
+
+              <div class="alert alert-default" id="editMappingAlert" data-state="editMappingItem">
+                <p class="alert-title text-sm">매핑할 계약 품목을<br>선택해주세요</p>
+              </div>
+
+              <div class="mapping-list-wrap" id="editMappingWrap" data-state="editMappingItem">
+                <!-- 매핑 품목 검색 -->
+                <div class="input">
+                  <input type="text" id="editMappingItemSearch" class="w-full" placeholder="품목코드 검색">
+                  <button type="button"><i class="icon-search"></i></button>
+                </div>
+                <ul class="mapping-list type-item" id="editMappingItemList">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer flex-col gap-4">
+        <div class="badge badge-orange w-full" id="editUnmappedNotice">
+          <div class="flex flex-col gap-2 p-2 text-sm">
+            <h5>미매핑 품목 안내</h5>
+            <p class="text-primary">체크 해제된 품목은 이 영역에서 삭제됩니다.<br>해당 품목이 다른 영역에도 매핑되지 않으면 미매핑 계약 상태로 표시됩니다.</p>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 w-full">
+          <button type="button" class="btn btn-outline" onclick="cancelEditItemMapping()">취소</button>
+          <button type="button" class="btn btn-primary" onclick="saveEditItemMapping()">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 영역 수정 모달 상태 ===== */
+let _editAreaIdx = null;        // 수정 중인 영역 idx
+let _editContractCode = null;   // 수정 중인 계약 코드
+let _editConIdx = null;         // 수정 중인 계약 conIdx (정확한 그룹 매칭용)
+let _editIsNewArea = false;     // 신규 등록 모드 여부
+let _editOtherAreaQty = {};     // 같은 계약의 다른 영역에서 매핑된 수량 {key: qty}
+
+/**
+ * 영역 정보 모달 열기
+ * @param {string} contractCode - 계약코드
+ * @param {string} areaIdx - 영역 idx (A, B, ...)
+ * @param {boolean} isNew - true: 신규 등록, false: 수정
+ */
+function openEditItemMappingModal(contractCode, areaIdx, isNew, conIdx) {
+  _editContractCode = contractCode;
+  _editAreaIdx = areaIdx;
+  _editConIdx = conIdx || null;
+  _editIsNewArea = isNew === true;
+
+  // 타이틀 변경
+  document.getElementById('editItemModalTitle').textContent = _editIsNewArea ? '영역 정보 등록' : '영역 정보 수정';
+  document.getElementById('editItemModalDesc').textContent = _editIsNewArea
+    ? '영역에 매핑할 품목을 선택하세요.'
+    : '영역에 매핑된 품목을 수정합니다.';
+
+  // drawAreaData에서 영역 정보 찾기 (conIdx로 정확한 그룹 매칭)
+  const group = conIdx
+    ? drawAreaData.find(g => String(g.conIdx) === String(conIdx))
+    : drawAreaData.find(g => g.contractCode === contractCode);
+  if (!group) return;
+  const area = group.info.find(a => a.idx === areaIdx);
+  if (!area) return;
+
+  // 영역명
+  document.getElementById('editAreaName').value = area.name || '';
+
+  // 같은 계약의 다른 영역들이 이미 매핑한 수량 계산
+  _editOtherAreaQty = {};
+  group.info.forEach(a => {
+    if (a.idx === areaIdx) return; // 현재 영역 제외
+    (a.items || []).forEach(item => {
+      const key = (item.itemCode || '') + '__' + (item.colCd || '');
+      _editOtherAreaQty[key] = (_editOtherAreaQty[key] || 0) + (item.itemCout || 0);
+    });
+  });
+
+  // 해당 계약의 conIdx로 품목 조회
+  const groupConIdx = group.conIdx;
+  if (groupConIdx) {
+    $.ajax({
+      url: '/hqDrawingMng/getContractItems',
+      type: 'post',
+      data: {
+        conIdx: groupConIdx,
+        drawingId: (typeof _detailData !== 'undefined' && _detailData) ? _detailData.drawingId : null,
+        addressId: (typeof _detailData !== 'undefined' && _detailData) ? _detailData.addressId : null
+      },
+      success: function(res) {
+        const items = res.data.contractItems || [];
+        renderEditContractItemsWithData(items);
+        renderEditMappingItems(area.items || []);
+        updateEditMappingStatus();
+      }
+    });
+  } else {
+    renderEditContractItems();
+    renderEditMappingItems(area.items || []);
+    updateEditMappingStatus();
+  }
+
+  // onActiveDrawArea에서 추가된 불필요한 ul 제거 + hidden/display 리셋
+  const editWrap = document.getElementById('editMappingWrap');
+  if (editWrap) {
+    editWrap.querySelectorAll('ul.mapping-list.type-item:not(#editMappingItemList)').forEach(el => el.remove());
+    editWrap.classList.remove('hidden'); editWrap.style.display = '';
+  }
+  const editUl = document.getElementById('editMappingItemList');
+  if (editUl) { editUl.classList.remove('hidden'); editUl.style.display = ''; }
+
+  openModal('editItemMappingInfoModal');
+}
+
+/** 계약 품목 렌더링 — 데이터 직접 전달 */
+function renderEditContractItemsWithData(contractItems) {
+  const ul = document.getElementById('editContractItemList');
+  ul.innerHTML = '';
+
+  if (!contractItems || contractItems.length === 0) {
+    ul.innerHTML = '<div class="alert alert-default"><p class="alert-title text-sm">계약 품목이 없습니다</p></div>';
+    document.getElementById('editContractCount').textContent = '0';
+    return;
+  }
+
+  contractItems.forEach(item => {
+    const li = document.createElement('li');
+    li.dataset.itemcode = item.ITEM_CD || '';
+    li.dataset.colcode = item.COL_CD || '';
+    li.dataset.setyn = item.SET_YN || 'N';
+
+    const key = (item.ITEM_CD || '') + '__' + (item.COL_CD || '');
+    const totalQty = item.TOTAL_QTY || 0;                        // 계약 전체 수량
+    const otherAreaQty = _editOtherAreaQty[key] || 0;            // 같은 도면 내 다른 영역 매핑 수량
+    const sameAddrOtherDrawingQty = item.OTHER_MAPPED_QTY || 0;  // 같은 주소지 다른 도면 매핑 수량
+    const sameAddrOther = otherAreaQty + sameAddrOtherDrawingQty; // 매핑 한도 계산용 (주소지별 독립)
+    const availableQty = Math.max(totalQty - sameAddrOther, 0);
+
+    // dataset에 보관 — 주소지별 독립
+    li.dataset.totalQty = totalQty;
+    li.dataset.otherQty = sameAddrOther;
+
+    const seriesNm = item.SERIES_NM || item.ITM_DESC || '';
+    li.innerHTML = `
+      <div class="item-info">
+        <p class="text-basic">${item.ITEM_CD || ''}
+          <span class="text-sub">${item.COL_CD || ''}</span>
+        </p>
+        <p class="text-sub">${seriesNm}</p>
+      </div>
+      <div class="item-qty-check">
+        <p class="text-basic">
+          <span class="qty-count">0</span>/<span class="qty-total">${totalQty}</span>
+        </p>
+        <i class="icon-box"></i>
+      </div>
+    `;
+
+    // 사용 가능 수량이 0이면 선택 불가
+    if (availableQty <= 0) {
+      li.classList.add('done');
+      li.style.opacity = '0.5';
+      li.style.pointerEvents = 'none';
+    } else {
+      li.addEventListener('click', function() {
+        addEditMappingItem(this);
+      });
+    }
+
+    ul.appendChild(li);
+  });
+
+  document.getElementById('editContractCount').textContent = contractItems.length;
+}
+
+/** 계약 품목 렌더링 — _detailData 사용 (기존 호환) */
+function renderEditContractItems() {
+  const contractItems = _detailData.contractItems || [];
+  renderEditContractItemsWithData(contractItems);
+}
+
+/** 기존 매핑 품목 복원 */
+function renderEditMappingItems(items) {
+  const ul = document.getElementById('editMappingItemList');
+  ul.innerHTML = '';
+
+  items.forEach(item => {
+    const key = (item.itemCode || '') + '__' + (item.colCd || '');
+
+    // 계약 품목에서 정보 가져오기
+    const contractLi = findEditContractLi(key);
+    if (!contractLi) return;
+
+    const itemInfo = contractLi.querySelector('.item-info').outerHTML;
+    const newLi = createEditMappingLi(item.itemCode, item.colCd, item.itemCout || 0, itemInfo);
+    ul.appendChild(newLi);
+  });
+
+  updateEditLeftQty();
+  toggleEditMappingAlert();
+}
+
+/** 매핑 품목 추가 */
+function addEditMappingItem(contractLi) {
+  const ul = document.getElementById('editMappingItemList');
+  const key = (contractLi.dataset.itemcode || '') + '__' + (contractLi.dataset.colcode || '');
+
+  // 이미 매핑된 품목이면 아무 동작 안 함 (수량 조절은 매핑품목에서)
+  let existing = null;
+  ul.querySelectorAll('li').forEach(li => {
+    if ((li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '') === key) existing = li;
+  });
+  if (existing) return;
+
+  // 수량 체크 (이 영역에서 매핑 가능한 최대 = 전체 - 다른 곳 매핑)
+  const max = getEditMaxQty(key);
+  const currentTotal = getEditTotalQty(key);
+  if (currentTotal >= max) return;
+
+  const itemInfo = contractLi.querySelector('.item-info').outerHTML;
+  const newLi = createEditMappingLi(contractLi.dataset.itemcode, contractLi.dataset.colcode, 1, itemInfo);
+  ul.appendChild(newLi);
+
+  updateEditLeftQty();
+  toggleEditMappingAlert();
+  updateEditMappingStatus();
+}
+
+/** 매핑 품목 li 생성 */
+function createEditMappingLi(itemCode, colCode, qty, itemInfoHtml) {
+  const li = document.createElement('li');
+  li.dataset.itemcode = itemCode || '';
+  li.dataset.colcode = colCode || '';
+
+  li.innerHTML = `
+    ${itemInfoHtml}
+    <div class="item-actions">
+      <div class="item-counter">
+        <button type="button" class="btn btn-ghost edit-minus">
+          <i class="icon-chevron rotate-90"></i>
+        </button>
+        <input type="text" class="input text-center edit-qty" value="${qty}">
+        <button type="button" class="btn btn-ghost edit-plus">
+          <i class="icon-chevron rotate-270"></i>
+        </button>
+      </div>
+      <button type="button" class="btn btn-delete btn-ghost edit-item-delete"></button>
+    </div>
+  `;
+  return li;
+}
+
+/** 매핑 품목 이벤트 위임 (증가/감소/삭제) */
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#editMappingItemList')) return;
+  const li = e.target.closest('li');
+  if (!li) return;
+
+  const key = (li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '');
+  const input = li.querySelector('.edit-qty');
+
+  // 삭제
+  if (e.target.closest('.edit-item-delete')) {
+    li.remove();
+    updateEditLeftQty();
+    toggleEditMappingAlert();
+    updateEditMappingStatus();
+    return;
+  }
+
+  // 증가
+  if (e.target.closest('.edit-plus')) {
+    const max = getEditMaxQty(key);
+    const total = getEditTotalQty(key);
+    if (total >= max) return;
+    input.value = parseInt(input.value) + 1;
+    updateEditLeftQty();
+    updateEditMappingStatus();
+    return;
+  }
+
+  // 감소
+  if (e.target.closest('.edit-minus')) {
+    let val = parseInt(input.value);
+    if (val > 1) {
+      input.value = val - 1;
+      updateEditLeftQty();
+      updateEditMappingStatus();
+    }
+    return;
+  }
+});
+
+/** 수량 직접 입력 — 최대 초과 시 alert + 1 로 초기화 */
+document.addEventListener('change', function(e) {
+  if (!e.target.classList.contains('edit-qty')) return;
+  if (!e.target.closest('#editMappingItemList')) return;
+
+  const input = e.target;
+  const li = input.closest('li');
+  const key = (li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '');
+  const max = getEditMaxQty(key);
+
+  let val = parseInt(input.value) || 0;
+  if (val < 1) val = 1;
+  if (val > max) {
+    alert('입력 가능한 최대수량은 ' + max + '개 입니다.');
+    input.value = 1;
+    updateEditLeftQty();
+    updateEditMappingStatus();
+    return;
+  }
+  input.value = val;
+
+  updateEditLeftQty();
+  updateEditMappingStatus();
+});
+
+/** 계약 품목에서 key로 찾기 */
+function findEditContractLi(key) {
+  let found = null;
+  document.querySelectorAll('#editContractItemList li').forEach(li => {
+    if ((li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '') === key) found = li;
+  });
+  return found;
+}
+
+/** 매핑 수량 합계 */
+function getEditTotalQty(key) {
+  let total = 0;
+  document.querySelectorAll('#editMappingItemList li').forEach(li => {
+    if ((li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '') === key) {
+      total += parseInt(li.querySelector('.edit-qty').value) || 0;
+    }
+  });
+  return total;
+}
+
+/** 최대 수량 (이 영역에서 매핑 가능한 최대 = 전체 - 다른 곳 매핑) */
+function getEditMaxQty(key) {
+  const li = findEditContractLi(key);
+  if (!li) return 0;
+  const total = parseInt(li.dataset.totalQty) || 0;
+  const other = parseInt(li.dataset.otherQty) || 0;
+  return Math.max(total - other, 0);
+}
+
+/** 좌측 계약 품목 수량 갱신
+ *  qty-count = 타 영역 매핑 + 타 도면 매핑 (현재 영역 제외 — 오른쪽 매핑품목 패널에 별도 표시)
+ *  도면 등록 화면과 동일 기준 */
+function updateEditLeftQty() {
+  document.querySelectorAll('#editContractItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;  // 안내 메시지 li 건너뜀
+    const key = (li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '');
+    const mapped = getEditTotalQty(key);  // 현재 영역 매핑
+    const totalQty = parseInt(li.dataset.totalQty) || 0;
+    const otherQty = parseInt(li.dataset.otherQty) || 0;  // 타 영역 + 타 도면 (외부) 합계
+    // qty-count = 외부 매핑 (타 영역 + 타 도면) 수량 — 이 영역 기준 "이미 매핑되어있는" 수량
+    const countEl = li.querySelector('.qty-count');
+    if (countEl) countEl.textContent = otherQty;
+    // done: 외부 + 현재 영역 매핑이 전체 수량 도달
+    const isDone = totalQty > 0 && (otherQty + mapped >= totalQty);
+    li.classList.toggle('done', isDone);
+    li.classList.toggle('copy', mapped > 0);
+  });
+
+  // 매핑 개수 표시 (이미 매핑된 수량 합계 / 계약 전체 수량 합계)
+  //   left  = 같은 주소지 다른 도면 매핑 + 이 도면 다른 영역 매핑 + 현재 영역 매핑
+  //   right = 계약 전체 수량 (TOTAL_QTY 합)
+  let current = 0, maxTotal = 0;
+  document.querySelectorAll('#editContractItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;
+    const key = (li.dataset.itemcode || '') + '__' + (li.dataset.colcode || '');
+    const otherQty = parseInt(li.dataset.otherQty) || 0;
+    const thisAreaQty = getEditTotalQty(key);
+    const totalQty = parseInt(li.dataset.totalQty) || 0;
+    current += otherQty + thisAreaQty;
+    maxTotal += totalQty;
+  });
+  document.getElementById('editMappingCount').textContent = `${current}/${maxTotal}`;
+}
+
+/** 매핑 상태 badge */
+function updateEditMappingStatus() {
+  let current = 0, total = 0;
+  document.querySelectorAll('#editContractItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;
+    current += parseInt(li.querySelector('.qty-count')?.textContent) || 0;
+    total += parseInt(li.querySelector('.qty-total')?.textContent) || 0;
+  });
+
+  // 매핑된 품목 종류 수 / 개수
+  let mappedKinds = 0, mappedCount = 0;
+  document.querySelectorAll('#editMappingItemList li').forEach(li => {
+    mappedKinds++;
+    mappedCount += parseInt(li.querySelector('.edit-qty')?.value) || 0;
+  });
+
+  const el = document.getElementById('editMappingStatus');
+  if (mappedKinds > 0) {
+    el.innerHTML = `<span class="badge badge-blue">${mappedKinds}품목 ${mappedCount}개</span>`;
+  } else {
+    el.innerHTML = '<span class="badge badge-orange-fill">미매핑</span>';
+  }
+}
+
+/** 매핑 품목 없을 때 안내 토글 */
+function toggleEditMappingAlert() {
+  const alertEl = document.getElementById('editMappingAlert');
+  const wrap = document.getElementById('editMappingWrap');
+  const count = document.querySelectorAll('#editMappingItemList li').length;
+
+  if (count === 0) {
+    if (alertEl) { alertEl.classList.remove('hidden'); alertEl.style.display = ''; }
+    if (wrap) { wrap.classList.add('hidden'); wrap.style.display = 'none'; }
+  } else {
+    if (alertEl) { alertEl.classList.add('hidden'); alertEl.style.display = 'none'; }
+    if (wrap) { wrap.classList.remove('hidden'); wrap.style.display = ''; }
+    // #editMappingItemList UL의 hidden도 제거
+    const ul = document.getElementById('editMappingItemList');
+    if (ul) { ul.classList.remove('hidden'); ul.style.display = ''; }
+  }
+}
+
+/** 계약 품목 검색 (keyup) */
+document.getElementById('editContractSearch')?.addEventListener('keyup', function() {
+  const keyword = this.value.trim().toLowerCase();
+  document.querySelectorAll('#editContractItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;
+    const text = (li.dataset.itemcode || '') + ' ' + (li.dataset.colcode || '') + ' ' + (li.textContent || '');
+    li.style.display = text.toLowerCase().includes(keyword) ? '' : 'none';
+  });
+});
+
+/** 매핑 품목 검색 (keyup) */
+document.getElementById('editMappingItemSearch')?.addEventListener('keyup', function() {
+  const keyword = this.value.trim().toLowerCase();
+  document.querySelectorAll('#editMappingItemList li').forEach(li => {
+    if (!li.dataset.itemcode) return;
+    const text = (li.dataset.itemcode || '') + ' ' + (li.dataset.colcode || '') + ' ' + (li.textContent || '');
+    li.style.display = text.toLowerCase().includes(keyword) ? '' : 'none';
+  });
+});
+
+/**
+ * 취소 — 신규 등록 모드에서는 영역 삭제, 수정 모드에서는 변경사항 무시
+ */
+function cancelEditItemMapping() {
+  if (_editIsNewArea) {
+    // 신규 등록 취소 → drawAreaData에서 제거 + 도면 위 영역 삭제
+    const group = _editConIdx
+      ? drawAreaData.find(g => String(g.conIdx) === String(_editConIdx))
+      : drawAreaData.find(g => g.contractCode === _editContractCode);
+    if (group) {
+      group.info = group.info.filter(a => a.idx !== _editAreaIdx);
+    }
+    const removeSelector = _editConIdx
+      ? `#drawCont .drawing-area[data-conidx="${_editConIdx}"][data-idx="${_editAreaIdx}"]`
+      : `#drawCont .drawing-area[data-idx="${_editAreaIdx}"]`;
+    document.querySelector(removeSelector)?.remove();
+
+    // 영역 목록 재렌더링
+    loadAreas();
+  }
+
+  closeModal('editItemMappingInfoModal');
+}
+
+/** 저장 — drawAreaData에 반영 + 영역 목록 전체 재렌더링 + 모달 닫기 */
+function saveEditItemMapping() {
+  const group = _editConIdx
+    ? drawAreaData.find(g => String(g.conIdx) === String(_editConIdx))
+    : drawAreaData.find(g => g.contractCode === _editContractCode);
+  if (!group) return;
+  const area = group.info.find(a => a.idx === _editAreaIdx);
+  if (!area) return;
+
+  // 영역명 업데이트
+  area.name = document.getElementById('editAreaName').value.trim() || area.name;
+
+  // 품목 수집
+  area.items = [];
+  document.querySelectorAll('#editMappingItemList li').forEach(li => {
+    area.items.push({
+      itemCode: li.dataset.itemcode || '',
+      itemName: li.dataset.itemcode || '',
+      colCd: li.dataset.colcode || '',
+      itemCout: parseInt(li.querySelector('.edit-qty').value) || 0
+    });
+  });
+
+  // 도면 위 영역 라벨 갱신
+  const areaSelector = _editConIdx
+    ? `#drawCont .drawing-area[data-conidx="${_editConIdx}"][data-idx="${_editAreaIdx}"]`
+    : `#drawCont .drawing-area[data-idx="${_editAreaIdx}"]`;
+  const areaEl = document.querySelector(areaSelector);
+  if (areaEl) {
+    areaEl.querySelector('.area-label').textContent = `${_editAreaIdx} ${area.name}`;
+  }
+
+  // 신규 등록 완료 → 더 이상 신규가 아님
+  _editIsNewArea = false;
+
+  // 우측 영역 목록 + 도면 위 영역 전체 재렌더링
+  loadAreas();
+
+  closeModal('editItemMappingInfoModal');
+}
+</script>

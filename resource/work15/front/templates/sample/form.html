@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+<th:block th:replace="~{common/layout/js.html}" />
+
+<!-- 가이드 페이지에만 사용하는 스타일 -->
+<style>
+  body { background: #fff; }
+  .tempPage { padding: 50px; margin: 50px 0; background: var(--fursys-white);; }
+  .guideSection { display: grid; gap: 20px 5vw; grid-template-columns: repeat(4, 1fr); align-items: flex-start; }
+  .guideSection + .guideSection { margin-top: 50px; }
+  .list-inline { gap: 30px; }
+</style>
+</head>
+<body>
+  <div class="tempPage">
+    <div class="guideSection">
+      <div class="list-inline" style="grid-column: span 4;">
+        <div class="form-chk">
+          <input type="radio" name="radioA" id="radioA01">
+          <label for="radioA01">기본</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="radio" name="radioA" id="radioA02" checked>
+          <label for="radioA02">선택됨</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="radio" name="radioC" id="radioC01">
+          <label for="radioC01"></label>
+        </div>
+
+        <div class="form-chk">
+          <input type="radio" name="radioC" id="radioC02" checked>
+          <label for="radioC02"></label>
+        </div>
+
+        <div class="form-chk">
+          <input type="radio" name="radioB" id="radioB01" disabled>
+          <label for="radioB01">비활성화 (스타일 없음)</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="radio" name="radioB" id="radioB02" checked disabled>
+          <label for="radioB02">선택된 비활성화 (스타일 없음)</label>
+        </div>
+      </div>
+
+      <div class="list-inline" style="grid-column: span 4;">
+        <div class="form-chk">
+          <input type="checkbox" id="chk01">
+          <label for="chk01">기본</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="checkbox" id="chk02" checked>
+          <label for="chk02">선택됨</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="checkbox" id="chk05">
+          <label for="chk05"></label>
+        </div>
+
+        <div class="form-chk">
+          <input type="checkbox" id="chk06" checked>
+          <label for="chk06"></label>
+        </div>
+
+        <div class="form-chk">
+          <input type="checkbox" id="chk03" disabled>
+          <label for="chk03">비활성화 (체크박스만 비활성화 스타일 적용됨)</label>
+        </div>
+
+        <div class="form-chk">
+          <input type="checkbox" id="chk04" checked disabled>
+          <label for="chk04">선택된 비활성화 (스타일 없음)</label>
+        </div>
+      </div>
+
+      <div class="list-inline float-bg-white mt-md py-lg" style="grid-column: span 4;">
+        <label class="toggle-switch">
+          <input type="checkbox">
+          <span class="switch"></span>
+          <span class="text">toggle-switch</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <p class="title-md mb-lg">.text-error 가 있을 경우 div.form-group안에 작성</p>
+
+    <div class="guideSection">
+      <div class="form-group">
+        <label for="selectBox01" class="text-label">기본형</label>
+        <div class="select-box">
+          <button type="button" id="selectBox01" class="btn-select" title="선택">선택</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="selectBox02" class="text-label">placeholder 변경</label>
+        <div class="select-box">
+          <button type="button" id="selectBox02" class="btn-select" title="선택">placeholder</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="selectBox03" class="text-label">선택된 경우</label>
+        <div class="select-box">
+          <button type="button" id="selectBox03" class="btn-select" title="선택">선택</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button" class="selected">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="selectBox04" class="text-label">error</label>
+        <div class="select-box error">
+          <button type="button" id="selectBox02" class="btn-select" title="선택">선택</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button" class="selected">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="flex items-end justify-between mb-2xs">
+          <label for="selectBox05" class="text-label">.text-label</label>
+          <button type="button" class="btn link"
+            onclick='document.querySelector("#testTarget1").classList.toggle("error");'>
+            error 타입 보기
+          </button>
+        </div>
+
+        <div class="select-box" id="testTarget1">
+          <button type="button" id="selectBox05" class="btn-select" title="선택">선택</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+        <p class="text-error">error 메세지</p>
+      </div>
+
+      <div class="form-group">
+        <label for="selectBox06" class="text-label">.text-label</label>
+        <div class="select-box">
+          <button type="button" id="selectBox06" class="btn-select" title="선택" disabled>disabled (스타일 없음)</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <div class="guideSection">
+      <div class="form-group">
+        <label for="formA01" class="text-label">.text-label</label>
+        <div class="form-box">
+          <input type="text" id="formA01" autocomplete="off" placeholder="placeholder" title="입력">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formA02" class="text-label required">text-label</label>
+        <div class="form-box">
+          <input type="text" id="formA02" autocomplete="off" placeholder=".text-label .required" title="입력">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formA03" class="text-label">.text-label</label>
+        <div class="form-box focus">
+          <input type="text" id="formA03" autocomplete="off" placeholder="placeholder" value="focus" title="입력">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formA04" class="text-label">.text-label</label>
+        <div class="form-box error">
+          <input type="text" id="formA04" autocomplete="off" placeholder="placeholder" value="error" title="입력">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="guideSection">
+      <div class="flex-col">
+        <div class="form-group">
+          <div class="flex items-end justify-between mb-2xs">
+            <label for="formB01" class="text-label">.text-label</label>
+            <button type="button" class="btn link"
+              onclick='document.querySelector("#testTarget").classList.toggle("error");'>
+              error 타입 보기
+            </button>
+          </div>
+          <div class="form-box" id="testTarget">
+            <input type="text" id="formB01" autocomplete="off" placeholder="placeholder" title="입력">
+          </div>
+          <p class="text-error">error 메세지</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formB02" class="text-label">.text-label</label>
+        <div class="form-box num-only">
+          <input type="text" id="formB02" autocomplete="off" placeholder="숫자만 입력 .num-only" title="숫자만 입력">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formB03" class="text-label">.text-label</label>
+        <div class="form-box">
+          <input type="text" id="formB03" autocomplete="off" placeholder="placeholder" value="readonly (스타일 없음)" title="입력" readonly>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formB04" class="text-label">.text-label</label>
+        <div class="form-box">
+          <input type="text" id="formB04" autocomplete="off" placeholder="placeholder" value="disabled" title="입력" disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <div class="guideSection">
+      <div class="form-group">
+        <label for="formD01" class="text-label">.text-label</label>
+        <div class="form-box">
+          <i class="icon-search"></i>
+          <input type="text" id="formD01" autocomplete="off" placeholder="placeholder" title="검색어 입력">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formD02" class="text-label">.text-label</label>
+        <div class="form-box date-picker">
+          <input type="text" id="formD02" class="single-date" autocomplete="off" placeholder="연도.월.일" title="날짜 입력">
+        </div>
+      </div>
+
+      <div style="grid-column: span 2;">
+        <div class="form-group">
+          <label for="formD03" class="text-label">.text-label</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="formD03" class="start-date" autocomplete="off" placeholder="연도.월.일" title="시작 날짜 입력">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form04" class="end-date" autocomplete="off" placeholder="연도.월.일" title="종료 날짜 입력">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage">
+    <p class="mb-2xs">.form-box.textarea (default 높이: 215px)</p>
+    <div class="guideSection">
+      <div class="form-group">
+        <label for="formC01" class="text-label">.text-label</label>
+        <div class="form-box textarea">
+          <textarea name="" id="formC01" placeholder="placeholder" title="입력"></textarea>
+          <span class="counter">(0/1,000)</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formC02" class="text-label">.text-label</label>
+        <div class="form-box textarea" style="height: 130px;">
+          <textarea name="" id="formC02" placeholder="다른 높이값이 필요할 경우 .form-box에 높이값 지정해서 사용" title="입력"></textarea>
+          <span class="counter">(0/1,000)</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formC03" class="text-label">.text-label</label>
+        <div class="form-box textarea no-counter">
+          <textarea name="" id="formC03" placeholder="no-counter" title="입력"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tempPage bg-white">
+    <p class="title-md mb-lg">.bg-invert 추가시 form bgColor 변경</p>
+
+    <div class="guideSection">
+      <div class="form-group">
+        <label for="form91" class="text-label">기본형</label>
+        <div class="select-box bg-invert">
+          <button type="button" id="form91" class="btn-select" title="선택">선택</button>
+          <div class="option-list">
+            <div class="scroll-y">
+              <button type="button">option 01</button>
+              <button type="button">option 02</button>
+              <button type="button">option 03</button>
+              <button type="button">option 04</button>
+              <button type="button">option 05</button>
+              <button type="button">option 06</button>
+              <button type="button">option 07</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="form92" class="text-label">.text-label</label>
+        <div class="form-box bg-invert">
+          <input type="text" id="form92" autocomplete="off" placeholder="placeholder" title="입력">
+        </div>
+      </div>
+
+      <div style="grid-column: span 2;">
+        <div class="form-group">
+          <label for="form92_1" class="text-label">.text-label</label>
+          <div class="range-picker">
+            <div class="form-box bg-invert">
+              <input type="text" id="form92_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="시작 날짜 입력">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box bg-invert">
+              <input type="text" id="form92_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="종료 날짜 입력">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-lg">
+        <label for="form93" class="text-label">.text-label</label>
+        <div class="form-box textarea bg-invert">
+          <textarea name="" id="form93" placeholder="placeholder" title="입력"></textarea>
+          <span class="counter">(0/1,000)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

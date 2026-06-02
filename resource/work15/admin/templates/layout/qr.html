@@ -1,0 +1,344 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+    <form id="searchForm">
+    <div class="card">
+      <div class="card-content">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
+            <div class="input-group">
+              <label>
+                <span class="label">계약일자</span>
+                <input id="dateRange" type="text" class="input datepicker-range" placeholder="FROM ~ TO" value="2026.03.01 ~ 2026.03.31">
+              </label>
+            </div>
+
+            <div class="input-group sm:col-span-2">
+              <label>
+                <span class="label">검색</span>
+                <div class="flex gap-2">
+                  <form-select class="w-1/3 flex-shrink-0">
+                    <select name="" id="contractSearchType">
+                      <option value="0">계약명</option>
+                      <option value="1">계약번호</option>
+                    </select>
+                  </form-select>
+                  <input type="text" id="searchKeyword" class="input w-2/3" placeholder="검색어를 입력하세요">
+                </div>
+              </label>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <span class="label">고객명</span>
+                <input type="text" id="ctmNm" class="input" placeholder="고객명를 입력하세요">
+              </label>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <span class="label">계약 담당자</span>
+                <input type="text" id="estUsrNm" class="input" placeholder="담당자명을 입력하세요" >
+              </label>
+            </div>
+
+            <div class="flex justify-end items-end sm:col-span-2 lg:col-span-1">
+              <button id="btnSearch" type="button" class="btn btn-check" onclick="fetchContractList()">조회</button>
+            </div>
+          </div>
+      </div>
+    </div>
+    </form>
+
+    <div class="card mt-3 card-h-full">
+      <div class="card-header">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+          <div class="flex items-end gap-4 flex-wrap">
+            <h3 class="card-title">계약 목록</h3>
+            <p class="text-xs text-fursys-red">* QR코드는 품목 총 수량만큼 생성됩니다.</p>
+          </div>
+          <div class="flex justify-end gap-2 flex-1">
+            <button class="btn btn-outline" onclick="printEmptyQrSticker()">공QR 스티커 출력</button>
+            <button class="btn btn-outline" onclick="generateQrCode()">QR코드 생성</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div id="grid1" class="w-full h-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- modal -->
+  <!-- 공QR 스티커 출력 -->
+  <th:block th:replace="~{layout/modal/printBlankQrModal.html}"/>
+  <!-- QR코드 생성 -->
+  <th:block th:replace="~{layout/modal/printCreateQrModal.html}"/>
+  <!-- QR코드 상세 출력 -->
+  <th:block th:replace="~{layout/modal/printDetailQrModal.html}"/>
+  <!--// modal -->
+</th:block>
+
+<th:block layout:fragment="script">
+
+  <!-- QR코드 생성 라이브러리 (qrcodejs) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <script>
+    let myGridId1;
+    let selectedRowOfMyGridId1;
+    let selectedContractNo;
+
+    $(function () {
+      addEnterSearch('searchKeyword', fetchContractList);
+      addEnterSearch('estUsrNm', fetchContractList);
+      addEnterSearch('ctmNm', fetchContractList);
+      addEnterSearch('printCountInput', printBlankQr);
+    });
+
+    /* QR코드 상세 출력 모달 진입 — 선택 행 정보(conIdx/estaIdx/conCd/conTitle) 전달 */
+    function openDetailQrModal(rowIndex) {
+      const row = AUIGrid.getItemByRowIndex(this.myGridId1, rowIndex);
+      if (!row) return;
+      window._detailQrCtx = {
+        conIdx:   row.CON_IDX,
+        estaIdx:  row.ESTA_IDX,
+        conCd:    row.TEMP_DATA02,
+        conTitle: row.TEMP_DATA03
+      };
+      // 헤더 텍스트: "CON_CD - 계약명"
+      const desc = document.querySelector('#printDetailQrModal .modal-description');
+      if (desc) desc.textContent = `${row.TEMP_DATA02 || '-'} - ${row.TEMP_DATA03 || '-'}`;
+      openModal('printDetailQrModal');
+    }
+
+    function printEmptyQrSticker() {
+      this.selectedRowOfMyGridId1 = AUIGrid.getSelectedRows(this.myGridId1)[0];
+      if (!this.selectedRowOfMyGridId1 || this.selectedRowOfMyGridId1.length === 0) {
+        alert('선택한 데이터가 없습니다.');
+        return;
+      }
+
+      this.selectedContractNo = this.selectedRowOfMyGridId1.TEMP_DATA02;
+      openModal('printBlankQrModal');
+    }
+
+    //QR코드 생성
+    function generateQrCode() {
+      this.selectedRowOfMyGridId1 = AUIGrid.getSelectedRows(this.myGridId1)[0];
+      if (!this.selectedRowOfMyGridId1 || this.selectedRowOfMyGridId1.length === 0) {
+        alert('선택한 데이터가 없습니다.');
+        return;
+      }
+
+      if (this.selectedRowOfMyGridId1.TEMP_DATA09 === '출력') {
+        alert('이미 생성 완료했습니다. 다시 생성할 수 없습니다.');
+        return;
+      }
+
+      $.ajax({
+        url: '/hqDrawingMng/getQrCodePreview'
+        ,type: 'post'
+        ,data: {
+          conIdx: this.selectedRowOfMyGridId1.CON_IDX,
+          estaIdx: this.selectedRowOfMyGridId1.ESTA_IDX,
+        }
+        ,success: function(res){
+          let qrCodeListHtml = '';
+          // 이전 호출의 잔여 콘텐츠 초기화 (재오픈 시 누적 방지)
+          $('#qrCodeListCaption').html(`총 ${res.data.length}개 중 ${res.data.length > 6 ? '6' : res.data.length}개 미리보기`);
+          $('#qrCodeList').empty();
+
+          res.data.forEach(data => {
+            QRCode.toDataURL(data.SERIAL_NO, function (err, url) {
+              let generatedQrCodeHtml = `
+                <li>
+                  <div class='logo-area'>
+                    <img class='qr-logo' src='/assets/img/logo/logo_fursys_mark.svg' alt='퍼시스 로고'>
+                    <p>${data.ESTG_SET_YN === 'I' ? '단품' : '세트'}</p>
+                  </div>
+                  <div class='flex'>
+                    <div class='info'>
+                      <dl>
+                        <dt>계약번호</dt>
+                        <dd>${data.CON_CD}</dd>
+                      </dl>
+                      <dl>
+                        <dt>시리즈명</dt>
+                        <dd>${data.SERIES_NM ?? ''}</dd>
+                      </dl>
+                      <dl>
+                        <dt>품목코드(색상)</dt>
+                        <dd>${data.ITM_CODE}</dd>
+                      </dl>
+                    </div>
+                    <div class='qr-box'>
+                      <img class='qr-logo' src='${url}' alt='qr 코드'>
+                    </div>
+                  </div>
+                  <dl class='dl-item'>
+                    <dt>시리얼 넘버</dt>
+                    <dd>${data.SERIAL_NO}</dd>
+                  </dl>
+                </li>
+                `;
+              qrCodeListHtml += generatedQrCodeHtml;
+            });
+          });
+
+          openModal('printCreateQrModal');
+          $('#qrCodeList').html(qrCodeListHtml);
+        }
+      });
+    }
+
+    // 계약목록 조회
+    function fetchContractList() {
+      var conContractDate = parseDateRange($('#dateRange').val());
+      var conContractDateFrom = conContractDate.fromDt;
+      var conContractDateTo = conContractDate.endDt;
+      var conTitle = $('#contractSearchType').val() === '0' ? $('#searchKeyword').val() : '';
+      var conCd = $('#contractSearchType').val() === '1' ? $('#searchKeyword').val() : '';
+      var ctmNm = $('#ctmNm').val();
+      var estUsrNm = $('#estUsrNm').val();
+
+      $.ajax({
+        url: '/hqDrawingMng/getContractList'
+        ,type: 'post'
+        ,data: {
+          conContractDateFrom,
+          conContractDateTo,
+          conTitle,
+          conCd,
+          ctmNm,
+          estUsrNm,
+        }
+        ,success: function(res){
+          renderContractList(res.data);
+        }
+      });
+    }
+
+    // 계약목록 렌더링
+    function renderContractList(dataList) {
+      const renderer = { type: 'TemplateRenderer' };
+      const filter = { showIcon: true };
+
+      const columnLayout1 = [
+        {
+          headerText: '계약일',
+          dataField: 'TEMP_DATA01',
+          filter: filter,
+          width: 120,
+          style: 'text-center',
+        },
+        {
+          headerText: '계약번호',
+          dataField: 'TEMP_DATA02',
+          filter: filter,
+          width: 140,
+        },
+        {
+          headerText: '계약명',
+          dataField: 'TEMP_DATA03',
+          filter: filter,
+          width: '17%',
+        },
+        {
+          headerText: '고객사',
+          dataField: 'TEMP_DATA04',
+          filter: filter,
+          width: '12%',
+        },
+        {
+          headerText: '계약주소',
+          dataField: 'TEMP_DATA05',
+          filter: filter,
+          width: '27%',
+        },
+        {
+          headerText: '계약품목수',
+          dataField: 'TEMP_DATA06',
+          filter: filter,
+          style: 'text-center',
+        },
+        {
+          headerText: '품목총수량',
+          dataField: 'TEMP_DATA07',
+          filter: filter,
+          dataType:'numeric',
+          style: 'text-center',
+        },
+        {
+          headerText: 'QR코드갯수',
+          dataField: 'TEMP_DATA08',
+          filter: filter,
+          dataType:'numeric',
+          style: 'text-center',
+        },
+        {
+          headerText: '출력여부',
+          dataField: 'TEMP_DATA09',
+          filter: filter,
+          style: 'text-center',
+          renderer: renderer,
+          labelFunction: function (rowIndex, columnIndex, value, headerText, item) {
+            if (value == '출력') {
+              return "<div class='flex items-center justify-center gap-2'> 출력" +
+                "<button class='btn btn-outline btn-icon' onclick=\"openDetailQrModal(" + rowIndex + ")\">" +
+                "<i class='icon-search w-[12px] h-[12px] bg-size-[12px]'></i>" +
+                "</button>" +
+                "</div>";
+            } else {
+              return "<div onclick=\"alert('시리얼코드 생성 후에 사용하세요.')\">미출력</div>";
+            }
+          }
+        },
+      ];
+
+      const auiGridProps1 = {
+        isRowAllCheckCurrentView: true,
+        enableSorting: true,
+        enableFilter: true,
+        hoverMode: 'singleRow',
+        selectionMode: 'singleRow',
+        showRowNumColumn: true,
+        showRowCheckColumn: false,
+        defaultColumnWidth: 100,
+        softRemoveRowMode: false,
+        enableMovingColumn: true,
+        usePaging: true,
+      };
+
+      const contractGridData = [];
+      dataList.forEach(data => {
+        contractGridData.push({ 'TEMP_DATA01': data.CON_CONTRACT_DATE, 'TEMP_DATA02': data.CON_CD, 'TEMP_DATA03': data.CON_TITLE, 'TEMP_DATA04': data.CTM_NM, 'TEMP_DATA05': data.ESTA_ADR4, 'TEMP_DATA06': data.CONTRACT_ITM_CNT, 'TEMP_DATA07': data.CONTRACT_ITM_QTY, 'TEMP_DATA08': data.QR_CNT, 'TEMP_DATA09': data.PRT_YN === 'Y' ? '출력' : '미출력', "CON_IDX": data.CON_IDX, "ESTA_IDX": data.ESTA_IDX });
+      });
+
+      this.myGridId1 = AUIGrid.create('#grid1', columnLayout1, auiGridProps1);
+      AUIGrid.setGridData(this.myGridId1, contractGridData);
+    }
+
+    function parseDateRange(value) {
+      if (!value) return { fromDt: '', endDt: '' };
+      const parts = value.replaceAll('.', '-').split('~').map(s => s.trim());
+      return { fromDt: parts[0] || '', endDt: parts[1] || '' };
+    }
+
+    function addEnterSearch(elementId, callback) {
+      const element = document.getElementById(elementId);
+
+      if (!element) return;
+      element.addEventListener("keyup", function (e) {
+        if (e.key === "Enter") {
+          callback();
+        }
+      });
+    }
+  </script>
+</th:block>
+</body>
+</html>

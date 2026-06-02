@@ -1,0 +1,365 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="main">
+  <div class="container-h-full">
+
+    <div class="panel-layout">
+      <div class="list-panel-dim"></div>
+      <div class="list-panel-wrap">
+        <div class="panel-header">
+          <h3 class="title">고객사별 도면 현황</h3>
+          <button type="button" class="btn btn-icon btn-ghost" onclick="toggleListPanel()">
+            <i class="icon-arrow-left-to-line"></i>
+          </button>
+        </div>
+
+        <div class="panel-list-wrap">
+          <div class="panel-search">
+            <div class="flex items-center gap-1">
+              <div class="w-1/3">
+                <form-select>
+                  <select name="">
+                    <option value="1">고객사명</option>
+                    <option value="2">사업자번호</option>
+                    <option value="3">주소</option>
+                  </select>
+                </form-select>
+              </div>
+
+              <div class="input">
+                <input type="text" class="w-full" placeholder="검색어를 입력하세요">
+                <button type="button"><i class="icon-search"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <ul class="tabs type-underline">
+            <li class="tab-item is-active" data-filter="all">
+              전체 <span class="ml-1 badge badge-default badge-rounded">00</span>
+            </li>
+            <li class="tab-item" data-filter="unmapped">
+              미매핑 <span class="ml-1 badge badge-orange-fill badge-rounded">00</span>
+            </li>
+          </ul>
+
+          <div class="panel-list">
+
+            <div class="card-selected-wrap">
+
+              <div class="card" data-mapped="true"><!-- 매핑 : data-mapped="true" -->
+                <div class="card-content">
+                  <i class="icon-chevron"></i>
+                  <ul class="text-list">
+                    <li class="text-primary-300">123-45-6789</li>
+                    <li class="text-sm"><strong>(주)테크노1</strong></li>
+                    <li>주소 주소 주소 <span class="text-primary-300">외 2개</span></li>
+                  </ul>
+                  <div class="badge-list">
+                    <span class="badge badge-blue">계약 1건</span>
+                    <span class="badge badge-green">도면 1건</span>
+                  </div>
+                </div>
+
+                <div class="card-content toggle-cont">
+                  <ul class="address-list">
+                    <li>주소 명</li>
+                    <li>주소 명</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card" data-mapped="false"><!-- 미매핑 : data-mapped="false" -->
+                <div class="card-content">
+                  <i class="icon-chevron"></i>
+                  <ul class="text-list">
+                    <li class="text-primary-300">123-45-6789</li>
+                    <li class="text-sm"><strong>(주)테크노2</strong></li>
+                    <li>주소 주소 주소 <span class="text-primary-300"></span></li>
+                  </ul>
+                  <div class="badge-list">
+                    <span class="badge badge-blue">계약 1건</span>
+                    <span class="badge badge-green">도면 1건</span>
+                    <span class="badge badge-orange">미매핑 1건</span>
+                  </div>
+                </div>
+
+                <div class="toggle-cont">
+                  <ul class="address-list">
+                    <li>주소 명주소 명 주소 명 주소 명 주소 명주소 명주소 명주소 명주소 명주소 명주소 명주소 명주소 명 주소 명</li>
+                    <li>주소 명</li>
+                    <li>주소 명</li>
+                    <li>주소 명</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card" data-mapped="true"><!-- 매핑 : data-mapped="true" -->
+                <div class="card-content">
+                  <i class="icon-chevron"></i>
+                  <ul class="text-list">
+                    <li class="text-primary-300">123-45-6789</li>
+                    <li class="text-sm"><strong>(주)테크노3</strong></li>
+                    <li>주소 주소 주소 <span class="text-primary-300"></span></li>
+                  </ul>
+                  <div class="badge-list">
+                    <span class="badge badge-blue">계약 1건</span>
+                    <span class="badge badge-green">도면 1건</span>
+                  </div>
+                </div>
+
+                <div class="card-content toggle-cont">
+                  <ul class="address-list">
+                    <li>주소 명</li>
+                    <li>주소 명</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div><!-- // card-selected-wrap -->
+
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <p>전체 21개사</p>
+          <p>총 44주소 · 66도면</p>
+        </div>
+      </div>
+      <!-- // list-panel-wrap -->
+
+      <div class="content-panel-wrap">
+
+        <!-- div.alert, div.content-panel-cont 영역 show/hide는 hidden 클래스로 제어해주세요-->
+        <div class="alert alert-default" data-state="selectList">
+          <div class="alert-title">고객사와 주소를 선택하세요</div>
+          <div class="alert-description mt-5">고객사 > 주소(법정동) > 층 순으로 탐색할 수 있습니다</div>
+          <div class="alert-description">고객사별 도면 현황 목록에서 고객사를 선택 후 도면을 등록하세요</div>
+        </div>
+
+        <div class="content-panel-cont hidden" data-state="selectList">
+          <div class="panel-header">
+            <div class="flex flex-col">
+              <h3 class="title">(주)테크노</h3>
+              <p class="text-xs text-primary-300">123-45-6789</p>
+            </div>
+          </div>
+
+          <div class="content-panel">
+
+            <div class="draw-wrap" data-mapped="false"><!-- 미매핑 : data-mapped="false" -->
+              <div class="title-area">
+                <h3 class="title">경기 이천시 마장면 덕평리 100</h3>
+                <span class="badge badge-orange-fill">미매핑</span>
+              </div>
+              <div class="info-area">
+                <span class="title">계약</span>
+                <div class="badge-list">
+                  <span class="badge badge-orange">CNT-2023-001 (13개)</span>
+                  <span class="badge badge-orange">CNT-2023-001 (3개)</span>
+                  <span class="badge badge-orange">CNT-2023-001 (7개)</span>
+                  <span class="badge badge-blue">CNT-2023-002</span>
+                </div>
+              </div>
+
+              <div class="draw-list">
+                <div class="draw-box">
+                  <div class="title-group">
+                    <h4>1F 로비</h4>
+                    <span class="text-xs text-primary-300">ver1</span>
+                    <button type="button" class="btn-switch is-checked">
+                      <span class="text">고객 노출</span>
+                      <span class="switch-box"></span>
+                    </button>
+                  </div>
+                  <ul class="text-group">
+                    <li class="text-primary font-medium">계약 1건</li>
+                    <li class="no-dot">
+                      <ul>
+                        <li>등록 2025-01-01</li>
+                        <li>수정 2025-01-01</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- 계약이 없을 경우(비활성화) -->
+                <div class="draw-box disabled">
+                  <div class="title-group">
+                    <span class="badge badge-outline">계약 없음</span>
+                    <h4>1F 로비</h4>
+                    <span class="text-xs text-primary-300">ver1</span>
+                    <button type="button" class="btn-switch" disabled>
+                      <span class="text">고객 미노출</span>
+                    </button>
+                  </div>
+                  <ul class="text-group">
+                    <li class="text-primary font-medium">계약 1건</li>
+                    <li class="no-dot">
+                      <ul>
+                        <li>등록 2025-01-01</li>
+                        <li>수정 2025-01-01</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <!-- // 비활성화 타입 -->
+
+                <div class="draw-box no-mapped" onclick="openModal('registDrawModalPub')"><!-- 미매핑 타입 .no-mapped 추가 -->
+                  <div class="title-group">
+                    <h4 class="text-sm">신규 도면 등록</h4>
+                  </div>
+                  <ul class="text-group">
+                    <li class="no-dot">도면을 추가하려면 클릭하세요</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="draw-wrap" data-mapped="true"><!-- 매핑 : data-mapped="true" -->
+              <div class="title-area">
+                <h3 class="title">경기 이천시 마장면 덕평리 100</h3>
+              </div>
+              <div class="info-area">
+                <span class="title">계약</span>
+                <div class="badge-list">
+                  <span class="badge badge-blue">CNT-2023-002</span>
+                  <span class="badge badge-blue">CNT-2023-002</span>
+                </div>
+              </div>
+
+              <div class="draw-list">
+                <div class="draw-box">
+                  <div class="title-group">
+                    <h4>도면 공간 (층수)</h4>
+                    <span class="text-xs text-primary-300">ver1</span>
+                    <button type="button" class="btn-switch">
+                      <span class="text">고객 미노출</span>
+                      <span class="switch-box"></span>
+                    </button>
+
+                  </div>
+                  <ul class="text-group">
+                    <li class="text-primary font-medium">계약 1건</li>
+                    <li class="no-dot">
+                      <ul>
+                        <li>등록 2025-01-01</li>
+                        <!-- <li>수정 2025-01-01</li> -->
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- // content-panel-wrap -->
+
+    </div>
+    <!-- // panel-layout -->
+  </div>
+
+<th:block th:replace="~{layout/pub/modal/registDrawModal.html}"/><!-- Modal: 도면 등록 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+/* 1. 안내문구 토글 */
+function toggleAlertPanelArea() {
+  const alertEl = document.querySelector('.alert[data-state="selectList"]');
+  const panelEl = document.querySelector('.content-panel-cont[data-state="selectList"]');
+  if (!alertEl || !panelEl) return;
+
+  alertEl.classList.add("hidden");
+  panelEl.classList.remove("hidden");
+}
+
+/* 2. list-panel 토글 */
+function toggleListPanel() {
+  document.querySelector(".panel-layout").classList.toggle("close-panel");
+}
+
+
+/* 3. list-panel 영역 이벤트 */
+function selectItem(container, selector, target) {
+  container.querySelectorAll(selector).forEach(el => el.classList.remove("selected"));
+  if (target) target.classList.add("selected");
+}
+
+document.addEventListener("click", (e) => {
+  const cardList = document.querySelector(".card-selected-wrap");
+
+  /* 전체, 미매핑 클릭 */
+  const tab = e.target.closest(".tab-item");
+  if (tab) {
+
+    const filter = tab.dataset.filter;
+    const cards = cardList.querySelectorAll(".card");
+
+    document.querySelectorAll(".tab-item").forEach(item => item.classList.remove("is-active") );
+    tab.classList.add("is-active");
+
+    cards.forEach(card => {
+      const isMapped = card.dataset.mapped === "true";
+      card.classList.toggle("hidden", filter === "unmapped" && isMapped);
+    });
+
+    return;
+  }
+
+  /* card 클릭 */
+  const card = e.target.closest(".card-selected-wrap .card");
+  if (!card) return;
+
+  const addressItem = e.target.closest(".address-list li");
+
+  if (!addressItem) {
+    const isSelected = card.classList.contains("selected");
+
+    selectItem(cardList, ".card.selected");
+    selectItem(cardList, ".address-list li.selected");
+    card.classList.add("selected")
+    toggleAlertPanelArea();
+  }
+
+  /* address 클릭 */
+  else {
+    const addrList = addressItem.closest(".address-list");
+    const isSelected = addressItem.classList.contains("selected");
+
+    selectItem(addrList, "li.selected");
+    if (!isSelected) addressItem.classList.add("selected");
+  }
+});
+
+  /* 4. 스위치 버튼 클릭 (2026-04-16) */
+  document.querySelectorAll(".btn-switch").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const textEl = this.querySelector(".text");
+      const isChecked = this.classList.contains("is-checked");
+
+      // 상태에 따라 confirm 문구 변경
+      const message = isChecked
+        ? "현재 도면을 고객에게 미노출하시겠습니까?"
+        : "현재 도면을 고객에게 노출하시겠습니까?";
+
+      if (!confirm(message)) return;
+
+      // 확인 눌렀을 때만 상태 변경
+      if (isChecked) {
+        this.classList.remove("is-checked");
+        textEl.textContent = "고객 미노출";
+      } else {
+        this.classList.add("is-checked");
+        textEl.textContent = "고객 노출";
+      }
+    });
+  });
+</script>
+</th:block>
+</body>
+</html>

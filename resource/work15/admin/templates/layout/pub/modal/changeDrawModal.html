@@ -1,0 +1,180 @@
+<div class="modal" id="changeDrawModalPub">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">도면 파일 변경</h5>
+          <p class="modal-description mt-2">도면 이미지 및 첨부 파일을 교체할 수 있습니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="badge badge-orange w-full">
+          <div class="flex flex-col gap-1 p-2 text-sm">
+            <h5 class="mb-2">도면 파일 변경 안내</h5>
+            <p class="text-indent text-sm text-primary">* DWG 도면 변경 시 해당 파일만 변경됩니다.</p>
+            <p class="text-indent text-sm text-primary">* PDF 도면 변경 시 새로운 버전이 생성됩니다.</p>
+            <p class="text-indent text-sm text-primary">* 새 버전이 생성될 경우, 기존 영역 및 매핑된 정보의 유지 여부를 선택할 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="card mt-5">
+          <div class="card-content flex flex-col gap-2">
+            <span class="label">기존 등록된 파일 정보</span>
+            <div class="flex flex-wrap gap-2 label-data-text text-sm">
+              <span class="mr-4">도면: 한빛소프트_본사_6F.pdf</span>
+              <span>등록일 : 2025-01-01</span>
+            </div>
+            <ul class="flex flex-col gap-2 mt-2">
+              <li class="text-indent text-primary">* 한빛소프트_본사_6F.pdf (0.0 MB)</li>
+              <li class="text-indent text-primary">* 한빛소프트_본사_6F.dwg (0.0 MB)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="input-group w-full mt-5">
+          <span class="label">PDF 도면</span>
+          <div  class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone>
+            <label data-upload-msg
+              class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+              변경할 파일을 드래그하거나 클릭하여 업로드하세요
+              <span class="block text-xs mt-2">(최대 00MB)</span>
+              <input data-upload-input type="file" accept=".pdf" class="hidden">
+            </label>
+            <ul data-upload-list class="w-full hidden"></ul>
+          </div>
+        </div>
+
+        <div class="input-group w-full mt-5">
+          <span class="label">DWG/DXF 도면</span><!-- [2026-04-22] 텍스트 수정 -->
+          <div  class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone>
+            <label data-upload-msg
+              class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+              변경할 파일을 드래그하거나 클릭하여 업로드하세요
+              <span class="block text-xs mt-2">(최대 00MB)</span>
+              <input data-upload-input type="file" accept=".dwg, .dxf" class="hidden">
+            </label>
+            <ul data-upload-list class="w-full hidden"></ul>
+          </div>
+        </div>
+
+        <!-- pdf 파일이 업로드 됐을때만 노출 (hidden 클래스 삭제) -->
+        <div class="badge badge-orange w-full mt-5 hidden" data-state="pdfUpload">
+          <div class="flex flex-col gap-2 p-2 text-sm">
+            <h5>도면 이미지가 변경되어 새로운 버전이 생성됩니다.</h5>
+            <p class="text-primary">기존 영역 및 매핑된 품목을 유지할지, 초기화할지 선택하세요.</p>
+            <div class="flex gap-8 mt-4 mb-2">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="option" class="radio" />
+                <span class="text-primary leading-none">기존 설정 유지</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="option" class="radio" />
+                <span class="text-primary leading-none">모든 설정 초기화</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 파일 업로드 기능
+document.querySelectorAll('[data-upload-zone]').forEach(zone => {
+  const input = zone.querySelector('[data-upload-input]');
+  const list = zone.querySelector('[data-upload-list]');
+  const msg = zone.querySelector('[data-upload-msg]');
+  const badge = document.querySelector('[data-state="pdfUpload"]'); // 👈 추가
+
+  let files = [];
+
+  const isPdfZone = input.accept.includes('.pdf'); // 👈 PDF 존인지 체크
+
+  const formatSize = b => {
+    if (!b) return '0 KB';
+    const u = ['KB','MB','GB'];
+    let s = b / 1024, i = 0;
+    while (s >= 1024 && i < u.length-1) { s /= 1024; i++; }
+    return s.toFixed(1) + ' ' + u[i];
+  };
+
+  const render = () => {
+    list.innerHTML = '';
+
+    if (!files.length) {
+      msg.style.display = '';
+      list.classList.add('hidden');
+
+      // 👇 PDF 파일 없으면 배지 숨김
+      if (isPdfZone && badge) {
+        badge.classList.add('hidden');
+      }
+
+      return;
+    }
+
+    msg.style.display = 'none';
+    list.classList.remove('hidden');
+
+    // 👇 PDF 파일 있으면 배지 노출
+    if (isPdfZone && badge) {
+      badge.classList.remove('hidden');
+    }
+
+    files.forEach((file,i)=>{
+      const li = document.createElement('li');
+      li.className = 'p-3 text-sm bg-background';
+
+      li.innerHTML = `
+        <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+          <div class="min-w-0">
+            <p class="truncate">${file.name}</p>
+            <p class="text-xs text-muted-foreground">${formatSize(file.size)}</p>
+          </div>
+          <button class="btn btn-delete"></button>
+        </div>
+      `;
+
+      li.querySelector('button').onclick = ()=>{
+        files.splice(i,1);
+        render();
+      };
+
+      list.appendChild(li);
+    });
+
+  };
+
+  const addFiles = f => {
+    files.push(...f);
+    render();
+  };
+
+  input.onchange = e => {
+    addFiles([...e.target.files]);
+    input.value='';
+  };
+
+  zone.ondragover = e=>{
+    e.preventDefault();
+    zone.classList.add('border-primary-200');
+  };
+
+  zone.ondragleave = ()=>{
+    zone.classList.remove('border-primary-200');
+  };
+
+  zone.ondrop = e=>{
+    e.preventDefault();
+    zone.classList.remove('border-primary-200');
+    addFiles([...e.dataTransfer.files]);
+  };
+});
+</script>

@@ -1,0 +1,114 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div id="sideNavi">
+  <div class="logo-area">
+    <h1 class="main-logo"><strong>OFFICE JOURNEY PROGRAM</strong></h1>
+  </div>
+
+  <div class="menu-list-wrap">
+    <ul class="menu-list">
+      <li><a href="#0" class="menu-link"><i class="icon-dashboard"></i> 대시보드</a></li>
+      <li><a th:href="@{/contract}" class="menu-link"><i class="icon-assignment"></i> 계약 정보</a></li>
+      <li><a th:href="@{/payment}" class="menu-link"><i class="icon-receipt"></i> 결제 정보</a></li>
+      <li>
+        <button type="button" class="menu-link btn-toggle" aria-controls="#menuListA">
+          <i class="icon-ruler"></i> 도면 관리
+        </button>
+        <ul class="sub-menu" id="menuListA">
+          <li><a th:href="@{/layout}" class="menu-link">도면 현황</a></li>
+          <li><a th:href="@{/layout/service}" class="menu-link">레이아웃 서비스</a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" class="menu-link btn-toggle" aria-controls="#menuListB">
+          <i class="icon-desk"></i> 렌탈 서비스
+        </button>
+        <ul class="sub-menu" id="menuListB">
+          <li><a th:href="@{/service/care}" class="menu-link">오피스 케어</a></li>
+          <li><a href="#0" class="menu-link">의자 클리닝</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="user-area">
+    <div class="user-info">
+      <p class="name">홍길동</p>
+      <p>user0101@fursys.com</p>
+    </div>
+    <div class="menu-list">
+      <li>
+        <button type="button" id="btnNotif" class="menu-link">
+          <i class="icon-notification"></i>
+          <span class="text">새로운 알림</span>
+          <span class="badge xs bg-blue">n</span>
+        </button>
+      </li>
+      <li><a th:href="@{/account/mypage}" class="menu-link"><i class="icon-account"></i> 마이 페이지</a></li>
+      <li><a href="#0" id="btnLogout" class="menu-link"><i class="icon-logout"></i> 로그아웃</a></li>
+    </div>
+  </div>
+</div>
+
+<div class="notif-wrap">
+  <div class="header">
+    <p class="title">새로운 알림</p>
+    <button type="button" class="btn dark">모두 확인</button>
+  </div>
+  <div class="content">
+    <!-- <p class="text-nodata">새로운 알림이 없습니다.</p> -->
+
+    <!-- !! 알림 텍스트 색상 참고 !!
+      <strong class="text-slate">신규 계약</strong>
+      <strong class="text-orange">결제 예정</strong>
+      <strong class="text-orange">결제 완료</strong>
+      <strong class="text-blue">레이아웃 서비스</strong>
+      <strong class="text-green">의자 클리닝</strong>
+    -->
+    <ul class="notif-list">
+      <li>
+        <a href="#0" class="new"><!-- 새로운 알림일 경우 .new 추가 -->
+          <div class="top-area">
+            <strong class="text-slate">신규 계약</strong>
+            <span>2026.01.01</span>
+          </div>
+          <p class="title">중앙동 사옥 렌탈 7회차</p>
+          <p>2026.01.01 ~ 2026.12.31</p>
+        </a>
+      </li>
+      <li>
+        <a href="#0">
+          <div class="top-area">
+            <strong class="text-green">의자 클리닝</strong>
+            <span>2026.01.01</span>
+          </div>
+          <p class="title">오금 가락빌딩 렌탈</p>
+          <p>2026.01.01 ~ 2026.12.31</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  /* 사이드 메뉴 - 로그아웃 */
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnLogout = document.getElementById('btnLogout');
+    if (!btnLogout) return;
+    btnLogout.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' }
+        });
+      } catch (err) {
+        console.error('logout error', err);
+      } finally {
+        // 성공/실패 무관하게 로그인 페이지로 이동 (서버 세션은 만료됨)
+        location.href = '/';
+      }
+    });
+  });
+</script>
+</html>

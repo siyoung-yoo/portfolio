@@ -1,0 +1,278 @@
+<div class="modal" id="serviceRegModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">서비스 등록</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="serviceRegForm">
+          <div class="grid sm:grid-cols-3 gap-3">
+
+            <!-- 신청건명 -->
+            <div class="input-group sm:col-span-3">
+              <label>
+                <span class="label required">신청건명</span>
+                <input type="text" class="input" name="reqTitle" id="regReqTitle" placeholder="신청건명을 입력하세요">
+              </label>
+            </div>
+
+            <!-- 신청자 (팝업 검색) -->
+            <div class="input-group">
+              <label>
+                <span class="label required">신청자</span>
+                <div class="input">
+                  <input type="text" id="regReqUserNm" class="w-full overflow-hidden whitespace-nowrap text-ellipsis" placeholder="선택" readonly />
+                  <input type="hidden" name="reqUserId" id="regReqUserId">
+                  <input type="hidden" name="reqUserTelNo" id="regReqUserTelNo">
+                  <button type="button" onclick="openOjAccountSearchModal()">
+                    <i class="icon-search w-[18px] h-[18px] bg-size-[18px]"></i>
+                  </button>
+                </div>
+              </label>
+            </div>
+
+            <!-- 고객사 (신청자 선택 시 자동 세팅) -->
+            <div class="input-group">
+              <label>
+                <span class="label">고객사</span>
+                <div class="input disabled">
+                  <input type="text" id="regCorpNm" class="w-full overflow-hidden whitespace-nowrap text-ellipsis" placeholder="-" readonly />
+                  <input type="hidden" name="corpCd" id="regCorpCd">
+                </div>
+              </label>
+            </div>
+
+            <!-- 영업담당자 -->
+            <div class="input-group">
+              <label>
+                <span class="label required">영업담당자</span>
+                <form-select>
+                  <select name="cepCd" id="regCepCd">
+                    <option value="">선택</option>
+                    <option th:each="agent : ${salesAgntList}" th:value="${agent.CEP_CD}" th:text="${agent.CEP_NM}"></option>
+                  </select>
+                </form-select>
+              </label>
+            </div>
+
+            <!-- 목적 (체크박스) -->
+            <div class="input-group sm:col-span-3">
+              <span class="label required">목적  <span class="text-xs">(다중 선택 가능)</span></span>
+              <div class="flex gap-4 mt-1">
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="purpose" value="NEW" class="checkbox">
+                  <span class="text-sm">신규 공간 구축</span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="purpose" value="CHANGE" class="checkbox">
+                  <span class="text-sm">기존 공간 변경</span>
+                </label>
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" name="purpose" value="ETC" class="checkbox">
+                  <span class="text-sm">기타</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 도면 등록 -->
+            <div class="input-group sm:col-span-3">
+              <div class="flex items-center justify-between">
+                <span class="label mb-0">도면 등록</span>
+                <div class="flex gap-2">
+                  <button type="button" class="btn btn-outline btn-sm" onclick="openLayoutSearchModal()">도면 현황 조회</button>
+                  <label class="btn btn-outline btn-sm cursor-pointer">
+                    파일 업로드
+                    <input type="file" id="regLayoutFile" name="layoutFile" class="hidden" accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg" multiple onchange="onLayoutFileChange(this)">
+                  </label>
+                </div>
+              </div>
+              <div id="layoutDropZone" class="mt-2 border border-input rounded p-4 max-h-60 overflow-y-auto transition-colors"
+                   ondragover="onLayoutDragOver(event)" ondragleave="onLayoutDragLeave(event)" ondrop="onLayoutDrop(event)">
+                <ul id="regLayoutList" class="flex flex-col gap-1"></ul>
+                <p id="layoutDropMsg" class="text-sm text-muted-foreground text-center py-4">파일을 드래그하거나 버튼으로 추가하세요</p>
+              </div>
+            </div>
+
+            <!-- 내용 -->
+            <div class="input-group sm:col-span-3">
+              <label>
+                <span class="label">내용</span>
+                <textarea class="textarea focus:outline-none focus:ring-0 focus:border-input" name="content" id="regContent" rows="5" placeholder="내용을 입력하세요"></textarea>
+              </label>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="saveService()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // === 모달 열기 (초기화) ===
+  function openServiceRegModal() {
+    document.getElementById('serviceRegForm').reset();
+    document.getElementById('regReqUserId').value = '';
+    document.getElementById('regReqUserNm').value = '';
+    document.getElementById('regReqUserTelNo').value = '';
+    document.getElementById('regCorpCd').value = '';
+    document.getElementById('regCorpNm').value = '';
+    registeredLayouts = [];
+    renderLayoutList();
+    openModal('serviceRegModal');
+  }
+
+  // === 도면 목록 관리 ===
+  let registeredLayouts = [];
+
+  function addLayoutItem(item) {
+    registeredLayouts.push(item);
+    renderLayoutList();
+  }
+
+  function removeLayoutItem(index) {
+    registeredLayouts.splice(index, 1);
+    renderLayoutList();
+  }
+
+  function updateLayoutDesc(index, value) {
+    registeredLayouts[index].desc = value;
+  }
+
+  function renderLayoutList() {
+    const ul = document.getElementById('regLayoutList');
+    const dropMsg = document.getElementById('layoutDropMsg');
+    ul.innerHTML = '';
+    dropMsg.style.display = registeredLayouts.length === 0 ? '' : 'none';
+    registeredLayouts.forEach((item, idx) => {
+      const li = document.createElement('li');
+      li.className = 'flex flex-col gap-1 px-3 py-2 border rounded text-sm bg-background';
+      li.innerHTML =
+        '<div class="flex items-center gap-2">' +
+          '<span class="flex-1 overflow-hidden whitespace-nowrap text-ellipsis">' + item.name + '</span>' +
+          '<button type="button" class="flex-shrink-0 text-xs text-muted-foreground underline" onclick="removeLayoutItem(' + idx + ')">삭제</button>' +
+        '</div>' +
+        '<input type="text" class="input w-full" placeholder="도면 설명을 입력하세요" value="' + (item.desc || '') + '" onchange="updateLayoutDesc(' + idx + ', this.value)">';
+      ul.appendChild(li);
+    });
+  }
+
+  // === 파일 업로드 ===
+  function onLayoutFileChange(input) {
+    Array.from(input.files).forEach(file => {
+      addLayoutItem({ type: 'file', name: file.name, file: file });
+    });
+    input.value = '';
+  }
+
+  // === 드래그 앤 드롭 ===
+  function onLayoutDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('border-primary');
+  }
+
+  function onLayoutDragLeave(e) {
+    e.currentTarget.classList.remove('border-primary');
+  }
+
+  function onLayoutDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('border-primary');
+    Array.from(e.dataTransfer.files).forEach(file => {
+      addLayoutItem({ type: 'file', name: file.name, file: file });
+    });
+  }
+
+  // === 저장 ===
+  async function saveService() {
+    const reqTitle = document.getElementById('regReqTitle').value;
+    if (!reqTitle) {
+      alert('신청건명을 입력하세요.');
+      return;
+    }
+
+    if (!confirm('저장하시겠습니까?')) return;
+
+    const purposes = Array.from(document.querySelectorAll('input[name="purpose"]:checked')).map(el => el.value).join(',');
+
+    // 영업담당자 선택된 option의 텍스트 추출
+    const cepSelect = document.getElementById('regCepCd');
+    const cepNm = cepSelect.options[cepSelect.selectedIndex]?.text || '';
+
+    const params = {
+      reqTitle: reqTitle,
+      corpCd: document.getElementById('regCorpCd').value,
+      corpNm: document.getElementById('regCorpNm').value,
+      reqUserId: document.getElementById('regReqUserId').value,
+      reqUserTelNo: document.getElementById('regReqUserTelNo').value,
+      cepCd: cepSelect.value,
+      cepNm: cepNm !== '선택' ? cepNm : '',
+      purpose: purposes,
+      content: document.getElementById('regContent').value
+    };
+
+    try {
+      // 1. 서비스 등록
+      const response = await fetch('/layout/service/saveService.ajax', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: new URLSearchParams(params).toString()
+      });
+
+      if (!response.ok) {
+        const msg = await response.text();
+        alert(msg || '저장에 실패했습니다.');
+        return;
+      }
+
+      const result = await response.json();
+      const requestId = result.ojLayoutServiceRequestId;
+
+      // 2. 도면 파일 업로드 (파일이 있고 requestId가 있는 경우)
+      const fileItems = registeredLayouts.filter(item => item.type === 'file' && item.file);
+      if (fileItems.length > 0 && requestId) {
+        for (const item of fileItems) {
+          const formData = new FormData();
+          formData.append('ojLayoutServiceRequestId', requestId);
+          formData.append('file', item.file);
+          formData.append('memo', item.desc || '');
+
+          await fetch('/layout/service/insertFloorPlan.ajax', {
+            method: 'POST',
+            body: formData
+          });
+        }
+      }
+
+      // 3. 기존 도면에서 추가 (도면 현황 조회 모달에서 선택한 경우 — S3 경로 직접 저장)
+      const searchItems = registeredLayouts.filter(item => item.type === 'search' && item.filePath);
+      if (searchItems.length > 0 && requestId) {
+        for (const item of searchItems) {
+          const params = new URLSearchParams();
+          params.append('ojLayoutServiceRequestId', requestId);
+          params.append('filePath', item.filePath);
+          params.append('fileName', item.fileNm || item.name);
+          params.append('memo', item.desc || '');
+
+          await fetch('/layout/service/insertFloorPlanByPath.ajax', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            body: params.toString()
+          });
+        }
+      }
+
+      alert('저장되었습니다.');
+      closeModal('serviceRegModal');
+      searchOrderList().then(() => updateAllCounts());
+    } catch (error) {
+      console.error('저장 실패:', error);
+      alert('저장 중 오류가 발생했습니다.');
+    }
+  }
+</script>

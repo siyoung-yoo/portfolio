@@ -1,0 +1,403 @@
+<div role="dialog" class="popup-wrap" id="careReportModal">
+  <div class="popup-dim" onclick="fnCareReportChk(event)"></div>
+  <div class="popup-cont w-lg">
+    <div class="popup-header flex-center-between bg-light">
+        <div class="flex-center gap-sm">
+          케어 리포트 상세
+          <span class="font-sm text-dark-gray spacing-lg">2026.01.11 발행</span>
+        </div>
+        <button type="button" class="btn line rounded" onclick="pdfCareReport()"><i class="icon-download"></i>PDF</button>
+    </div>
+    <div class="popup-body">
+
+      <div class="tab-list type-sliding">
+        <div class="tab-indicator"></div>
+        <button type="button" data-target="#tabCont01" class="tab is-active">케어 리포트</button>
+        <button type="button" data-target="#tabCont02" class="tab">품목별 이슈 <span class="badge bg-blue sm">0</span></button>
+      </div>
+
+      <div class="tab-contents">
+        <!-- S: 케어 리포트 -->
+        <div id="tabCont01" class="tab-cont is-active">
+          <div class="layout-column gap-md">
+            <div class="group">
+              <h4 class="text-title mb-2xs">기본 정보</h4>
+              <div class="box-style type-care-info">
+                <ul class="info-list col-2">
+                  <li>
+                    <div class="title">계약번호</div>
+                    <div class="value">CON-2026-0102</div>
+                  </li>
+                  <li>
+                    <div class="title">계약 건명</div>
+                    <div class="value">본사 사옥  렌탈  계약건</div>
+                  </li>
+                  <li class="span-2">
+                    <div class="title">주소</div>
+                    <div class="value">서울특별시 도봉구 해등로34길 63-0</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="group">
+              <h4 class="text-title mb-2xs">일정/담당 정보</h4>
+              <div class="box-style type-care-info">
+                <ul class="info-list col-2">
+                  <li>
+                    <div class="title">방문일정</div>
+                    <div class="value">2026.02.10</div>
+                  </li>
+                  <li>
+                    <div class="title">계약 담당자</div>
+                    <div class="value">홍길동</div>
+                  </li>
+                  <li>
+                    <div class="title">대리점</div>
+                    <div class="value">퍼시스강남</div>
+                  </li>
+                  <li>
+                    <div class="title">대리점 담당자</div>
+                    <div class="value">김가나 02-1234-5678</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider-dash only-line"><hr class="dash-line"></div>
+
+          <div class="layout-column gap-md">
+            <div class="box-style bg-dark-gray text-white group">
+              <p class="font-sm"><span class="dot"></span> 점검 결과</p>
+              <div>총 대상 품목 <strong class="group-title text-green">nn개</strong> 이슈 발생</div>
+            </div>
+
+            <div class="group">
+              <h4 class="text-title mb-2xs">현장 코멘트</h4>
+              <div class="box-style gap-2xs">
+                <p>가구 특별 조치사항 내용이 노출 됩니다.
+                  <br>4층 폰부스의 경우 사용 빈도가 높아 전체적인 점검 주기를 단축하는 것을 권장드립니다.
+                  <br>또한 3층 복도부 바테이블 체어는 2년 이상 사용으로 교체 시기가 도래하였습니다.
+                </p>
+                <p>현장 개선사항 내용이 노출 됩니다. <br>2층 회의실 부스 우측 모서리에 균열이 있어 확인이 필요합니다.</p>
+              </div>
+            </div>
+
+            <div class="group"><!-- 이전 케어 코멘트 없을 경우 hidden 클래스 추가 -->
+              <h4 class="font-sm mb-2xs">이전 케어 코멘트</h4>
+              <div class="box-style bg-light-gray">
+                <div class="flex gap-2xs">
+                  <i class="icon-history"></i>
+                  <div class="flex-col gap-2xs">
+                    <p>가구 특별 조치사항 내용이 노출 됩니다. 3층 테이블 상판 교체를 권하였으나, 교체 되지 않아 아직 위험도가 존재합니다.</p>
+                    <p>현장 개선사항 내용이 노출 됩니다. 2층 회의실 부스 우측 모서리에 균열이 있어 확인이 필요합니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 케어 리포트 -->
+
+        <!-- S: 품목별 이슈 -->
+        <div id="tabCont02" class="tab-cont">
+          <!-- 이슈 품목이 없을 경우 -->
+          <!-- <div class="text-nodata lg bg-light">이슈가 없습니다.</div> -->
+
+          <!-- 이슈 품목이 있을 경우 -->
+          <div class="layout-column gap-sm">
+            <div class="box-toggle">
+              <button type="button" class="btn-toggle is-expanded" aria-controls="#toggleTarget01">
+                <div class="flex gap-md">
+                  <p>3F Trusses Zone</p>
+                  <p>120도 데스크</p>
+                </div>
+              </button>
+              <div class="box-style pb-lg" id="toggleTarget01">
+                <ul class="info-list type-inline">
+                  <li><span class="title">시리즈</span><span class="value">KOAS</span></li>
+                  <li><span class="title">품목 코드</span><span class="value">SET-001</span></li>
+                  <li><span class="title">색상</span><span class="value">화이트</span></li>
+                  <li><span class="title">옵션</span><span class="value">-</span></li>
+                </ul>
+
+                <hr class="dash-line">
+
+                <div class="text-box bg-white">
+                  <strong class="font-sm font-bold">재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안</strong>
+                </div>
+
+                <div class="as-img-wrap mt-2xs">
+                  <div class="flex-center-between mb-2xs">
+                    <h4 class="font-sm">업로드 사진 <strong>(6)</strong></h4>
+                    <button type="button" class="btn link text-medium-gray">전체 다운로드</button>
+                  </div>
+
+                  <div class="thumb-img-list">
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지"><!-- alt 값: as 대상 품목 시리얼넘버 + '이미지' -->
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_04.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_05.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+                    </button>
+                  </div>
+                </div>
+
+                <div class="list-column">
+                  <div class="box-style bg-white p-xs">
+                    <div class="flex gap-2xs">
+                      <span class="badge bg-red xs square">AS</span>
+                      <div class="list-column gap-3xs">
+                        <ul class="info-list type-inline">
+                          <li>
+                            <span class="title">시리얼 번호</span>
+                            <span class="value">ABCDEFG1234</span>
+                          </li>
+                        </ul>
+                        <p>재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="box-style bg-white p-xs">
+                    <div class="flex gap-2xs">
+                      <span class="badge bg-red xs square">AS</span>
+                      <div class="list-column gap-3xs">
+                        <ul class="info-list type-inline">
+                          <li>
+                            <span class="title">시리얼 번호</span>
+                            <span class="value">ABCDEFG1234</span>
+                          </li>
+                        </ul>
+                        <p>재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="box-toggle">
+              <button type="button" class="btn-toggle is-expanded" aria-controls="#toggleTarget02">
+                <div class="flex gap-md">
+                  <p>관리 타입</p>
+                  <p>120도 데스크</p>
+                </div>
+              </button>
+              <div class="box-style pb-lg" id="toggleTarget02">
+                <ul class="info-list type-inline">
+                  <li><span class="title">시리즈</span><span class="value">KOAS</span></li>
+                  <li><span class="title">품목 코드</span><span class="value">SET-001</span></li>
+                  <li><span class="title">색상</span><span class="value">화이트</span></li>
+                  <li><span class="title">옵션</span><span class="value">-</span></li>
+                </ul>
+
+                <hr class="dash-line">
+
+                <div class="text-box bg-white">
+                  <strong class="font-sm font-bold">재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="box-toggle">
+              <button type="button" class="btn-toggle is-expanded" aria-controls="#toggleTarget03">
+                <div class="flex gap-md">
+                  <p>as 타입 + 사진첨부 X</p>
+                  <p>120도 데스크</p>
+                </div>
+              </button>
+              <div class="box-style pb-lg" id="toggleTarget03">
+                <ul class="info-list type-inline">
+                  <li><span class="title">시리즈</span><span class="value">KOAS</span></li>
+                  <li><span class="title">품목 코드</span><span class="value">SET-001</span></li>
+                  <li><span class="title">색상</span><span class="value">화이트</span></li>
+                  <li><span class="title">옵션</span><span class="value">-</span></li>
+                </ul>
+
+                <hr class="dash-line">
+
+                <!-- <div class="as-img-wrap mt-2xs">
+                  <div class="flex-center-between mb-2xs">
+                    <h4 class="font-sm">업로드 사진 <strong>(6)</strong></h4>
+                    <button type="button" class="btn link text-medium-gray">전체 다운로드</button>
+                  </div>
+
+                  <div class="thumb-img-list">
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_01.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_02.png}" alt="SN 이미지">
+                    </button>
+                    <button type="button" class="thumb-img">
+                      <img th:src="@{/assets/img/page/temp_item_03.png}" alt="SN 이미지">
+                    </button>
+                  </div>
+                </div> -->
+
+                <div class="list-column">
+                  <div class="box-style bg-white p-xs">
+                    <div class="flex gap-2xs">
+                      <span class="badge bg-red xs square">AS</span>
+                      <div class="list-column gap-3xs">
+                        <ul class="info-list type-inline">
+                          <li>
+                            <span class="title">시리얼 번호</span>
+                            <span class="value">ABCDEFG1234</span>
+                          </li>
+                        </ul>
+                        <p>재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="box-style bg-white p-xs">
+                    <div class="flex gap-2xs">
+                      <span class="badge bg-red xs square">AS</span>
+                      <div class="list-column gap-3xs">
+                        <ul class="info-list type-inline">
+                          <li>
+                            <span class="title">시리얼 번호</span>
+                            <span class="value">ABCDEFG1234</span>
+                          </li>
+                        </ul>
+                        <p>재시공 과정상 1EA 상판 깨짐 하자 추정 → A/S 및 제품교제 제안 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우 텍스트 길 경우</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- E: 품목별 이슈 -->
+      </div>
+
+    </div>
+
+    <div class="popup-footer btn-wide">
+      <button type="button" class="btn" onclick="fnCareReportChk(event);"><!-- 확인 완료되면 .is-active 추가 -->
+        <i class="icon-check"></i>확인 완료
+      </button>
+    </div>
+
+    <button type="button" class="btn-close" onclick="fnCareReportChk(event);">
+      <span class="sr-only">닫기</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  @page print-care-report { size: portrait; margin: 0; padding: 1cm; }
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+    html, .pdfCareReport { page: print-care-report; background: #fff; }
+    .pdfCareReport #sideNavi, .pdfCareReport .notif-wrap, .pdfCareReport #footer,
+    .pdfCareReport #bodyContent, .pdfCareReport .popup-dim,
+    .pdfCareReport .popup-header .btn.line, .pdfCareReport .popup-wrap .popup-body::before,
+    .pdfCareReport .popup-wrap .as-img-wrap, .pdfCareReport .popup-wrap .box-toggle > .btn-toggle::after,
+    .pdfCareReport .btn-close, .pdfCareReport .popup-footer { display: none; }
+    .pdfCareReport #wrapper, .pdfCareReport #container { padding: 0; min-width: initial; }
+    .pdfCareReport .popup-wrap.show { display: block; height: auto; position: static; }
+    .pdfCareReport .popup-wrap .popup-cont { width: 100%; height: auto; max-height: initial; border-radius: 0; }
+    .pdfCareReport .popup-wrap .popup-header { padding-left: 0; background: #fff !important; }
+    .pdfCareReport .popup-wrap .popup-body { padding: var(--space-2xs) 0; }
+    .pdfCareReport .popup-wrap .tab-list.type-sliding { display: none; }
+    .pdfCareReport .popup-wrap .tab-list.type-sliding.is-cloned { display: inline-flex; }
+    .pdfCareReport .popup-wrap .tab-list.type-sliding .tab-indicator { width: 100%; }
+    .pdfCareReport .popup-wrap .tab-list.type-sliding .tab { color: var(--tab-color_active); background: var(--tab-bgColor_active); border-color: var(--tab-borderColor_active); }
+    .pdfCareReport .popup-wrap .tab-list.type-sliding .tab:nth-last-of-type(2) { display: none; }
+    .pdfCareReport .popup-wrap .tab-contents .tab-cont:first-child { page-break-after: always; break-after: page; }
+    .pdfCareReport .popup-wrap .box-toggle > .box-style { height: auto !important; padding: var(--boxStyle-padding) !important; grid-template-rows: 1fr; }
+    .pdfCareReport .popup-wrap .tab-cont { display: block !important; padding: var(--space-md) 0; }
+    .pdfCareReport .popup-wrap .group, .pdfCareReport .popup-wrap .box-toggle { break-inside: avoid; page-break-inside: avoid; }
+    .pdfCareReport .popup-wrap .text-nodata { height: auto; }
+  }
+</style>
+
+<script>
+
+/* 이미지 클릭 시 해당 이미지부터 스와이프 팝업 보이기 */
+const thumbImg = document.querySelectorAll('.thumb-img');
+thumbImg.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    imgSwiper.slideToLoop(index, 0);
+    fnPopupOpen('imgSwiperModal');
+  });
+});
+
+/* 케어리포트 PDF 다운로드 */
+let cloneTabList = null;
+function pdfCareReport() {
+  // 인쇄 시점에 현재 탭 목록을 복제 — 스크립트 로드 시점 복제는 갱신 전 하드코딩 카운트(12)를 캡처함
+  const tabList = document.querySelector('.tab-list.type-sliding');
+  const tabConts = document.querySelectorAll('.tab-cont');
+  if (tabList && tabConts[1]) {
+    cloneTabList = tabList.cloneNode(true);
+    cloneTabList.classList.add('is-cloned');
+    tabConts[1].before(cloneTabList);
+  }
+  document.body.classList.add('pdfCareReport');
+  window.print();
+}
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('pdfCareReport');
+  if (cloneTabList) { cloneTabList.remove(); cloneTabList = null; }
+});
+
+/*
+  케어리포트 상세 팝업 닫을 경우 만족도 조사 팝업 노출
+  → 확인 완료 버튼, 닫기 버튼, Dim 영역 클릭
+
+  별점 평가를 완료한 경우에는 만족도 조사 팝업 다시 노출하지 않음
+  → 별점 수정 불가
+*/
+const modalCareReport = document.querySelector('#careReportModal');
+const btnCareReportChk = modalCareReport.querySelector('.popup-footer.btn-wide .btn');
+function fnCareReportChk(e) {
+  const btnCareReportChk = modalCareReport.querySelector('.popup-footer.btn-wide .btn');
+
+  if (!btnCareReportChk.classList.contains('is-active')) {
+    // 미평가/미완료 상태 — 닫기 시도를 막고 만족도 모달로 유도
+    e.stopImmediatePropagation();
+    fnPopupOpen('serviceRatingModal');
+    return;
+  }
+
+  // 완료/평가완료/반려 상태 — 모달을 직접 닫는다.
+  // ui_common.js 의 글로벌 닫기 핸들러는 ".close-btn" 클래스를 인식하지만 본 모달의 X 버튼은 ".btn-close" 라
+  // 매칭되지 않아 닫기가 트리거되지 않는다. 여기서 명시적으로 fnPopupClose 호출.
+  if (e && typeof e.stopImmediatePropagation === 'function') {
+    e.stopImmediatePropagation();
+  }
+  fnPopupClose('careReportModal');
+}
+
+modalCareReport.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !btnCareReportChk.classList.contains('is-active')) {
+    e.stopImmediatePropagation();
+    fnPopupOpen('serviceRatingModal');
+  }
+})
+
+</script>

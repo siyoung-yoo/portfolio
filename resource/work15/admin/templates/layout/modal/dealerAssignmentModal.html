@@ -1,0 +1,34 @@
+<div class="modal" id="dealerAssignmentModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">신규 대리점 본사 배정</h5>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-content">
+            <span class="label">신규 대리점 배정 요청 사유</span>
+            <div class="text-sm font-medium break-keep mt-1">작성된 요청 사유가 노출 됩니다. 작성된 요청 사유가 노출 됩니다. 작성된 요청 사유가 노출 됩니다. 작성된 요청 사유</div>
+            <!-- <div class="text-sm font-medium break-keep mt-1">-</div> --><!-- 사유 없을 경우 '-' 표기 -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="btnDealerAssign()">대리점 배정하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+  * 대리점 배정하기 버튼 클릭 시,
+  * 현재 팝업 닫은 후, 실적사업소/실적대리점 팝업 오픈
+  */
+  function btnDealerAssign() {
+    closeModal('dealerAssignmentModal');
+    openModal('agencyModal');
+  }
+</script>

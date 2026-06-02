@@ -1,0 +1,303 @@
+<!-- 도면 파일 변경 모달 (버전업) -->
+<div class="modal" id="changeDrawModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">도면 파일 변경</h5>
+          <p class="modal-description mt-2">도면 이미지 및 첨부 파일을 교체할 수 있습니다.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="badge badge-orange w-full">
+          <div class="flex flex-col gap-1 p-2 text-sm">
+            <h5 class="mb-2">도면 파일 변경 안내</h5>
+            <p class="text-indent text-sm text-primary">* DWG 도면 변경 시 해당 파일만 변경됩니다.</p>
+            <p class="text-indent text-sm text-primary">* PDF 도면 변경 시 새로운 버전이 생성됩니다.</p>
+            <p class="text-indent text-sm text-primary">* 새 버전이 생성될 경우, 기존 영역 및 매핑된 정보의 유지 여부를 선택할 수 있습니다.</p>
+          </div>
+        </div>
+
+        <!-- 기존 파일 정보 -->
+        <div class="card mt-5">
+          <div class="card-content flex flex-col gap-2">
+            <span class="label">기존 등록된 파일 정보</span>
+            <div class="flex flex-wrap gap-2 label-data-text text-sm">
+              <span class="mr-4" id="changeDrawCurrentDrawing"></span>
+              <span id="changeDrawCurrentRegDate"></span>
+            </div>
+            <ul class="flex flex-col gap-2 mt-2" id="changeDrawCurrentFiles">
+            </ul>
+          </div>
+        </div>
+
+        <!-- PDF 업로드 -->
+        <div class="input-group w-full mt-5">
+          <span class="label">PDF 도면</span>
+          <div class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone="changePdf">
+            <label data-upload-msg
+              class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+              변경할 파일을 드래그하거나 클릭하여 업로드하세요
+              <span class="block text-xs mt-2">(최대 100MB)</span>
+              <input data-upload-input type="file" accept=".pdf" class="hidden">
+            </label>
+            <ul data-upload-list class="w-full hidden"></ul>
+          </div>
+        </div>
+
+        <!-- DWG/DXF 업로드 -->
+        <div class="input-group w-full mt-5">
+          <span class="label">DWG/DXF 도면</span>
+          <div class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone="changeDwgDxf">
+            <label data-upload-msg
+              class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+              변경할 파일을 드래그하거나 클릭하여 업로드하세요
+              <span class="block text-xs mt-2">(최대 100MB)</span>
+              <input data-upload-input type="file" accept=".dwg,.dxf" class="hidden">
+            </label>
+            <ul data-upload-list class="w-full hidden"></ul>
+          </div>
+        </div>
+
+        <!-- PDF 업로드 시 영역 이관 선택 -->
+        <div class="badge badge-orange w-full mt-5 hidden" id="changeDrawVersionAlert">
+          <div class="flex flex-col gap-2 p-2 text-sm">
+            <h5>도면 이미지가 변경되어 새로운 버전이 생성됩니다.</h5>
+            <p class="text-primary">기존 영역 및 매핑된 품목을 유지할지, 초기화할지 선택하세요.</p>
+            <div class="flex gap-8 mt-4 mb-2">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="versionOption" value="keep" class="radio" />
+                <span class="text-primary leading-none">기존 설정 유지</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="versionOption" value="reset" class="radio" />
+                <span class="text-primary leading-none">모든 설정 초기화</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="submitChangeDrawing()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let _changePdfFile = null;
+let _changeDwgFile = null;
+let _changeDxfFile = null;
+
+/** 도면변경 모달 오픈 시 기존 파일 정보 세팅 */
+document.addEventListener('modalOpened', function(e) {
+  if (e.detail.modalId !== 'changeDrawModal') return;
+
+  _changePdfFile = null;
+  _changeDwgFile = null;
+  _changeDxfFile = null;
+
+  // 파일 크기 포맷 (바이트 → MB)
+  const fmtSize = b => {
+    const n = Number(b);
+    if (!isFinite(n) || n < 0) return '';
+    return ' (' + (n / 1024 / 1024).toFixed(1) + ' MB)';
+  };
+
+  // 기존 등록된 파일 정보 렌더링 — 최신 데이터로 직접 조회 (캐시 의존 X)
+  const renderCurrentInfo = (d) => {
+    const pdfName = d.pdfFileNm || (d.pdfPath ? d.pdfPath.split('/').pop() : '');
+    document.getElementById('changeDrawCurrentDrawing').textContent =
+      '도면: ' + (pdfName || '-');
+    document.getElementById('changeDrawCurrentRegDate').textContent =
+      '등록일 : ' + (d.regDate || '-');
+
+    let filesHtml = '';
+    if (d.pdfPath) {
+      filesHtml += `<li class="text-indent text-primary">* ${d.pdfFileNm || d.pdfPath.split('/').pop()}${fmtSize(d.pdfSize)}</li>`;
+    }
+    if (d.dwgPath) {
+      filesHtml += `<li class="text-indent text-primary">* ${d.dwgFileNm || d.dwgPath.split('/').pop()}${fmtSize(d.dwgSize)}</li>`;
+    }
+    if (d.dxfPath) {
+      filesHtml += `<li class="text-indent text-primary">* ${d.dxfFileNm || d.dxfPath.split('/').pop()}${fmtSize(d.dxfSize)}</li>`;
+    }
+    document.getElementById('changeDrawCurrentFiles').innerHTML = filesHtml || '<li class="text-primary-300">없음</li>';
+  };
+
+  // 모달 오픈 시 항상 서버에서 최신 도면 정보 재조회 (버전업 직후 타이밍 이슈 방지)
+  $.ajax({
+    url: '/hqDrawingMng/getDrawingCreateData',
+    type: 'post',
+    data: { drawingId: _detailData.drawingId },
+    success: function(res) {
+      const fresh = res.data || {};
+      // _detailData 갱신 (다른 영역 렌더링도 일관성 유지)
+      Object.assign(_detailData, fresh);
+      renderCurrentInfo(_detailData);
+    },
+    error: function() {
+      // 실패 시 기존 캐시 사용
+      renderCurrentInfo(_detailData);
+    }
+  });
+
+  // 파일 업로드 UI 초기화
+  document.querySelectorAll('#changeDrawModal [data-upload-zone]').forEach(zone => {
+    const msg = zone.querySelector('[data-upload-msg]');
+    const list = zone.querySelector('[data-upload-list]');
+    if (msg) msg.style.display = '';
+    if (list) { list.classList.add('hidden'); list.innerHTML = ''; }
+  });
+
+  // 라디오/알림 영역 초기화
+  const versionAlert = document.getElementById('changeDrawVersionAlert');
+  if (versionAlert) versionAlert.classList.add('hidden');
+  document.querySelectorAll('input[name="versionOption"]').forEach(r => r.checked = false);
+});
+
+/** 도면변경 저장
+ *   - PDF 업로드 있음 → 새 버전 생성 (영역 유지/초기화 라디오 선택)
+ *   - PDF 없이 DWG/DXF만 업로드 → 새 버전 없이 현재 버전 파일만 교체
+ *   - 아무것도 없으면 차단
+ */
+async function submitChangeDrawing() {
+  if (!_changePdfFile && !_changeDwgFile && !_changeDxfFile) {
+    alert('변경할 파일을 업로드하세요.');
+    return;
+  }
+
+  let versionOption = 'keep';
+  if (_changePdfFile) {
+    versionOption = document.querySelector('input[name="versionOption"]:checked')?.value;
+    if (!versionOption) {
+      alert('기존 설정 유지 또는 모든 설정 초기화를 선택하세요.');
+      return;
+    }
+  }
+
+  const confirmMsg = _changePdfFile
+    ? '도면을 변경하시겠습니까?\n새로운 버전이 생성됩니다.'
+    : 'DWG/DXF 파일을 교체하시겠습니까?\n(버전은 유지됩니다.)';
+  if (!confirm(confirmMsg)) return;
+
+  try {
+    const formData = new FormData();
+    formData.append('drawingId', _detailData.drawingId);
+    formData.append('versionOption', versionOption);
+    if (_changePdfFile) formData.append('pdfFile', _changePdfFile);
+    if (_changeDwgFile) formData.append('dwgFile', _changeDwgFile);
+    if (_changeDxfFile) formData.append('dxfFile', _changeDxfFile);
+
+    const response = await fetch('/hqDrawingMng/updateDrawingVersion', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (!result.message) {
+      if (_changePdfFile) {
+        const verNo = (result.data?.versionNo || '').replace(/^v(\d+)$/, 'ver $1');
+        alert('새로운 버전(' + verNo + ')이 생성되었습니다.');
+      } else {
+        alert('파일이 교체되었습니다.');
+      }
+      closeModal('changeDrawModal');
+
+      // 수정모드 해제 + 데이터 재로드
+      _backupDrawAreaData = null;
+      _isEditMode = false;
+      document.querySelectorAll('[data-state="areaEdit"]').forEach(el => el.classList.add('hidden'));
+      document.getElementById('btnEditWrap')?.classList.remove('hidden');
+      document.getElementById('versionSelectWrap')?.classList.remove('hidden');
+      document.querySelector('.draw-panel-layout')?.classList.remove('edit-mode');
+      if (drawCont) { drawCont.classList.add('draw-fixed'); disableAllInteract(); }
+
+      loadDetailData();
+    } else {
+      alert(result.message);
+    }
+  } catch (error) {
+    console.error('도면 변경 실패:', error);
+    alert('도면 변경 중 오류가 발생했습니다.');
+  }
+}
+
+/** 파일 업로드 UI — changeDrawModal 전용 */
+document.querySelectorAll('#changeDrawModal [data-upload-zone]').forEach(zone => {
+  const input = zone.querySelector('[data-upload-input]');
+  const list = zone.querySelector('[data-upload-list]');
+  const msg = zone.querySelector('[data-upload-msg]');
+  const fileType = zone.dataset.uploadZone; // 'changePdf' / 'changeDwgDxf'
+
+  const formatSize = b => {
+    if (!b) return '0 KB';
+    const u = ['KB','MB','GB'];
+    let s = b / 1024, i = 0;
+    while (s >= 1024 && i < u.length-1) { s /= 1024; i++; }
+    return s.toFixed(1) + ' ' + u[i];
+  };
+
+  const setFile = (file) => {
+    if (file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (fileType === 'changePdf' && ext !== 'pdf') { alert('PDF 파일만 업로드 가능합니다.'); return; }
+      if (fileType === 'changeDwgDxf' && ext !== 'dwg' && ext !== 'dxf') { alert('DWG 또는 DXF 파일만 업로드 가능합니다.'); return; }
+    }
+
+    if (fileType === 'changePdf') {
+      _changePdfFile = file;
+      const alert = document.getElementById('changeDrawVersionAlert');
+      if (alert) alert.classList.toggle('hidden', !file);
+    } else if (fileType === 'changeDwgDxf') {
+      if (!file) {
+        _changeDwgFile = null;
+        _changeDxfFile = null;
+      } else {
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (ext === 'dwg') { _changeDwgFile = file; _changeDxfFile = null; }
+        else if (ext === 'dxf') { _changeDxfFile = file; _changeDwgFile = null; }
+      }
+    }
+
+    if (!file) {
+      msg.style.display = '';
+      list.classList.add('hidden');
+      list.innerHTML = '';
+      return;
+    }
+
+    msg.style.display = 'none';
+    list.classList.remove('hidden');
+    list.innerHTML = `
+      <li class="p-3 text-sm bg-background">
+        <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+          <div class="min-w-0">
+            <p class="truncate">${file.name}</p>
+            <p class="text-xs text-muted-foreground">${formatSize(file.size)}</p>
+          </div>
+          <button class="btn btn-delete" type="button"></button>
+        </div>
+      </li>
+    `;
+    list.querySelector('button').onclick = () => setFile(null);
+  };
+
+  input.onchange = e => {
+    if (e.target.files.length > 0) setFile(e.target.files[0]);
+    input.value = '';
+  };
+
+  zone.ondragover = e => { e.preventDefault(); zone.classList.add('border-primary-200'); };
+  zone.ondragleave = () => { zone.classList.remove('border-primary-200'); };
+  zone.ondrop = e => {
+    e.preventDefault();
+    zone.classList.remove('border-primary-200');
+    if (e.dataTransfer.files.length > 0) setFile(e.dataTransfer.files[0]);
+  };
+});
+</script>

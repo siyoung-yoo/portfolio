@@ -1,0 +1,109 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">결제 정보</h2>
+      <p class="page-description">결제 내역 조회</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="search-area">
+      <div class="row">
+        <div class="form-group">
+          <label for="form01" class="text-label">검색</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="form01" autocomplete="off" placeholder="계약 건명 검색" title="계약 건명 입력">
+          </div>
+        </div>
+
+        <div class="form-group w-lg">
+          <label for="form02_1" class="text-label">결제일자</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="form02_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="결제일자 시작 날짜 선택">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form02_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="결제일자 종료 날짜 선택">
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="button" class="btn dark">검색</button>
+          <button type="button" class="btn line"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+    <!-- // search-area -->
+
+    <div class="table-utils">
+      <p class="table-info">전체 n건</p>
+      <button type="button" class="btn line rounded"><i class="icon-download"></i>엑셀 다운로드</button>
+    </div>
+
+    <!-- 조회 조건이 없을 경우 -->
+    <!-- <div class="text-nodata">검색 내역이 존재하지 않습니다.</div> -->
+
+    <!-- 조회 조건이 있을 경우 -->
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 158px">
+          <col>
+          <col style="width: 98px">
+          <col style="width: 98px">
+          <col style="width: 134px">
+          <col style="width: 150px">
+          <col style="width: 110px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">계약번호</th>
+            <th scope="col">계약 건명</th>
+            <th scope="col" class="text-center">결제 회차</th>
+            <th scope="col" class="text-center">결제 상태</th>
+            <th scope="col" class="text-right">결제 금액 (VAT 제외)</th>
+            <th scope="col">결제일시</th>
+            <th scope="col" class="text-center">결제 내역</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td class="text-black">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td class="text-center"><span class="text-black">12</span>/20회</td>
+            <td class="text-center"><span class="badge-line-orange w-fix-lg">부분결제</span></td>
+            <td class="row-title text-right">3,000,000원</td>
+            <td class="spacing-lg">-</td>
+            <td class="text-center">
+              <button type="button" class="btn link" onclick="fnPopupOpen('paymentDetailModal');">상세</button>
+            </td>
+          </tr>
+          <tr>
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td class="text-black">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td class="text-center"><span class="text-black">1</span>/50회</td>
+            <td class="text-center"><span class="badge bg-light-gray w-fix">완료</span></td>
+            <td class="row-title text-right">100,000원</td>
+            <td class="spacing-lg">2026.01.01 12:59</td>
+            <td class="text-center">
+              <button type="button" class="btn link" onclick="fnPopupOpen('paymentDetailModal');">상세</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <th:block th:replace="~{common/fragments/pagination :: pagination}"></th:block>
+    <!-- // 조회 조건이 있을 경우 -->
+
+  </div>
+
+  <th:block th:insert="~{payment/modal/paymentDetailModal}"></th:block><!-- Modal: 결제 상세 -->
+</th:block>
+</body>
+</html>

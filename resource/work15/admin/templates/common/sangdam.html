@@ -1,0 +1,620 @@
+<script th:inline="javascript">
+    function prevent() {
+        AUIGrid.setProp(myGridId9,"enableMouseWheel",false);
+    }
+
+    function preventDelete() {
+        AUIGrid.setProp(myGridId9,"enableMouseWheel",true);
+    }
+
+    var myGridId9;
+
+    var filter = {
+        showIcon: true
+    };
+
+    var renderer = {
+        type: "TemplateRenderer"
+    };
+
+    var columnLayout9 = [
+        {
+            headerText: "상담일시",
+            dataField: 'CREATED_DATE',
+            filter: filter,
+            width: 150,
+        },
+        {
+            headerText: "상담파트",
+            dataField: 'SD_PART_STR',
+            filter: filter,
+        },
+        {
+            headerText: "상담단계",
+            dataField: 'M_PROCESS_STR',
+            filter: filter,
+            width: 100
+        },
+        {
+            headerText: "상담결과",
+            dataField: 'SD_RESULT',
+            filter: filter,
+            width:120,
+            renderer: renderer,
+            labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+                if(value=='미정') return '미정';
+                if (rowIndex == 0) {
+                    var result1 =
+                        `<form-select portal>
+                            <select  name="sdResult2" id="sd1" onchange="openSdResultDetail2()" onblur="javascript:myInputHandlerResult(0, this.value, event);">`;
+                    [# th:each="opt : ${sdIC}" ]
+                    var opts = [[${opt.codeName}]];
+
+                    if(opts == value) {
+                        result1 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'" selected>' + [[${opt.codeName}]] + '</option>';
+                    }else{
+                        result1 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'">' + [[${opt.codeName}]] + '</option>';
+                    }
+                    [/]
+
+                        [# th:each="opt : ${sdCC}"]
+                    var opts = [[${opt.codeName}]];
+                    if(opts == value) {
+                        result1 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'" selected>' + [[${opt.codeName}]] + '</option>';
+                    }else{
+                        result1 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'">' + [[${opt.codeName}]] + '</option>';
+                    }
+                    [/]
+                        result1 += `</select></form-select>`;
+
+
+
+
+                    var result2 =
+                      `<form-select portal><select name="sdResult2" id="sd1" onchange="openSdResultDetail2()" onblur="javascript:myInputHandlerResult(0, this.value, event);">`;
+                    [# th:each="opt : ${sdOC}" ]
+                    var opts = [[${opt.codeName}]];
+                    if(opts == value) {
+                        result2 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'" selected>' + [[${opt.codeName}]] + '</option>';
+                    }else{
+                        result2 += '<option value="' + [[${opt.codeName}]] + '" prop="'+[[${opt.codeValue}]]+'">' + [[${opt.codeName}]] + '</option>';
+                    }
+                    [/]
+                        result2 += `</select></form-select>`;
+
+
+                    if([[${member?.mProcess?.name == 'MP0001' || member?.mProcess?.name == 'MP0002'}]]) {
+                        return result2;
+                    }else{
+                        return result1;
+                    }
+
+                } else {
+                    return value;
+                }
+            }
+
+        },
+        {
+            headerText: "상담상세결과",
+            dataField: 'SD_RESULT_DETAIL',
+            filter: filter,
+            renderer: renderer,
+            labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+
+                if (rowIndex == 0) {
+                    var result =
+                      `<form-select portal><select name="sdResultDetail2" id="sd2" onblur="javascript:myInputHandlerResultDetail(0, this.value, this, event);">${tag}</select></form-select>`;
+                    return result;
+                } else {
+                    return value;
+                }
+            }
+        },
+        {
+            headerText: "상담담당자",
+            dataField: 'CREATED_BY',
+            filter: filter,
+        },
+        {
+            headerText: "상담메모",
+            dataField: 'SD_MEMO',
+            style: 'text-lineBreak',
+            filter: filter,
+            renderer: renderer,
+            width: 500,
+            labelFunction : function (rowIndex, columnIndex, value, headerText, item, dataField, cItem ) {
+                if (rowIndex == 0) {
+                    var template = '<textarea name="sdMemo2" rows="3" enterkeyhint="done" onmouseout="preventDelete()" class="textarea" onblur="javascript:myInputHandler(0, this.value, event);">' + value + '</textarea>';
+                    return template;
+                }else if(item.SD_FIX == 1){
+                    var count = value.split('\n').length;
+                    var content = value.split('\n');
+                    for(var i of content) {
+                        count += lineChange(i);
+                    }
+                    if(count<3) count = 3;
+                    var template ='<textarea name="sdMemo_'+rowIndex+'" rows="'+count+'" onmouseout="preventDelete()"  enterkeyhint="done" class="textarea" onblur="javascript:myInputHandler('+rowIndex+', this.value, event);">'+value+'</textarea>'
+                    return template;
+                }else{
+                    var count = value.split('\n').length;
+                    var content = value.split('\n');
+                    for(var i of content) {
+                        count += lineChange(i);
+                    }
+
+                    if(count<3) {
+                        var template ='<textarea name="sdMemo_'+rowIndex+'" rows="2" enterkeyhint="done" class="textarea" onblur="javascript:myInputHandler('+rowIndex+', this.value, event);">'+value+'</textarea>'
+                        return template;
+                    }else{
+                        var template ='<textarea name="sdMemo_'+rowIndex+'" onmouseover="prevent()" onmouseout="preventDelete()" rows="2" enterkeyhint="done" class="textarea" onblur="javascript:myInputHandler('+rowIndex+', this.value, event);">'+value+'</textarea>'
+                        return template;
+                    }
+
+                }
+
+            }
+        },
+        {
+            headerText: "상단고정",
+            dataField: 'SD_FIX',
+            renderer: renderer,
+            filter: filter,
+            labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+                if(value == null){
+                    return '';
+                }else{
+                    var btnClass;
+                    var state;
+                    if(rowIndex == 0){
+                        btnClass='btn-secondary';
+                        if(value == 1){
+                            return
+                            `<form-select portal>
+                                <select name="sdFix" onblur="javascript:myInputHandlerFix(0, this.value, event);">
+                                 <option value="false">미고정</option><option value="true" selected>상단고정</option>
+                                </select>
+                              </form-select>`;
+                        }else{
+                            return
+                            `<form-select portal>
+                              <select name="sdFix" onblur="javascript:myInputHandlerFix(0, this.value, event);">
+                                <option value="false" selected>미고정</option><option value="true">상단고정</option>
+                              </select>
+                            </form-select>`;
+                        }
+                    }
+
+                    if(value == 0){
+                        state = '미고정';
+                        btnClass='btn-outline';
+                        return '<button type="button" class="btn '+btnClass+'" onclick="openSdColorModalOn('+item.SD_IDX+')">'+state+'</button>';
+                    }else if(value == 1){
+                        state = '상단고정';
+                        btnClass='btn-secondary';
+                        return '<button type="button" class="btn '+btnClass+'" onclick="toggleTopOff('+item.SD_IDX+')">'+state+'</button>';
+                    }
+                }
+            },
+        },
+        {
+            headerText: "통화약속일",
+            dataField: 'SD_DATE',
+            renderer: renderer,
+            filter: filter,
+            width: 160,
+            labelFunction : function (rowIndex, columnIndex, value, headerText, item, dataField, cItem ) {
+                if(rowIndex == 0) {
+                    var template = '<input type="text" name="SD_DATE" class="input datepicker-basic" placeholder="YYYY.MM.DD" value="'+value+'" onblur="javascript:myInputHandlerDate(0, this.value, event);">';
+                    return template;
+                }else{
+                    return value;
+                }
+
+            }
+        },
+        {
+            headerText: "통화약속시간",
+            dataField: 'SD_TIME',
+            renderer: renderer,
+            filter: filter,
+            width: 160,
+            labelFunction : function (rowIndex, columnIndex, value, headerText, item, dataField, cItem ) {
+                if(rowIndex == 0) {
+                    var template = '<input type="time" name="SD_TIME" class="input" placeholder="시간" value="'+value+'" onblur="javascript:myInputHandlerTime(0, this.value, event);">';
+                    return template;
+                }else{
+                    return value;
+                }
+
+            }
+        },
+        {
+            headerText: "기능버튼",
+            dataField: 'BTN',
+            width: 120,
+            renderer: renderer,
+            filter: filter,
+            labelFunction: function(rowIndex, columnIndex, value, headerText, item) {
+                var result = '';
+                if (value == 1) {
+                    result =
+                        '<div class="flex items-center flex-wrap gap-2">' +
+                        // '<button type="button" class="btn btn-outline">팝업</button>' +
+                        // '<button type="button" class="btn btn-outline" onclick="deleteMemberFile(\'' + item.MF_IDX + '\')">첨부파일</button>' +
+                        '<button type="button" class="btn btn-outline" onmousedown="updateSangdam(' + rowIndex + ')">수정</button>' +
+                        '<button type="button" class="btn btn-delete" onmousedown="deleteSangdam(\'' + item.SD_IDX + '\')"></button>' +
+                        '</div>'
+                } else {
+                    result = '<button type="button" class="btn btn-outline" onmousedown="saveSangdam();">저장</button>';
+                    if([[${yangdoMember != null}]]) result = '<button type="button" class="btn btn-outline" onmousedown="saveSangdam2();">저장</button>';
+                }
+
+                return result;
+            }
+        },
+    ]
+
+    function searchSangdam() {
+        $('.auiCard').show();
+        var auiGridProps9 = {
+            isRowAllCheckCurrentView : true,
+            enableSorting: true,
+            enableFilter: true,
+            editable: false,
+            selectionMode: "multipleCells",
+            showRowNumColumn: true,
+            softRemoveRowMode: true,
+            showRowCheckColumn: true,
+            enableVirtualization: true,
+            /*         enableMouseWheel: false,
+                     autoGridHeight: true,*/
+            wordWrap: true,
+            // row Styling 함수
+            rowStyleFunction: function (rowIndex, item) {
+                if (item != null && item.SD_FIX != null && item.SD_FIX == 1) {
+
+                    if(item.SD_FIX_COLOR == 'yellow') {
+                        return "my-column-yellow";
+                    }else if(item.SD_FIX_COLOR == 'green') {
+                        return "my-column-green";
+                    }else if(item.SD_FIX_COLOR == 'red') {
+                        return "my-column-red";
+                    }else if(item.SD_FIX_COLOR == 'blue') {
+                        return "my-column-blue";
+                    }else{
+                        return "my-column-style";
+                    }
+
+                }
+                return "";
+            }
+        };
+
+        myGridId9 = AUIGrid.create("#sangdamGrid", columnLayout9, auiGridProps9);
+
+
+
+        $.ajax({
+            type: "post",
+            url: '/member/selectSangdam.dataTable',
+            data: {
+                M_IDX: [[${member?.mIdx}]]
+            },
+            async: false,
+            success: function(data) {
+                if(data.data.length == 0) {
+                    return;
+                }
+
+                var gridData = data.data;
+                AUIGrid.removeAjaxLoader(myGridId9);
+                AUIGrid.setGridData(myGridId9, gridData);
+                AUIGrid.setFixedRowCount(myGridId9,data.data[0].SD_COUNT);
+            },
+            error: function(a, b, c) {
+                alert(a + b + c);
+            }
+        });
+
+        AUIGrid.bind(myGridId9, "cellDoubleClick", function(event) {
+            if(event.columnIndex == 4 || event.columnIndex == 5) {
+                $('#sd1').val(event.item.SD_RESULT).trigger('change');
+                setTimeout(()=>{
+                    $('#sd2').val(event.item.SD_RESULT_DETAIL).trigger('change');
+                },300)
+
+            }
+
+        });
+
+
+        addSangDam();
+
+    }
+
+    var tag;
+
+    function popUpAllIn() {
+        window.open('/member/sangdam/'+[[${member?.mIdx}]] +'?type=IN','bondsDetail', 'width=800, height=1400,scrollbars=yes, resizable=yes');
+    }
+    function popUpAllOut() {
+        window.open('/member/sangdam/'+[[${member?.mIdx}]] +'?type=OUT','bondsDetail', 'width=800, height=1400,scrollbars=yes, resizable=yes');
+    }
+    function popUpAll() {
+        window.open('/member/sangdam/'+[[${member?.mIdx}]] +'?type=ALL','bondsDetail', 'width=800, height=1400,scrollbars=yes, resizable=yes');
+    }
+    function openSdResultDetail2() {
+        var sdResult = $('select[name=sdResult2]').val();
+        $.ajax({
+            url: '/member/sangdamResultDetail.ajax?sdResult='+sdResult,
+            type: 'post',
+            success: function (res) {
+                $('select[name=sdResultDetail2] option').remove();
+                var str = '';
+                $.each(res.data.sangdam,function (i){
+                    var result = res.data.sangdam[i]
+                    str+='<option value="'+result.CODE_NAME+'">'+result.CODE_NAME+'</option>'
+                })
+                $('select[name=sdResultDetail2]').append(str);
+                tag = str;
+            }
+        });
+    }
+
+    function clearInput(obj) {
+        $(obj).parent().parent().find('input').val('');
+    }
+
+    function saveSangdam() {
+
+        if([[${member == null}]])  return alert('대상이 존재하지 않습니다.');
+
+        if (confirm('상담정보를 저장하시겠습니까?')) {
+            $.ajax({
+                url: '/member/saveSangdam.ajax',
+                type: 'post',
+                data: {
+
+                    mIdx: [[${member?.mIdx}]],
+                    sdMemo: $('textarea[name=sdMemo2]').val(),
+                    sdResult: $('select[name=sdResult2]').val(),
+                    sdResultSTR: $('select[name=sdResult2] option:selected').text(),
+                    sdResultDetail: $('select[name=sdResultDetail2]').val(),
+                    sdResultDetailSTR: $('select[name=sdResultDetail2] option:selected').text(),
+                    sdFix: $('select[name=sdFix]').val(),
+                    sdDate: $('input[name=SD_DATE]').val(),
+                    sdTime: $('input[name=SD_TIME]').val(),
+                    sdType: $('select[name=sdResult2] option:selected').attr('prop')
+                },
+                success: function () {
+                    testReload();
+                    searchSangdam();
+                }
+            });
+        }
+
+    }
+
+    function saveSangdam2() {
+
+        if([[${member == null}]])  return alert('대상이 존재하지 않습니다.');
+
+        if (confirm('상담정보를 저장하시겠습니까?')) {
+            $.ajax({
+                url: '/member/saveSangdam.ajax',
+                type: 'post',
+                data: {
+                    yangdo: true,
+                    mIdx: [[${member?.mIdx}]],
+                    sdMemo: $('textarea[name=sdMemo2]').val(),
+                    sdResult: $('select[name=sdResult2]').val(),
+                    sdResultSTR: $('select[name=sdResult2] option:selected').text(),
+                    sdResultDetail: $('select[name=sdResultDetail2]').val(),
+                    sdResultDetailSTR: $('select[name=sdResultDetail2] option:selected').text(),
+                    sdFix: $('select[name=sdFix]').val(),
+                    sdDate: $('input[name=SD_DATE]').val(),
+                    sdTime: $('input[name=SD_TIME]').val(),
+                    sdType: $('select[name=sdResult2] option:selected').attr('prop')
+                },
+                success: function () {
+                    testReload();
+                    searchSangdam();
+                }
+            });
+        }
+
+    }
+
+    // 인풋 변경 핸들러
+    function myInputHandler(rowIndex, selectedValue, event) {
+
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_MEMO": selectedValue
+        }, rowIndex);
+    }
+
+    // 인풋 변경 핸들러
+    function myInputHandlerDate(rowIndex, selectedValue, event) {
+
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_DATE": selectedValue
+        }, rowIndex);
+    }
+
+    // 인풋 변경 핸들러
+    function myInputHandlerTime(rowIndex, selectedValue, event) {
+
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_TIME": selectedValue
+        }, rowIndex);
+    }
+
+    // 인풋 변경 핸들러
+    function myInputHandlerFix(rowIndex, selectedValue, event) {
+        if(selectedValue == 'true') {
+            selectedValue = 1;
+        }else{
+            selectedValue = 0;
+        }
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_FIX": selectedValue
+        }, rowIndex);
+    }
+
+    function myInputHandlerResult(rowIndex, selectedValue, event) {
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_RESULT": selectedValue
+        }, rowIndex);
+    }
+
+    function myInputHandlerResultDetail(rowIndex, selectedValue, obj, event) {
+        tag = $(obj).html();
+        selectedValue = '"'+selectedValue+'"';
+        tag = tag.replace('selected=""','');
+        tag = tag.replace(selectedValue,selectedValue + " selected");
+        // 그리드에 실제 업데이트 적용 시킴
+        AUIGrid.updateRow(myGridId9, {
+            "SD_RESULT_DETAIL": tag
+        }, rowIndex);
+    }
+
+    function getToday(){
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = ("0" + (1 + date.getMonth())).slice(-2);
+        var day = ("0" + date.getDate()).slice(-2);
+
+        return year + "-" + month + "-" + day;
+    }
+
+    function getTime() {
+        let today = new Date();
+        let hours = today.getHours(); // 시
+        let minutes = today.getMinutes();  // 분
+        let seconds = today.getSeconds();  // 초
+        return hours +':'+minutes+':'+seconds;
+    }
+
+    // 행 추가, 삽입
+    function addSangDam() {
+
+
+
+        var item = new Object();
+        item.CREATED_DATE = '-',
+            item.SD_PART = '-',
+            item.SD_M_PROCESS = '-',
+            item.SD_RESULT = '',
+            item.SD_RESULT_DETAIL = 1,
+            item.CREATED_BY = [[${@sessionInfo.getName}]],
+            item.SD_MEMO = '',
+            item.SD_FIX = 'false',
+            item.SD_DATE = getToday(),
+            item.SD_TIME = getTime(),
+            // item.SD_FILE1 = '-',
+            // item.SD_FILE2 = '-',
+            item.BTN = 2;
+
+        AUIGrid.addRow(myGridId9, item, 'first');
+    }
+
+    function updateSangdam(rowIndex) {
+        AUIGrid.forceEditingComplete(myGridId9)
+        var sdIdx = AUIGrid.getCellValue(myGridId9, rowIndex, 'SD_IDX')
+        var sdMemo = $('textarea[name=sdMemo_'+rowIndex+']').val();
+        if (confirm("해당 상담내역을 수정하시겠습니까?")) {
+            $.ajax({
+                type: "post",
+                url: '/member/updateSangdam.ajax',
+                data: {
+                    sdIdx: sdIdx,
+                    sdMemo: sdMemo
+                },
+                async: false,
+                success: function(data) {
+                    searchSangdam();
+                }
+            });
+        }
+    }
+
+    function deleteSangdam(sdIdx) {
+        if (confirm("해당 상담내역을 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "post",
+                url: '/member/deleteSangdam.ajax',
+                data: {
+                    sdIdx: sdIdx
+                },
+                async: false,
+                success: function(data) {
+                    searchSangdam();
+                }
+            });
+        }
+    }
+</script>
+<script>
+    const toggleButton = document.querySelector('.toggle-button');
+    const resizableSection = document.querySelector('.resizable-section');
+    const resizeHandle = document.querySelector('.resize-handle');
+    const resizeGuide= document.querySelector('.resize-guide');
+
+    let isDragging = false; // 드래그 상태 확인 변수
+
+    // 커서 동적 적용
+    resizeHandle.addEventListener("mouseenter", () => {
+        if (!resizableSection.classList.contains("d-none")) {
+            resizeHandle.style.cursor = "ns-resize"; // 열려 있을 때 커서 설정
+        } else {
+            resizeHandle.style.cursor = "default"; // 닫혀 있을 때 기본 커서
+        }
+    });
+
+    // 버튼 클릭으로 섹션 토글
+    toggleButton.addEventListener('click', () => {
+        if (resizableSection.classList.contains('d-none')) {
+            resizableSection.classList.remove('d-none');
+            resizeGuide.classList.remove('d-none');
+            toggleButton.classList.add('on');
+        } else {
+            resizableSection.classList.add('d-none');
+            resizeGuide.classList.add('d-none');
+            toggleButton.classList.remove('on');
+        }
+    });
+    // 드래그 시작 이벤트
+    resizeHandle.addEventListener('mousedown', (e) => {
+        if (!resizableSection.classList.contains("d-none")) {
+            isDragging = true;
+            document.body.style.cursor = 'ns-resize';
+            resizeGrid(myGridId9);
+        }
+    });
+
+    // 드래그 중 이벤트
+    window.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const newHeight = window.innerHeight - e.clientY; // 마우스 위치에 따른 높이 계산
+            if (newHeight >= 50) {
+                // 최소 높이 제한
+                resizableSection.style.height = `${newHeight}px`;
+            }
+        }
+    });
+
+    // 드래그 종료 이벤트
+    window.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            document.body.style.cursor = 'default'; // 커서 초기화
+
+        }
+    });
+</script>

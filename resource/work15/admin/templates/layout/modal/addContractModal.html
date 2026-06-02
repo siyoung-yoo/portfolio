@@ -1,0 +1,175 @@
+<!-- 계약 추가 모달 -->
+<div class="modal" id="addContractModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">계약 추가</h5>
+          <p class="modal-description mt-2">현재 도면에 추가 매핑할 미매핑 계약건을 선택하세요.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="card mb-5">
+          <div class="card-content">
+            <div class="flex items-center">
+              <p class="label w-[45px] flex-shrink-0">주소</p>
+              <p class="label-data-text mt-0" id="addContractAddress"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-between mb-2">
+          <span class="label" id="addContractCountLabel">미매핑 계약 (0건)</span>
+          <p class="text-indent">* 계약 건을 선택한 후, 영역 지정 및 품목 매핑을 다시 진행해 주세요.</p>
+        </div>
+
+        <form-select allow-html id="addContractFormSelect">
+          <select id="addContractSelect" name="">
+            <option value="" hidden>추가할 계약을 선택하세요</option>
+          </select>
+        </form-select>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="submitAddContract()">선택</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/** 계약 추가 모달 오픈 시 미매핑 계약 목록 로드 */
+document.addEventListener('modalOpened', function(e) {
+  if (e.detail.modalId !== 'addContractModal') return;
+
+  const d = _detailData;
+  document.getElementById('addContractAddress').textContent = d.adr4 || '';
+
+  $.ajax({
+    url: '/hqDrawingMng/getUnmappedContracts',
+    type: 'post',
+    data: { drawingId: d.drawingId, ctmLscno: d.ctmLscno, addressId: d.addressId },
+    success: function(res) {
+      // 이미 현재 도면에 연결된(DB 또는 메모리상) 계약 IDX 수집
+      //   - drawAreaData 에 있는 계약 (현재 세션에서 추가/유지 중인 계약)
+      //   - _detailData.contracts 에 있고 아직 삭제 안된 계약 (초기 DB 스냅샷)
+      //   둘 다를 Set 에 합쳐서 이중 안전 필터링
+      const linkedConIdxSet = new Set();
+      (typeof drawAreaData !== 'undefined' ? drawAreaData : []).forEach(g => {
+        if (g && g.conIdx != null && g.conIdx !== '') linkedConIdxSet.add(String(g.conIdx));
+      });
+      // 메모리에서 삭제된 계약은 재매핑 후보라 제외, 그 외 초기 DB 매핑은 모두 제외
+      const memDeletedSet = (typeof getMemoryDeletedContracts === 'function')
+        ? new Set(getMemoryDeletedContracts().map(c => String(c.CON_IDX)))
+        : new Set();
+      if (typeof _detailData !== 'undefined' && _detailData && Array.isArray(_detailData.contracts)) {
+        _detailData.contracts.forEach(c => {
+          if (c && c.conIdx != null && !memDeletedSet.has(String(c.conIdx))) {
+            linkedConIdxSet.add(String(c.conIdx));
+          }
+        });
+      }
+
+      // 다른 도면에서 이미 완전 매핑된 계약(UNMAPPED_QTY=0)은 제외 + 이미 연결된 계약도 제외
+      const contracts = (res.data || []).filter(c => {
+        if (linkedConIdxSet.has(String(c.CON_IDX))) return false;
+        const remaining = Number(c.UNMAPPED_QTY != null ? c.UNMAPPED_QTY : c.ITEM_QTY) || 0;
+        return remaining > 0;
+      });
+      // 메모리에서 삭제된 계약 (저장 전 상태) 도 목록에 포함 — 저장 전이라 DB에는 아직 매핑되어 있어 API가 잡지 못함
+      if (typeof getMemoryDeletedContracts === 'function') {
+        getMemoryDeletedContracts().forEach(mc => {
+          if (linkedConIdxSet.has(String(mc.CON_IDX))) return;
+          if (!contracts.find(c => String(c.CON_IDX) === String(mc.CON_IDX))) {
+            contracts.push(mc);
+          }
+        });
+      }
+      document.getElementById('addContractCountLabel').textContent =
+        '미매핑 계약 (' + contracts.length + '건)';
+
+      const selectEl = document.getElementById('addContractSelect');
+      let optionsHtml = '<option value="" hidden>추가할 계약을 선택하세요</option>';
+
+      if (contracts.length === 0) {
+        optionsHtml += '<option value="" disabled>추가 가능한 미매핑 계약이 없습니다.</option>';
+      } else {
+        contracts.forEach(c => {
+          optionsHtml += '<option value="' + c.CON_IDX + '">' +
+            '<div class="py-1">' +
+              '<div class="flex items-start gap-2">' +
+                '<strong class="whitespace-normal">' + (c.CON_TITLE || c.CON_CD) + '</strong>' +
+              '</div>' +
+              '<p class="label mt-1">' + c.CON_CD + '</p>' +
+            '</div>' +
+          '</option>';
+        });
+      }
+
+      selectEl.innerHTML = optionsHtml;
+
+      // form-select 커스텀 컴포넌트 갱신
+      const formSelectEl = selectEl.closest('form-select');
+      if (formSelectEl) {
+        formSelectEl.collectOptions();
+        formSelectEl.renderOptions();
+        formSelectEl.selectedValues = [];
+        formSelectEl.updateInputDisplay();
+
+        // placeholder 직접 삽입 (form-select allowHTML 모드에서 innerHTML이 비워지므로)
+        const inputEl = formSelectEl.querySelector('.custom-select-input');
+        if (inputEl) {
+          inputEl.innerHTML = '<span style="color: var(--muted-foreground)">추가할 계약을 선택하세요</span>';
+        }
+      }
+    }
+  });
+});
+
+/** 계약 추가 선택 — drawAreaData에 계약 그룹 추가 + 영역 목록 재렌더링 */
+function submitAddContract() {
+  const selectEl = document.getElementById('addContractSelect');
+  const conIdx = selectEl.value;
+  if (!conIdx) {
+    alert('추가할 계약을 선택하세요.');
+    return;
+  }
+
+  // 선택한 option의 CON_CD, CON_TITLE 추출
+  const selectedOption = selectEl.querySelector('option[value="' + conIdx + '"]');
+  const conCdEl = selectedOption ? selectedOption.querySelector('.label') : null;
+  const conTitleEl = selectedOption ? selectedOption.querySelector('strong') : null;
+  const conCd = conCdEl ? conCdEl.textContent.trim() : '';
+  const conTitle = conTitleEl ? conTitleEl.textContent.trim() : '';
+
+  // 이미 추가된 계약인지 확인
+  if (drawAreaData.find(g => String(g.conIdx) === String(conIdx))) {
+    alert('이미 추가된 계약입니다.');
+    return;
+  }
+
+  // drawAreaData에 계약 그룹 추가 (영역 0개)
+  drawAreaData.push({
+    contractCode: conCd,
+    contractName: conTitle,
+    conIdx: conIdx,
+    info: []
+  });
+
+  // _detailData.contracts에도 추가
+  if (_detailData.contracts) {
+    _detailData.contracts.push({ conIdx: conIdx, conCd: conCd, conTitle: conTitle });
+  }
+
+  closeModal('addContractModal');
+
+  // 영역 목록 재렌더링
+  loadAreas();
+
+  // 계약 추가 버튼 표시 재평가 (메모리 삭제 상태 반영)
+  if (typeof updateAddContractBtnVisibility === 'function') updateAddContractBtnVisibility();
+}
+</script>

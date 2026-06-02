@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--<link rel="shortcut icon" th:href="${@sessionInfo == null}?${@optimizer.optimize(ci.CCI_FAVICON)}:${@sessionInfo.getFavicon()}">-->
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/rowGroup.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/select2.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/summernote.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/daterangepicker.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/fontello.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/icons/icomoon/styles.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/all.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/layout.css}"/>
+
+
+<script th:src="@{/assets/js/main/jquery.min.js}"></script>
+
+<!--메뉴 hover-->
+<script>
+$(document).ready(function(){
+    $('li.dropdown').hover(function() {
+      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(100);
+    }, function() {
+      $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(100);
+    });
+});
+
+/* localStorage 팝업까지 적용. */
+document.addEventListener('DOMContentLoaded', () => {
+    const savedThemeMode = localStorage.getItem('themeMode');
+    if (savedThemeMode) {
+        document.documentElement.setAttribute('data-mode', savedThemeMode);
+    }
+
+    const savedPrimaryColorMode = localStorage.getItem('primaryColorMode');
+    if (savedPrimaryColorMode) {
+        document.documentElement.setAttribute('data-theme-colors', savedPrimaryColorMode);
+    }
+})
+</script>

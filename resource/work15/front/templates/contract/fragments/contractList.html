@@ -1,0 +1,30 @@
+<th:block th:fragment="contractListResult"
+          xmlns:th="http://www.thymeleaf.org">
+  <table id="contractRowsWrapper" style="display:none"
+         th:attr="data-empty=${items == null or #lists.isEmpty(items)}">
+    <tbody>
+      <tr th:each="item : ${items}" th:attr="data-href=@{/contract/{idx}(idx=${item.conIdx})}" class="row-link">
+        <td th:text="${item.conCd}"></td>
+        <td class="row-title">
+          <span th:text="${item.conTitle}"></span>
+        </td>
+        <td th:text="${item.vndNm}"></td>
+        <td th:text="${item.contractPeriod}"></td>
+        <td class="text-center">
+          <span class="text-state" th:text="${item.conType}"></span>
+        </td>
+        <td class="text-center">
+          <span th:classappend="${item.contractStatus == '렌탈완료'} ? 'done'"
+                class="text-state"
+                th:text="${item.contractStatus}"></span>
+        </td>
+        <td class="text-center">
+          <span th:if="${item.payStatus == '정상'}" class="badge-line-green w-fix">정상</span>
+          <span th:if="${item.payStatus == '연체'}" class="badge-line-red w-fix">연체</span>
+          <span th:if="${item.payStatus == '-'}"   class="text-light-gray">-</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <th:block th:replace="~{common/fragments/pagination :: pagination}"></th:block>
+</th:block>

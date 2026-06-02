@@ -1,0 +1,330 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">오피스 케어</h2>
+      <p class="page-description">오피스 케어 및 유지관리 서비스</p>
+    </div>
+    <!-- // .title-area -->
+
+    <!-- S: 예정일정 없을 경우 -->
+    <div class="care-cards-wrap">
+      <div class="title-area">
+        <h3 class="group-title gap-2xs">예정 일정 확인<span class="text-blue">0건</span></h3>
+      </div>
+
+      <div class="text-nodata bg-lighter">
+        <div class="flex-all-center gap-2xs">
+          <i class="icon-calendar bg-gray"></i><span class="text-gray">예정된 일정이 없습니다.</span>
+        </div>
+      </div>
+    </div>
+    <!-- E: 예정일정 없을 경우 -->
+
+    <!-- S: 예정일정 -->
+    <div class="care-cards-wrap">
+      <div class="title-area">
+        <h3 class="group-title gap-2xs">예정 일정 확인<span class="text-blue">5건</span></h3>
+      </div>
+
+      <div class="layout-grid col-3">
+        <div class="box-style type-dday"><!-- D-DAY일 경우 .type-dday 추가 -->
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge bg-blue">D-DAY</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈 관련 블라블라 어쩌고 계약건 두줄 말줄임 해야될까요 한줄 말줄임 해야될까요</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30서울 강서구 마곡중앙10로 30서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점 대리점 대리점 대리점 대리점 대리점 대리점 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge">D-1</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈 관련 블라블라 어쩌고 계약건 두줄 말줄임 해야될까요 한줄 말줄임 해야될까요</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge">D-1</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge">D-1</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- E: 예정일정 -->
+
+    <!-- S: 미진행 일정 - 일정 없을 경우 영역 삭제 or 숨김(.hidden 추가) -->
+    <div class="care-cards-wrap float-bg-white">
+      <div class="title-area">
+        <h3 class="group-title gap-2xs">미진행 일정<span class="text-blue">3건</span></h3>
+      </div>
+
+      <div class="layout-grid col-3">
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge bg-light-gray">미진행</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈 관련 블라블라 어쩌고 계약건 두줄 말줄임 해야될까요 한줄 말줄임 해야될까요</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge bg-light-gray">미진행</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈 관련 블라블라 어쩌고 계약건 두줄 말줄임 해야될까요 한줄 말줄임 해야될까요</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+
+        <div class="box-style">
+          <div class="flex-center-between">
+            <p class="group-title spacing-lg">2026.01.01 (월)</p>
+            <span class="badge bg-light-gray">미진행</span>
+          </div>
+
+          <ul class="list-column">
+            <li><button type="button" class="btn link text-blue">CT-2024-001</button></li>
+            <li class="w-full title-sm ellipsis">본사 사옥 렌탈</li>
+            <li class="text-box"><i class="icon-location"></i><span class="ellipsis">서울 강서구 마곡중앙10로 30</span></li>
+          </ul>
+
+          <ul class="list-inline">
+            <li><i class="icon-user"></i><span class="ellipsis">서울 대리점</span></li>
+            <li>·</li>
+            <li>김철수</li>
+            <li>·</li>
+            <li>02-1234-4697</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- E: 미진행 일정 -->
+
+    <!-- S: 케어 이력 -->
+    <div class="title-area mt-100px">
+      <h3 class="group-title">케어 이력</h3>
+    </div>
+    <div class="search-area mt-0">
+      <div class="row">
+        <div class="form-group">
+          <label for="form01" class="text-label">계약 건명</label>
+          <div class="select-box">
+            <button type="button" id="form01" class="btn-select" title="계약 건명 선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button" class="selected">전체</button>
+                <button type="button">퍼시스 본사 사옥 리뉴얼 건</button>
+                <button type="button">LG 화학 대전 사옥 블라블라 건</button>
+                <button type="button">중앙동 가락빌딩 본사 건</button>
+                <button type="button">블라블라 계약 건</button>
+                <button type="button">어쩌고 저쩌고 계약 건</button>
+                <button type="button">이건 좀 긴 명칭의 블라 블라 계약 건</button>
+                <button type="button">퍼시스 본사 사옥 리뉴얼 건</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group w-md">
+          <label for="form02" class="text-label">검색</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="form02" autocomplete="off" placeholder="주소 검색" title="주소 입력">
+          </div>
+        </div>
+
+        <div class="form-group w-lg">
+          <label for="form21_1" class="text-label">방문 일정</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="form21_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="방문 일정 시작 날짜 선택">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form21_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="방문 일정 종료 날짜 선택">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="btn-area">
+          <button type="button" class="btn dark">검색</button>
+          <button type="button" class="btn line"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+    <!-- // search-area -->
+
+    <div class="table-utils">
+      <p class="table-info">전체 n건</p>
+
+      <!-- [확인필요] 버튼 * 클릭 시 .is-active 토글
+                          * 버튼 활성화 시, 테이블 확인 상태 "확인필요" row만 노출
+                          * "확인필요" row가 없으면 0건으로 표기 후 disabled 속성 추가 -->
+      <button type="button" class="btn tag">
+        <span class="dot"></span>확인필요<span>7</span>
+      </button>
+    </div>
+
+    <!-- 조회 조건이 없을 경우 -->
+    <!-- <div class="text-nodata">검색 내역이 존재하지 않습니다.</div> -->
+
+    <!-- 조회 조건이 있을 경우 -->
+    <div class="table-wrap">
+      <table>
+        <colgroup>
+          <col style="width: 158px">
+          <col>
+          <col style="width: 320px">
+          <col style="width: 120px">
+          <col style="width: 100px">
+          <col style="width: 100px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">계약번호</th>
+            <th scope="col">계약 건명</th>
+            <th scope="col">주소</th>
+            <th scope="col" class="text-center">방문 일정</th>
+            <th scope="col" class="text-center">확인 상태</th>
+            <th scope="col" class="text-center">리포트</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-state="unconfirmed">
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td class="text-black">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td class="text-black">서울 강서구 마곡중앙10로 30 본사 사옥</td>
+            <td class="text-center text-black">2026.02.11</td>
+            <td class="text-center"><span class="badge-line-blue w-fix-lg">확인필요</span></td>
+            <td class="text-center"><button type="button" class="btn link" onclick="fnPopupOpen('careReportModal');">상세</button></td>
+          </tr>
+          <tr data-state="confirmed">
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td class="text-black">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td class="text-black">서울 강서구 마곡중앙10로 30 본사 사옥</td>
+            <td class="text-center text-black">2026.02.11</td>
+            <td class="text-center"><span class="badge bg-light-gray w-fix">완료</span></td>
+            <td class="text-center"><button type="button" class="btn link" onclick="fnPopupOpen('careReportModal');">상세</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <th:block th:replace="~{common/fragments/pagination :: pagination}"></th:block>
+    <!-- // 조회 조건이 있을 경우 -->
+  </div>
+
+<th:block th:insert="~{service/pub/modal/careReportModal}"></th:block><!-- Modal: 케어 리포트 상세 -->
+<th:block th:insert="~{service/pub/modal/imgSwiperModal}"></th:block><!-- Modal: 이미지 스와이퍼 -->
+<th:block th:insert="~{service/pub/modal/serviceRatingModal}"></th:block><!-- Modal: 오피스 케어 > 만족도 조사 -->
+</th:block>
+
+<th:block layout:fragment="script">
+<script>
+
+/* 확인필요 버튼 클릭시 */
+const btnTag = document.querySelector('.btn.tag');
+btnTag.addEventListener('click', (e) => {
+  const isActive = btnTag.classList.toggle('is-active');
+
+  document.querySelectorAll('tr[data-state]').forEach(row => {
+    row.hidden = isActive && row.dataset.state !== 'unconfirmed';
+  });
+})
+
+</script>
+</th:block>
+</body>
+</html>

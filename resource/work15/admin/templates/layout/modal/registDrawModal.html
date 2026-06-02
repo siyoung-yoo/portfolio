@@ -1,0 +1,328 @@
+<div class="modal" id="registDrawModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">도면 등록</h5>
+          <p class="modal-description mt-3">주소가 선택된 상태에서 계약건을 선택하고, 도면 파일을 업로드하세요.</p>
+        </div>
+        <button type="button" class="icon-close modal-close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="grid gap-3">
+          <div class="input-group">
+            <span class="label">고객사</span>
+            <div class="input items-center gap-1">
+              <span id="modalCtmNm"></span>
+              <span id="modalCtmLscno" class="text-xs text-primary-300"></span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <span class="label">주소</span>
+            <div class="input items-center gap-1">
+              <span id="modalAddr"></span>
+              <span id="modalContractCnt" class="text-xs text-primary-300"></span>
+            </div>
+          </div>
+
+          <div class="group">
+            <span class="label required mb-2">계약건</span>
+            <form-select allow-html>
+              <select id="modalContractSelect" name="">
+                <option value="" hidden><p class="text-primary-300">해당 주소의 계약을 선택하세요</p></option>
+              </select>
+            </form-select>
+          </div>
+
+          <div class="input-group">
+            <label>
+              <div class="flex justify-between flex-wrap gap-1 mb-2">
+                <span class="label required mb-0 mr-6">도면 공간 (층수)</span>
+                <div class="flex gap-1 text-xs text-muted-foreground">
+                  <span class="flex-shrink-0">* 기존 등록된 층 :</span>
+                  <span id="modalExistingFloors">-</span>
+                </div>
+              </div>
+              <input type="text" id="modalDrawingName" class="input" placeholder="예: 3F, B1, 1F 로비">
+            </label>
+          </div>
+
+          <div class="input-group mb-2">
+            <span class="label required">도면 노출 여부</span>
+            <div class="flex items-center gap-8 mt-3">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="modalUseYn" value="Y" class="radio" checked />
+                <span class="text-sm">고객 노출</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="modalUseYn" value="N" class="radio" />
+                <span class="text-sm">고객 미노출</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <span class="label required">PDF 도면</span>
+            <div class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone="pdf">
+              <label data-upload-msg
+                class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+                드래그하거나 클릭하여 파일을 업로드하세요
+                <span class="block text-xs mt-2">(최대 100MB)</span>
+                <input data-upload-input type="file" accept=".pdf" class="hidden">
+              </label>
+              <ul data-upload-list class="w-full hidden"></ul>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <span class="label">DWG/DXF 도면</span>
+            <div class="input p-0 overflow-hidden transition-colors hover:border-primary-200" data-upload-zone="dwgdxf">
+              <label data-upload-msg
+                class="w-full text-sm text-muted-foreground px-3 py-5 text-center cursor-pointer">
+                DWG 또는 DXF 파일을 업로드하세요 <span class="text-xs">(선택)</span>
+                <span class="block text-xs mt-2">(최대 100MB)</span>
+                <input data-upload-input type="file" accept=".dwg,.dxf" class="hidden">
+              </label>
+              <ul data-upload-list class="w-full hidden"></ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline modal-close">취소</button>
+        <button type="button" class="btn btn-primary" onclick="submitDrawingRegist()">다음</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 모달 상태 ===== */
+let _modalCtmLscno = '';
+let _modalCtmNm = '';
+let _modalAddressId = '';
+let _modalAdr4 = '';
+let _modalPdfFile = null;
+let _modalDwgFile = null;
+let _modalDxfFile = null;
+
+/* 모달 오픈 — layout.html에서 호출 */
+function openRegistDrawModal(ctmLscno, ctmNm, addressId, adr4) {
+  _modalCtmLscno = ctmLscno;
+  _modalCtmNm = ctmNm || '';
+  _modalAddressId = addressId;
+  _modalAdr4 = adr4 || '';
+  _modalPdfFile = null;
+  _modalDwgFile = null;
+  _modalDxfFile = null;
+
+  // 고객사/주소 표시
+  $('#modalCtmNm').text(ctmNm);
+  $('#modalCtmLscno').text('(' + ctmLscno + ')');
+  $('#modalAddr').text(adr4);
+
+  // 입력값 초기화
+  $('#modalDrawingName').val('');
+  $('#modalContractSelect').html('<option value="" hidden><p class="text-primary-300">해당 주소의 계약을 선택하세요</p></option>');
+  $('#modalExistingFloors').text('-');
+  // 도면 노출 여부 기본값 — 고객 노출(Y)
+  document.querySelectorAll('#registDrawModal input[name="modalUseYn"]').forEach(r => {
+    r.checked = (r.value === 'Y');
+  });
+
+  // 파일 업로드 UI 초기화
+  document.querySelectorAll('#registDrawModal [data-upload-zone]').forEach(zone => {
+    const msg = zone.querySelector('[data-upload-msg]');
+    const list = zone.querySelector('[data-upload-list]');
+    if (msg) msg.style.display = '';
+    if (list) { list.classList.add('hidden'); list.innerHTML = ''; }
+  });
+
+  // 계약 목록 + 기존 도면층 조회
+  $.ajax({
+    url: '/hqDrawingMng/getContractsByAddress',
+    type: 'post',
+    data: { ctmLscno: ctmLscno, addressId: addressId },
+    success: function(res) {
+      const data = res.data[0];
+      const contracts = data.contractList || [];
+      const existingDrawings = data.existingDrawings || [];
+
+      // 계약 건수 표시
+      $('#modalContractCnt').text('(계약 ' + contracts.length + '건)');
+
+      // 계약 select 옵션 — form-select allow-html 모드
+      const selectEl = document.querySelector('#modalContractSelect');
+      let optionsHtml = '<option value="" hidden><p class="text-primary-300">해당 주소의 계약을 선택하세요</p></option>';
+      contracts.filter(c => c.MAPPED_YN !== 'Y').forEach(c => {
+        optionsHtml += `<option value="${c.CON_IDX}" data-concd="${c.CON_CD}" data-contitle="${c.CON_TITLE || ''}">
+          <div class="flex items-start gap-2">
+            <span class="whitespace-normal">${c.CON_CD}${c.CON_TITLE ? ' - ' + c.CON_TITLE : ''}</span>
+            <span class="badge badge-orange">미매핑</span>
+          </div>
+        </option>`;
+      });
+      selectEl.innerHTML = optionsHtml;
+
+      // form-select 커스텀 컴포넌트 갱신
+      const formSelectEl = selectEl.closest('form-select');
+      if (formSelectEl) {
+        formSelectEl.collectOptions();
+        formSelectEl.renderOptions();
+        formSelectEl.selectedValues = [];
+        formSelectEl.updateInputDisplay();
+
+        // placeholder 직접 삽입 (form-select allowHTML 모드에서 innerHTML이 비워지므로)
+        const inputEl = formSelectEl.querySelector('.custom-select-input');
+        if (inputEl) {
+          inputEl.innerHTML = '<span style="color: var(--muted-foreground)">해당 주소의 계약을 선택하세요</span>';
+        }
+      }
+
+      // 기존 등록된 층
+      if (existingDrawings.length > 0) {
+        $('#modalExistingFloors').text(existingDrawings.map(d => d.DRAWING_NAME).join(', '));
+      } else {
+        $('#modalExistingFloors').text('-');
+      }
+    }
+  });
+
+  openModal('registDrawModal');
+}
+
+/* ===== 도면 등록 제출 — 파일 S3 업로드 후 도면 상세 화면으로 이동 (DB INSERT 안함) ===== */
+function submitDrawingRegist() {
+  const drawingName = $('#modalDrawingName').val().trim();
+  const conIdx = $('#modalContractSelect').val();
+  const conCdText = $('#modalContractSelect option:selected').data('concd') || '';
+  const conTitleText = $('#modalContractSelect option:selected').data('contitle') || '';
+
+  // 유효성 검사
+  if (!conIdx) { alert('계약건을 선택하세요.'); return; }
+  if (!drawingName) { alert('도면 공간(층수)을 입력하세요.'); return; }
+  if (!_modalPdfFile) { alert('PDF 도면 파일을 업로드하세요.'); return; }
+
+  const formData = new FormData();
+  formData.append('ctmLscno', _modalCtmLscno);
+  formData.append('pdfFile', _modalPdfFile);
+  if (_modalDwgFile) formData.append('dwgFile', _modalDwgFile);
+  if (_modalDxfFile) formData.append('dxfFile', _modalDxfFile);
+
+  $.ajax({
+    url: '/hqDrawingMng/uploadDrawingFiles',
+    type: 'post',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(res) {
+      if (!res.message) {
+        const useYn = document.querySelector('input[name="modalUseYn"]:checked')?.value || 'Y';
+        sessionStorage.setItem('pendingDrawing', JSON.stringify({
+          ctmLscno: _modalCtmLscno,
+          ctmNm: _modalCtmNm || '',
+          addressId: _modalAddressId,
+          adr4: _modalAdr4 || '',
+          conIdx: conIdx,
+          conCd: conCdText,
+          conTitle: conTitleText,
+          drawingName: drawingName,
+          useYn: useYn,
+          pdfPath: res.data.pdfPath,
+          dwgPath: res.data.dwgPath,
+          dxfPath: res.data.dxfPath,
+          pdfFileNm: res.data.pdfFileNm,
+          dwgFileNm: res.data.dwgFileNm,
+          dxfFileNm: res.data.dxfFileNm
+        }));
+
+        window.location.href = '/layout/create';
+      } else {
+        alert(res.message || '파일 업로드에 실패했습니다.');
+      }
+    },
+    error: function() {
+      alert('파일 업로드 중 오류가 발생했습니다.');
+    }
+  });
+}
+
+/* ===== 파일 업로드 UI ===== */
+document.querySelectorAll('#registDrawModal [data-upload-zone]').forEach(zone => {
+  const input = zone.querySelector('[data-upload-input]');
+  const list = zone.querySelector('[data-upload-list]');
+  const msg = zone.querySelector('[data-upload-msg]');
+  const fileType = zone.dataset.uploadZone; // 'pdf' / 'dwgdxf'
+
+  const formatSize = b => {
+    if (!b) return '0 KB';
+    const u = ['KB','MB','GB'];
+    let s = b / 1024, i = 0;
+    while (s >= 1024 && i < u.length-1) { s /= 1024; i++; }
+    return s.toFixed(1) + ' ' + u[i];
+  };
+
+  const setFile = (file) => {
+    let ext = null;
+    if (file) {
+      ext = file.name.split('.').pop().toLowerCase();
+      if (fileType === 'pdf' && ext !== 'pdf') { alert('PDF 파일만 업로드 가능합니다.'); return; }
+      if (fileType === 'dwgdxf' && ext !== 'dwg' && ext !== 'dxf') { alert('DWG 또는 DXF 파일만 업로드 가능합니다.'); return; }
+    }
+
+    if (fileType === 'pdf') {
+      _modalPdfFile = file;
+    } else if (fileType === 'dwgdxf') {
+      // 확장자에 따라 DWG 또는 DXF 슬롯에 저장 (교체 시 다른 쪽 초기화)
+      if (!file) {
+        _modalDwgFile = null;
+        _modalDxfFile = null;
+      } else if (ext === 'dwg') {
+        _modalDwgFile = file;
+        _modalDxfFile = null;
+      } else if (ext === 'dxf') {
+        _modalDxfFile = file;
+        _modalDwgFile = null;
+      }
+    }
+
+    if (!file) {
+      msg.style.display = '';
+      list.classList.add('hidden');
+      list.innerHTML = '';
+      return;
+    }
+
+    msg.style.display = 'none';
+    list.classList.remove('hidden');
+    list.innerHTML = `
+      <li class="p-3 text-sm bg-background">
+        <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2">
+          <div class="min-w-0">
+            <p class="truncate">${file.name}</p>
+            <p class="text-xs text-muted-foreground">${formatSize(file.size)}</p>
+          </div>
+          <button class="btn btn-delete" type="button"></button>
+        </div>
+      </li>
+    `;
+    list.querySelector('button').onclick = () => setFile(null);
+  };
+
+  input.onchange = e => {
+    if (e.target.files.length > 0) setFile(e.target.files[0]);
+    input.value = '';
+  };
+
+  zone.ondragover = e => { e.preventDefault(); zone.classList.add('border-primary-200'); };
+  zone.ondragleave = () => { zone.classList.remove('border-primary-200'); };
+  zone.ondrop = e => {
+    e.preventDefault();
+    zone.classList.remove('border-primary-200');
+    if (e.dataTransfer.files.length > 0) setFile(e.dataTransfer.files[0]);
+  };
+});
+</script>
