@@ -68,11 +68,6 @@ function initSectionScroll() {
 const visualSwiperImg = new Swiper(".section-visual .img-swiper", {
   speed: 800,
   loop: true,
-  autoplay: {
-    delay: 5000,
-    disableOnInteraction: false,
-    pauseOnMouseEnter: true,
-  },
   effect: 'fade',
   fadeEffect: {
     crossFade: true
@@ -84,7 +79,6 @@ const visualSwiperText = new Swiper(".section-visual .text-swiper", {
   autoplay: {
     delay: 5000,
     disableOnInteraction: false,
-    pauseOnMouseEnter: true,
   },
   pagination: {
     el: ".swiper-pagination",
@@ -93,6 +87,16 @@ const visualSwiperText = new Swiper(".section-visual .text-swiper", {
 });
 visualSwiperImg.controller.control = visualSwiperText;
 visualSwiperText.controller.control = visualSwiperImg;
+
+const visualSection = document.querySelector(".section-visual");
+
+visualSection.addEventListener("mouseenter", () => {
+  visualSwiperText.autoplay.stop();
+});
+
+visualSection.addEventListener("mouseleave", () => {
+  visualSwiperText.autoplay.start();
+});
 
 
 const cardSwiper = new Swiper(".section-card .swiper", {
