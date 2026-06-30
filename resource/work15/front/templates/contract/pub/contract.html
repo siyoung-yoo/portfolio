@@ -1,0 +1,142 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area flex-col">
+      <h2 class="page-title">계약 정보</h2>
+      <p class="page-description">계약 내역 조회</p>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="search-area">
+      <div class="row">
+        <div class="form-group">
+          <label for="form01" class="text-label">검색</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="form01" autocomplete="off" placeholder="계약 건명" title="계약번호 또는 계약건명 입력">
+          </div>
+        </div>
+
+        <div class="form-group w-md">
+          <label for="form02" class="text-label">대리점명</label>
+          <div class="select-box">
+            <button type="button" id="form02" class="btn-select" title="대리점명 선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button" class="selected">전체</button>
+                <button type="button">option 01</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group w-sm">
+          <label for="form03" class="text-label">렌탈 상태</label>
+          <div class="select-box">
+            <button type="button" id="form03" class="btn-select" title="렌탈 상태 선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button" class="selected">전체</button>
+                <button type="button">option 01</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group w-lg">
+          <label for="form21_1" class="text-label">렌탈 기간</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="form21_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="렌탈 기간 시작 날짜 선택">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form21_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="렌탈 기간 종료 날짜 선택">
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="button" class="btn dark">검색</button>
+          <button type="button" class="btn line"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+    <!-- // search-area -->
+
+    <!-- 조회 조건이 없을 경우 -->
+    <div class="table-utils">
+      <p class="table-info">전체 0건</p>
+    </div>
+    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
+
+    <!-- 조회 조건이 있을 경우 -->
+    <div class="table-utils">
+      <p class="table-info">전체 21건</p>
+    </div>
+    <div class="table-wrap">
+      <table class="is-selectable">
+        <colgroup>
+          <col style="width: 182px">
+          <col style="width: 313px">
+          <col style="width: 146px">
+          <col style="width: 194px">
+          <col>
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">계약번호</th>
+            <th scope="col">계약 건명</th>
+            <th scope="col">대리점명</th>
+            <th scope="col">렌탈 기간</th>
+            <th scope="col" class="text-center">계약유형</th>
+            <th scope="col" class="text-center">렌탈상태</th>
+            <th scope="col" class="text-center">결제상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td>퍼시스 강남 oc</td>
+            <td>2026.01.01 ~ 2027.01.01</td>
+            <td class="text-center"><span class="text-state">반납형</span></td>
+            <td class="text-center"><span class="text-state">렌탈중</span></td>
+            <td class="text-center"><span class="badge-line-green w-fix">정상</span></td>
+          </tr>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td>퍼시스 강남 oc</td>
+            <td>2026.01.01 ~ 2027.01.01</td>
+            <td class="text-center"><span class="text-state">인수형</span></td>
+            <td class="text-center"><span class="text-state done">완료</span></td>
+            <td class="text-center"><span class="badge-line-red w-fix">연체</span></td>
+          </tr>
+          <tr>
+            <td>CT-2024-001</td>
+            <td class="row-title">퍼시스 본사 사옥 리뉴얼 건</td>
+            <td>퍼시스 강남 oc</td>
+            <td>2026.01.01 ~ 2027.01.01</td>
+            <td class="text-center"><span class="text-state">인수형</span></td>
+            <td class="text-center"><span class="text-state done">완료</span></td>
+            <td class="text-center"><span class="text-light-gray">-</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <th:block th:replace="~{common/fragments/pagination :: pagination}"></th:block>
+
+  </div>
+</th:block>
+
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

@@ -1,1 +1,614 @@
-home
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body class="scroll-fix">
+
+<th:block layout:fragment="contents">
+  <div id="homeContent">
+    <div class="home-fade-out"></div>
+
+    <!--
+      [visual 영역 설명]
+
+      * 이미지 권장 사이즈: 960*460
+      * webP 확장자 사용 권장 (quality: 80% 이상)
+
+      * 링크 타입 정리
+      1. 외부 링크일 경우 (target="_blank", i.icon-ext-link)
+      <a href="#0" class="btn line" target="_blank">
+        <span>텍스트</span><i class="icon-ext-link"></i>
+      </a>
+
+      2. 내부 링크일 경우 (i.icon-int-link)
+      <a href="#0" class="btn line">
+        <span>텍스트</span><i class="icon-int-link"></i>
+      </a>
+    -->
+    <section class="section-visual">
+      <div class="swiper-wrap">
+        <div class="swiper img-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/home/visual_01.webp}" role="presentation">
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/home/visual_02.webp}" role="presentation">
+            </div>
+            <div class="swiper-slide">
+              <video autoplay muted loop playsinline th:poster="@{/assets/img/home/visual_03.webp}">
+                <source th:src="@{/assets/img/home/visual_03.mp4#t=5}" type="video/mp4">
+              </video>
+            </div>
+            <div class="swiper-slide">
+              <img th:src="@{/assets/img/home/visual_04.webp}" role="presentation">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-wrap">
+        <div class="swiper text-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <h2 class="visual-title">Cove</h2>
+              <h3 class="visual-subtitle">오피스 서비스 허브 고객 전용 Cove 체험 혜택</h3>
+              <p class="visual-info">집중 공간이 필요하다면, 먼저 경험해보세요.</p>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSdlv2cyDq1snXI_3eeIXyVNQAojGwaXbkRxKYBqmFWBysY0bw/viewform"
+                class="btn line" target="_blank">
+                <span>신청하기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <h2 class="visual-title">Flow Finder</h2>
+              <h3 class="visual-subtitle">각자의 리듬이 하나의 흐름이 되도록</h3>
+              <p class="visual-info">몰입과 협업을 자연스럽게 잇는 하이퍼 모듈러 워크스테이션입니다.</p>
+              <a href="https://www.fursys.com/products/flowfinder" class="btn line" target="_blank">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <h2 class="visual-title">Manta</h2>
+              <h3 class="visual-subtitle">내 몸의 움직임을 읽는 직관적인 편안함</h3>
+              <p class="visual-info">유연한 곡선과 세련된 컬러 감도의 체어로 우리 기업만의<br>프리미엄 워크스페이스를 완성해 보세요.</p>
+              <a href="https://www.fursys.com/products/manta" class="btn line" target="_blank">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+            <div class="swiper-slide">
+              <h2 class="visual-title">Replex</h2>
+              <h3 class="visual-subtitle">감각이 먼저 증명하는 완벽함</h3>
+              <p class="visual-info">모든 움직임에 빈틈없이 반응하는 다이내믹 피팅 시스템으로<br>장시간 흔들림 없는 편안함을 경험하세요.</p>
+              <a href="https://www.fursys.com/products/replex" class="btn line" target="_blank">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+    <!-- // .section-visual -->
+
+    <section class="section-card">
+      <div class="title-area flex-col">
+        <h2 class="page-title inline-block">안녕하세요 <strong class="text-white">김가나님.</strong></h2>
+        <!-- <p class="page-description inline-block">확인이 필요한 항목이 없어요.</p> --><!-- 확인할 항목이 없을 경우 -->
+        <p class="page-description inline-block">확인이 필요한 항목이 <strong class="text-white">9건</strong> 있어요.</p>
+      </div>
+
+      <!-- 확인할 항목이 없을 경우 -->
+      <!-- <div class="text-nodata text-light-gray">새로운 확인 항목이 생기면 여기에 표시됩니다.</div> -->
+
+      <!--
+        * 카드 영역 타입 정리 (배지 /  타이틀 / yyyy.mm.dd 상태)
+        1. 결제 / 결제 연체 / 결제
+        2. 계약 / 계약 만료 예정 / 만료
+        3. 오피스케어 / 오피스 케어 다음 일정 / 방문
+        4. 오피스케어 / 오피스 케어 리포트 확인 / 발행
+      -->
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">결제</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">결제 연체</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>결제</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈 텍스트가 길경우 텍스트가 길경우</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 텍스트가 길경우 텍스트가 길경우 텍스트가 길경우 텍스트가 길경우 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">계약</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">계약 만료 예정</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>만료</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">오피스케어</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">오피스 케어 다음 일정</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>방문</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">오피스케어</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">오피스 케어 리포트 확인</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>발행</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">결제</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">결제 연체</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>결제</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈 텍스트가 길경우 텍스트가 길경우</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 텍스트가 길경우 텍스트가 길경우 텍스트가 길경우 텍스트가 길경우 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">계약</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">계약 만료 예정</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>만료</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">오피스케어</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">오피스 케어 다음 일정</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>방문</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="box-style">
+              <span class="badge lg">오피스케어</span>
+              <ul class="list-column my-lg">
+                <li class="title-md">오피스 케어 리포트 확인</li>
+                <li class="font-lg">
+                  <span class="spacing-lg">2026.01.01</span>
+                  <span>발행</span>
+                </li>
+              </ul>
+              <div class="list-column flex-1 w-full">
+                <ul class="font-bold flex gap-3xs w-full">
+                  <li>CT-2024-001</li>
+                  <li>·</li>
+                  <li class="flex-1 min-w-0"><p class="ellipsis">본사 사옥 렌탈</p></li>
+                </ul>
+                <p class="font-sm">서울특별시 광진구 능동로23길 11-14 외 1건</p>
+              </div>
+              <div class="w-full text-right">
+                <a href="#0" class="btn line rounded p-0">
+                  <i class="icon-int-link"></i><span class="sr-only">바로가기 링크</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- // .section-card -->
+
+    <section class="section-link">
+      <div class="center-cont">
+        <div class="title-area justify-center">
+          <h2 class="contents-title">Quick menu</h2>
+        </div>
+
+        <ul class="link-list">
+          <li><a class="link" th:href="@{/contract}"><i class="icon-assignment-fill"></i> 계약 정보</a></li>
+          <li><a class="link" th:href="@{/payment}"><i class="icon-receipt-fill"></i> 결제 정보</a></li>
+          <li><a class="link" th:href="@{/layout}"><i class="icon-ruler"></i> 도면 현황</a></li>
+          <li><a class="link" th:href="@{/layout/service}"><i class="icon-design-service"></i> 레이아웃 서비스</a></li>
+          <li><a class="link" th:href="@{/service/care}"><i class="icon-fact-check"></i> 오피스 케어</a></li>
+          <li><a class="link" th:href="@{/service/clean}"><i class="icon-chair"></i> 의자 클리닝</a></li>
+        </ul>
+      </div>
+    </section>
+    <!-- // .section-link -->
+
+    <section class="section-service">
+      <div class="center-cont">
+        <h2 class="home-title">Services</h2>
+
+        <div class="service-contents">
+          <div class="left-cont">
+            <div class="flex-all-center flex-col gap-3xs">
+              <h3 class="contents-title">사무 공간, 전문가에게 맡겨보세요.</h3>
+              <p class="page-description"><strong>레이아웃 서비스</strong>로 최적의 공간을 설계합니다.</p>
+            </div>
+
+            <div class="swiper">
+              <ul class="swiper-wrapper">
+                <li class="swiper-slide">
+                  <img th:src="@{/assets/img/home/service_icon_01.svg}" role="presentation">
+                </li>
+                <li class="swiper-slide">
+                  <img th:src="@{/assets/img/home/service_icon_02.svg}" role="presentation">
+                </li>
+                <li class="swiper-slide">
+                  <img th:src="@{/assets/img/home/service_icon_03.svg}" role="presentation">
+                </li>
+                <li class="swiper-slide">
+                  <img th:src="@{/assets/img/home/service_icon_04.svg}" role="presentation">
+                </li>
+                <li class="swiper-slide">
+                  <img th:src="@{/assets/img/home/service_icon_05.svg}" role="presentation">
+                </li>
+              </ul>
+            </div>
+            <div class="btn-area gap-xs">
+              <a th:href="@{/layout}" class="btn line">
+                <span>도면 현황 보기</span><i class="icon-int-link"></i>
+              </a>
+              <a th:href="@{/layout/service}" class="btn line">
+                <span>레이아웃 서비스 신청하기</span><i class="icon-int-link"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="right-cont">
+            <div class="title-area items-end">
+              <h3 class="contents-title flex-1">매일 앉는 의자,<br>의자 클리닝 서비스로 관리하세요.</h3>
+              <a th:href="@{/service/clean}" class="btn line">
+                <span>신청하기</span><i class="icon-int-link"></i>
+              </a>
+            </div>
+
+            <div class="table-wrap">
+              <!-- 내역 없을 경우 -->
+              <!-- <div class="text-nodata text-light">이용 가능한 의자 클리닝 서비스가 없습니다.</div> -->
+
+              <!-- 내역 있을 경우 -->
+              <table>
+                <colgroup>
+                  <col style="width: 124px">
+                  <col style="width: 50%;">
+                  <col style="width: 78px">
+                  <col style="width: 126px">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th scope="col">계약번호</th>
+                    <th scope="col">계약 건명</th>
+                    <th scope="col" class="text-center">잔여 횟수</th>
+                    <th scope="col">만료일자</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- row 최대 5개까지 노출 -->
+                  <tr>
+                    <td><a href="#0" class="btn link lg">CT-2024-001</a></td>
+                    <td>퍼시스 본사 사옥 리뉴얼 건퍼시스 본사 사옥 리뉴얼 건퍼시스 본사 사옥 리뉴얼 건</td>
+                    <td class="text-center font-lg">1</td>
+                    <td>2026. 12. 21</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="rignt-cont-desc">만료일이 가장 가까운 5건이 우선 노출됩니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- // .section-service -->
+
+    <section class="section-place">
+      <div class="left-cont">
+        <div class="layout-column gap-xs items-start">
+          <span class="badge square xxl">Busuness Hub</span>
+          <h2 class="home-title mb-0">비즈니스 허브 강남</h2>
+          <p class="title-sm font-regular">퍼시스 제품이 적용된 업무 공간을 직접 확인할 수 있습니다.<br>제품 적용부터 공간 구성까지 전문가와 상담해보세요.</p>
+          <div class="btn-area gap-xs mt-3xs">
+            <a href="https://my.matterport.com/show/?m=C7atfHMqtHG" class="btn line" target="_blank">
+              <span>제품 둘러보기</span><i class="icon-3d"></i>
+            </a>
+            <a href="https://www.connectplus.co.kr/sr/showRoom/showroom_resv.do?com_brand=T60F01" class="btn dark" target="_blank">
+              <span>예약하기</span><i class="icon-ext-link"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="layout-column gap-2xs w-full mt-2xl">
+          <h3 class="group-title text-dark-gray mb-3xs">오시는 길 & 연락처</h3>
+          <div class="box-style bg-white">
+            <ul class="info-list">
+              <li>
+                <span class="title">주소</span>
+                <span class="value">서울 강남구 테헤란로 201 아주빌딩 18층</span>
+              </li>
+              <li>
+                <span class="title">연락처</span>
+                <span class="value">02-501-7557</span>
+              </li>
+              <li>
+                <span class="title">운영시간</span>
+                <span class="value">월요일-금요일 10:00~18:00</span>
+              </li>
+              <li>
+                <span class="title">주차</span>
+                <span class="value">지하 주차장 이용 가능 (30분 무료)</span>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full text-right">
+            <p class="font-sm text-dark2">*원활한 상담을 위해 사전 예약을 권장합니다.</p>
+          </div>
+        </div>
+
+        <div class="layout-column gap-2xs mt-xl">
+          <h3 class="group-title text-dark-gray mb-3xs">제공 서비스</h3>
+          <ul class="service-list">
+            <li>전문가 상담</li>
+            <li>공간 투어</li>
+            <li>태스크 체어 피팅룸</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="right-cont">
+        <div class="flex-1">
+          <div class="swiper">
+            <ul class="swiper-wrapper">
+              <li class="swiper-slide">
+                <img th:src="@{/assets/img/home/place_bg_01.webp}" role="presentation">
+              </li>
+              <li class="swiper-slide">
+                <img th:src="@{/assets/img/home/place_bg_02.webp}" role="presentation">
+              </li>
+              <li class="swiper-slide">
+                <img th:src="@{/assets/img/home/place_bg_03.webp}" role="presentation">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul class="service-card">
+          <li class="bg-dark2">
+            <div class="flex-col items-start gap-xs">
+              <span class="badge square bg-green">혜택 1</span>
+              <h3 class="section-title">프라이빗 목업룸 서비스</h3>
+              <p>커스터마이징 서비스를 포함한 목업룸 사용이 가능합니다.<br>실제 발주할 제품을 미리 세팅하여 확인하세요.</p>
+              <p class="font-sm text-light-gray">(일정 규모 이상의 프로젝트 진행시 가능)</p>
+            </div>
+          </li>
+          <li class="bg-green">
+            <div class="flex">
+              <div class="flex-col items-start gap-xs flex-1">
+                <span class="badge square bg-black">혜택 2</span>
+                <h3 class="section-title">의자 무료 체험 서비스</h3>
+                <p>비즈니스 허브 강남 방문 고객 대상<br>주요 태스크 체어 2주 무상 체험을 제공합니다.</p>
+              </div>
+              <img th:src="@{/assets/img/home/place_img_01.webp}" role="presentation">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- // .section-place -->
+
+    <section class="section-story">
+      <h2 class="home-title">Stories</h2>
+
+      <ul class="story-list">
+        <li class="story-item">
+          <div class="img-cont">
+            <img th:src="@{/assets/img/home/story_bg_01.webp}" role="presentation">
+          </div>
+          <div class="text-cont">
+            <span class="badge square xxl">광동제약</span>
+            <h3 class="contents-title">연구와 비즈니스가 '원팀(One-Team)'이 되는 스마트 오피스 공간의 비결</h3>
+          </div>
+          <div class="transition-cont">
+            <div class="inner">
+              <p class="text-desc">부서 간의 장벽을 허물고 소통의 효율을 극대화하다.<br>광동제약은 신사옥을 통해 본사와 연구소의 유기적인 협업을 이끌어내는 스마트 워크 환경을 구축했습니다.</p>
+              <a href="https://blog.naver.com/fursys_official/223849982078" target="_blank" class="btn line">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="story-item">
+          <div class="img-cont">
+            <img th:src="@{/assets/img/home/story_bg_02.webp}" role="presentation">
+          </div>
+          <div class="text-cont">
+            <span class="badge square xxl">교촌에프앤비</span>
+            <h3 class="contents-title">교촌에프앤비 신사옥, 새로운 도약을 이끄는 '소통과 융합'의 공간</h3>
+          </div>
+          <div class="transition-cont">
+            <div class="inner">
+              <p class="text-desc">교촌의 철학 '진심'을 업무 공간에 구현하다.<br>자연스러운 만남을 유도하는 개방형 동선과 업무 목적에 따라 자유롭게 선택할 수 있는 다채로운 워크스테이션을 확인해 보세요.</p>
+              <a href="https://blog.naver.com/fursys_official/223771589574" target="_blank" class="btn line">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="story-item">
+          <div class="img-cont">
+            <img th:src="@{/assets/img/home/story_bg_03.webp}" role="presentation">
+          </div>
+          <div class="text-cont">
+            <span class="badge square xxl">크래프톤</span>
+            <h3 class="contents-title">역동적인 크리에이티브가 탄생하는 공간, 크래프톤</h3>
+          </div>
+          <div class="transition-cont">
+            <div class="inner">
+              <p class="text-desc">최고의 인재들은 어떤 공간에서 아이디어를 나눌까요?<br>팀의 경계를 허물고 자유로운 아이디어 융합을 이끌어내는 크래프톤의 스마트 워크 환경을 확인해 보세요.</p>
+              <a href="https://blog.naver.com/fursys_official/223771588690" target="_blank" class="btn line">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="story-item">
+          <div class="img-cont">
+            <img th:src="@{/assets/img/home/story_bg_04.webp}" role="presentation">
+          </div>
+          <div class="text-cont">
+            <span class="badge square xxl">sk바이오사이언스</span>
+            <h3 class="contents-title">첨단 R&D 기업의 일하는 방식, 그 본질을 담아낸 최적의 공간</h3>
+          </div>
+          <div class="transition-cont">
+            <div class="inner">
+              <p class="text-desc">연구 중심 조직의 오피스를 설계할 때 가장 중요한 기준은 무엇일까요?<br>공간의 형태보다 '어떻게 일할 것인가'에 먼저 주목하여, 치열한 몰입과 자유로운 소통이 완벽히 조화된 SK바이오사이언스만의 공간 솔루션을 구축했습니다.</p>
+              <a href="https://blog.naver.com/fursys_official/224203641504" target="_blank" class="btn line">
+                <span>자세히 보기</span><i class="icon-ext-link"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="story-item">
+          <a href="https://blog.naver.com/fursys_official" target="_blank" class="link-box">
+            <span>더 많은 스토리 보기</span>
+            <i class="icon-ext-link"></i>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- // .section-story  -->
+  </div>
+</th:block>
+
+<th:block layout:fragment="script">
+<link rel="stylesheet" type="text/css" th:href="@{/assets/css/plugins/swiper-bundle.min.css}"/>
+<script th:src="@{/assets/js/plugins/swiper-bundle.min.js}"></script>
+<script th:src="@{/assets/js/pages/home/home.js}"></script>
+</th:block>
+</body>
+</html>

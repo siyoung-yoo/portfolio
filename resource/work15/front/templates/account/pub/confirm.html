@@ -11,9 +11,10 @@
 
     <div class="form-group">
       <label for="form01" class="text-label required">현재 비밀번호</label>
-      <div class="form-box">
+      <div class="form-box"><!-- 항목 미입력 시, .form-box < .error 추가 -->
         <input type="password" id="form01" autocomplete="off" placeholder="비밀번호 입력" title="비밀번호 입력">
       </div>
+      <p class="text-error">현재 비밀번호를 입력해 주세요.</p>
     </div>
 
     <div class="footer-btn-area py-lg">

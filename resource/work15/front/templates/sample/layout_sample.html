@@ -1,0 +1,175 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<th:block layout:fragment="page-style">
+<style>
+  /* 임시 스타일 */
+  .box { display: flex; align-items: center; justify-content: center; width: 100%; height: 30px; background: rgba(0,0,0,0.5); color: #fff; }
+</style>
+</th:block>
+
+<body>
+<th:block layout:fragment="contents">
+  <div id="bodyContent">
+    <div class="title-area">
+      <h2 class="page-title">layout 샘플 페이지</h2>
+    </div>
+
+    <div class="search-area">
+      <div class="row">
+        <div class="form-group">
+          <label for="form01" class="text-label">.form-group (flex: 1)</label>
+          <div class="form-box">
+            <i class="icon-search"></i>
+            <input type="text" id="form01" autocomplete="off" placeholder="placeholder" title="검색어 입력">
+          </div>
+        </div>
+
+        <div class="form-group w-md">
+          <label for="form02" class="text-label">.form-group.w-md</label>
+          <div class="select-box">
+            <button type="button" id="form02" class="btn-select" title="선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button">option 01</button>
+                <button type="button">option 02</button>
+                <button type="button">option 03</button>
+                <button type="button">option 04</button>
+                <button type="button">option 05</button>
+                <button type="button">option 06</button>
+                <button type="button">option 07</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group w-sm">
+          <label for="form03" class="text-label">.form-group.w-sm</label>
+          <div class="select-box">
+            <button type="button" id="form03" class="btn-select" title="선택">선택</button>
+            <div class="option-list">
+              <div class="scroll-y">
+                <button type="button">option 01</button>
+                <button type="button">option 02</button>
+                <button type="button">option 03</button>
+                <button type="button">option 04</button>
+                <button type="button">option 05</button>
+                <button type="button">option 06</button>
+                <button type="button">option 07</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group w-lg">
+          <label for="form04_1" class="text-label">.form-group.w-lg (range-picker만 사용)</label>
+          <div class="range-picker">
+            <div class="form-box">
+              <input type="text" id="form04_1" class="start-date" autocomplete="off" placeholder="연도.월.일" title="시작 날짜 입력">
+            </div>
+            <span class="text-mid">~</span>
+            <div class="form-box">
+              <input type="text" id="form04_2" class="end-date" autocomplete="off" placeholder="연도.월.일" title="종료 날짜 입력">
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="button" class="btn dark">검색</button>
+          <button type="button" class="btn line"><i class="icon-refresh"></i>초기화</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="float-bg-white" style="padding: 100px 0;">
+      <h3 class="section-title">.float-bg-white</h3><br>
+      <h3 class="section-title">contents 영역 밖으로 background white 색상 있을 경우</h3>
+    </div>
+
+    <br><br><br><br><br><br><br>
+
+    <div class="register-page" style="background: #fff; margin: 0 auto;">
+      <div class="title-area flex-col">
+        <h3 class="section-title">register-page 컨텐츠 넓이 660px (등록/입력 페이지 사용)</h3>
+        <p class="page-description">타이틀 ~ 컨텐츠 사이: 100px</p>
+        <p class="page-description">컨텐츠 ~ 하단버튼 사이: 70px</p>
+      </div>
+      <div class="footer-btn-area">
+        <button type="button" class="btn dark">하단 버튼</button>
+      </div>
+    </div>
+
+    <div class="divider-dash only-line py-2xl my-2xl"><hr class="dash-line"></div>
+
+    <div class="title-area flex-col" style="background: #fff;">
+      <h3 class="section-title">layout-with-panel (분할 페이지에 사용)</h3>
+      <p class="page-description">title-area 바로 뒤에 .layout-with-panel 있을 경우 title-area 넓이 줄어듬</p>
+    </div>
+    <div class="layout-with-panel">
+      <div class="layout-content" style="height: 200px; background: #fff;">.layout-content</div>
+      <div class="layout-panel" style="height: 200px;">.layout-panel</div>
+    </div>
+
+    <div class="divider-dash only-line py-2xl my-2xl"><hr class="dash-line"></div>
+
+    <div class="title-area">
+      <h3 class="section-title">.layout-column (.gap-n 클래스 추가해서 사용)</h3>
+    </div>
+    <div class="layout-column gap-2xs">
+      <div class="box">box</div>
+      <div class="box">box</div>
+      <div class="box">box</div>
+    </div>
+
+    <br><br><br><br>
+
+    <div class="title-area">
+      <h3 class="section-title">.layout-flex (> .w-5 ~ .w-95: 5단위, .w-33 )</h3>
+    </div>
+    <div class="layout-flex">
+      <div class="box w-10">box w-10</div>
+      <div class="box w-30">box w-30</div>
+      <div class="box">box (넓이 지정 없으면 flex: 1)</div>
+    </div>
+
+    <br><br><br><br>
+
+    <div class="title-area">
+      <h3 class="section-title">.layout-grid (기본형: grid-template-columns: repeat(2, 1fr);)</h3>
+    </div>
+    <div class="layout-grid">
+      <div class="box span-2">box span-2</div>
+      <div class="box">box</div>
+      <div class="box">box</div>
+    </div>
+
+    <br><br>
+
+    <div class="title-area">
+      <h3 class="section-title">.layout-grid.col-3</h3>
+    </div>
+    <div class="layout-grid col-3">
+      <div class="box span-2">box span-2</div>
+      <div class="box">box</div>
+      <div class="box">box</div>
+      <div class="box span-3">box span-3</div>
+    </div>
+
+    <br><br>
+
+    <div class="title-area">
+      <h3 class="section-title">.layout-grid.col-4</h3>
+    </div>
+    <div class="layout-grid col-4">
+      <div class="box span-2">box span-2</div>
+      <div class="box">box</div>
+      <div class="box">box</div>
+      <div class="box span-3">box span-3</div>
+      <div class="box span-4">box span-4</div>
+    </div>
+  </div>
+</th:block>
+
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

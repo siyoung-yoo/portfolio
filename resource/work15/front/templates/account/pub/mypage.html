@@ -59,9 +59,10 @@
     <div class="layout-column gap-sm hidden" id="pwForm">
       <div class="form-group">
         <label for="formB01" class="text-label required">현재 비밀번호</label>
-        <div class="form-box">
+        <div class="form-box"><!-- 항목 미입력 시, .form-box < .error 추가 -->
           <input type="password" id="formB01" autocomplete="off" placeholder="비밀번호 입력" title="비밀번호 입력">
         </div>
+        <p class="text-error">현재 비밀번호를 입력해 주세요.</p>
       </div>
 
       <!--
@@ -87,9 +88,10 @@
 
       <div class="form-group">
         <label for="formB03" class="text-label required">새 비밀번호 확인</label>
-        <div class="form-box">
+        <div class="form-box"><!-- 비밀번호 미일치 시, .form-box < .error 추가 -->
           <input type="password" id="formB03" autocomplete="off" placeholder="비밀번호 다시 입력">
         </div>
+        <p class="text-error">비밀번호가 일치하지 않습니다.</p>
       </div>
     </div>
 

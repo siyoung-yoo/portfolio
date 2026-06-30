@@ -174,7 +174,7 @@ function renderDrawingDetail(detail) {
   // 연결된 계약
   renderLinkedContracts(detail.contracts || []);
 
-  // 영역은 도면 로드 시점부터 전체 노출 (계약 선택 전 기본 상태)
+  // 영역 데이터 보관 — 표시는 연결된 계약 클릭(.has-dim) 시에만 (퍼블 원본 방식)
   _currentAreas = detail.areas || [];
 
   // 이전에 적용된 has-dim / selected 상태 초기화
@@ -306,7 +306,8 @@ function renderAreas() {
     if (area.x == null || area.y == null || area.width == null || area.height == null) return;
     const div = document.createElement("div");
     div.className = "drawing-area";
-    div.style.display = "block";
+    // display 는 강제하지 않음 — 퍼블 CSS 가 제어(.draw-cont.has-dim 일 때만 표시).
+    // 즉 연결된 계약 클릭 시에만 영역이 노출된다.
     div.style.left   = area.x + "px";
     div.style.top    = area.y + "px";
     div.style.width  = area.width + "px";
@@ -421,11 +422,11 @@ function fitMultiPageSize(originalW, originalH) {
 
   if (!originalW || !originalH) return;
 
-  // 가로 기준 fit — 다중 페이지/긴 세로 문서도 가독성을 위해 폭을 꽉 채우고
-  // 넘치는 세로는 스크롤로 처리한다.
+  // 퍼블 원본 방식: 가로/세로 중 작은 배율로 맞춰 영역 안에 꽉 채워 고정(스크롤 없음).
+  // 세로가 길면 세로맞춤, 가로가 길면 가로맞춤.
   const scaleX = targetW / originalW;
   const scaleY = targetH / originalH;
-  const scale  = scaleX;
+  const scale  = Math.min(scaleX, scaleY);
 
   // isWidthLimited 는 원래 비율 기준으로 계산 (updateScale 정렬 분기용)
   isWidthLimited = scaleX < scaleY;

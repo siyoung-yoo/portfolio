@@ -7,29 +7,38 @@
     <h2 class="page-title">의자 클리닝</h2>
     <div class="title-area flex-col my-2xl">
       <h3 class="group-title">계약 건 선택</h3>
-      <p>클리닝은 계약-주소 단위로 신청됩니다. 다중주소 계약 건은 주소별로 분리 조회됩니다.</p>
+      <p>클리닝은 계약 단위로 한 번에 한 건씩 신청 가능하며, 신청 시 무상 클리닝 횟수가 차감됩니다.</p>
     </div>
-  <!-- // .title-area -->
+    <!-- // .title-area -->
 
+    <!-- 계약 건이 없을 경우 -->
+    <div class="table-utils">
+      <p class="table-info">전체 0건</p>
+
+      <!-- <label class="toggle-switch hidden">
+        <input type="checkbox">
+        <span class="switch"></span>
+        <span class="text">신청 불가 포함</span>
+      </label> -->
+    </div>
+    <div class="text-nodata">클리닝 내역이 존재하지 않습니다.</div>
+
+
+    <!-- 계약 건이 있을 경우 -->
     <div class="table-utils">
       <p class="table-info">전체 n건</p>
 
       <label class="toggle-switch"><!-- 계약 건이 없을 경우 .hidden 추가 -->
-        <input type="checkbox" onchange="updateRows()">
+        <input type="checkbox" checked><!-- [2026-06-30] default: 체크된 상태로 변경 -->
         <span class="switch"></span>
         <span class="text">신청 불가 포함</span>
       </label>
     </div>
-
-    <!-- 계약 건이 없을 경우 -->
-    <div class="text-nodata">클리닝 내역이 존재하지 않습니다.</div>
-
-    <!-- 계약 건이 있을 경우 -->
     <div class="table-wrap">
-      <table>
+      <table class="tr-hover"><!-- [2026-06-30] .tr-hover 추가 -->
         <colgroup>
           <col style="width: 85px">
-          <col style="width: 150px">
+          <col style="width: 160px">
           <col>
           <col style="width: 100px">
           <col style="width: 120px">
@@ -46,24 +55,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="tr-header">
-            <th scope="row" class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkA">
-                <label for="chkA"></label>
-              </div>
-            </th>
-            <th scope="row" colspan="5">서울특별시 강남구 테헤란로123</th>
-          </tr>
           <tr>
             <td class="text-center">
               <div class="form-chk">
-                <input type="checkbox" id="chkA01">
-                <label for="chkA01"></label>
+                <input type="radio" name="radio" id="radio01">
+                <label for="radio01"></label>
               </div>
             </td>
             <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○</p>
+            </td>
             <td class="text-center"><span class="text-black">1</span> / 12회</td>
             <td class="text-center spacing-lg">2026.01.01</td>
             <td class="text-center">
@@ -73,245 +76,220 @@
           <tr>
             <td class="text-center">
               <div class="form-chk">
-                <input type="checkbox" id="chkA02">
-                <label for="chkA02"></label>
+                <input type="radio" name="radio" id="radio02">
+                <label for="radio02"></label>
               </div>
             </td>
             <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건LG 화학 대전 사옥 블라블라 건</td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○</p>
+            </td>
             <td class="text-center"><span class="text-black">3</span> / 48회</td>
             <td class="text-center spacing-lg">2026.01.01</td>
             <td class="text-center">
               <a href="#0" class="btn link">상세</a>
             </td>
           </tr>
-          <tr class="disabled">
+          <tr class="is-disabled fade"><!-- [2026-06-30] tr.is-disabled row에 .hidden 삭제(default: 노출상태로 변경) -->
             <td class="text-center">
               <div class="form-chk">
-                <input type="checkbox" id="chkA03" disabled>
-                <label for="chkA03"></label>
+                <input type="radio" name="radio" id="radio03" disabled>
+                <label for="radio03"></label>
               </div>
             </td>
             <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○</p>
+            </td>
+            <td class="text-center"><span class="text-black">0</span> / 2회</td>
+            <td class="text-center spacing-lg">2026.01.01</td>
+            <td class="text-center">
+              <a href="#0" class="btn link">상세</a>
+            </td>
+          </tr>
+          <tr class="is-disabled fade"><!-- [2026-06-30] tr.is-disabled row에 .hidden 삭제(default: 노출상태로 변경) -->
+            <td class="text-center">
+              <div class="form-chk">
+                <input type="radio" name="radio" id="radio04" disabled>
+                <label for="radio04"></label>
+              </div>
+            </td>
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○</p>
+            </td>
+            <td class="text-center"><span class="text-black">0</span> / 3회</td>
+            <td class="text-center spacing-lg">2026.01.01</td>
+            <td class="text-center">
+              <a href="#0" class="btn link">상세</a>
+            </td>
+          </tr>
+          <tr class="multi-address">
+            <td class="text-center">
+              <div class="form-chk">
+                <input type="radio" name="radio" id="radio05">
+                <label for="radio05"></label>
+              </div>
+            </td>
+            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○ <span>외 2개 주소 포함</span></p>
+            </td>
             <td class="text-center"><span class="text-black">1</span> / 12회</td>
             <td class="text-center spacing-lg">2026.01.01</td>
             <td class="text-center">
               <a href="#0" class="btn link">상세</a>
             </td>
           </tr>
-          <tr class="disabled">
+          <tr class="address-detail fade hidden">
+            <td></td>
+            <td></td>
+            <td>
+              <div class="list-column">
+                <p class="text-black">포함 주소</p>
+
+                <div class="form-chk">
+                  <input type="checkbox" id="chk5_01">
+                  <label for="chk5_01">대전광역시 유성구 ○○로 ○○</label>
+                </div>
+                <div class="form-chk">
+                  <input type="checkbox" id="chk5_02">
+                  <label for="chk5_02">주소2 주소2</label>
+                </div>
+                <div class="form-chk">
+                  <input type="checkbox" id="chk5_03">
+                  <label for="chk5_03">주소3 주소3</label>
+                </div>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="multi-address">
             <td class="text-center">
               <div class="form-chk">
-                <input type="checkbox" id="chkA04" disabled>
-                <label for="chkA04"></label>
+                <input type="radio" name="radio" id="radio06">
+                <label for="radio06"></label>
               </div>
             </td>
             <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
+            <td>
+              <p class="text-black ellipsis">LG 화학 대전 사옥 블라블라 건</p>
+              <p class="font-sm mt-3xs">대전광역시 유성구 ○○로 ○○ <span>외 3개 주소 포함</span></p>
+            </td>
             <td class="text-center"><span class="text-black">1</span> / 12회</td>
             <td class="text-center spacing-lg">2026.01.01</td>
             <td class="text-center">
               <a href="#0" class="btn link">상세</a>
             </td>
           </tr>
-        </tbody>
-        <tbody>
-          <tr class="tr-header disabled">
-            <th scope="row" class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkB" disabled>
-                <label for="chkB"></label>
-              </div>
-            </th>
-            <th scope="row" colspan="5">서울특별시 강남구 테헤란로123</th>
-          </tr>
-          <tr class="disabled">
-            <td class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkB01" disabled>
-                <label for="chkB01"></label>
-              </div>
-            </td>
-            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
-            <td class="text-center"><span class="text-black">1</span> / 12회</td>
-            <td class="text-center spacing-lg">2026.01.01</td>
-            <td class="text-center">
-              <a href="#0" class="btn link">상세</a>
-            </td>
-          </tr>
-          <tr class="disabled">
-            <td class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkB02" disabled>
-                <label for="chkB02"></label>
+          <tr class="address-detail fade hidden">
+            <td></td>
+            <td></td>
+            <td>
+              <div class="list-column">
+                <p class="text-black">포함 주소</p>
+
+                <div class="form-chk">
+                  <input type="checkbox" id="chk6_01">
+                  <label for="chk6_01">대전광역시 유성구 ○○로 ○○</label>
+                </div>
+                <div class="form-chk">
+                  <input type="checkbox" id="chk6_02">
+                  <label for="chk6_02">주소2 주소2</label>
+                </div>
+                <div class="form-chk">
+                  <input type="checkbox" id="chk6_03">
+                  <label for="chk6_03">주소3 주소3</label>
+                </div>
+                <div class="form-chk">
+                  <input type="checkbox" id="chk6_04">
+                  <label for="chk6_04">주소4 주소4</label>
+                </div>
               </div>
             </td>
-            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
-            <td class="text-center"><span class="text-black">1</span> / 12회</td>
-            <td class="text-center spacing-lg">2026.01.01</td>
-            <td class="text-center">
-              <a href="#0" class="btn link">상세</a>
-            </td>
-          </tr>
-          <tr class="disabled">
-            <td class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkB03" disabled>
-                <label for="chkB03"></label>
-              </div>
-            </td>
-            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
-            <td class="text-center"><span class="text-black">1</span> / 12회</td>
-            <td class="text-center spacing-lg">2026.01.01</td>
-            <td class="text-center">
-              <a href="#0" class="btn link">상세</a>
-            </td>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr class="tr-header">
-            <th scope="row" class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkC">
-                <label for="chkC"></label>
-              </div>
-            </th>
-            <th scope="row" colspan="5">서울특별시 강남구 테헤란로123</th>
-          </tr>
-          <tr>
-            <td class="text-center">
-              <div class="form-chk">
-                <input type="checkbox" id="chkC01">
-                <label for="chkC01"></label>
-              </div>
-            </td>
-            <td><a href="#0" class="btn link lg text-medium-gray">CT-2024-001</a></td>
-            <td class="row-title">LG 화학 대전 사옥 블라블라 건</td>
-            <td class="text-center"><span class="text-black">1</span> / 12회</td>
-            <td class="text-center spacing-lg">2026.01.01</td>
-            <td class="text-center">
-              <a href="#0" class="btn link">상세</a>
-            </td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
 
-      <!--
-      [.table-footer 영역 설명]
-      * 체크박스 선택된게 있으면
-        [data-selection="empty"] .hidden 추가
-        [data-selection="filled"] .hidden 삭제
-        #btnReset .hidden 삭제
-
-      * 체크박스 선택된게 없으면
-        [data-selection="empty"] .hidden 삭제
-        [data-selection="filled"] .hidden 추가
-        #btnReset .hidden 추가
-      -->
       <div class="table-footer">
-        <p data-selection="empty">클리닝할 계약 건을 선택해 주세요.</p>
+        <p data-selected="false">클리닝할 계약 건을 선택해 주세요.</p>
+        <p class="hidden" data-selected="true">계약 건이 선택되었습니다.</p>
 
-        <div class="flex-center gap-lg hidden" data-selection="filled">
-          <div class="flex-center gap-2xs">
-            <span class="dot"></span>
-            <strong>선택 4건</strong>
-          </div>
-          <p>여러 주소가 선택되었습니다. 같은 주소끼리 신청하면 효율적입니다.</p><!-- 여러 주소건이 선택됐을 경우만 문구 노출 -->
-        </div>
-
-        <div class="flex-center gap-md">
-          <button type="button" class="btn link hidden" id="btnReset">전체 취소</button>
-          <button type="button" class="btn dark px-md" id="btnApply" disabled onclick="fnPopupOpen('applySummaryModal');">클리닝 신청</button>
-        </div>
+        <button type="button" class="btn dark px-md" id="btnApply" disabled>클리닝 신청</button>
       </div>
     </div>
     <!-- // 계약 건이 있을 경우 -->
   </div>
-
-<th:block th:insert="~{service/pub/modal/applySummaryModal}"></th:block> <!-- Modal: 신청 내용 요약 -->
 </th:block>
 
 <th:block layout:fragment="script">
 <script>
-const tbodyList = document.querySelectorAll('tbody');
-const btnReset = document.querySelector('#btnReset');
-const btnApply = document.querySelector('#btnApply');
+
+/* 신청 불가 토글 시 row 노출 업데이트 */
 const toggleInput = document.querySelector('.toggle-switch input');
-
-/* 신청 불가 row 노출 업데이트 */
-function updateRows() {
+toggleInput.addEventListener('change', (e) => {
   const isChecked = toggleInput.checked;
+  document.querySelectorAll('.is-disabled').forEach(row => row.classList.toggle('hidden', !isChecked));
+})
 
-  document
-    .querySelectorAll('tr.disabled')
-    .forEach(row => row.hidden = !isChecked);
-}
+// [2026-06-30] tr 클릭 시 radio 선택
+document.querySelectorAll('.table-wrap tbody tr').forEach(tr => {
+  tr.addEventListener('click', e => {
+    // radio가 없는 행(address-detail 등)은 제외
+    const radio = tr.querySelector('input[type="radio"]');
+    if (!radio || radio.disabled) return;
 
-/* 전체 취소 버튼 상태 업데이트 */
-const selectionEmpty = document.querySelector('[data-selection="empty"]');
-const selectionFilled = document.querySelector('[data-selection="filled"]');
-function updateResetButton() {
-  const hasChecked = [
-    ...document.querySelectorAll('tbody input[type="checkbox"]:not(:disabled)')
-  ].some(input => input.checked);
+    // 이미 radio나 label을 클릭한 경우는 중복 처리하지 않음
+    if (e.target.closest('input[type="radio"], label')) return;
 
-  /* 테이블 하단 버튼 */
-  btnReset.classList.toggle('hidden', !hasChecked);
-  btnApply.disabled = !hasChecked;
-
-  /* 선택 상태 UI */
-  selectionEmpty.classList.toggle('hidden', hasChecked);
-  selectionFilled.classList.toggle('hidden', !hasChecked);
-}
-
-/* tbody 단위 체크박스 기능 */
-tbodyList.forEach(tbody => {
-  const headerInput = tbody.querySelector('.tr-header').querySelector('input[type="checkbox"]');
-
-  if (!headerInput) return;
-
-  const rowInputs = tbody.querySelectorAll(
-    'tr:not(.tr-header) input[type="checkbox"]:not(:disabled)'
-  );
-
-  /* 헤더 체크 → 전체 선택/해제 */
-  headerInput.addEventListener('change', () => {
-    rowInputs.forEach(input => input.checked = headerInput.checked);
-    updateResetButton();
+    if (!radio.checked) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
   });
+});
 
-  /* 개별 체크 → 헤더 상태 동기화 */
-  rowInputs.forEach(input => {
-    input.addEventListener('change', () => {
-      headerInput.checked = [...rowInputs].every(item => item.checked);
-      updateResetButton();
+document.querySelectorAll('tr input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const selectedRow = radio.closest('tr');
+
+    // row 스타일 변경
+    document.querySelectorAll('.table-wrap tr').forEach(tr => {
+      tr.classList.toggle('selected', tr === selectedRow);
     });
+
+    // 상세 주소 숨기기 및 초기화
+    document.querySelectorAll('tr.address-detail').forEach(tr => {
+      tr.classList.add('hidden');
+
+      tr.querySelectorAll('input[type="checkbox"]').forEach(chk => {
+        chk.checked = true;
+      });
+    });
+
+    // 상세 주소 표시
+    const detailRow = selectedRow?.classList.contains('multi-address')
+      ? selectedRow.nextElementSibling : null;
+
+    if (detailRow?.classList.contains('address-detail')) {
+      detailRow.classList.remove('hidden');
+    }
+
+    // 하단 문구 변경 및 버튼 활성화
+    const isSelected = radio.checked;
+    document.querySelector('[data-selected="false"]').classList.toggle('hidden', isSelected);
+    document.querySelector('[data-selected="true"]').classList.toggle('hidden', !isSelected);
+    if (isSelected) document.querySelector('#btnApply').disabled = false;
   });
-});
-
-/* 전체 취소 */
-btnReset.addEventListener('click', () => {
-  document
-    .querySelectorAll('tbody input[type="checkbox"]:not(:disabled)')
-    .forEach(input => {input.checked = false;});
-
-  document
-    .querySelectorAll('.tr-header input[type="checkbox"]')
-    .forEach(input => {input.checked = false;});
-
-  btnReset.classList.add('hidden');
-  btnApply.disabled = true;
-  selectionEmpty.classList.remove('hidden');
-  selectionFilled.classList.add('hidden');
-});
-
-/* 초기 실행만 DOM 준비 후 실행 */
-document.addEventListener('DOMContentLoaded', () => {
-  updateRows();
 });
 </script>
 </th:block>

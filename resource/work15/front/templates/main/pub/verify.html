@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="~{common/layout/config.html}" />
+</head>
+<body class="scroll-responsive">
+  <div class="full-page login-page">
+    <h1 class="main-logo"><strong>OFFICE SERVICE HUB</strong></h1>
+
+
+    <div class="login-content">
+
+      <form id="otpForm">
+      <div class="login-box layout-column gap-2xl">
+        <div class="title-area">
+          <h2 class="page-title">문자 인증</h2>
+          <p class="page-description">등록된 휴대폰 번호(010-****-1234)로<br>인증번호를 발송했습니다.</p>
+        </div>
+
+        <div class="layout-column gap-sm">
+
+          <!-- 진입 시 -->
+          <div class="form-group type-verify">
+            <label for="otpCode_1" class="text-label">인증번호 6자리</label>
+            <div class="form-box num-only layout-flex">
+              <input type="text" id="otpCode_1" maxlength="1" autocomplete="off" autofocus>
+              <input type="text" id="otpCode_2" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_3" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_4" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_5" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_6" maxlength="1" autocomplete="off">
+            </div>
+
+            <div class="form-info">
+              <p class="text-blue">남은 시간 00:00</p>
+              <p class="text-error hidden">인증번호가 일치하지 않습니다.</p>
+              <button type="button" class="btn link">재발송</button>
+            </div>
+          </div>
+
+          <!-- error 일 경우 -->
+          <div class="form-group type-verify">
+            <label for="otpCode_1" class="text-label">인증번호 6자리</label>
+            <div class="form-box num-only layout-flex error"><!-- .error 추가 -->
+              <input type="text" id="otpCode_1" maxlength="1" autocomplete="off" autofocus>
+              <input type="text" id="otpCode_2" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_3" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_4" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_5" maxlength="1" autocomplete="off">
+              <input type="text" id="otpCode_6" maxlength="1" autocomplete="off">
+            </div>
+
+            <div class="form-info">
+              <p class="text-blue hidden">남은 시간 00:00</p><!-- .hidden 추가 -->
+              <p class="text-error">인증번호가 일치하지 않습니다.</p><!-- .hidden 삭제 -->
+              <button type="button" class="btn link">재발송</button>
+            </div>
+          </div>
+
+          <!-- 시간 만료되었을 경우 -->
+          <div class="form-group type-verify">
+            <label for="otpCode_1" class="text-label">인증번호 6자리</label>
+            <div class="form-box num-only layout-flex error"><!-- .error 추가, input에 disabled 속성 추가 -->
+              <input type="text" id="otpCode_1" maxlength="1" autocomplete="off" disabled autofocus>
+              <input type="text" id="otpCode_2" maxlength="1" autocomplete="off" disabled>
+              <input type="text" id="otpCode_3" maxlength="1" autocomplete="off" disabled>
+              <input type="text" id="otpCode_4" maxlength="1" autocomplete="off" disabled>
+              <input type="text" id="otpCode_5" maxlength="1" autocomplete="off" disabled>
+              <input type="text" id="otpCode_6" maxlength="1" autocomplete="off" disabled>
+            </div>
+
+            <div class="form-info">
+              <p class="text-blue hidden">남은 시간 00:00</p><!-- .hidden 추가 -->
+              <p class="text-error">인증 시간이 만료되었습니다.</p><!-- .hidden 삭제 -->
+              <button type="button" class="btn link">재발송</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-area">
+          <button type="submit" class="btn dark lg" disabled>인증 확인</button>
+        </div>
+
+        <div class="logo-area">
+          <div class="mark-logo"><span class="sr-only">FURSYS</span></div>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <th:block th:replace="~{common/layout/js.html}" />
+</body>
+</html>

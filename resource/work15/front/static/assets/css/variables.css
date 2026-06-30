@@ -85,14 +85,15 @@
 
   --disabled-coef: 0.6;
   --dim-bg: rgba(13, 16, 18, var(--disabled-coef));
-  --shadow-base: 0 0px 6px 0 rgba(0,0,0,0.2);
+  --shadow-base: 0 0px 6px 0 rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 4px 30px 0 rgba(0, 0, 0, 0.16);
 
   --radius-base: 8px;
   --radius-round-lg: 100px;
 
   --icon-size-sm: 16px;
   --icon-size: 24px;
-  --icon-size-lg: 36px;
+  --icon-size-lg: 32px;
 
 
   /* COMMON SETTING */

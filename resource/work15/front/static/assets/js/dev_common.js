@@ -1,23 +1,59 @@
 /*
  * ----------------------------------------------------------
- * 전역 fetch 401 핸들러
- *   - 세션 만료 / 미인증 응답(401) 을 감지하면 "/" 로 이동
- *   - 로그인 API(/api/auth/*) 의 401 은 로그인 실패 메시지 처리를 위해 제외
+ * 전역 fetch 401 핸들러 — 세션 만료 시 "튕김 없이" 팝업 재로그인
+ *   - 세션 만료/미인증(401) 감지 시 현재 화면을 두고 로그인 팝업('/?relogin=1')을 띄움
+ *   - 팝업에서 로그인 성공 → opener(현재 화면) 새로고침 + 팝업 자동 종료
+ *   - 로그인 API(/api/auth/*) 401 은 로그인 실패 메시지 처리를 위해 제외
+ *   - 팝업 차단 시에는 기존 방식("/" 이동)으로 폴백
  * ----------------------------------------------------------
  */
 (function () {
   if (window.__fetch401HandlerInstalled) return;
   window.__fetch401HandlerInstalled = true;
 
-  const origFetch = window.fetch.bind(window);
+  var AUTH_PAGES = ["/", "/auth/verify", "/account/locked", "/account/password"];
+  var reloginHandling = false;
+
+  function isAuthPage() { return AUTH_PAGES.indexOf(location.pathname) !== -1; }
+  function isSameOrigin(url) {
+    try { return new URL(url, location.origin).origin === location.origin; }
+    catch (e) { return true; } // 상대경로 → 동일 출처
+  }
+
+  function openReloginPopup() {
+    if (reloginHandling) return;
+    // 로그인/인증 화면이거나, 이미 팝업(자기 자신)이면 무시
+    if (isAuthPage() || window.opener) return;
+    reloginHandling = true;
+
+    // 로그인 2단 레이아웃이 시원하게 보이도록 (화면의 80% x 92%, 상한 1280x960)
+    var w = Math.min(1280, Math.round(window.screen.availWidth  * 0.8));
+    var h = Math.min(960,  Math.round(window.screen.availHeight * 0.92));
+    var left = window.screenX + Math.max(0, (window.outerWidth - w) / 2);
+    var top  = window.screenY + Math.max(0, (window.outerHeight - h) / 2);
+    var pop = window.open("/?relogin=1", "oshReloginPopup",
+      "width=" + w + ",height=" + h + ",left=" + left + ",top=" + top + ",resizable=yes,scrollbars=yes");
+
+    if (!pop) {           // 팝업 차단 → 기존 방식으로 폴백
+      window.location.href = "/";
+      return;
+    }
+    try { pop.focus(); } catch (e) {}
+    // 사용자가 로그인 없이 팝업을 닫으면 다음 401 때 다시 띄울 수 있도록 플래그 해제
+    var t = setInterval(function () {
+      if (pop.closed) { clearInterval(t); reloginHandling = false; }
+    }, 700);
+  }
+
+  var origFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     return origFetch(input, init).then(function (response) {
       if (response && response.status === 401) {
-        const url = typeof input === "string" ? input : (input && input.url) || "";
-        const isAuthEndpoint = url.indexOf("/api/auth/") !== -1;
-        if (!isAuthEndpoint) {
-          window.location.href = "/";
-          return new Promise(function () { /* never resolve → 후속 .then 미실행 */ });
+        var url = typeof input === "string" ? input : (input && input.url) || "";
+        if (url.indexOf("/api/auth/") === -1 && isSameOrigin(url) && !isAuthPage() && !window.opener) {
+          openReloginPopup();
+          // 재로그인 성공 시 opener(현재 화면)가 reload 되므로 후속 .then 은 실행하지 않음
+          return new Promise(function () {});
         }
       }
       return response;
@@ -147,7 +183,6 @@ function baseNoticePopup({
  * alertPopup(message, callBack)
  * alertPopup(message, endFocus, callBack)
  * alertPopup(message, okBtn, endFocus, callBack)
- * alertPopup(title, message, endFocus, callBack)
  * alertPopup(title, message, okBtn, endFocus, callBack)
  * ----------------------------------------------------------
  */
@@ -168,27 +203,20 @@ function alertPopup(...args) {
 
   } else if (args.length === 3) {
     text = args[0];
-    focusReturnEl = document.querySelector(args[1]);
+    focusReturnEl = typeof args[1] === "string" ? document.querySelector(args[1]) : null;
     onConfirm = args[2];
 
   } else if (args.length === 4) {
-    if (typeof args[1] === "string" && args[1].startsWith("#")) {
-      text = args[0];
-      okBtn = args[1];
-      focusReturnEl = document.querySelector(args[2]);
-      onConfirm = args[3];
-    } else {
-      title = args[0];
-      text = args[1];
-      focusReturnEl = document.querySelector(args[2]);
-      onConfirm = args[3];
-    }
+    text = args[0];
+    okBtn = args[1];
+    focusReturnEl = typeof args[2] === "string" ? document.querySelector(args[2]) : null;
+    onConfirm = args[3];
 
   } else if (args.length === 5) {
     title = args[0];
     text = args[1];
     okBtn = args[2];
-    focusReturnEl = document.querySelector(args[3]);
+    focusReturnEl = typeof args[3] === "string" ? document.querySelector(args[3]) : null;
     onConfirm = args[4];
 
   } else {
@@ -247,8 +275,7 @@ function alertPopup(...args) {
  * ----------------------------------------------------------
  */
 function confirmPopup(...args) {
-
-  if (args.length === 1 && typeof args[0] === "object") {
+  if (args.length === 1 && typeof args[0] === "object" && args[0] !== null) {
     const opt = args[0];
 
     baseNoticePopup({
@@ -278,13 +305,13 @@ function confirmPopup(...args) {
 
   } else if (args.length === 3) {
     text = args[0];
-    focusReturnEl = document.querySelector(args[1]);
+    focusReturnEl = typeof args[1] === "string" ? document.querySelector(args[1]) : null;
     callback = args[2];
 
   } else if (args.length === 4) {
     title = args[0];
     text = args[1];
-    focusReturnEl = document.querySelector(args[2]);
+    focusReturnEl = typeof args[2] === "string" ? document.querySelector(args[2]) : null;
     callback = args[3];
 
   } else if (args.length === 6) {
@@ -292,7 +319,7 @@ function confirmPopup(...args) {
     text = args[1];
     okBtn = args[2];
     cancelBtn = args[3];
-    focusReturnEl = document.querySelector(args[4]);
+    focusReturnEl = typeof args[4] === "string" ? document.querySelector(args[4]) : null;
     callback = args[5];
 
   } else {

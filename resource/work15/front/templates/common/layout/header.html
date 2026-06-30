@@ -1,0 +1,119 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<header id="header">
+  <div class="header-cont">
+    <div class="menu-list-wrap">
+      <button type="button" id="btnMenu" class="btn-menu">
+        <i class="icon-menu"></i>
+        <span class="sr-only">메뉴</span>
+      </button>
+      <ul class="menu-list fade hidden">
+        <li><a th:href="@{/home}" class="menu-link"><i class="icon-home"></i> 홈</a></li>
+        <li><a th:href="@{/contract}" class="menu-link"><i class="icon-assignment"></i> 계약 정보</a></li>
+        <li><a th:href="@{/payment}" class="menu-link"><i class="icon-receipt"></i> 결제 정보</a></li>
+        <li>
+          <button type="button" class="menu-link btn-toggle" aria-controls="#menuListA">
+            <i class="icon-ruler"></i> 도면 관리
+          </button>
+          <ul class="sub-menu" id="menuListA">
+            <li><a th:href="@{/layout}" class="menu-link">도면 현황</a></li>
+            <li><a th:href="@{/layout/service}" class="menu-link">레이아웃 서비스</a></li>
+          </ul>
+        </li>
+        <li>
+          <button type="button" class="menu-link btn-toggle" aria-controls="#menuListB">
+            <i class="icon-desk"></i> 렌탈 서비스
+          </button>
+          <ul class="sub-menu" id="menuListB">
+            <li><a th:href="@{/service/care}" class="menu-link">오피스 케어</a></li>
+            <li><a th:href="@{/service/clean}" class="menu-link">의자 클리닝</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h1 class="header-title"><a th:href="@{/home}">OFFICE SERVICE HUB</a></h1>
+
+    <div class="util-area">
+      <div class="user-menu-wrap">
+        <button type="button" id="btnUserMenu" class="btn-usermenu">
+          <i class="icon-user"></i>
+          <span class="sr-only"></span>
+        </button>
+        <ul class="user-menu fade hidden">
+          <li><a th:href="@{/account/mypage}">마이페이지</a></li>
+          <li><button type="button" id="btnLogout">로그아웃</button></li>
+        </ul>
+      </div>
+
+      <div class="notif-list-wrap">
+        <button type="button" id="btnNotif" class="btn-notif">
+          <i class="icon-notif"></i>
+          <span class="dot bg-red"></span>
+        </button>
+
+        <div class="notif-wrap fade hidden">
+          <div class="header">
+            <p class="title">새로운 알림</p>
+            <button type="button" class="btn dark">모두 읽음</button>
+          </div>
+          <div class="content">
+            <!-- <p class="text-nodata">새로운 알림이 없습니다.</p> -->
+
+            <!-- !! 알림 텍스트 색상 참고 !!
+              <strong class="text-slate">신규 계약</strong>
+              <strong class="text-orange">결제 예정</strong>
+              <strong class="text-orange">결제 완료</strong>
+              <strong class="text-blue">레이아웃 서비스</strong>
+              <strong class="text-green">의자 클리닝</strong>
+            -->
+            <ul class="notif-list">
+              <li>
+                <a href="#0" class="new"><!-- 새로운 알림일 경우 .new 추가 -->
+                  <div class="top-area">
+                    <strong class="text-slate">신규 계약</strong>
+                    <span>2026.01.01</span>
+                  </div>
+                  <p class="title">중앙동 사옥 렌탈 7회차</p>
+                  <p>2026.01.01 ~ 2026.12.31</p>
+                </a>
+              </li>
+              <li>
+                <a href="#0">
+                  <div class="top-area">
+                    <strong class="text-green">의자 클리닝</strong>
+                    <span>2026.01.01</span>
+                  </div>
+                  <p class="title">오금 가락빌딩 렌탈</p>
+                  <p>2026.01.01 ~ 2026.12.31</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  /* 사이드 메뉴 - 로그아웃 */
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnLogout = document.getElementById('btnLogout');
+    if (!btnLogout) return;
+    btnLogout.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' }
+        });
+      } catch (err) {
+        console.error('logout error', err);
+      } finally {
+        // 성공/실패 무관하게 로그인 페이지로 이동 (서버 세션은 만료됨)
+        location.href = '/';
+      }
+    });
+  });
+</script>
+</html>

@@ -246,21 +246,30 @@
     </div>
     <!-- // search-area -->
 
+    <!-- 조회 조건이 없을 경우 -->
+    <div class="table-utils">
+      <p class="table-info">전체 0건</p>
+
+      <!-- [확인필요] 버튼 * 클릭 시 .is-active 토글
+                          * 버튼 활성화 시, 테이블 확인 상태 "확인필요" row만 노출
+                          * "확인필요" row가 없으면 0건으로 표기 후 disabled 속성 추가 -->
+      <button type="button" class="btn tag" disabled>
+        <span class="dot"></span>확인필요<span>0</span>
+      </button>
+    </div>
+    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
+
+    <!-- 조회 조건이 있을 경우 -->
     <div class="table-utils">
       <p class="table-info">전체 n건</p>
 
       <!-- [확인필요] 버튼 * 클릭 시 .is-active 토글
                           * 버튼 활성화 시, 테이블 확인 상태 "확인필요" row만 노출
                           * "확인필요" row가 없으면 0건으로 표기 후 disabled 속성 추가 -->
-      <button type="button" class="btn tag">
+      <button type="button" class="btn tag" id="btnFilter">
         <span class="dot"></span>확인필요<span>7</span>
       </button>
     </div>
-
-    <!-- 조회 조건이 없을 경우 -->
-    <!-- <div class="text-nodata">검색 내역이 존재하지 않습니다.</div> -->
-
-    <!-- 조회 조건이 있을 경우 -->
     <div class="table-wrap">
       <table>
         <colgroup>
@@ -315,7 +324,7 @@
 <script>
 
 /* 확인필요 버튼 클릭시 */
-const btnTag = document.querySelector('.btn.tag');
+const btnTag = document.querySelector('#btnFilter');
 btnTag.addEventListener('click', (e) => {
   const isActive = btnTag.classList.toggle('is-active');
 

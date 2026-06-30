@@ -10,7 +10,6 @@
   .tempPage { padding: 50px; margin: 50px 0; background: #fff; }
   .box, .box2 { display: flex; align-items: center; width: 250px; border: 1px solid #000; }
   .box { flex-direction: column; align-items: flex-start; height: auto; padding: var(--space-lg); }
-  /* .box > * { flex: 1; } */
   .box2 { height: 80px; justify-content: center; text-align: center; }
 </style>
 </head>
@@ -183,39 +182,50 @@
     <h3>default color: var(--fursys-black)</h3><br>
 
     <div class="list-inline">
+      <i class="icon-3d"></i>
       <i class="icon-account"></i>
       <i class="icon-arrow-b"></i>
       <i class="icon-arrow-l"></i>
       <i class="icon-arrow-r"></i>
       <i class="icon-assignment"></i>
+      <i class="icon-assignment-fill"></i>
       <i class="icon-attach"></i>
       <i class="icon-bank"></i>
       <i class="icon-calendar"></i>
       <i class="icon-card"></i>
       <i class="icon-card-check"></i>
+      <i class="icon-chair"></i>
       <i class="icon-check"></i>
       <i class="icon-close"></i>
       <i class="icon-close_sm"></i>
       <i class="icon-dashboard"></i>
+      <i class="icon-design-service"></i>
       <i class="icon-desk"></i>
       <i class="icon-document"></i>
       <i class="icon-download"></i>
       <i class="icon-edit"></i>
+      <i class="icon-ext-link"></i>
+      <i class="icon-fact-check"></i>
+      <i class="icon-half_circle"></i>
       <i class="icon-history"></i>
+      <i class="icon-home"></i>
+      <i class="icon-int-link"></i>
       <i class="icon-location"></i>
       <i class="icon-logout"></i>
-      <i class="icon-minus"></i>
       <i class="icon-menu"></i>
+      <i class="icon-minus"></i>
       <i class="icon-notice"></i>
-      <i class="icon-notification"></i>
+      <i class="icon-notif"></i>
       <i class="icon-plus"></i>
       <i class="icon-receipt"></i>
+      <i class="icon-receipt-fill"></i>
       <i class="icon-refresh"></i>
       <i class="icon-renew"></i>
       <i class="icon-ruler"></i>
       <i class="icon-search"></i>
-      <i class="icon-user"></i>
+      <i class="icon-star lg"></i>
       <i class="icon-upload"></i>
+      <i class="icon-user"></i>
     </div>
 
     <br>
@@ -223,9 +233,9 @@
     <h3>[variation] .pure / .bg-</h3><br>
 
     <div class="list-inline">
+      <i class="icon-user pure"></i>i.icon-user .pure
       <i class="icon-account"></i> i.icon-account
       <i class="icon-account lg"></i> i.icon-account .lg
-      <i class="icon-user pure"></i>i.icon-user .pure
     </div>
     <div class="list-inline mt-4">
       <i class="icon-account bg-red"></i> i.icon-account .bg-red
@@ -234,12 +244,25 @@
       <i class="icon-account bg-olive"></i> i.icon-account .bg-olive
       <i class="icon-account bg-green"></i> i.icon-account .bg-green
     </div>
+
+    <h3 class="mt-2xl mb-2xs">기타 아이콘 img 태그 사용</h3><br>
+    <ul class="list-column gap-md">
+      <li class="flex-center gap-2xs">
+        <img th:src="@{/assets/img/common/logo_mark.svg}" alt="fursys 로고">th:src="@{/assets/img/common/logo_mark.svg}"
+      </li>
+      <li class="flex-center gap-2xs">
+        <img th:src="@{/assets/img/common/logo_black.svg}" alt="fursys 로고">th:src="@{/assets/img/common/logo_black.svg}"
+      </li>
+      <li class="flex-center gap-2xs">
+        <img th:src="@{/assets/img/common/logo_color.svg}" alt="fursys 로고">th:src="@{/assets/img/common/logo_color.svg}"
+      </li>
+    </ul>
   </div>
 
 
   <div class="tempPage">
     <h2 class="page-title">* badge</h2>
-    <h3>[size] default: 22px / .sm 20px / .xs 18px / .w-fix 넓이 48px 고정 / .w-fix-lg 넓이 60px 고정</h3>
+    <h3>[size] default: 22px / .xxl 34px / .lg 24px / .sm 20px / .xs 18px / .w-fix 넓이 48px 고정 / .w-fix-lg 넓이 60px 고정</h3>
     <h3>[variation] .square / .bg- / .badge-line-</h3><br><br>
 
     <div class="list-inline">
@@ -247,6 +270,8 @@
       <span class="badge w-fix">.w-fix</span>
       <span class="badge w-fix-lg">.w-fix-lg</span>
       <span class="badge square">.badge .square</span>
+      <span class="badge xxl">.badge .xxl</span>
+      <span class="badge lg">.badge .lg</span>
       <span class="badge sm">.badge .sm</span>
       <span class="badge xs">.badge .xs</span>
     </div>

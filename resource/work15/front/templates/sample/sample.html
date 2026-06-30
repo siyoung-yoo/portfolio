@@ -6,10 +6,11 @@
 
 <style>
   .tempPage { padding: 50px;}
-  .tempTable td { cursor: default !important; border: 1px solid #f0f0f0; }
-  .tempTable .no, .tempTable .pageId, .tempTable .end { text-align: center; }
-  .tempTable a { display: inline-block; color: #111; }
-  .tempTable a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .tempTable td { text-align: left; cursor: default !important; border: 1px solid #f0f0f0; }
+  .tempTable td:nth-child(1), .tempTable td:nth-child(6) { text-align: center; }
+  .tempTable .pageId { padding: 0; }
+  .tempTable .pageId * { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: #111; }
+  .tempTable .pageId *:hover { text-decoration: underline; text-underline-offset: 4px; }
   .tempTable tr.divide td { border-top-width: 3px; }
   .pubList .info { font-size: 85%; line-height: 2; }
   button { color: initial; }
@@ -22,11 +23,12 @@
 
     <table class="is-selectable">
       <colgroup>
-        <col style="width: 50px">
+        <col style="width: 60px">
         <col style="width: 15%">
         <col style="width: 12%">
         <col style="width: 12%">
-        <col style="width: 15%">
+        <col style="width: 180px">
+        <col style="width: 210px">
         <col>
       </colgroup>
       <thead class="all-center">
@@ -34,7 +36,8 @@
           <th scope="col">No.</th>
           <th scope="col">1 depth</th>
           <th scope="col">2 depth</th>
-          <th scope="col">2 depth</th>
+          <th scope="col">3 depth</th>
+          <th scope="col">폴더 구분</th>
           <th scope="col">page</th>
           <th scope="col">비고</th>
         </tr>
@@ -44,41 +47,47 @@
           <td>컴포넌트 예시</td><!-- 1depth -->
           <td>typo & button & icon</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/guide01" target="_blank">type_button</a></td>
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/typo_button" target="_blank">typo_button</a></td>
           <td class="info">typo, info-list, btn, icon, badge, color</td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>form</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/guide02" target="_blank">form</a></td>
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/form" target="_blank">form</a></td>
           <td class="info">radio, checkbox, selectbox, input</td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>table & tab</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/guide03" target="_blank">table_tab</a></td>
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/table_tab" target="_blank">table_tab</a></td>
           <td class="info">table, tab</td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>etc</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/guide04" target="_blank">etc</a></td>
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/etc" target="_blank">etc</a></td>
           <td class="info">box-style, divider-dash, rating-wrap, thumb-img-list</td><!-- 비고 -->
         </tr>
         <tr class="divide">
           <td>샘플 페이지</td><!-- 1depth -->
           <td>레이아웃</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/layout" target="_blank">layout</a></td>
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/layout_sample" target="_blank">layout_sample</a></td>
           <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>로딩</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>sample</td><!-- 구분 -->
           <td class="pageId"><a href="/sample/loading_sample" target="_blank">loading_sample</a></td>
           <td class="info"></td><!-- 비고 -->
         </tr>
@@ -86,15 +95,9 @@
           <td></td><!-- 1depth -->
           <td>팝업</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>sample</td><!-- 구분 -->
           <td class="pageId"><a href="/sample/modal_sample" target="_blank">modal_sample</a></td>
           <td class="info">modal, alert, confirm</td><!-- 비고 -->
-        </tr>
-        <tr>
-          <td></td><!-- 1depth -->
-          <td>에러 페이지</td><!-- 2depth -->
-          <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/sample/error" target="_blank"></a></td>
-          <td class="info"></td><!-- 비고 -->
         </tr>
         <!-- // 가이드 -->
       </tbody>
@@ -105,6 +108,7 @@
           <td>Custom Element</td>
           <td>form</td>
           <td></td>
+          <td></td>
           <td class="text-center"><a href="/sample/form_comp_sample" target="_blank">form_comp_sample</a></td>
           <td class="info">custom-select, custom-input, custom-textarea 컴포넌트</td>
         </tr>
@@ -112,6 +116,7 @@
           <td></td>
           <td></td>
           <td>table & tab</td>
+          <td></td>
           <td></td>
           <td class="text-center"><a href="/sample/table_tab_comp_sample" target="_blank">table_tab_comp_sample</a></td>
           <td class="info">custom-table (SSR 페이지네이션), custom-tab 컴포넌트</td>
@@ -121,6 +126,7 @@
           <td></td>
           <td>팝업</td>
           <td></td>
+          <td></td>
           <td class="text-center"><a href="/sample/modal_comp_sample" target="_blank">modal_comp_sample</a></td>
           <td class="info">custom-modal, custom-alert 컴포넌트</td>
         </tr>
@@ -128,207 +134,248 @@
 
       <tbody>
         <tr>
-          <th colspan="6">페이지 확인용 링크(삭제 예정)</th>
+          <th colspan="7">페이지 확인용 링크(삭제 예정)</th>
         </tr>
       </tbody>
 
       <tbody class="tempTable pubList">
         <tr class="divide">
-          <td>진입 페이지</td><!-- 1depth -->
+          <td>공통</td><!-- 1depth -->
           <td>로그인</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td></td><!-- 구분 -->
           <td class="pageId"><a href="/" target="_blank">login</a></td>
-          <td class="info">[수정 04/13] placeholer 수정<br></td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
-          <td>문자 인증</td><!-- 2depth -->
+          <td>에러 페이지</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/auth/verify" target="_blank">verify</a></td>
-          <td class="info">[완료] 04/13</td><!-- 비고 -->
+          <td>sample</td><!-- 구분 -->
+          <td class="pageId"><a href="/sample/error" target="_blank">error</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>홈</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId">-</td>
-          <!-- <td class="pageId"><a href="/home" target="_blank">home</a></td> -->
+          <td>main/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/home" target="_blank">home</a></td>
           <td class="info"></td><!-- 비고 -->
         </tr>
 
         <tr class="divide">
           <td>계정/인증 페이지</td><!-- 1depth -->
+          <td>문자 인증</td><!-- 2depth -->
+          <td></td><!-- 3depth -->
+          <td>main/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/verify" target="_blank">verify</a></td>
+          <td class="info"></td><!-- 비고 -->
+        </tr>
+
+        <tr>
+          <td></td><!-- 1depth -->
           <td>비밀번호 변경</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/account/password" target="_blank">password</a></td>
-          <td class="info">[완료] 04/13</td>
+          <td>account/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/account/password" target="_blank">password</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>계정 잠금 안내</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/account/locked" target="_blank">locked</a></td>
-          <td class="info">[완료] 04/13</td>
+          <td>account/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/account/locked" target="_blank">locked</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>비밀번호 확인</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>account/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/account/confirm" target="_blank">confirm</a></td>
-          <td class="info">[완료] 06/02 신규 페이지 추가</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>마이 페이지</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>account/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/account/mypage" target="_blank">mypage</a></td>
-          <td class="info">[완료] 05/19</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
 
         <tr class="divide">
           <td>계약 정보</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/contract" target="_blank">contract</a></td>
-          <td class="info">[완료] 04/08</td><!-- 비고 -->
+          <td>contract/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/contract" target="_blank">contract</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>상세</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/contract/23" target="_blank">contractDetail</a></td>
-          <td class="info">[수정 04/10] divider-dash 추가<br>[완료] 04/08</td><!-- 비고 -->
+          <td>contract/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/contract/1" target="_blank">contractDetail</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 열람자 정보</td><!-- 3depth -->
+          <td>contract/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('viewerInfoModal');">viewerInfoModal</button></td>
-          <td class="info">[완료] 04/08</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
 
         <tr class="divide">
           <td>결제 정보</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/payment" target="_blank">payment</a></td>
-          <td class="info">[완료] 04/13</td><!-- 비고 -->
+          <td>payment/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/payment" target="_blank">payment</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 결제 상세</td><!-- 3depth -->
+          <td>payment/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('paymentDetailModal');">paymentDetailModal</button></td>
-          <td class="info">[완료] 04/13</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
 
         <tr class="divide">
           <td>도면 관리 > 도면 현황</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/layout" target="_blank">layout</a></td>
-          <td class="info">[완료] 04/21</td><!-- 비고 -->
-        </tr>
-        <tr>
-          <td></td><!-- 1depth -->
-          <td>도면 공유 페이지</td><!-- 2depth -->
-          <td></td><!-- 3depth -->
-          <td class="pageId">-</td>
-          <!-- <td class="pageId"><a href="/layout/1" target="_blank">layoutShare</a></td> -->
-          <td class="info"></td><!-- 비고 -->
-        </tr>
-        <tr>
-          <td></td><!-- 1depth -->
-          <td></td><!-- 2depth -->
-          <td>[팝업] 도면 이미지</td><!-- 3depth -->
-          <td class="pageId">-</td>
-          <!-- <td class="pageId"><button type="button" onclick="fnPopupOpen('');"></button></td> -->
           <td class="info"></td><!-- 비고 -->
         </tr>
         <tr class="divide">
           <td>도면 관리 > 레이아웃 서비스</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/layout/service" target="_blank">service</a></td>
-          <td class="info">[수정 05/20] 진행 대리점 input > select로 수정<br>[완료] 04/16</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>신청</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/layout/service/apply" target="_blank">serviceApply</a></td>
-          <td class="info">[완료] 04/17</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
-          <td>상세</td><!-- 2depth -->
+          <td>상세 (신청)</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/pub/layout/service/1" target="_blank">serviceDetail</a></td>
-          <td class="info">[완료] 04/28</td><!-- 비고 -->
+          <td>layout/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/layout/service/1" target="_blank">serviceDetail_01</a></td>
+          <td class="info"></td><!-- 비고 -->
+        </tr>
+        <tr>
+          <td></td><!-- 1depth -->
+          <td>상세 (접수)</td><!-- 2depth -->
+          <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/layout/service/2" target="_blank">serviceDetail_02</a></td>
+          <td class="info"></td><!-- 비고 -->
+        </tr>
+        <tr>
+          <td></td><!-- 1depth -->
+          <td>상세 (진행)</td><!-- 2depth -->
+          <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/layout/service/3" target="_blank">serviceDetail_03</a></td>
+          <td class="info"></td><!-- 비고 -->
+        </tr>
+        <tr>
+          <td></td><!-- 1depth -->
+          <td>상세 (완료)</td><!-- 2depth -->
+          <td></td><!-- 3depth -->
+          <td>layout/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/layout/service/4" target="_blank">serviceDetail_04</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 만족도 조사</td><!-- 3depth -->
+          <td>layout/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('layoutRatingModal');">layoutRatingModal</button></td>
-          <td class="info">[완료] 04/28</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
 
         <tr class="divide">
           <td>렌탈 서비스 > 오피스 케어</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>service/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/service/care" target="_blank">care</a></td>
-          <td class="info">[완료] 05/15</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 케어리포트 상세</td><!-- 3depth -->
+          <td>service/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('careReportModal');">careReportModal</button></td>
-          <td class="info">[완료] 05/15</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 이미지 스와이퍼</td><!-- 3depth -->
+          <td>service/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('imgSwiperModal');">imgSwiperModal</button></td>
-          <td class="info">[완료] 05/15</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td></td><!-- 2depth -->
           <td>[팝업] 만족도 조사</td><!-- 3depth -->
+          <td>service/pub/modal</td><!-- 구분 -->
           <td class="pageId"><button type="button" onclick="fnPopupOpen('serviceRatingModal');">serviceRatingModal</button></td>
-          <td class="info">[완료] 05/15</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr class="divide">
           <td>렌탈 서비스 > 의자 클리닝</td><!-- 1depth -->
           <td>목록</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>service/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/service/clean" target="_blank">clean</a></td>
-          <td class="info">[완료] 05/18</td><!-- 비고 -->
-        </tr>
-        <tr>
-          <td></td><!-- 1depth -->
-          <td></td><!-- 2depth -->
-          <td>[팝업] 신청 내용 요약</td><!-- 3depth -->
-          <td class="pageId"><button type="button" onclick="fnPopupOpen('applySummaryModal');">applySummaryModal</button></td>
-          <td class="info">[완료] 05/18</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
           <td>신청</td><!-- 2depth -->
           <td></td><!-- 3depth -->
+          <td>service/pub</td><!-- 구분 -->
           <td class="pageId"><a href="/pub/service/clean/apply" target="_blank">cleanApply</a></td>
-          <td class="info">[완료] 05/18</td><!-- 비고 -->
+          <td class="info"></td><!-- 비고 -->
         </tr>
         <tr>
           <td></td><!-- 1depth -->
-          <td>상세</td><!-- 2depth -->
+          <td>상세 (서비스 이력이 없을 경우)</td><!-- 2depth -->
           <td></td><!-- 3depth -->
-          <td class="pageId"><a href="/pub/service/clean/1" target="_blank">cleanDetail</a></td>
-          <td class="info">[완료] 05/18</td><!-- 비고 -->
+          <td>service/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/service/clean/1" target="_blank">cleanDetail_01</a></td>
+          <td class="info"></td><!-- 비고 -->
+        </tr>
+        <tr>
+          <td></td><!-- 1depth -->
+          <td>상세 (서비스 이력이 있을 경우)</td><!-- 2depth -->
+          <td></td><!-- 3depth -->
+          <td>service/pub</td><!-- 구분 -->
+          <td class="pageId"><a href="/pub/service/clean/2" target="_blank">cleanDetail_02</a></td>
+          <td class="info"></td><!-- 비고 -->
         </tr>
       </tbody>
     </table>
@@ -336,13 +383,12 @@
 
 
 
-<th:block th:insert="~{contract/modal/viewerInfoModal}"></th:block>  <!-- Modal: 계약정보 > 열람자 정보 -->
-<th:block th:insert="~{payment/modal/paymentDetailModal}"></th:block><!-- Modal: 결제정보 > 결제 상세 -->
-<th:block th:insert="~{layout/modal/layoutRatingModal}"></th:block>  <!-- Modal: 레이아웃서비스 > 만족도 조사 -->
+<th:block th:insert="~{contract/pub/modal/viewerInfoModal}"></th:block>  <!-- Modal: 계약정보 > 열람자 정보 -->
+<th:block th:insert="~{payment/pub/modal/paymentDetailModal}"></th:block><!-- Modal: 결제정보 > 결제 상세 -->
+<th:block th:insert="~{layout/pub/modal/layoutRatingModal}"></th:block>  <!-- Modal: 레이아웃서비스 > 만족도 조사 -->
 <th:block th:insert="~{service/pub/modal/careReportModal}"></th:block>   <!-- Modal: 오피스 케어  > 케어 리포트 상세 -->
 <th:block th:insert="~{service/pub/modal/imgSwiperModal}"></th:block>    <!-- Modal: 오피스 케어  > 이미지 스와이퍼 -->
 <th:block th:insert="~{service/pub/modal/serviceRatingModal}"></th:block><!-- Modal: 오피스 케어  > 만족도 조사 -->
-<th:block th:insert="~{service/pub/modal/applySummaryModal}"></th:block> <!-- Modal: 의자 클리닝 > 신청 내용 요약 -->
 <script>
   document.querySelectorAll(".tempTable tr").forEach((tr, index) => {
     let numCell = tr.querySelector(".no");

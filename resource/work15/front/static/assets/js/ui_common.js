@@ -2,9 +2,15 @@
 // init
 // --------------------
 document.addEventListener('DOMContentLoaded', () => {
-  initBtnToggle();
+  initMenuVisibility();
+  initResetClick();
   initMenuActions();
+  setActiveMenu();
+
+  initUserMenuActions();
   initNotifActions();
+
+  initBtnToggle();
   initFormText();
   initDatePicker();
   initTabs();
@@ -13,6 +19,177 @@ document.addEventListener('DOMContentLoaded', () => {
   initPagination();
 });
 
+// --------------------
+// resize
+// --------------------
+window.addEventListener("resize", () => {
+  const isHome = window.location.pathname === "/home";
+  if (!isHome) updateMenuByWidth();
+});
+
+// --------------------
+// header 메뉴 동작
+// --------------------
+const btnMenu = document.querySelector('#btnMenu');
+const headerMenuWrap = document.querySelector("#header .menu-list");
+const btnUserMenu = document.querySelector("#btnUserMenu");
+const userMenuWrap = document.querySelector("#header .user-menu");
+const btnNotif = document.querySelector("#btnNotif");
+const notifWrap = document.querySelector("#header .notif-wrap");
+const MENU_BREAKPOINT = 1468;
+
+function updateMenuByWidth() {
+  if (window.innerWidth >= MENU_BREAKPOINT) {
+    headerMenuWrap?.classList.remove("hidden");
+  } else {
+    headerMenuWrap?.classList.add("hidden");
+  }
+}
+
+function initMenuVisibility() {
+  const isHome = window.location.pathname === "/home";
+
+  if (isHome) {
+    headerMenuWrap?.classList.add("hidden");
+  } else {
+    updateMenuByWidth();
+  }
+}
+
+function initResetClick() {
+  document.addEventListener("click", (e) => {
+    // header menu
+    const isHome = window.location.pathname === "/home";
+    const isHeaderMenuInside = btnMenu?.contains(e.target) || headerMenuWrap?.contains(e.target);
+    const shouldHandleHeaderMenu = isHome || window.innerWidth < MENU_BREAKPOINT;
+    if (shouldHandleHeaderMenu && !isHeaderMenuInside) headerMenuWrap?.classList.add("hidden");
+
+    // user menu
+    const isUserMenuInside = btnUserMenu?.contains(e.target) || userMenuWrap?.contains(e.target);
+    if (!isUserMenuInside) userMenuWrap?.classList.add("hidden");
+
+    // notification
+    const isNotifInside = btnNotif?.contains(e.target) || notifWrap?.contains(e.target);
+    if (!isNotifInside) notifWrap?.classList.add("hidden");
+  });
+}
+
+function initMenuActions() {
+  if (!headerMenuWrap) return;
+  if (!btnMenu) return;
+
+  btnMenu.addEventListener('click', (e) => {
+    headerMenuWrap.classList.toggle('hidden');
+  })
+
+  const links = document.querySelectorAll("#header .menu-list-wrap .menu-link");
+  const expandedToggles = () => document.querySelectorAll("#header .btn-toggle.is-expanded");
+
+  links.forEach(link => {
+    link.addEventListener("click", function() {
+
+      // 전체 active 제거
+      links.forEach(l => l.classList.remove("is-active"));
+      const isToggle = this.hasAttribute("aria-controls");
+      const isExpanded = this.getAttribute("aria-expanded") === "true";
+
+      // 토글 메뉴
+      if (isToggle) {
+        if (!isExpanded) {
+          this.classList.add("is-active");
+          expandedToggles().forEach(closeToggle);
+        } else {
+          this.classList.remove("is-active");
+        }
+        return;
+      }
+
+      // 일반 메뉴
+      this.classList.add("is-active");
+
+      const parentUl = this.closest("ul");
+      const isSubMenu = parentUl?.classList.contains("sub-menu");
+
+      if (isSubMenu) {
+        const parentLink = parentUl.previousElementSibling;
+        parentLink?.classList.add("is-active");
+      } else {
+        expandedToggles().forEach(closeToggle);
+      }
+    });
+  });
+}
+
+function setActiveMenu() {
+  const currentPath = window.location.pathname;
+  const menuLinks = document.querySelectorAll("#header .menu-list-wrap .menu-link[href]");
+  let activeLink = null;
+  let maxMatchLength = 0;
+
+  menuLinks.forEach(link => {
+    const href = link.getAttribute("href");
+    if (!href || href === "#0") return;
+
+    if (
+      currentPath === href ||
+      currentPath.startsWith(href + "/")
+    ) {
+      if (href.length > maxMatchLength) {
+        maxMatchLength = href.length;
+        activeLink = link;
+      }
+    }
+  });
+
+  if (!activeLink) return;
+  activeLink.classList.add("is-active");
+
+  const subMenu = activeLink.closest(".sub-menu");
+  if (subMenu) {
+    const parentToggle = subMenu.previousElementSibling;
+    parentToggle?.classList.add("is-active");
+
+    if (parentToggle) {
+      openToggle(parentToggle);
+    }
+  }
+}
+
+function initUserMenuActions() {
+  if (!btnUserMenu || !userMenuWrap) return;
+
+  btnUserMenu.addEventListener("click", () => {
+    userMenuWrap.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    const isInside = btnUserMenu.contains(e.target) || userMenuWrap.contains(e.target);
+    if (!isInside) userMenuWrap.classList.add("hidden");
+  });
+}
+
+function initNotifActions() {
+  if (!btnNotif || !notifWrap) return;
+
+  btnNotif.addEventListener("click", () => {
+    const isActive = notifWrap.classList.toggle("hidden");
+    btnNotif.classList.toggle("hidden", isActive);
+
+    // 스크롤 초기화
+    if (isActive) {
+      const list = notifWrap.querySelector(".notif-list");
+      if (list) list.scrollTop = 0;
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const isInside = btnNotif.contains(e.target) || notifWrap.contains(e.target);
+
+    if (!isInside) {
+      notifWrap.classList.add("hidden");
+    }
+  });
+}
 
 // --------------------
 // toggle 초기화
@@ -80,82 +257,6 @@ function closeToggle(btn) {
 
   const srOnly = btn.querySelector(".sr-only");
   if (srOnly) srOnly.textContent = "열기";
-}
-
-
-// --------------------
-// sideNavi 메뉴 동작
-// --------------------
-function initMenuActions() {
-  const sideNavi = document.querySelector("#sideNavi");
-  if (!sideNavi) return;
-
-  const links = document.querySelectorAll("#sideNavi .menu-list-wrap .menu-link");
-  const expandedToggles = () => document.querySelectorAll("#sideNavi .btn-toggle.is-expanded");
-
-  links.forEach(link => {
-    link.addEventListener("click", function() {
-
-      // 전체 active 제거
-      links.forEach(l => l.classList.remove("is-active"));
-      const isToggle = this.hasAttribute("aria-controls");
-      const isExpanded = this.getAttribute("aria-expanded") === "true";
-
-      // 토글 메뉴
-      if (isToggle) {
-        if (!isExpanded) {
-          this.classList.add("is-active");
-          expandedToggles().forEach(closeToggle);
-        } else {
-          this.classList.remove("is-active");
-        }
-        return;
-      }
-
-      // 일반 메뉴
-      this.classList.add("is-active");
-
-      const parentUl = this.closest("ul");
-      const isSubMenu = parentUl?.classList.contains("sub-menu");
-
-      if (isSubMenu) {
-        const parentLink = parentUl.previousElementSibling;
-        parentLink?.classList.add("is-active");
-      } else {
-        expandedToggles().forEach(closeToggle);
-      }
-    });
-  });
-}
-
-// --------------------
-// sideNavi 메뉴 > 알림 영역 동작
-// --------------------
-function initNotifActions() {
-  const btnNotif = document.querySelector("#btnNotif");
-  const notifWrap = document.querySelector(".notif-wrap");
-
-  if (!btnNotif || !notifWrap) return;
-
-  btnNotif.addEventListener("click", () => {
-    const isActive = notifWrap.classList.toggle("is-active");
-    btnNotif.classList.toggle("is-active", isActive);
-
-    // 스크롤 초기화
-    if (isActive) {
-      const list = notifWrap.querySelector(".notif-list");
-      if (list) list.scrollTop = 0;
-    }
-  });
-
-  document.addEventListener("click", (e) => {
-    const isInside = btnNotif.contains(e.target) || notifWrap.contains(e.target);
-
-    if (!isInside) {
-      notifWrap.classList.remove("is-active");
-      btnNotif.classList.remove("is-active");
-    }
-  });
 }
 
 // --------------------
@@ -434,9 +535,9 @@ function initSelectBox() {
 
       currentBtnSelect.innerHTML = optionBtn.innerHTML;
 
-      if (optionBtn.dataset.value !== undefined) {
-        currentBtnSelect.dataset.value = optionBtn.dataset.value;
-      }
+      // 옵션의 data-value 를 항상 반영. "전체"처럼 값이 빈 문자열이면 속성이 렌더링되지 않아
+      // dataset.value 가 undefined 가 되므로, 이 경우 빈 문자열로 세팅해 이전 선택값이 남지 않도록 한다.
+      currentBtnSelect.dataset.value = optionBtn.dataset.value ?? '';
 
       dropdown.querySelectorAll("button").forEach(btn => {
         btn.classList.remove("selected");

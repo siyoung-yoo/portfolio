@@ -12,9 +12,8 @@
 <body>
   <div class="tempPage">
     <h2 class="page-title">* TABLE</h2><br>
-
     <h3 class="title-lg">.table-wrap > table</h3><br><br>
-    <div class="table-wrap">
+    <div class="table-wrap" id="tableA">
       <table>
         <colgroup>
           <col style="width: 15%">
@@ -37,7 +36,7 @@
         <tbody>
           <tr>
             <td>value</td>
-            <td class="row-title">value</td>
+            <td>value</td>
             <td>value</td>
             <td>value</td>
             <td>value</td>
@@ -51,21 +50,58 @@
             <td class="text-right">.text-right</td>
             <td><span class="badge w-fix">badge</span> <span class="badge w-fix-lg">badge</span></td>
           </tr>
+          <tr>
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioA" id="radioA01">
+                <label for="radioA01"></label>
+              </div>
+            </td>
+            <td class="row-title" colspan="5">tr.selected + hover 스타일 X + input만 선택 가능</td>
+          </tr>
+          <tr class="selected">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioA" id="radioA02" checked>
+                <label for="radioA02"></label>
+              </div>
+            </td>
+            <td class="row-title" colspan="5">tr.selected + hover 스타일 X + input만 선택 가능</td>
+          </tr>
+          <tr class="is-disabled">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioA" id="radioA03" disabled>
+                <label for="radioA03"></label>
+              </div>
+            </td>
+            <td class="row-title" colspan="5">row disabled일 경우 (tr.is-disabled)</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <script>
+      document.querySelectorAll('#tableA input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          const selectedRow = radio.closest('tr');
+
+          // row 스타일 변경
+          document.querySelectorAll('#tableA tr').forEach(tr => {
+            tr.classList.toggle('selected', tr === selectedRow);
+          });
+        });
+      });
+    </script>
 
     <br><br><br>
 
     <h3 class="title-lg">.table-wrap > table.is-selectable</h3><br>
 
     <div class="table-utils">
-      <p class="table-info">전체 21건</p>
+      <p class="table-info">전체 n건</p>
     </div>
-
-    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
-
-    <div class="table-wrap">
+    <div class="table-wrap" id="tableB">
       <table class="is-selectable">
         <colgroup>
           <col style="width: 15%">
@@ -88,7 +124,7 @@
         <tbody>
           <tr>
             <td>value</td>
-            <td class="row-title">value</td>
+            <td>value</td>
             <td>value</td>
             <td>value</td>
             <td>value</td>
@@ -102,11 +138,182 @@
             <td class="text-center">.text-center</td>
             <td class="text-right">.text-right</td>
           </tr>
+          <tr>
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioB" id="radioB01">
+                <label for="radioB01"></label>
+              </div>
+            </td>
+            <td colspan="5" class="row-title">tr.selected + hover 스타일 O + row 선택 가능 + 텍스트 컬러 변경 O</td>
+          </tr>
+          <tr class="selected">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioB" id="radioB02" checked>
+                <label for="radioB02"></label>
+              </div>
+            </td>
+            <td colspan="5" class="row-title">tr.selected + hover 스타일 O + row 선택 가능 + 텍스트 컬러 변경 O</td>
+          </tr>
+          <tr class="is-disabled">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioB" id="radioB03" disabled>
+                <label for="radioB03"></label>
+              </div>
+            </td>
+            <td colspan="5" class="row-title">row disabled일 경우 (tr.is-disabled)</td>
+          </tr>
         </tbody>
       </table>
     </div>
-
     <div th:replace="~{common/fragments/pagination :: pagination}"></div>
+
+    <script>
+      document.querySelectorAll("#tableB tbody").forEach((tbody) => {
+        tbody.addEventListener("click", (e) => {
+          const tr = e.target.closest("tr");
+          if (!tr || tr.classList.contains("is-disabled")) return;
+
+          // radio가 있는 row만 동작
+          const radio = tr.querySelector('input[type="radio"]');
+          if (!radio || radio.disabled) return;
+
+          tbody.querySelectorAll("tr.selected").forEach((row) => {
+            row.classList.remove("selected");
+          });
+
+          radio.checked = true;
+          tr.classList.add("selected");
+        });
+      });
+
+      document.querySelectorAll('#tableB input[type="radio"]').forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const tbody = radio.closest("tbody");
+
+          tbody.querySelectorAll("tr.selected").forEach((row) => {
+            row.classList.remove("selected");
+          });
+
+          radio.closest("tr").classList.add("selected");
+        });
+      });
+    </script>
+
+    <br><br><br>
+
+    <h3 class="title-lg">.table-wrap > table.tr-hover (텍스트 색상 변화 없이 bg색상만 hover시 변경)</h3><br>
+    <div class="table-utils">
+      <p class="table-info">전체 n건</p>
+    </div>
+    <div class="table-wrap" id="tableC">
+      <table class="tr-hover">
+        <colgroup>
+          <col style="width: 15%">
+          <col>
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+          <col style="width: 15%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+            <th scope="col">title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+            <td>value</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td class="row-title">.row-title</td>
+            <td>value</td>
+            <td>value</td>
+            <td class="text-center">.text-center</td>
+            <td class="text-right">.text-right</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioC" id="radioC01">
+                <label for="radioC01"></label>
+              </div>
+            </td>
+            <td  class="row-title" colspan="5">tr.selected + hover 스타일 O + row 선택 가능 + 텍스트 컬러 변경 X</td>
+          </tr>
+          <tr class="selected">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioC" id="radioC02" checked>
+                <label for="radioC02"></label>
+              </div>
+            </td>
+            <td  class="row-title" colspan="5">tr.selected + hover 스타일 O + row 선택 가능 + 텍스트 컬러 변경 X</td>
+          </tr>
+          <tr class="is-disabled">
+            <td>
+              <div class="form-chk">
+                <input type="radio" name="radioC" id="radioC03" disabled>
+                <label for="radioC03"></label>
+              </div>
+            </td>
+            <td  class="row-title" colspan="5">row disabled일 경우 (tr.is-disabled)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div th:replace="~{common/fragments/pagination :: pagination}"></div>
+
+    <script>
+      document.querySelectorAll("#tableC tbody").forEach((tbody) => {
+        tbody.addEventListener("click", (e) => {
+          const tr = e.target.closest("tr");
+          if (!tr || tr.classList.contains("is-disabled")) return;
+
+          // radio가 있는 row만 동작
+          const radio = tr.querySelector('input[type="radio"]');
+          if (!radio || radio.disabled) return;
+
+          tbody.querySelectorAll("tr.selected").forEach((row) => {
+            row.classList.remove("selected");
+          });
+
+          radio.checked = true;
+          tr.classList.add("selected");
+        });
+      });
+
+      document.querySelectorAll('#tableC input[type="radio"]').forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const tbody = radio.closest("tbody");
+
+          tbody.querySelectorAll("tr.selected").forEach((row) => {
+            row.classList.remove("selected");
+          });
+
+          radio.closest("tr").classList.add("selected");
+        });
+      });
+    </script>
+
+    <h3 class="title-lg">값 없을 경우 (.text-nodata)</h3><br><br>
+    <div class="table-utils">
+      <p class="table-info">전체 0건</p>
+    </div>
+    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
   </div>
 
 

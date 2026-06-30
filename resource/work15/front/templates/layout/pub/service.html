@@ -24,13 +24,6 @@
           </div>
         </div>
 
-        <!-- <div class="form-group w-md">
-          <label for="form02" class="text-label">진행 대리점</label>
-          <div class="form-box">
-            <input type="text" id="form02" autocomplete="off" placeholder="진행 대리점" title="진행 대리점 입력">
-          </div>
-        </div> -->
-        <!-- [2026-05-20] input > select 로 변경 -->
         <div class="form-group w-md">
           <label for="form02" class="text-label">진행 대리점</label>
           <div class="select-box">
@@ -44,7 +37,6 @@
             </div>
           </div>
         </div>
-        <!-- // [2026-05-20] input > selectbox로 변경 -->
 
         <div class="form-group w-sm">
           <label for="form03" class="text-label">진행 상태</label>
@@ -83,14 +75,16 @@
     </div>
     <!-- // search-area -->
 
+    <!-- 조회 조건이 없을 경우 -->
+    <div class="table-utils">
+      <p class="table-info">전체 0건</p>
+    </div>
+    <div class="text-nodata">검색 내역이 존재하지 않습니다.</div>
+
+    <!-- 조회 조건이 있을 경우 -->
     <div class="table-utils">
       <p class="table-info">전체 n건</p>
     </div>
-
-    <!-- 조회 조건이 없을 경우 -->
-    <!-- <div class="text-nodata">검색 내역이 존재하지 않습니다.</div> -->
-
-    <!-- 조회 조건이 있을 경우 -->
     <div class="table-wrap">
       <table class="is-selectable">
         <colgroup>

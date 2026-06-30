@@ -1,0 +1,204 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+
+  <div id="bodyContent" class="service-page">
+    <div class="title-area flex-col">
+      <h2 class="contents-title items-center gap-2xs">2026년 LG전자 가산캠퍼스 12층 리뉴얼 건
+        <!-- <span class="badge-line-orange w-fix">신청</span> -->
+        <!-- <span class="badge-line-green w-fix">접수</span> -->
+        <span class="badge-line-blue w-fix">진행</span>
+        <!-- <span class="badge bg-light-gray w-fix">완료</span> -->
+      </h2>
+
+      <p class="page-description">CT-2024-001</p>
+      <!-- <button type="button" class="btn line rounded"><i class="icon-edit"></i>수정</button> -->
+    </div>
+    <!-- // .title-area -->
+
+    <div class="layout-with-panel">
+      <div class="layout-content">
+        <div class="header">
+          <h3 class="group-title">서비스 신청 정보</h3>
+        </div>
+
+        <div class="contents">
+          <div class="group">
+            <ul class="info-list col-2">
+              <li>
+                <div class="title">목적</div>
+                <div class="value">신규 공간 구축, 기존 공간 변경, 기타</div>
+              </li>
+              <li>
+                <div class="title">대리점</div>
+                <div class="value">퍼시스강남</div>
+              </li>
+              <li>
+                <div class="title">서비스 담당자</div>
+                <div class="value">홍길동</div>
+              </li>
+              <li>
+                <div class="title">담당자 연락처</div>
+                <div class="value">010-1234-4569</div>
+              </li>
+              <li>
+                <div class="title">신청일자</div>
+                <div class="value spacing-lg">2026.01.28</div>
+              </li>
+              <li>
+                <div class="title">최종 업로드일</div>
+                <div class="value">-</div>
+              </li>
+              <li class="span-2 pb-md">
+                <div class="title">내용</div>
+                <div class="value font-regular">12층 전체 공간 리뉴얼 요청드립니다. 고정좌석과 자율좌석을 혼용한 배치안과 자율좌석 중심 배치안 두 가지를 제안해주시면 감사하겠습니다.</div>
+              </li>
+            </ul>
+          </div>
+          <!-- // 상세 정보 -->
+
+          <div class="group type-upload">
+            <div class="title-area justify-between">
+              <h3 class="group-title">업로드 파일</h3>
+              <span class="font-sm font-bold"><span>0</span>개</span>
+            </div>
+
+            <div class="list-column">
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-attach"></i>
+                </div>
+                <div class="list-column flex-1">
+                  <div class="font-md">
+                    <span class="mr-3xs">본사6층 리뉴얼.dwg</span>
+                    <span class="badge square sm align-bottom">기존</span>
+                  </div>
+                  <p class="font-sm text-gray">블라블라 리뉴얼 파일입니다.</p>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-attach"></i>
+                </div>
+                <div class="list-column flex-1">
+                  <div class="font-md">
+                    <span class="mr-3xs">본사6층 리뉴얼.dwg</span>
+                  </div>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-attach"></i>
+                </div>
+                <div class="list-column flex-1">
+                  <div class="font-md">
+                    <span class="mr-3xs">본사6층 리뉴얼 본사6층 리뉴얼 본사6층 리뉴얼 본사6층 리뉴얼 본사6층 리뉴얼 본사6층 리뉴얼 본사6층 리뉴얼.dwg</span>
+                    <span class="badge square sm align-bottom">기존</span>
+                  </div>
+                  <p class="font-sm text-gray">블라블라 리뉴얼 파일입니다.블라블라 리뉴얼 파일입니다.블라블라 리뉴얼 파일입니다.블라블라 리뉴얼 파일입니다.블라블라 리뉴얼 파일입니다.</p>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+          <!-- // 업로드 파일-->
+        </div>
+      </div>
+      <!-- // 왼쪽 영역(.layout-content) -->
+
+      <div class="layout-panel">
+        <div class="header">
+          <h3 class="group-title">작업 결과</h3>
+        </div>
+
+        <!-- <div class="text-nodata">대리점에서 확인 중입니다.</div> -->
+        <!-- <div class="text-nodata">대리점에서 작업 중입니다.</div> -->
+
+        <!-- .panel-cont 영역은 숨김 처리할때 hidden 클래스로 제어해 주세요 -->
+        <div class="panel-cont">
+          <div class="flex justify-end mb-xs">
+            <p class="font-sm">업로드 파일 <strong>0개</strong></p>
+          </div>
+
+          <div class="scroll-area">
+            <div class="list-column">
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-document"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="title list-inline flex-nowrap">
+                    <strong class="ellipsis">파일명 파일명 파일명 파일명 파일명 파일명</strong>
+                    <span class="badge square sm bg-blue">NEW</span>
+                  </div>
+                  <p class="font-sm">최종 수정</p>
+                  <p class="font-sm text-gray mt-2xs spacing-lg">2026.01.01</p>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-document"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="title list-inline flex-nowrap">
+                    <strong class="ellipsis">파일명 파일명 파일명 파일명 파일명 파일명</strong>
+                  </div>
+                  <p class="font-sm">최종 수정</p>
+                  <p class="font-sm text-gray mt-2xs spacing-lg">2026.01.01</p>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+
+              <a href="#" download class="btn attach-file">
+                <div class="icon-area">
+                  <i class="icon-document"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="title list-inline flex-nowrap">
+                    <strong class="ellipsis">파일명 파일명 파일명 파일명 파일명 파일명</strong>
+                  </div>
+                  <p class="font-sm">최종 수정</p>
+                  <p class="font-sm text-gray mt-2xs spacing-lg">2026.01.01</p>
+                </div>
+                <div class="icon-area">
+                  <i class="icon-download"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- .panel-footer 영역은 숨김 처리할때 hidden 클래스로 제어해 주세요 -->
+        <div class="panel-footer">
+          <div class="flex items-center gap-2xs font-md pr-md">
+            <i class="icon-check bg-green"></i>결과물 확인이 완료 되셨나요?
+          </div>
+          <p class="font-sm">확인 후 완료 처리를 해주시면 서비스가 종료됩니다.</p>
+          <button type="button" class="btn dark mt-2xs" onclick="fnPopupOpen('layoutRatingModal')">확인 완료</button>
+        </div>
+      </div>
+      <!-- // 오른쪽 영역(.layout-panel) -->
+    </div>
+  </div>
+
+  <th:block th:insert="~{layout/modal/layoutRatingModal}"></th:block><!-- Modal: 레이아웃서비스 > 만족도 조사 -->
+</th:block>
+</body>
+</html>

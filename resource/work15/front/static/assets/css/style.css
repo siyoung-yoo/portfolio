@@ -3,8 +3,14 @@
 @import url(base.css);
 @import url(component.css);
 @import url(layout.css);
+@import url(home.css);
 @import url(page.css);
 
 /**** z-index 정리 ****
-  // { z-index: 10  }  #header, #sideInfo
+  { z-index: 200 } .loading-wrap
+  { z-index: 150 } .popup-alert
+  { z-index: 100 } .popup-wrap, .home-fade-in
+  { z-index: 50 } #header
+  { z-index: 20 } .flatpickr-calendar
+  { z-index: 10 } .select-box > .option-list
 */

@@ -1,0 +1,411 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout/default.html}">
+<body>
+
+<th:block layout:fragment="contents">
+  <div id="bodyContent" class="contract-page">
+    <div class="title-area">
+      <h2 class="contents-title">퍼시스 본사 사옥 리뉴얼 건</h2>
+      <span class="badge-line-blue w-fix">렌탈중</span>
+      <span class="badge bg-light-gray w-fix">완료</span>
+    </div>
+    <!-- // .title-area -->
+
+    <div class="layout-with-panel">
+      <div class="layout-content">
+        <div class="header">
+          <h3 class="group-title">계약 정보</h3>
+          <button type="button" class="btn link" onclick="fnPopupOpen('viewerInfoModal')">열람자 보기</button>
+        </div>
+
+        <div class="contents">
+          <div class="group">
+            <ul class="info-list col-2">
+              <li>
+                <div class="title">계약일</div>
+                <div class="value spacing-lg">2024.01.15</div>
+              </li>
+              <li>
+                <div class="title">계약번호</div>
+                <div class="value">CT-2024-001</div>
+              </li>
+              <li>
+                <div class="title">계약 담당자</div>
+                <div class="value">홍길동</div>
+              </li>
+              <li>
+                <div class="title">대리점</div>
+                <div class="value">퍼시스 강남
+                  <p class="text-sub">홍길동 02-1234-5678</p>
+                </div>
+              </li>
+              <li>
+                <div class="title">렌탈 기간</div>
+                <div class="value">2024.02.01 ~ 2029.01.31 (60개월)</div>
+              </li>
+              <li class="span-2">
+                <div class="title">설치 주소</div>
+                <div class="value list-inline flex-wrap">
+                  <p class="text-box">경기 성남시 분당구 판교역로 166 판교 지점</p>
+                  <p class="text-box">경기 성남시 분당구 판교역로 166 판교 지점</p>
+                </div>
+              </li>
+              <li class="span-2">
+                <div class="title">진행 현황</div>
+                <div class="value">
+                  <div class="box-style type-progress">
+                    <div class="top-area">
+                      <div class="round">
+                        <p class="label">진행 회차</p>
+                        <div class="value">
+                          <strong class="text-green">25</strong>
+                          <span>/</span>
+                          <span>60회</span>
+                        </div>
+                      </div>
+                      <div class="amount">
+                        <p class="label">렌탈료(VAT 포함)</p>
+                        <div class="value">
+                          <strong><span class="unit">월</span> 2,000,000원</strong>
+                          <span>/</span>
+                          <span>120,000,000원</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="progress-bar">
+                      <span class="bar" style="width: 20%"></span>
+                    </div>
+
+                    <div class="bottom-area">
+                      <span>2024.01.01</span>
+                      <span>2027.01.01</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+
+          </div>
+          <!-- // 계약 정보 -->
+
+          <div class="group">
+            <div class="title-area justify-between">
+              <h3 class="group-title">업로드 파일</h3>
+              <span class="font-sm font-bold">n개</span>
+            </div>
+
+            <div class="list-inline flex-wrap">
+              <a href="#" download class="btn light rounded md">
+                <span>파일도면.dwg</span><i class="icon-download"></i>
+              </a>
+              <a href="#" download class="btn light rounded md">
+                <span>계약서첨부.pdf</span><i class="icon-download"></i>
+              </a>
+            </div>
+          </div>
+          <!-- // 업로드 파일 -->
+
+          <div class="group">
+            <div class="title-area">
+              <h3 class="group-title">품목 정보</h3>
+            </div>
+
+            <ul class="tab-list">
+              <li><button type="button" data-target="#tabCont1" class="tab is-active">마곡중앙10로 30 본사 사옥</button></li>
+              <li><button type="button" data-target="#tabCont2" class="tab">두번째 탭 주소</button></li>
+            </ul>
+
+            <div class="tab-contents">
+              <div id="tabCont1" class="tab-cont is-active">
+                <div class="title-area justify-between font-sm">
+                  <div class="flex-center gap-3xs">
+                    <i class="icon-location"></i>
+                    <p class="font-bold">경기 성남시 분당구 판교역로 166 판교 지점</p>
+                  </div>
+
+                  <p class="flex-center gap-3xs"><i class="dot"></i>인수담보부</p>
+                </div>
+
+                <div class="layout-column gap-xs">
+                  <!-- 첫번째 .table-toggle > .btn-toggle에 .is-expanded 추가 -->
+                  <div class="table-toggle">
+                    <button type="button" class="btn-toggle is-expanded" aria-controls="#tableA01">
+                      6층 회의실 A-1
+                    </button>
+                    <div class="table-wrap"  id="tableA01">
+                      <table>
+                        <colgroup>
+                          <col style="width: 140px">
+                          <col style="width: 110px">
+                          <col>
+                          <col style="width: 110px">
+                          <col style="width: 60px">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th scope="col">품목코드</th>
+                            <th scope="col">색상</th>
+                            <th scope="col">품목명</th>
+                            <th scope="col">옵션</th>
+                            <th scope="col" class="text-center">수량</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="table-toggle">
+                    <button type="button" class="btn-toggle" aria-controls="#tableA02">
+                      6층 회의실 A-2
+                    </button>
+                    <div class="table-wrap"  id="tableA02">
+                      <table>
+                        <colgroup>
+                          <col style="width: 140px">
+                          <col style="width: 110px">
+                          <col>
+                          <col style="width: 110px">
+                          <col style="width: 60px">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th scope="col">품목코드</th>
+                            <th scope="col">색상</th>
+                            <th scope="col">품목명</th>
+                            <th scope="col">옵션</th>
+                            <th scope="col" class="text-center">수량</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tabCont2" class="tab-cont">
+                <div class="title-area justify-between font-sm">
+                  <div class="flex-center gap-3xs">
+                    <i class="icon-location"></i>
+                    <p class="font-bold">두번째 탭의 상세 주소</p>
+                  </div>
+
+                  <p class="flex-center gap-3xs"><i class="dot"></i>인수담보부</p>
+                </div>
+
+                <div class="layout-column gap-xs">
+                  <!-- 첫번째 .table-toggle > .btn-toggle에 .is-expanded 추가 -->
+                  <div class="table-toggle">
+                    <button type="button" class="btn-toggle is-expanded" aria-controls="#tableB01">
+                      6층 회의실 B-1
+                    </button>
+                    <div class="table-wrap"  id="tableB01">
+                      <table>
+                        <colgroup>
+                          <col style="width: 140px">
+                          <col style="width: 110px">
+                          <col>
+                          <col style="width: 110px">
+                          <col style="width: 60px">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th scope="col">품목코드</th>
+                            <th scope="col">색상</th>
+                            <th scope="col">품목명</th>
+                            <th scope="col">옵션</th>
+                            <th scope="col" class="text-center">수량</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="table-toggle">
+                    <button type="button" class="btn-toggle" aria-controls="#tableB02">
+                      6층 회의실 B-2
+                    </button>
+                    <div class="table-wrap"  id="tableB02">
+                      <table>
+                        <colgroup>
+                          <col style="width: 140px">
+                          <col style="width: 110px">
+                          <col>
+                          <col style="width: 110px">
+                          <col style="width: 60px">
+                        </colgroup>
+                        <thead>
+                          <tr>
+                            <th scope="col">품목코드</th>
+                            <th scope="col">색상</th>
+                            <th scope="col">품목명</th>
+                            <th scope="col">옵션</th>
+                            <th scope="col" class="text-center">수량</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span>FDD014NN</span>
+                              <i class="right-dot"></i>
+                            </td>
+                            <td>WW</td>
+                            <td>덕트형 데스크</td>
+                            <td>표준품</td>
+                            <td class="text-center">10</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 왼쪽 컨텐츠 영역 -->
+
+      <div class="layout-panel">
+        <div class="panel-cont">
+          <div class="title-area">
+            <h3 class="group-title">결제 정보</h3>
+          </div>
+
+          <div class="box-style type-receipt">
+            <div class="payment">
+              <p class="text-sky">다음 결제</p>
+              <p class="value">2026.01.01</p>
+            </div>
+            <strong class="price">20,000,000원<span>VAT 포함</span></strong>
+          </div>
+
+          <ul class="info-list">
+            <li>
+              <div class="title">결제상태</div>
+              <div class="value">
+                <span class="badge-line-green w-fix">정상</span>
+                <span class="badge-line-red w-fix">연체</span>
+              </div>
+            </li>
+            <li>
+              <div class="title">결제방식</div>
+              <div class="value">카드 / 계좌 / CMS</div>
+            </li>
+            <li>
+              <div class="title">결제일</div>
+              <div class="value">매월 15일</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="divider-dash"><hr class="line"></div>
+
+        <div class="panel-cont">
+          <ul class="info-list">
+            <!-- 결제방식: 카드일 경우 -->
+            <li>
+              <div class="title">카드사</div>
+              <div class="value">삼성카드</div>
+            </li>
+            <li>
+              <div class="title">카드번호</div>
+              <div class="value">1234-****-****-5678</div>
+            </li>
+
+            <!-- 결제방식: 계좌, CMS 경우 -->
+            <li>
+              <div class="title">은행</div>
+              <div class="value">국민은행</div>
+            </li>
+            <li>
+              <div class="title">계좌번호</div>
+              <div class="value">1234-****-****-5678</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 열람자 보기 -->
+  <th:block th:replace="~{contract/pub/modal/viewerInfoModal.html}"/>
+</th:block>
+
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

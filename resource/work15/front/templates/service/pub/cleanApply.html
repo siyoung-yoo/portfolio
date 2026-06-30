@@ -2,141 +2,83 @@
 <body>
 
 <th:block layout:fragment="contents">
-  <div id="bodyContent" class="register-page">
+  <div id="bodyContent" class="register-page cleaning-page">
     <div class="title-area mb-2xl">
       <h2 class="page-title">의자 클리닝 신청</h2>
     </div>
     <!-- // .title-area -->
 
-    <div class="box-toggle active-border mb-lg">
-      <button type="button" class="btn-toggle py-sm bg-white" aria-controls="#toggleBox01">
-        <div class="flex-col text-left gap-2xs">
-          <div class="font-md">선택한 계약 건 <strong>4건</strong></div>
-          <p class="font-sm">서비스 신청 완료 시 각 계약 건(주소)별로 개별 신청번호가 부여됩니다.</p>
-        </div>
-      </button>
-      <div class="box-style bg-white pt-0" id="toggleBox01">
-        <div class="layout-column gap-xs">
-
-          <div class="box-style gap-sm">
-            <div class="flex-col gap-2xs">
-              <div class="flex justify-between gap-xs">
-                <div class="text-title">CT-2024-001 본사 사옥 렌탈 계약건</div>
-                <p class="font-sm flex-none">총 수량: <strong>n개</strong></p>
-              </div>
-              <div class="flex-center font-sm text-dark">
-                <i class="icon-location sm"></i>
-                <p class="ellipsis">경기도 성남시 분당구 정자일로 95 (정자동)</p>
-              </div>
-            </div>
-
-            <ul class="list-inline type-box-list">
-              <li>CT-2024-001 300개</li>
-              <li>CT-2024-001 50개</li>
-              <li>CT-2024-001 50개</li>
-              <li>CT-2024-001 120개</li>
-              <li>CT-2024-001 300개</li>
-              <li>CT-2024-001 200개</li>
-              <li>CT-2024-001 2개</li>
-              <li>CT-2024-001 1개</li>
-              <li>CT-2024-001 300개</li>
-              <li>CT-2024-001 2개</li>
-              <li>CT-2024-001 1개</li>
-            </ul>
-          </div>
-
-          <div class="box-style gap-sm">
-            <div class="flex-col gap-2xs">
-              <div class="flex justify-between gap-xs">
-                <div class="text-title">CT-2024-001 본사 사옥 렌탈 계약건</div>
-                <p class="font-sm flex-none">총 수량: <strong>n개</strong></p>
-              </div>
-              <div class="flex-center font-sm text-dark">
-                <i class="icon-location sm"></i>
-                <p class="ellipsis">경기도 성남시 분당구 정자일로 95 (정자동)</p>
-              </div>
-            </div>
-
-            <ul class="list-inline type-box-list">
-              <li>CT-2024-001 300개</li>
-            </ul>
-          </div>
-
-          <div class="box-style gap-sm">
-            <div class="flex-col gap-2xs">
-              <div class="flex justify-between gap-xs">
-                <div class="text-title">CT-2024-001 본사 사옥 렌탈 계약건 텍스트가 길 경우 CT-2024-001 본사 사옥 렌탈 계약건 텍스트가 길 경우 CT-2024-001 본사 사옥 렌탈 계약건 텍스트가 길 경우 CT-2024-001 본사 사옥 렌탈 계약건 텍스트가 길 경우 CT-2024-001 본사 사옥 렌탈 계약건 텍스트가 길 경우 </div>
-                <p class="font-sm flex-none">총 수량: <strong>n개</strong></p>
-              </div>
-              <div class="flex-center font-sm text-dark">
-                <i class="icon-location sm"></i>
-                <p class="ellipsis">경기도 성남시 분당구 정자일로 95 (정자동) 경기도 성남시 분당구 정자일로 95 (정자동) 경기도 성남시 분당구 정자일로 95 (정자동) 경기도 성남시 분당구 정자일로 95 (정자동) 경기도 성남시 분당구 정자일로 95 (정자동)경기도 성남시 분당구 정자일로 95 (정자동)경기도 성남시 분당구 정자일로 95 (정자동)</p>
-              </div>
-            </div>
-
-            <ul class="list-inline type-box-list">
-              <li>CT-2024-001 텍스트가 길 경우 30000개</li>
-              <li>CT-2024-001 1개</li>
-            </ul>
-          </div>
-        </div>
+    <!-- S: 상단 계약 정보 -->
+    <div class="box-style bg-white mb-lg">
+      <div class="flex-col text-left gap-2xs">
+        <p>선택된 계약 건</p>
+        <h3 class="group-title">LG 화학 대전 사옥 블라블라 건</h3>
       </div>
+      <ul class="list-inline">
+        <li class="text-box sm"><i class="icon-location"></i>주소명1 주소명1</li>
+        <li class="text-box sm"><i class="icon-location"></i>주소명2 주소명2 주소명2 주소명2</li>
+      </ul>
     </div>
+    <!-- E: 상단 계약 정보 -->
 
-    <div class="layout-column gap-lg">
+    <div class="layout-column gap-md">
+      <!-- S: 주소별 신청 항목 -->
       <div class="box-style bg-white">
-        <div class="header bg-light-gray">
-          <h3 class="group-title">신청 정보 입력</h3>
+        <div class="header bg-light-gray items-center justify-start">
+          <h3 class="group-title gap-xs leading-none">
+            <span class="shrink-0">주소1</span>
+            <span class="font-md">주소명1 주소명1</span>
+          </h3>
         </div>
         <div class="cont pb-xl">
           <div class="title-area justify-between mb-xl">
             <h4 class="text-title">현장 담당자</h4>
             <div class="form-chk">
-              <input type="checkbox" id="chk">
-              <label for="chk">신청자와 동일</label>
+              <input type="checkbox" id="chkA">
+              <label for="chkA">신청자와 동일</label>
             </div>
           </div>
 
           <div class="layout-grid gap-y-2xl">
             <div class="form-group">
-              <label for="form01" class="text-label required">이름</label>
+              <label for="formA01" class="text-label required">이름</label>
               <div class="form-box bg-invert">
-                <input type="text" id="form01" autocomplete="off" placeholder="이름 입력" title="이름 입력">
+                <input type="text" id="formA01" autocomplete="off" placeholder="이름 입력" title="이름 입력">
               </div>
               <p class="text-error">필수 항목입니다</p>
             </div>
 
             <div class="form-group">
-              <label for="form02" class="text-label required">연락처</label>
+              <label for="formA02" class="text-label required">연락처</label>
               <div class="form-box bg-invert">
-                <input type="text" id="form02" autocomplete="off" placeholder="숫자만 입력" title="연락처 숫자만 입력">
+                <input type="text" id="formA02" autocomplete="off" placeholder="숫자만 입력" title="연락처 숫자만 입력">
               </div>
               <p class="text-error">필수 항목입니다</p>
             </div>
 
             <div class="form-group">
-              <label for="form03" class="text-label required">이메일</label>
+              <label for="formA03" class="text-label required">이메일</label>
               <div class="form-box bg-invert">
-                <input type="email" id="form03" autocomplete="off" placeholder="ID@email.com" title="이메일 입력">
+                <input type="email" id="formA03" autocomplete="off" placeholder="ID@email.com" title="이메일 입력">
               </div>
               <p class="text-error">필수 항목입니다</p>
             </div>
 
             <div class="form-group">
               <div class="flex-center-between">
-                <label for="form04" class="text-label required">서비스 희망일</label>
+                <label for="formA04" class="text-label required">서비스 희망일</label>
                 <span class="font-sm mb-3xs">신청일 기준 14일 이후부터 선택 가능</span>
               </div>
               <div class="form-box date-picker bg-invert">
-                <input type="text" id="form04" class="single-date" autocomplete="off" placeholder="연도.월.일" title="서비스 희망일 날짜 입력">
+                <input type="text" id="formA04" class="single-date" autocomplete="off" placeholder="연도.월.일" title="서비스 희망일 날짜 입력">
               </div>
               <p class="text-error">필수 항목입니다</p>
             </div>
 
             <div class="form-group span-2">
-              <label for="form05" class="text-label">상세 정보 (선택)</label>
+              <label for="formA05" class="text-label">상세 정보 (선택)</label>
               <div class="form-box textarea bg-invert">
-                <textarea name="" id="form05" placeholder="요청 내용을 자유롭게 작성해 주세요." title="상세 정보 선택 입력"></textarea>
+                <textarea name="" id="formA05" placeholder="요청 내용을 자유롭게 작성해 주세요." title="상세 정보 선택 입력"></textarea>
                 <span class="counter">(0/1,000)</span>
               </div>
             </div>
@@ -159,11 +101,95 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <!-- E: 주소별 신청 항목 -->
 
-          <div class="footer-btn-area">
-            <button type="button" class="btn dark lg">신청하기</button>
+      <!-- S: 주소별 신청 항목 -->
+      <div class="box-style bg-white">
+        <div class="header bg-light-gray items-center justify-start">
+          <h3 class="group-title gap-xs leading-none">
+            <span class="shrink-0">주소2</span>
+            <span class="font-md">주소명2 주소명2 주소명2 주소명2</span>
+          </h3>
+        </div>
+        <div class="cont pb-xl">
+          <div class="title-area justify-between mb-xl">
+            <h4 class="text-title">현장 담당자</h4>
+            <div class="form-chk">
+              <input type="checkbox" id="chkB">
+              <label for="chkB">신청자와 동일</label>
+            </div>
+          </div>
+
+          <div class="layout-grid gap-y-2xl">
+            <div class="form-group">
+              <label for="formB01" class="text-label required">이름</label>
+              <div class="form-box bg-invert">
+                <input type="text" id="formB01" autocomplete="off" placeholder="이름 입력" title="이름 입력">
+              </div>
+              <p class="text-error">필수 항목입니다</p>
+            </div>
+
+            <div class="form-group">
+              <label for="formB02" class="text-label required">연락처</label>
+              <div class="form-box bg-invert">
+                <input type="text" id="formB02" autocomplete="off" placeholder="숫자만 입력" title="연락처 숫자만 입력">
+              </div>
+              <p class="text-error">필수 항목입니다</p>
+            </div>
+
+            <div class="form-group">
+              <label for="formB03" class="text-label required">이메일</label>
+              <div class="form-box bg-invert">
+                <input type="email" id="formB03" autocomplete="off" placeholder="ID@email.com" title="이메일 입력">
+              </div>
+              <p class="text-error">필수 항목입니다</p>
+            </div>
+
+            <div class="form-group">
+              <div class="flex-center-between">
+                <label for="formB04" class="text-label required">서비스 희망일</label>
+                <span class="font-sm mb-3xs">신청일 기준 14일 이후부터 선택 가능</span>
+              </div>
+              <div class="form-box date-picker bg-invert">
+                <input type="text" id="formB04" class="single-date" autocomplete="off" placeholder="연도.월.일" title="서비스 희망일 날짜 입력">
+              </div>
+              <p class="text-error">필수 항목입니다</p>
+            </div>
+
+            <div class="form-group span-2">
+              <label for="formB05" class="text-label">상세 정보 (선택)</label>
+              <div class="form-box textarea bg-invert">
+                <textarea name="" id="formB05" placeholder="요청 내용을 자유롭게 작성해 주세요." title="상세 정보 선택 입력"></textarea>
+                <span class="counter">(0/1,000)</span>
+              </div>
+            </div>
+
+            <div class="form-group span-2">
+              <div class="title-area">
+                <p class="text-title">현장 사진 / 도면 업로드 (선택)</p>
+                <p class="font-sm">기존 등록된 도면을 기준으로 서비스가 진행됩니다. 변경 사항이 있을 경우 최신 도면을 업로드해 주세요.</p>
+              </div>
+
+              <div class="btn-area mb-xs">
+                <button type="button" class="btn line rounded"><i class="icon-plus"></i>파일 추가</button>
+              </div>
+
+              <div class="list-inline flex-wrap">
+                <div class="btn light round md no-hover">
+                  <span>파일도면.dwg</span>
+                  <button type="button" class="btn-close-sm"></button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <!-- E: 주소별 신청 항목 -->
+
+      <div class="footer-btn-area">
+        <button type="button" class="btn dark lg">신청하기</button>
       </div>
     </div>
   </div>
@@ -173,13 +199,17 @@
 <script>
   // 퍼블리싱 UI 확인용 스크립트
   document.querySelector(".footer-btn-area .btn").addEventListener('click', (e) => {
-    alertPopup('신청이 완료되었습니다.','신청 내역은 의자 클리닝 페이지의 [상세]에서<br>확인하실 수 있습니다.', null, () => {
+    alertPopup('신청이 완료되었습니다.','무상 의자 클리닝 서비스<br>신청 가능 횟수가 차감됩니다.', null, null, () => {
 
       // 에러 타입 확인용
-      document.querySelector("#form01").closest('.form-box').classList.add("error");
-      document.querySelector("#form02").closest('.form-box').classList.add("error");
-      document.querySelector("#form03").closest('.form-box').classList.add("error");
-      document.querySelector("#form04").closest('.form-box').classList.add("error");
+      document.querySelector("#formA01").closest('.form-box').classList.add("error");
+      document.querySelector("#formA02").closest('.form-box').classList.add("error");
+      document.querySelector("#formA03").closest('.form-box').classList.add("error");
+      document.querySelector("#formA04").closest('.form-box').classList.add("error");
+      document.querySelector("#formB01").closest('.form-box').classList.add("error");
+      document.querySelector("#formB02").closest('.form-box').classList.add("error");
+      document.querySelector("#formB03").closest('.form-box').classList.add("error");
+      document.querySelector("#formB04").closest('.form-box').classList.add("error");
     })
   } )
 </script>
